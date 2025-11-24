@@ -39,6 +39,8 @@ by wins/points/earning etc.
 and it should be possible to sort the team list by earnings, wins and number of tournaments
 participated in etc.
 
+- **UP coming events / event calender** Hægt er að sjá hvernig næstu mótin eru og dagskráinn á því. (**Kristo setti þetta inn, Þarf review**)
+
 -  **Please note that statistics for teams and clubs is quite tricky if we allow players to change
 teams. Take this into account when/if you decide to support this feature.**
 Ég held að það sé sniðugt að sleppa að supporta þetta til að einfalda ferlið, ( Alltaf hægt að breyta )
