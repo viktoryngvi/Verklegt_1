@@ -1,6 +1,9 @@
-Day 1
+### **Day 1**
 
-Tasks
+**Tasks**
+
+----- 
+
 
 - Klára dagbókin ( setupið )
 - Klára hanbók (setupið ) 
@@ -9,6 +12,9 @@ Tasks
 - Brainstorma hönnuna forritið ( Hvað við viljum fá inn í það )
   
 ---------- 
-Day 2
+### **Day 2**
 
+- Fara yfir requirement lista (A) og (B), skoða hvaða klassa við viljum bæta og fara yfir klassa sem við erum buinn að bæta við.
+- Hafa í hreinu hvað við viljum að forritið gerir og hvaða klassa við þurfum.
+- Búa til klassa sem við þurfum fyir okkar hugmynd.
 - 
