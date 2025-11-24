@@ -23,3 +23,46 @@ Mikilvæg atriði:
 - Kerfið skal takmarka fjölda samtímis leikja út frá fjölda tiltækra netþjóna
 
 
+
+
+User Groups 
+
+- Administator/Organizer
+- Team Captain
+- Player
+- Spectator/Public User
+
+
+-------------------------------------------------------------------------------
+Funcional requirements
+
+| Number    |    Descripton   |    User group    |    Priority    |   Additional info |
+|-----------|------------|------------------|----------------|-------------------|
+| R1  |  Register a new player  |  Organizer, Team captain  |  A  |  Player must belong to exactly one team |
+| R2  |  View player profile(name and handle)  |  All users  |  A  |  Private info hidden | 
+| R3  |  Edit player personal information  |  Team Captain,Organizer  |  A  |  Captain can only edit players in own team |
+| R4  |  Create a new team  |  Organizer  |  A  |  Team name must be unique |
+| R5  |  Assign a captain to a team  |  Organizer  |  A  |  Captain must be a player in the team |
+| R6  |  Add players to team  |  Team captain  |  A  |  Must be 3-5 players |
+| R7  |  Create a new tournament  |  Organizer  |  A  |  Requires name, start date, end date, venue or location |
+| R8  |  View tournament information  |  All users  |  A  |  schedule and games |
+| R9  |  Register teams into a tournament  |  Organizer  |  A   | 16 teams mininum, no changes after schedule creation |
+| R10  |  Generate knockout tournament schedule  |  Organizer  |  A  |  schedule must respect server limitations | 
+| R11  |  Prevent teams from playing two matches at the same time  |  System  |  A  |  Logical constraint |
+| R12  |  Assign date, time and server to each match  |  System  |  A  |  Server availability |
+| R13  |  Enter match results  |  Organizer  |  A  |  Update standings |
+| R14  |  View match results and completed matches  |  All users  |  A  |  completed matches show results |
+| R15  |  View scheduled games and ongoing games  |  All users  |  A  |  If match has not started show scheduled time and who is playing, if game has started show who is playing |
+| R16  |  Restrict personal players information to authorized users only  |  System  |  A   | Only organizers and the team captains |
+
+
+Non functional requirements
+
+| Number | Description | Priority | Additional Info |
+|--------|-------------|----------|-----------------|
+| N1  |  The system should not crash on invalid input  |  A  |  Show error message |
+| N2  |  The UI should be text based  |  A  |  Required |
+| N3  |  3 tier architecture  |  A  |  UI,Logic,Data layers |
+| N4  |  Data will be stored in text based files  |  A  |  CSV or JSON |
+
+
