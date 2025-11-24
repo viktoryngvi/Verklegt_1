@@ -2,12 +2,13 @@
 
 
 GitHub Desktop. Notendahandbók.
+(Daglegt vinnuflæði er neðst.)
 
-Inngangur.
+Inngangur:
 
 GitHub er netþjónusta sem notendum kleift að geyma, deila og vinna með kóða með öðrum á öruggan og skipulagðan hátt.
 
-Nánar:
+          Nánar:
 
 -	Vista verkefni miðlægt á netinu (remote repositories).
 -	Fylgjast með öllum breytingum sem gerðar eru í skrám.
@@ -81,8 +82,7 @@ Nær aftur í breytingar sem þú hendir óvart.
 10. Publish Repository
 Sendir local repo upp á GitHub.
 
-
-Hvað þarf að varast þegar unnið er í Git:
+          Hvað þarf að varast þegar unnið er í Git:
 
 Ekki vinna beint í main
 Main á alltaf að vera stöðug og keyrsluhæf útgáfa. Breytingar eiga að fara í sér-branches.
@@ -107,3 +107,15 @@ Forðastu þau með því að vinna skipulega, uppfæra branch-ið þitt reglule
 
 Ekki eyða branches fyrr en þau eru merge-aðar
 Annars getur þú misst breytingar.
+
+          Daglegt vinnuflæði:
+
+Daglegt vinnuflæði fyrir grunnnotanda í Git er alltaf í sömu röð og tryggir að verkefnið haldist stöðugt og skipulagt.
+PULL          Fyrst er alltaf kallað í git pull til að sækja nýjustu útgáfu verkefnisins áður en byrjað er að vinna.
+Þá er búið til branch til að vinna í svo main haldist stöðug.
+ADD > COMMIT  Þegar búið er að vinna í skránum eru breytingarnar merktar með git add og vistaðar með git commit ásamt stuttum skilaboðum.
+PUSH          Að lokum eru breytingarnar sendar upp á GitHub með git push. Þar býr notandinn til Pull Request sem biður um að kóðinn verði sameinaður í main.
+
+Pull Request er annað hvort samþykktur eða hafnaður af yfirferðaraðila (t.d. senior developer).
+Ef hann er samþykktur er kóðinn sameinaður inn í main.
+Ef hann er hafnaður þarf notandinn að gera breytingar, commit-a aftur og push-a, þá uppfærir Pull Request sig sjálfkrafa þar til hann er samþykktur.
