@@ -8,7 +8,7 @@ Tasks
 - Finna út hver á að gera hvað
 - Brainstorma hönnuna forritið ( Hvað við viljum fá inn í það )
 
-
+  
 Day 2
 
 - 
