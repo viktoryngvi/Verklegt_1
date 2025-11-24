@@ -4,6 +4,13 @@ The following are additional requirements. As before, this list is not exhaustiv
 is to further refine this text into a detailed list of requirements. 
 
 
+**Smá útskyring**
+
+Eftir eitthvað text ef ég setji comment þá geri ég (-) síðan comment.  
+Skrá hver skrifað hvað með ("**Example name**, gera review, ").
+
+
+
 
 
 ### **Dæmi um requirement**
@@ -18,18 +25,18 @@ More information can be found on (Wikipedia: Double-elimination tournament).
 ### **Requiremenst**
 
 1. 
- - **Clubs** Við Þurfum að hafa ferlið þannig að, þú þarft að vera í **club**, "The club is like an
+ - **Clubs** - Við Þurfum að hafa ferlið þannig að, þú þarft að vera í **club**, "The club is like an
 umbrella term, that has a name, club colors, home town, country."
 2.
- - **Tournament Rewards** Búa til klassa sem vistar stig sem klubbinn, player, og "club level"
+ - **Tournament Rewards** - Búa til klassa sem vistar stig sem klubbinn, player, og "club level"
  - teams and players can earn points for doing well. Added
 requirements is to keep track of such rewards at both the player, team and club level.
 3.
- - **Statistics and history** Búa til klassa sem inniheldur allt tölfræðaleg efni og söguna bakvið hvert einstakling
+ - **Statistics and history** - Búa til klassa sem inniheldur allt tölfræðaleg efni og söguna bakvið hvert einstakling
    til dæmis getum við sagt...
 
     
- - Player – When viewing player’s information it should be possible to see (or ask to see) player
+ -**Player** – When viewing player’s information it should be possible to see (or ask to see) player
 statistics like (wins, earnings, clubs played for, teams played on, tournaments participated in
 etc.).
 -  **Team** – When viewing a team’s information it should be possible to see (or ask to see), won
@@ -43,7 +50,8 @@ participated in etc.
 
 ### **Klassa hugmyndir**
 
-- **UP coming events / event calender** - Hægt er að sjá hvernig næstu mótin eru og dagskráinn á því. (**Kristo setti þetta inn, Þarf review**)
+- **UP coming events / event calender** - Hægt er að sjá hvernig næstu mótin eru og dagskráinn á því. Þetta tengist síðan í (A) requirements með tournament creation. (**Kristo setti þetta inn, Þarf review**)
+- **Tournament Bracket** - Byr til tournament bracket fyrir klubbina sem eru að keppa. - tengist inn á event calender. - Færa kannski yfir í requirement (A) (**Kristo setti inn, þarf review**)
 - 
 
 -  **Please note that statistics for teams and clubs is quite tricky if we allow players to change
