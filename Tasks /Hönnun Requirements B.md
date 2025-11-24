@@ -22,7 +22,7 @@ More information can be found on (Wikipedia: Double-elimination tournament).
 
 
 
-### **Requiremenst**
+### **Requirements**
 
 1. 
  - **Clubs** - Við Þurfum að hafa ferlið þannig að, þú þarft að vera í **club**, "The club is like an
