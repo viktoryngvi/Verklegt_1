@@ -1,8 +1,6 @@
 
 
 
-
-
 GitHub Desktop. Notendahandbók.
 
 Inngangur.
@@ -36,7 +34,7 @@ Býr til nýtt Git-repo á tölvunni (local). Git fer að fylgjast með skrám o
 
 3. Klóna (Clone) verkefni af GitHub
 File > Clone Repository
-Sækja verkefni sem er á GitHub niður á tölvuna þína og tengir Desktop við það.
+Sækja verkefni sem er á GitHub niður á tölvuna þína og tengir GitHub Desktop við það.
 
 4. Breyta skrám og Commit-a
 Git fylgist með öllum breytingum sem þú gerir í skrám.
@@ -54,7 +52,7 @@ Fetch origin:
 Athugar hvort það séu nýjar breytingar á GitHub.
 
 Pull:
-Sækir nýjustu breytingar og uppfærir verkefnið.
+Sækir nýjustu breytingar og uppfærir branchið.
 
 6. Branches (útibú)
 Current Branch > New Branch:
@@ -83,15 +81,6 @@ Nær aftur í breytingar sem þú hendir óvart.
 10. Publish Repository
 Sendir local repo upp á GitHub.
 
-11. Best Practice – grunnflæði
-1. Opna repo í Desktop
-2. Búa til branch
-3. Skrifa kóða
-4. Commit-a
-5. Push-a
-6. Pull Request á GitHub
-7. Merge
-8. Pull-a main
 
 Hvað þarf að varast þegar unnið er í Git:
 
