@@ -110,11 +110,11 @@ Annars getur þú misst breytingar.
 
           Daglegt vinnuflæði:
 
-Daglegt vinnuflæði fyrir grunnnotanda í Git er alltaf í sömu röð og tryggir að verkefnið haldist stöðugt og skipulagt.
-PULL          Fyrst er alltaf kallað í git pull til að sækja nýjustu útgáfu verkefnisins áður en byrjað er að vinna.
-Þá er búið til branch til að vinna í svo main haldist stöðug.
-ADD > COMMIT  Þegar búið er að vinna í skránum eru breytingarnar merktar með git add og vistaðar með git commit ásamt stuttum skilaboðum.
-PUSH          Að lokum eru breytingarnar sendar upp á GitHub með git push. Þar býr notandinn til Pull Request sem biður um að kóðinn verði sameinaður í main.
+Daglegt vinnuflæði fyrir grunnnotanda í Git er alltaf í sömu röð og tryggir að verkefnið haldist stöðugt og skipulagt.  
+PULL          Fyrst er alltaf kallað í git pull til að sækja nýjustu útgáfu verkefnisins áður en byrjað er að vinna.  
+Þá er búið til branch til að vinna í svo main haldist stöðug.  
+ADD > COMMIT  Þegar búið er að vinna í skránum eru breytingarnar merktar með git add og vistaðar með git commit ásamt stuttum skilaboðum.  
+PUSH          Að lokum eru breytingarnar sendar upp á GitHub með git push. Þar býr notandinn til Pull Request sem biður um að kóðinn verði sameinaður í main.  
 
 Pull Request er annað hvort samþykktur eða hafnaður af yfirferðaraðila (t.d. senior developer).
 Ef hann er samþykktur er kóðinn sameinaður inn í main.
