@@ -6,9 +6,7 @@ GitHub Desktop. Notendahandbók.
 
 Inngangur:
 
-GitHub er netþjónusta sem notendum kleift að geyma, deila og vinna með kóða með öðrum á öruggan og skipulagðan hátt.
-
-          Nánar:
+GitHub er netþjónusta sem notendum kleift að geyma, deila og vinna með kóða með öðrum á öruggan og skipulagðan hátt:
 
 -	Vista verkefni miðlægt á netinu (remote repositories).
 -	Fylgjast með öllum breytingum sem gerðar eru í skrám.
@@ -18,6 +16,26 @@ GitHub er netþjónusta sem notendum kleift að geyma, deila og vinna með kóð
 -	Geyma afrit (backup) af kóðum í skýinu.
 -	Skoða sögu verkefnis og sjá nákvæmlega hvað breyttist hvenær.
 -	Birta verkefni eða halda þeim private.
+
+Basic workflow:
+
+Basic Order of Git Commands (Correct Sequence)
+1. git pull
+Always start by getting the newest version of the project.
+
+2. Make your changes
+Edit or add files.
+
+3. git add .
+Mark all changed files to be included in the next commit.
+
+4. git commit -m "message"
+Save your changes as a snapshot with a clear message.
+
+5. git push
+Send your committed changes to GitHub.
+
+Nánar:
 
 1. Setja upp GitHub Desktop
 - Fara á: https://desktop.github.com
