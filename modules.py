@@ -12,7 +12,7 @@ class Organiser(Person):
         self.id = id
 
 class Spectator(Person):
-    super()
+    pass
 
 class Player(Person):
     def __init__(self, name: str, phone: str, address: str, dob: str, email: str, id: int, handle: str):
@@ -58,3 +58,12 @@ class Tournament:
         self.contact_person = contact_person
         self.events = events
         pass
+
+class Club:
+    def __init__(self, name: str, home_town: str, country: str, colors: list):
+        self.name = name
+        self.home_town = home_town
+        self.country = country
+        self.colors = colors
+        pass
+
