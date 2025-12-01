@@ -1,22 +1,22 @@
-from models.modules import Modules
+from models.modules import Club, Tournament, Match, Team, Player
 
 class DLWrapper:
-    def load_tournaments() -> list[Modules.Tournament]:
+    def load_tournaments() -> list[Tournament]:
         pass
 
-    def save_tournaments(tournaments: list[Modules.Tournament]):
+    def save_tournaments(tournaments: list[Tournament]):
         pass
 
-    def load_matches() -> list[Modules.Match]:
+    def load_matches() -> list[Match]:
         pass
 
-    def save_matches(matches: list[Modules.Match]):
+    def save_matches(matches: list[Match]):
         pass
 
-    def load_teams() -> list[Modules.Team]:
+    def load_teams() -> list[Team]:
         pass
 
-    def save_teams(teams: list[Modules.Team]):
+    def save_teams(teams: list[Team]):
         pass
 
     def load_clubs() -> list[Club]:
@@ -31,3 +31,4 @@ class DLWrapper:
     def save_players(players: list[Player]):
         pass
 
+    
