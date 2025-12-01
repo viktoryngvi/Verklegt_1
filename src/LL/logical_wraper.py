@@ -1,10 +1,10 @@
-from models.modules import Modules
+from models.modules import Tournament, Event
 
 class LLWrapper:
    def create_tournament():
       pass
    
-   def generate_schedule(tournament: Modules.Tournament, event: Modules.Event):
+   def generate_schedule(tournament: Tournament, event: Event):
       pass
    
    def enter_match_result():
