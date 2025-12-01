@@ -1,4 +1,4 @@
-from modules import Club, Tournament, Match, Team, Player
+from models.modules import Club, Tournament, Match, Team, Player
 
 class DLWrapper:
     def load_tournaments() -> list[Tournament]:

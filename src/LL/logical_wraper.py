@@ -1,4 +1,4 @@
-from modules import Tournament, Event
+from models.modules import Tournament, Event
 
 class LLWrapper:
    def create_tournament():
