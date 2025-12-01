@@ -29,7 +29,6 @@ class Team:
         self.name = name
         self.captain = captain
         self.players = players
-
         pass
 
 class Match:
