@@ -14,7 +14,7 @@ git add <file> =  bætir bara file-inum sem þú velur
 2. git branch = sýnir þér öll branches
 3. git branch <branch_name> = býr til nýjan branch
 4. git branch -d <branch_name> = eyðir branchi ef það er full merge-að
-5. git checkout <branch> = færir þig í það branch
+5. git checkout <branch) = færir þig í það branch
 6. git log = sýnir öll commit í þessu branchi
 
 - git rm
