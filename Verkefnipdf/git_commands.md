@@ -11,10 +11,10 @@ getur breytt committi seinna meir með git commit
 
 - git branch
  git branch = sýnir þér þín branches með * hjá því sem þú ert í
-git branch = sýnir þér öll branches
-git branch <branch_name> = býr til nýjan branch
-git branch -d <branch_name> = eyðir branchi ef það er full merge-að
-git checkout <branch> = færir þig í það branch
+ git branch = sýnir þér öll branches
+ git branch <branch_name> = býr til nýjan branch
+ git branch -d <branch_name> = eyðir branchi ef það er full merge-að
+ git checkout <branch> = færir þig í það branch
 git log = sýnir öll commit í þessu branchi
 
 - git rm
