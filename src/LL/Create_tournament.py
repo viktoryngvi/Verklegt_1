@@ -1,4 +1,7 @@
-# 
+# Import Data inputs from ui  
+
+
+
 class create_tournament: 
     def __init__(self, create_tournament:str , tournament_list:list, tournament_type:str, start_date:str, end_date:str):
         self.create_tournament = create_tournament
