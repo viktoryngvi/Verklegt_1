@@ -1,7 +1,8 @@
 Git commands
+
 - git add
-git add . = bætir öllum skrám í möppunni í stage-ið 
-git add <file> =  bætir bara file-inum sem þú velur
+1. git add . = bætir öllum skrám í möppunni í stage-ið 
+2. git add <file> =  bætir bara file-inum sem þú velur
 
 - git commit
 1. git commit = þarft síðan að skrifa inn í inputtið til að halda áfram í næsta skref.
@@ -20,8 +21,13 @@ git add <file> =  bætir bara file-inum sem þú velur
 - git rm
 git rm <file> eyðir file
 
+- git clean
+1. git clean -n = sýnir hverju myndi vera eytt
+2. git clean -f = eyðir untracked files
+3. git clean - d = eyðir ócommituðum skrám
+
 - git status
-git status = sýnir þér hvaða branch þú ert á og hvort þú ert með eitthvað til að commita
+1. git status = sýnir þér hvaða branch þú ert á og hvort þú ert með eitthvað til að commita
 
 - git reset
 1. git reset hendir öllum local breytingum og syncar þig við remote repository.
@@ -30,8 +36,10 @@ git status = sýnir þér hvaða branch þú ert á og hvort þú ert með eitth
 1. git rebase setur þínar breytingar ofan á það sem er í skjalinu
 
 - git push
-git push færir allar breytingar frá þínu local repository yfir í remote repository-ið
+1. git push færir allar breytingar frá þínu local repository yfir í remote repository-ið
 
+- git pull
+1. git pull tekur breytingar frá remote repository og setur það á local
 
 
 
