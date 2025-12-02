@@ -1,54 +1,44 @@
+class CaptainUI:
+    def __init__(self, ll, menu_ui):
+        self.ll = ll
+        self.menu_ui = menu_ui
 
+    def show_menu(self) -> str:
+        print("\n==== Captain Menu ====")
+        print("1. Create player")
+        print("2. Edit player info")
+        print("3. View team")
+        print("4. Change team captain")
+        print("5. View schedule")
+        print("b. Back to main menu")
 
-class captainUI:
-    def __init__(self):
-        # self.ll = LLwrapper()  later when linking to logic layer
-        pass
+        choice = self.menu_ui._prompt_choice(["1", "2", "3", "4", "5", "b"])
 
-    # Captain menu
-    def menu(self):
-        while True:
-            print("Captain Menu")
-            print("1. Create player")
-            print("2. Edit player info")
-            print("3. View team")
-            print("4. Change team captain")
-            print("5. View schedule/n")
+        if choice == "1": 
+            self.create_player(); 
+            return "CAPTAIN_MENU"
+        if choice == "2": 
+            self.edit_player_info(); 
+            return "CAPTAIN_MENU"
+        if choice == "3": 
+            self.view_team(); 
+            return "CAPTAIN_MENU"
+        if choice == "4": 
+            self.change_team_captain(); 
+            return "CAPTAIN_MENU"
+        if choice == "5": 
+            self.view_schedule(); 
+            return "CAPTAIN_MENU"
+        if choice == "b": 
+            return "MAIN_MENU"
 
-            print("b. Back to main menu")
-
-            choice = input("Select an option: ")
-
-            if choice == '1':
-                self.create_player()
-            elif choice == '2':
-                self.edit_player()
-            elif choice == '3':
-                self.view_team()
-            elif choice == '4':
-                self.change_team_captain()
-            elif choice == '5':
-                self.view_schedule()
-            elif choice.lower() == 'b':
-                break
-            else:   # if the input is invalid, not in the options above. notify the user and try again
-                print("Invalid choice. Please try again.")
-
-    
-    def create_player(self):
-        print(" TODO : Create player functionality ")
-
-    def edit_player(self):
-        print(" TODO : Edit player info functionality ")
-
-    def view_team(self):
-        print(" TODO : View team functionality ")
-
-    def change_team_captain(self):
-        print(" TODO : Change captain functionality ")
-
-    def view_schedule(self):
-        print(" TODO : View schedule functionality ")
-
-
-    
+    def create_player(self): 
+        print("TODO")
+    def edit_player_info(self): 
+        print("TODO")
+    def view_team(self): 
+        print("TODO")
+    def change_team_captain(self): 
+        print("TODO")
+    def view_schedule(self): 
+        print("TODO")

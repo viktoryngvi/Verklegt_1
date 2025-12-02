@@ -19,8 +19,13 @@ class MenuUI:
 
         choice = self._prompt_choice(['1', '2', '3', '4', 'q'])
 
-        if choice == '1': return "ORGANIZER_MENU"
-        if choice == '2': return "CAPTAIN_MENU"
-        if choice == '3': return "PLAYER_MENU"
-        if choice == '4': return "SPECTATOR_MENU"
-        if choice == 'q': return "EXIT"
+        if choice == '1': 
+            return "ORGANIZER_MENU"
+        if choice == '2': 
+            return "CAPTAIN_MENU"
+        if choice == '3': 
+            return "PLAYER_MENU"
+        if choice == '4': 
+            return "SPECTATOR_MENU"
+        if choice == 'q': 
+            return "EXIT"
