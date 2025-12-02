@@ -15,14 +15,15 @@ class Spectator(Person):
     pass
 
 class Player(Person):
-    def __init__(self, name: str, phone: str, address: str, dob: str, email: str, id: int, handle: str):
+    def __init__(self, name: str, phone: str, address: str, dob: str, email: str, id: int, handle: str, captain: bool = False):
         super().__init__(name, phone, address, dob, email)
         self.handle = handle
         self.id = id
+        self.captain = captain
 
 class Captain(Player):
-    def __init__(self, name: str, phone: str, address: str, dob: str, email: str, id: int, handle: str):
-        super().__init__(name, phone, address, dob, email, id, handle)
+    def __init__(self, name: str, phone: str, address: str, dob: str, email: str, id: int, handle: str, captain: bool = True):
+        super().__init__(name, phone, address, dob, email, id, handle, captain)
 
 class Team:
     def __init__(self, name: str, captain: Captain, players: list[Player]):
