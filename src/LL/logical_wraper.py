@@ -1,6 +1,9 @@
 from models.modules import Tournament, Event
 
 class LLWrapper:
+   def __init__(self):
+      pass
+
    def create_tournament():
       pass
    

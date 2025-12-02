@@ -1,6 +1,9 @@
 from models.modules import Club, Tournament, Match, Team, Player
 
 class DLWrapper:
+    def __init__(self):
+        pass
+    
     def load_tournaments() -> list[Tournament]:
         pass
 
