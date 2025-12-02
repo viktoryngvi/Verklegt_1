@@ -1,48 +1,42 @@
-from UI.organizerUI import organizerUI
-from UI.captainUI import captainUI
-from UI.playerUI import playerUi
-from UI.spectatorUI import spectatorUI
+from UI.menuUI import MenuUI
+from UI.organizerUI import OrganizerUI
+from UI.captainUI import CaptainUI
+from UI.playerUI import PlayerUI
+from UI.spectatorUI import SpectatorUI
 
+class UImain:
+    def __init__(self, ll_wrapper):
+        self.llwrapper = ll_wrapper
+        self.menu_ui = MenuUI()
+        self.current_menu = "MAIN_MENU"
 
-class MainUI:
-    def __init__(self):
-        self.organizer_ui = organizerUI()
-        self.captain_ui = captainUI()
-        self.player_ui = playerUi()
-        self.spectator_ui = spectatorUI()
-    
-    
-    # Main menu 
-    def menu(self):
+        self.organizer_ui = OrganizerUI(self.llwrapper, self.menu_ui)
+        self.captain_ui = CaptainUI(self.llwrapper, self.menu_ui)
+        self.player_ui = PlayerUI(self.llwrapper, self.menu_ui)
+        self.spectator_ui = SpectatorUI(self.llwrapper, self.menu_ui)
+
+    def run(self):
         while True:
-            print("================================")
-            print("RU’s e-Sport Extravaganza")
-            print("================================")
-            print("Main Menu:")
-            print("1. Organizer")
-            print("2. Captain")
-            print("3. Player")
-            print("4. Spectator")
+            if self.current_menu == "MAIN_MENU":
+                action = self.menu_ui.main_menu()
 
-            print("q. Quit")
-            # select option and redirect to respective UI
-            choice = input("Select an option: ")
+                if action in ["ORGANIZER_MENU", "CAPTAIN_MENU", "PLAYER_MENU", "SPECTATOR_MENU"]:
+                    self.current_menu = action
+                elif action == "EXIT":
+                    print("Goodbye!")
+                    break
 
-            if choice == '1':
-                self.organizer_ui.menu()
-            elif choice == '2':
-                self.captain_ui.menu()
-            elif choice == '3':
-                self.player_ui.menu()
-            elif choice == '4':
-                self.spectator_ui.menu()
-            elif choice.lower() == 'q':
-                print("Exiting the application. Goodbye!")
-                break
-            else:
-                print("Invalid choice. Please try again.")
+            if self.current_menu == "ORGANIZER_MENU":
+                self.current_menu = self.organizer_ui.show_menu()
 
+            if self.current_menu == "CAPTAIN_MENU":
+                self.current_menu = self.captain_ui.show_menu()
 
+            if self.current_menu == "PLAYER_MENU":
+                self.current_menu = self.player_ui.show_menu()
+
+            if self.current_menu == "SPECTATOR_MENU":
+                self.current_menu = self.spectator_ui.show_menu()
 
 
         
