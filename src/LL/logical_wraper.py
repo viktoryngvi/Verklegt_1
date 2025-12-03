@@ -3,6 +3,7 @@ from models.event import Event
 from models.player import Player
 from IO.data_wrapper import DLWrapper
 from LL.playerLL import PlayerLL
+from UI.captainUI import CaptainUI
 
 class LLWrapper:
    def __init__(self):

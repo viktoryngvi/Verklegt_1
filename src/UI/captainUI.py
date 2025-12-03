@@ -1,5 +1,6 @@
-from UI import input_helpers as ih
 from models.player import Player
+from LL.logical_wraper import LLWrapper
+
 
 class CaptainUI:
     def __init__(self, ll, menu_ui):

@@ -1,25 +1,21 @@
-"""
-Test runner for the UI layer with MockLL
-Run this to manually test the create_tournament flow
-"""
-import sys
-sys.path.insert(0, 'src')
-
-
-from UI.mainUI import UImain
 from LL.logical_wraper import LLWrapper
-
-def create_ll():
-    try:
-        return LLWrapper()
-    except Exception as e:
-        print("Warning: could not create LLWrapper:", e)
-        return None
+from UI.mainUI import UImain
 
 def main():
-    ll = create_ll()
-    ui = UImain(ll_wrapper=ll)
+    print("============================================")
+    print("      TOURNAMENT SYSTEM — TEST RUN          ")
+    print("============================================")
+
+    # Initialize Logic Layer Wrapper (LL + DL)
+    ll_wrapper = LLWrapper()
+
+    # Initialize full UI system
+    ui = UImain(ll_wrapper)
+
+    # Start the UI state machine
     ui.run()
+
+    print("\nProgram exited successfully.")
 
 if __name__ == "__main__":
     main()
