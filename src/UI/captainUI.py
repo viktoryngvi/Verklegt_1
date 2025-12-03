@@ -1,4 +1,6 @@
-from UI import input_helpers as ih
+from models.player import Player
+
+
 
 class CaptainUI:
     def __init__(self, ll, menu_ui):
@@ -33,21 +35,48 @@ class CaptainUI:
             return "CAPTAIN_MENU"
         if choice == "b": 
             return "MAIN_MENU"
+    
 
-    def create_player(self): 
+    def create_player(self):
+        print("\n==== Create Player ====")
 
+        # Collect fields from user (UI does only raw input)
+        name = input("Full name: ").strip()
+        phone = input("Phone: ").strip()
+        address = input("Address: ").strip()
+        dob = input("DOB (YYYY-MM-DD): ").strip()
+        email = input("Email: ").strip()
+        handle = input("Handle (unique): ").strip()
 
-        handle = ih.get_handle_input("Player handle: ", self.ll)
-        name = ih.get_required_input("Full name: ")
-        dob = ih.get_date_input("Date of Birth (YYYY-MM-DD): ")
-        phone = ih.get_phone_input("Phone number: ")
-        email = ih.get_email_input("Email address: ")
-        address = ih.get_required_input("Home address: ")
-        link = ih.get_optional_input("Link to profile (optional): ")
+        # ID must not be asked by UI — let LL/DL handle it.
+        # So we send id=None
+        player = Player(
+            name=name,
+            phone=phone,
+            address=address,
+            dob=dob,
+            email=email,
+            id=None,
+            handle=handle
+        )
 
+        # Call LL through wrapper
+        try:
+            result = self.ll.create_player(player)
+        except Exception as e:
+            print(f"Unexpected error creating player: {e}")
+            return "CAPTAIN_MENU"
 
+        # LL returns list of errors OR a success string
+        if isinstance(result, list):  # validation failed
+            print("Player could not be created. Errors:")
+            for err in result:
+                print(f" - {err}")
+        else:
+            print("Player created successfully!")
 
-        
+        return "CAPTAIN_MENU"
+
     def edit_player_info(self): 
         print("TODO")
     def view_team(self): 

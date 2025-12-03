@@ -1,9 +1,7 @@
 from models.player import Player
-from IO.data_wrapper import DLWrapper
-
 
 class PlayerLL:
-    def __init__(self, dl_wrapper: DLWrapper):
+    def __init__(self, dl_wrapper):
         self._dl_wrapper = dl_wrapper
         
     def create_player(self, player: Player):
@@ -14,7 +12,8 @@ class PlayerLL:
             return validate_errors
         
         self._dl_wrapper.create_player(player)
-        return "Sucess"
+        return "Success"
+
 
 
     def edit_player(id: int) -> id: # id, phone and location
@@ -29,10 +28,10 @@ class PlayerLL:
         stripname = raw_name.strip()
         name_parts = stripname.split()
         
-
+        """""
         if not stripname.isalpha():
-            return "Not valid"
-        
+            return "Not allow"
+        """""
         # if raw_name in Data:
         #     return "Already in Data" 
         # TODO data connection
@@ -59,6 +58,8 @@ class PlayerLL:
 
         if "-" not in phone:
             return "not valid"
+        
+        return True
 
     
     def check_player_email(player: Player):
@@ -96,11 +97,11 @@ class PlayerLL:
         if "." not in email_split[1]:
             return "Top-level-domain is missing."
         
-        return "All good."
+        return True
         
             
 
-    def validate_player(player: Player) -> None:
+    def validate_player(self, player: Player) -> None:
         """
         Validates a player object.
         Returns the player object if valid.
@@ -116,15 +117,15 @@ class PlayerLL:
 
 
         if check_name is not True:
-            errors.append(f"Name Error: {check_name}")
+            errors.append(f"Name : {check_name}")
 
         
         if check_email is not True:
-            errors.append(f"Email Error: {check_email}")
+            errors.append(f"Email : {check_email}")
 
         
         if check_phone is not True:
-            errors.append(f"Phone Error: {check_phone}")
+            errors.append(f"Phone : {check_phone}")
         
         
         # if check_dob is not True:

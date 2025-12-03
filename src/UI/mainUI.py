@@ -4,7 +4,7 @@ from UI.captainUI import CaptainUI
 from UI.playerUI import PlayerUI
 from UI.spectatorUI import SpectatorUI
 
-class UImain:
+class UIMain:
     def __init__(self, ll_wrapper):
         self.llwrapper = ll_wrapper
         self.menu_ui = MenuUI()
