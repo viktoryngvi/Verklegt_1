@@ -53,11 +53,38 @@ class OrganizerUI:
     # CREATE TOURNAMENT
     # ================================
     def create_tournament(self) -> None:
-        print("TODO: )")
+        print("\n==== Create Tournament ====")
 
-    # ================================
-    # PLACEHOLDER FUNCTIONS
-    # ================================
+        name = input("Tournament name: ").strip()
+        start_date = input("Start date (YYYY-MM-DD): ").strip()
+        end_date = input("End date (YYYY-MM-DD): ").strip()
+        teams_raw = input("Teams (comma-separated): ").strip()
+
+        teams = [t.strip() for t in teams_raw.split(",") if t.strip()]
+
+        if not name:
+            print("Name is required. Returning to menu.")
+            return
+
+        # UI-only handoff. If LL is ready, try to call it; otherwise print a placeholder.
+        try:
+            if hasattr(self.ll, "create_tournament"):
+                result = self.ll.create_tournament(name=name, start_date=start_date, end_date=end_date, teams=teams)
+                if isinstance(result, list):
+                    print("Tournament could not be created. Errors:")
+                    for err in result:
+                        print(f" - {err}")
+                else:
+                    print("Tournament creation submitted to LL.")
+            else:
+                print("LL not implemented yet. Collected data:")
+                print(f" - name: {name}")
+                print(f" - start_date: {start_date}")
+                print(f" - end_date: {end_date}")
+                print(f" - teams: {', '.join(teams) if teams else '(none)'}")
+        except Exception as e:
+            print(f"Unexpected error handing off to LL: {e}")
+
     def generate_schedule(self) -> None:
         print("TODO: Schedule generation will be handled later by LL.")
 
