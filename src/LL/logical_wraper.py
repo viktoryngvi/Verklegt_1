@@ -1,13 +1,14 @@
-from models.tournament import Tournament
-from models.event import Event
-from models.player import Player
 from IO.data_wrapper import DLWrapper
 from LL.playerLL import PlayerLL
+from models.player import Player
+from models.tournament import Tournament
+from models.event import Event
 
 class LLWrapper:
    def __init__(self):
-      self.dl_wrapper: DLWrapper = DLWrapper()
+      self.dl_wrapper = DLWrapper()
       self.player_ll = PlayerLL(self.dl_wrapper)
+
       
    def create_player(self, player: Player):
       return self.player_ll.create_player(player)

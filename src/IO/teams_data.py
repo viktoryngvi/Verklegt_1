@@ -8,7 +8,10 @@ class Team_IO(Team):
     def change_team_captain():
         pass
 
-    def view_all_teams()
+    def view_all_teams():
+        pass
+
+    
 
 
 
