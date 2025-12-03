@@ -1,4 +1,8 @@
-from models.modules import Club, Tournament, Match, Team, Player
+from models.club import Club
+from models.tournament import Tournament
+from models.match import Match
+from models.team import Team
+from models.player import Player
 
 class DLWrapper:
     def __init__(self):
