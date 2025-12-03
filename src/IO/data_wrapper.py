@@ -1,11 +1,3 @@
-from models.club import Club
-from models.tournament import Tournament
-from models.match import Match
-from models.team import Team
-from models.player import Player
-from LL.playerLL import PlayerLL
-import os
-
 import csv
 import os
 from models.player import Player
@@ -47,9 +39,9 @@ class DLWrapper:
                 players.append(player)
 
         return players
-    
+
     def save_players(self, players: list[Player]):
-        """"""
+        """Save all players to CSV file."""
         os.makedirs(os.path.dirname(self.players_file), exist_ok=True)
 
         with open(self.players_file, mode="w", newline="", encoding="utf-8") as f:
@@ -69,7 +61,7 @@ class DLWrapper:
                     "handle": p.handle,
                     "captain": p.captain
                 })
-    
+
     def create_player(self, player: Player):
         """Add a single new player to CSV storage."""
         players = self.load_players()
@@ -83,4 +75,3 @@ class DLWrapper:
         self.save_players(players)
         return "Success"
 
-    
