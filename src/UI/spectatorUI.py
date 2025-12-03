@@ -1,43 +1,42 @@
+class SpectatorUI:
+    def __init__(self, ll, menu_ui):
+        self.ll = ll
+        self.menu_ui = menu_ui
 
-class spectatorUI:
-    def __init__(self):
-        # self.ll = LLwrapper() later when linking to logic layer
-        pass
+    def show_menu(self) -> str:
+        print("\n==== Spectator Menu ====")
+        print("1. View schedule")
+        print("2. View teams")
+        print("3. View players")
+        print("4. View clubs")
+        print("b. Back to main menu")
 
-    # Spectator menu
-    def menu(self):
-        while True:
-            print("Spectator Menu")
-            print("1. View schedule")
-            print("2. View teams")
-            print("3. View players")
-            print("4. View clubs/n")
+        choice = self.menu_ui._prompt_choice(["1", "2", "3", "4", "b"])
 
-            print("b. Back to main menu")
+        if choice == "1": 
+            self.view_schedule(); 
+            return "SPECTATOR_MENU"
+        if choice == "2": 
+            self.view_teams(); 
+            return "SPECTATOR_MENU"
+        if choice == "3": 
+            self.view_players(); 
+            return "SPECTATOR_MENU"
+        if choice == "4": 
+            self.view_clubs(); 
+            return "SPECTATOR_MENU"
+        if choice == "b": 
+            return "MAIN_MENU"
 
-            choice = input("Select an option: ")
+    def view_schedule(self): 
+        print("TODO")
+    def view_teams(self): 
+        print("TODO")
+    def view_players(self): 
+        print("TODO")
+    def view_clubs(self): 
+        print("TODO")
 
-            if choice == '1':
-                self.view_schedule()
-            elif choice == '2':
-                self.view_teams()
-            elif choice == '3':
-                self.view_players()
-            elif choice == '4':
-                self.view_clubs()
-            elif choice.lower() == 'b':
-                break
-            else:   # if the input is invalid, not in the options above. notify the user and try again
-                print("Invalid choice. Please try again.")
-
-    def view_schedule(self):
-        print(" TODO : View schedule functionality ")
-    def view_teams(self):
-        print(" TODO : View teams functionality ")
-    def view_players(self):
-        print(" TODO : View players functionality ")
-    def view_clubs(self):
-        print(" TODO : View clubs functionality ")
 
         
 
