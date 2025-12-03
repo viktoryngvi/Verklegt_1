@@ -1,4 +1,5 @@
 from models.player import Player
+from IO.data_wrapper import pl
 
 class PlayerLL:
     def __init__(self, dl_wrapper):

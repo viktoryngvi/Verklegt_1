@@ -1,9 +1,11 @@
 from models.team import Team
 
 class Team_IO(Team):
+    def __init__(self, name : str captain : str, players : List):
+    
 
     def create_Team():
-        pass
+        
 
     def change_team_captain():
         pass
