@@ -1,4 +1,6 @@
-from models.modules import Tournament, Event
+from models.tournament import Tournament
+from models.event import Event
+from io.
 
 class LLWrapper:
    def __init__(self):
