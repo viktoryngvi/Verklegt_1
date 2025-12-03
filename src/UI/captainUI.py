@@ -1,10 +1,11 @@
 from models.player import Player
+from LL.logical_wraper import LLWrapper
 
 
 
 class CaptainUI:
-    def __init__(self, ll, menu_ui):
-        self.ll = ll
+    def __init__(self, ll_wrapper, menu_ui):
+        self.ll = ll_wrapper
         self.menu_ui = menu_ui
 
     def show_menu(self) -> str:
