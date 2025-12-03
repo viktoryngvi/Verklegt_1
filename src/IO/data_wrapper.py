@@ -28,7 +28,7 @@ class DLWrapper:
     def load_players() -> list[Player]:
         pass
 
-    def save_players(players: list[Player]):
+    def create_player(players: list[Player]):
         pass
 
     
