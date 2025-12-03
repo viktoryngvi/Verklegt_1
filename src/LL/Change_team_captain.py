@@ -1,6 +1,9 @@
+from IO.teams_data import #TeamDL
+
 class change_team_captain:
     
     def __init__(self, team_name: str, new_captain: str):
+        # self.team_dl = TeamDL()
         self.team_name = team_name
         self.new_captain = new_captain
         self.current_captain = # Fetch current captain from data source 
