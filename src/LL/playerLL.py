@@ -1,4 +1,4 @@
-from models.modules import Player
+from models.player import Player
 
 class PlayerLL:
     def __init__(self):
@@ -7,8 +7,9 @@ class PlayerLL:
     def edit_player(id: int) -> id: # id, phone and location
         pass 
 
-    def check_player_dob(player: Player):
-        dob = player.dob
+    # def check_player_dob(player: Player):
+    #     dob = player.dob
+    # TODO 
 
 
     def check_player_name(player: Player):
