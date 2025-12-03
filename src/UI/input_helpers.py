@@ -4,6 +4,7 @@ Reusable functions for collecting and validating user input
 """
 import datetime
 from typing import Tuple
+import re
 
 
 def get_required_input(prompt: str) -> str:
@@ -96,3 +97,56 @@ def confirm_action(prompt: str) -> bool:
         if choice in ['n', 'no']:
             return False
         print("Please enter 'y' for yes or 'n' for no.")
+
+
+def get_optional_input(prompt: str) -> str:
+    """
+    Get an optional input from the user.
+    Returns the input string, which may be empty.
+    """
+    v = input(prompt).strip()
+    return v or None
+
+
+def get_handle_input(prompt: str, ll) -> str:
+    """
+    Ask user for a handle, validate format, and ensure uniqueness via LL.
+    Allowed format:
+        - 3–20 characters
+        - Starts with a letter
+        - Letters, numbers, underscore, hyphen
+    """
+
+    handle_pattern = re.compile(r"^[A-Za-z][A-Za-z0-9_-]{2,19}$")
+
+    while True:
+        handle = input(prompt).strip()
+
+        # allow user to cancel
+        if handle.lower() == 'b':
+            raise ValueError("Input cancelled by user.")
+
+        # Format validation
+        if not handle_pattern.match(handle):
+            print("Invalid handle. Must be 3–20 chars, start with a letter, allowed: letters, numbers, _ or -")
+            continue
+
+        # check the uniqueness with the logic layer
+        if hasattr(ll, 'player_handle_exists'):
+            try:
+                if ll.player_handle_exists(handle):
+                    print(f"Handle '{handle}' already exists, choose another.")
+                    continue
+            except Exception as e:
+                print(f"Error checking handle uniqueness: {e}")
+                continue
+        else:
+            print("Warning: LL missing method player_handle_exists(handle)")
+
+        # Passed all checks
+        return handle
+
+    
+        
+        
+
