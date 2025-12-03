@@ -3,7 +3,7 @@ from models.tournament import Tournament
 from models.match import Match
 from models.team import Team
 from models.player import Player
-from IO.Player_creation import Player_IO
+from IO.Player_functions import Player_IO
 
 class DLWrapper:
     def __init__(self):
