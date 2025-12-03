@@ -7,15 +7,18 @@ sys.path.insert(0, 'src')
 
 
 from UI.mainUI import UImain
+from LL.logical_wraper import LLWrapper
+
+def create_ll():
+    try:
+        return LLWrapper()
+    except Exception as e:
+        print("Warning: could not create LLWrapper:", e)
+        return None
 
 def main():
-    """Run the UI with a mock logic layer for testing."""
-    print("=" * 50)
-    print("UI TEST MODE - Using MockLL")
-    print("=" * 50)
-    print()
-    # Create and run the UI (no LL needed for UI navigation testing)
-    ui = UImain(ll_wrapper=None)
+    ll = create_ll()
+    ui = UImain(ll_wrapper=ll)
     ui.run()
 
 if __name__ == "__main__":
