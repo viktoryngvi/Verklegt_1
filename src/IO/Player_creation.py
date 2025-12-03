@@ -1,8 +1,8 @@
-from data_wrapper import DLWrapper
+# from data_wrapper import DLWrapper
 # það þarf að færa útfylltan clasa úr file til en til að fá gögnin úr clasanum þarf að importa objectinu?
 #TODO
 
-player = input("")
+player = input("insláðu nýjan player: ")
 class Player:
     def __init__(self, name="name", date_of_birth="date_of_birth", address="address", phone_number="phone_number", email="email", link="link", handle="handle", team="team"):
         self.name = name
@@ -18,13 +18,14 @@ class Player:
             player_file.write(f"{self.name},{self.date_of_birth},{self.address},{self.phone_number},{self.email},{self.link},{self.handle},{self.team} \n")
 # skrifar upplýsingarnar um nýjann player inn í player_creation skjalið
 
-    def check_if_player_exists(self,name):
+    def check_if_player_exists(self):
         with open("src/IO/player_info.csv", "r") as player_file:
             for line in player_file:
-                if name in line:
+                if line.startswith(self.name):
                     return True
-                else:
-                    return False
+                # if self.name in line.split(",")[0]:
+                    # return True
+            return False
                 # checkar hverja línu og skoðar hvort það er "name" sem passar við inslegið nafn
 
                 
@@ -32,7 +33,9 @@ class Player:
 while player != "q":
     new_player = Player(player)
     new_player.create_player()
-    player = input("")
+    player = input("aftur: ")
 
-
-    
+check_player = input("ok, núna ertu að gá hvort hann er til: ")
+while check_player != "Q":
+    print(new_player.check_if_player_exists())
+    check_player = input("aftur:): ")
