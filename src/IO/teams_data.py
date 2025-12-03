@@ -1,16 +1,24 @@
 from models.team import Team
 
 class Team_IO(Team):
-    def __init__(self, name : str captain : str, players : List):
-    
+    def __init__(self, name, captain, players):
+        file_path = "data/teams.csv"
+        self.file_path = file_path
 
-    def create_Team():
+    def create_team(self):
+        with open(self.file_path, "a", encoding="utf-8") as teams_file:
+            teams_file.write(f"{self.name},{self.captain},{self.players}")
+        
         
 
-    def change_team_captain():
-        pass
+    def change_team_captain(self):#############TODO
+        with open(self.file_path, "w", encoding="utf-8") as teams_file:
+            for line in teams_file:
+                if team_name == self.name:
 
-    def view_all_teams():
+        return players in team
+
+    def view_all_teams(self):
         pass
 
     
