@@ -1,5 +1,5 @@
 from models.player import Player
-from LL.logical_wraper import LLWrapper
+
 
 
 class CaptainUI:
