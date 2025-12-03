@@ -1,10 +1,16 @@
 from models.tournament import Tournament
 from models.event import Event
-from io.
+from models.player import Player
+from IO.data_wrapper import DLWrapper
+from LL.playerLL import PlayerLL
 
 class LLWrapper:
    def __init__(self):
-      pass
+      self.dl_wrapper: DLWrapper = DLWrapper()
+      self.player_ll = PlayerLL(self.dl_wrapper)
+      
+   def create_player(self, player: Player):
+      return self.player_ll.create_player(player)
 
    def create_tournament():
       pass
@@ -18,8 +24,7 @@ class LLWrapper:
    def change_team_captain():
       pass
    
-   def create_player():
-      pass
+
    
    def assign_point():
       pass

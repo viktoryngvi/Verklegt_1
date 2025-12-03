@@ -1,16 +1,28 @@
 from models.player import Player
+from IO.data_wrapper import DLWrapper
+
 
 class PlayerLL:
-    def __init__(self):
-        pass
+    def __init__(self, dl_wrapper: DLWrapper):
+        self._dl_wrapper = dl_wrapper
         
+    def create_player(self, player: Player):
+
+        validate_errors = self.validate_player(player)
+
+        if validate_errors:
+            return validate_errors
+        
+        self._dl_wrapper.create_player(player)
+        return "Sucess"
+
+
     def edit_player(id: int) -> id: # id, phone and location
         pass 
 
     # def check_player_dob(player: Player):
     #     dob = player.dob
     # TODO 
-
 
     def check_player_name(player: Player):
         raw_name = player.name
@@ -88,7 +100,7 @@ class PlayerLL:
         
             
 
-    def create_player(player: Player) -> Player:
+    def validate_player(player: Player) -> None:
         """
         Validates a player object.
         Returns the player object if valid.
@@ -99,7 +111,9 @@ class PlayerLL:
         check_name = PlayerLL.check_player_name(player)
         check_email = PlayerLL.check_player_email(player)
         check_phone = PlayerLL.check_player_phone(player)
-        check_dob = PlayerLL.check_player_dob(player)
+        # check_dob = PlayerLL.check_player_dob(player)
+        #TODO 
+
 
         if check_name is not True:
             errors.append(f"Name Error: {check_name}")
@@ -113,14 +127,15 @@ class PlayerLL:
             errors.append(f"Phone Error: {check_phone}")
         
         
-        if check_dob is not True:
-            errors.append(f"DOB Error: {check_dob}")
+        # if check_dob is not True:
+        #     errors.append(f"DOB Error: {check_dob}")
+        #TODO
 
         # If the errors list is not empty, return it
         if errors:
             return errors
         
         # Otherwise, all checks passed
-        return player
+        return None
 
          
