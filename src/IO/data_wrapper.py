@@ -3,6 +3,7 @@ from models.tournament import Tournament
 from models.match import Match
 from models.team import Team
 from models.player import Player
+from IO.Player_creation import Player_IO
 
 class DLWrapper:
     def __init__(self):
@@ -35,7 +36,8 @@ class DLWrapper:
     def load_players() -> list[Player]:
         pass
 
-    def create_player(players: list[Player]):
-        pass
+    def create_player(self, player: Player_IO):
+        result = player.create_player()
+        return result
 
     
