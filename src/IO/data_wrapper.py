@@ -11,6 +11,7 @@ class DLWrapper:
          return self.playerio.create_player(player)
     def check_if_playerexists(self, player : Player_IO):
         return self.playerio.check_if_player_exists(player)
+    
     def edit_player_info(self, player : Player_IO):
         return self.playerio.edit_player_info(player)#########################
     def load_all_player_short_info(self, player : Player_IO):
