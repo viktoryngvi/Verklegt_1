@@ -31,35 +31,6 @@ class MenuUI:
                 return choice
             print(f"Invalid choice. Valid options: {', '.join(valid_choices)}")
 
-    def print_input_form(self, form_title: str, fields: list):
-        """
-        Display a bordered input form with consistent UI styling.
-        
-        Args:
-            form_title: Title of the form (e.g., "Create Tournament")
-            fields: List of tuples [(label, prompt_text), ...]
-        
-        Returns:
-            Dictionary with field labels as keys and user inputs as values
-        """
-        self.print_header(form_title)
-        print("                ║                                                                        ║")
-        
-        results = {}
-        
-        for label, prompt in fields:
-            print(f"                ║  {prompt:<70}║")
-            print("                ║  ➤ ", end="")
-            value = input()
-            results[label] = value.strip()
-            print("                ║                                                                        ║")
-        
-        print("                ╠════════════════════════════════════════════════════════════════════════╣")
-        print("                ║                    © Reykjavík University - 2025                       ║")
-        print("                ╚════════════════════════════════════════════════════════════════════════╝")
-        
-        return results
-
     # MAIN MENU
     def main_menu(self) -> str:
         self.print_header("MAIN MENU")
@@ -78,7 +49,7 @@ class MenuUI:
         print("                ╠════════════════════════════════════════════════════════════════════════╣")
         print("                ║                    © Reykjavík University - 2025                       ║")
         print("                ╚════════════════════════════════════════════════════════════════════════╝")
-
+        
         
         if choice not in ['1', '2', '3', '4', 'q']:
             print(f"Invalid choice. Valid options: 1, 2, 3, 4, Q")
