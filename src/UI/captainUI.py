@@ -1,4 +1,5 @@
 from models.player import Player
+from UI.input_helper import get_non_empty_input
 
 
 
@@ -56,15 +57,15 @@ class CaptainUI:
     
 
     def create_player(self):
-        print("\n==== Create Player ====")
+        print("\n==== Create Player ====\n")
 
-        # Collect fields from user (UI does only raw input)
-        name = input("Full name: ").strip()
-        phone = input("Phone: ").strip()
-        address = input("Address: ").strip()
-        dob = input("DOB (YYYY-MM-DD): ").strip()
-        email = input("Email: ").strip()
-        handle = input("Handle (unique): ").strip()
+        # Collect input (UI safety only - prevent empty/crashes)
+        name = get_non_empty_input("Full name: ")
+        phone = get_non_empty_input("Phone: ")
+        address = get_non_empty_input("Address: ")
+        dob = get_non_empty_input("DOB (YYYY-MM-DD): ")
+        email = get_non_empty_input("Email: ")
+        handle = get_non_empty_input("Handle (unique): ")
         team = None  # Captains do not assign teams when creating players
 
         # ID must not be asked by UI — let LL/DL handle it.
