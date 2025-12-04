@@ -20,7 +20,13 @@ class Team_IO(Team):
         return players in team
 
     def view_all_teams(self):
-        pass
+        with open ("data/teams.csv", "r", encoding="utf-8") as teams_file:
+            teams_list = []
+            for line in teams_file:
+                 teams_list.append(line.split(",")[0])
+        return teams_list
+            
+    def view_all_players_in_teams(self):
 
     
 
