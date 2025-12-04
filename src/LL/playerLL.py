@@ -1,5 +1,5 @@
 from models.player import Player
-from IO.data_wrapper import pl
+from IO.data_wrapper import DLWrapper
 
 class PlayerLL:
     def __init__(self, dl_wrapper):
@@ -29,13 +29,12 @@ class PlayerLL:
         stripname = raw_name.strip()
         name_parts = stripname.split()
         
-        """""
-        if not stripname.isalpha():
+
+        if not raw_name.replace(" ","").isalpha():
             return "Not allow"
-        """""
-        # if raw_name in Data:
-        #     return "Already in Data" 
-        # TODO data connection
+
+        if raw_name in DLWrapper.check_if_playerexists:
+             return "Already in Data" 
 
         if len(raw_name) < 2 or len(raw_name) > 60:
             return "Not valid"
