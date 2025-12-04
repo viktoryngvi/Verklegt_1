@@ -3,11 +3,20 @@ from models.player import Player
 from IO.data_wrapper import DLWrapper
 
 class PlayerLL:
+    """
+    The Player Logical Layer (LL) handles business logic and validation 
+    for Player objects before data is passed to or from the Data Layer (DL).
+    """
     def __init__(self, dl_wrapper):
+        # Stores the DLWrapper instance, which is the gateway to data persistence.
         self._dl_wrapper = dl_wrapper
-        
-    def create_player(self, player: Player):
 
+
+    def create_player(self, player: Player):
+        """
+        Validates the Player object and, if successful, passes it to the DL 
+        for creation/storage.
+        """
         validate_errors = self.validate_player(player)
 
         if validate_errors:
@@ -17,29 +26,36 @@ class PlayerLL:
         return "Success"
 
 
-    def edit_player(id: int) -> id: # id, phone and location
-        pass 
+    def check_player_team(player: Player):
+        """
+        Checks if the provided team name already exists in the system.
+        NOTE: This assumes DLWrapper.check_if_team_exists is implemented 
+              to perform a check against stored data.
+        """
+        team_str = player.team
 
-    self.handle = handle
-    self.id = id
-    self.captain = captain
-    self.team = team
+        if DLWrapper.check_if_team_exists(team_str):
+            print("Team does not exists")
 
-    # def check_player_team(player: Player):
-    #     team_str = player.team
-
-    #     if DLWrapper.
-    #TODO
-
+    
     def check_player_handle(player: Player):
+        """
+        Checks if the player's unique handle already exists in the system.
+        NOTE: This assumes DLWrapper.check_if_handle_exists is implemented.
+        """
         handle_str = player.handle
 
+        if DLWrapper.check_if_handle_exists(handle_str):
+            print("Handle does not exists")
         
 
-
-
-
     def check_player_address(player: Player):
+        """
+        Validates the player's address format.
+        - Must not be empty.
+        - Must contain at least one digit (for house/street number).
+        - Must not contain consecutive spaces.
+        """
         address_str = player.address.strip()
 
         if not address_str:
@@ -55,6 +71,11 @@ class PlayerLL:
 
 
     def check_player_dob(player: Player): 
+        """
+        Validates the player's Date of Birth (DOB).
+        - Must be in the exact YYYY-MM-DD format.
+        - Must be a valid date (e.g., no Feb 30th).
+        """
         dob_str  = player.dob.strip()
 
         try:
@@ -67,6 +88,16 @@ class PlayerLL:
 
 
     def check_player_name(player: Player):
+        """
+        Validates the player's full name.
+        - Must not be empty.
+        - Must contain only letters and spaces.
+        - Must not already exist in the data layer.
+        - Must be between 2 and 60 characters long.
+        - Must not contain consecutive spaces.
+        - Must be capitalized correctly (Title case).
+        - Must have between 2 and 5 parts (first name, last name, etc.).
+        """
         raw_name = player.name
         stripname = raw_name.strip()
         name_parts = stripname.split()
@@ -93,23 +124,41 @@ class PlayerLL:
             return "Not valid" 
         
         return True
-        
+
+
     def check_player_phone(player: Player):
-        phone = player.phone
+        """
+        Validates the player's phone number format.
+        - Must not be empty.
+        - Must be exactly 8 characters long.
+        - Must contain a hyphen ('-') specifically at the 4th position.
+        - All non-hyphen characters must be digits.
+        - Example 444-4444
+        """
+        phone_str = player.phone
 
-        if not phone:
+        if not phone_str:
             return "Not valid"
 
-        if len(phone) != 8:
+        if len(phone_str) != 8:
             return "Not valid"
 
-        if "-" not in phone:
+        if phone_str[3] != "-":
             return "Not valid"
         
+        part1 = phone_str[:3]
+        part2 = phone_str[4:]
+
+        if not (part1.isdigit() and part2.isdigit()):
+            return "Not valid"
+
         return True
 
-    
+
     def check_player_email(player: Player):
+        """
+        Validates the player's email address using a series of specific checks.
+        """
         email = player.email
         lenemail = len(email)
 
@@ -145,44 +194,61 @@ class PlayerLL:
             return "Top-level-domain is missing."
         
         return True
-        
-            
+
 
     def validate_player(self, player: Player) -> None:
         """
-        Validates a player object.
-        Returns the player object if valid.
-        Returns a LIST of error strings if invalid.
+        Aggregates all individual validation checks.
+        Returns a LIST of error strings if any check fails, or None if the player is valid.
         """
-        errors = [] # A list to hold all error messages
+        errors_list = [] # A list to hold all error messages
 
         check_name = PlayerLL.check_player_name(player)
         check_email = PlayerLL.check_player_email(player)
         check_phone = PlayerLL.check_player_phone(player)
         check_dob = PlayerLL.check_player_dob(player)
         check_address = PlayerLL.check_player_address(player)
-
+        check_handle = PlayerLL.check_player_handle(player)
+        check_team = PlayerLL.check_player_team(player)
 
         if check_name is not True:
-            errors.append(f"Name : {check_name}")
+            errors_list.append(f"Name : {check_name}")
 
         if check_email is not True:
-            errors.append(f"Email : {check_email}")
+            errors_list.append(f"Email : {check_email}")
         
         if check_phone is not True:
-            errors.append(f"Phone : {check_phone}")
+            errors_list.append(f"Phone : {check_phone}")
                 
         if check_dob is not True:
-             errors.append(f"DOB : {check_dob}")
+             errors_list.append(f"DOB : {check_dob}")
 
         if check_address is not True:
-            errors.append(f"Address: {check_address} ")
+            errors_list.append(f"Address: {check_address} ")
 
-        # If the errors list is not empty, return it
-        if errors:
-            return errors
+        if check_handle is not True:
+            errors_list.append(f"Handle : {check_handle}")
+
+        if check_team is not True:
+            errors_list.append(f"Team : {check_team}")
+
+        # If the errors_list is not empty, return it
+        if errors_list:
+            return errors_list
         
         # Otherwise, all checks passed
         return None
 
          
+    def edit_player(player: Player):
+        id = player.id
+        phone_str = player.phone
+        address_str = player.address
+        email_str = player.email
+        handle = player.handle 
+
+    
+    
+    
+    
+    
