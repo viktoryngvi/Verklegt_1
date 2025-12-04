@@ -33,7 +33,7 @@ class PlayerLL:
         if not raw_name.replace(" ","").isalpha():
             return "Not allow"
 
-        if raw_name in DLWrapper.check_if_playerexists:
+        if DLWrapper.check_if_player_exists(raw_name):
              return "Already in Data" 
 
         if len(raw_name) < 2 or len(raw_name) > 60:
