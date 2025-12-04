@@ -3,7 +3,7 @@ from csv import DictReader
 
 # player = input("insláðu nýjan player: ")
 class Player_IO(Player):
-    def __init__(self, name, date_of_birth, address, phone_number, email, link, handle, team):
+    def __init__(self):
         file_path = "data/player_info.csv"
         self.file_path = file_path
 

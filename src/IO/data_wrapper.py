@@ -9,8 +9,7 @@ class DLWrapper:
 
     def create_player(self, player : Player_IO):
          return self.playerio.create_player(player)
-    
-    def check_if_playerexists(self, player : Player_IO):
+    def check_if_player_exists(self, player : Player_IO):
         return self.playerio.check_if_player_exists(player)
     
     def edit_player_info(self, player : Player_IO):
