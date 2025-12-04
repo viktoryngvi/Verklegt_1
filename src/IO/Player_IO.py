@@ -27,9 +27,11 @@ class Player_IO(Player):
                 # checkar hverja línu og skoðar hvort það er "name" sem passar við inslegið nafn
 
     def edit_player_info(self):
-        all_players
+        if not self.check_if_player_exists():
+            with open (self.file_path, "r", encoding="utf-8") as player_file:
+                csv_reader = DictReader(player_file)
 
-        pass  #TODO
+          
 
     def load_all_player_short_info(self):
         with open (self.file_path, "r", encoding="utf-8") as player_file:
@@ -42,10 +44,12 @@ class Player_IO(Player):
         return short_list
     #býr til lista af dicts af id, name og handle hjá öllum players
 
-    def load_all_info_all_players(self):
-        with open ("data/player_info.csv", "r", encoding="utf-8") as player_file:
+    def load_all_player_info(self):
+        with open (self.file_path, "r", encoding="utf-8") as player_file:
             csv_reader = DictReader(player_file)
             player_list: list[dict[str, any]] = []
             for line in csv_reader:
                 player_list.append(line)
+            if len(player_list) == 0:
+                return "No players exists"
         return player_list
