@@ -1,4 +1,4 @@
-from IO.data_wrapper import DLWrapper
+# from IO.data_wrapper import DLWrapper
 from LL.playerLL import PlayerLL
 from models.player import Player
 from models.tournament import Tournament
