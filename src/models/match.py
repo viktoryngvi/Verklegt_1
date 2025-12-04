@@ -9,3 +9,4 @@ class Match:
         self.result_score = result_score
         self.schedule_time = schedule_time
         self.server_id = server_id
+        

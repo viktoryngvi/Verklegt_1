@@ -9,24 +9,21 @@ class LLWrapper:
       self.dl_wrapper = DLWrapper()
       self.player_ll = PlayerLL(self.dl_wrapper)
 
-      
    def create_player(self, player: Player):
       return self.player_ll.create_player(player)
 
-   def create_tournament():
+   def create_tournament(self):
       pass
    
    def generate_schedule(tournament: Tournament, event: Event):
       pass
    
-   def enter_match_result():
+   def enter_match_result(self):
       pass
    
-   def change_team_captain():
+   def change_team_captain(self):
       pass
-   
 
-   
    def assign_point():
       pass
    
