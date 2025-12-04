@@ -105,3 +105,5 @@ class CaptainUI:
         print("TODO")
     def view_schedule(self): 
         print("TODO")
+    def create_team(self): 
+        print("TODO")
