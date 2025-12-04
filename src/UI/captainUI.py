@@ -65,6 +65,7 @@ class CaptainUI:
         dob = input("DOB (YYYY-MM-DD): ").strip()
         email = input("Email: ").strip()
         handle = input("Handle (unique): ").strip()
+        team = None  # Captains do not assign teams when creating players
 
         # ID must not be asked by UI — let LL/DL handle it.
         # So we send id=None
@@ -75,7 +76,8 @@ class CaptainUI:
             dob=dob,
             email=email,
             id=None,
-            handle=handle
+            handle=handle,
+            team=None,
         )
 
         # Call LL through wrapper
