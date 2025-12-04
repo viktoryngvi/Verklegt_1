@@ -247,6 +247,8 @@ class PlayerLL:
         email_str = player.email
         handle = player.handle 
 
+        
+
     
     
     
