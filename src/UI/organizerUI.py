@@ -14,17 +14,34 @@ class OrganizerUI:
     def show_menu(self) -> str:
         """Show the organizer menu and return the next menu state."""
 
-        print("\n==== Organizer Menu ====")
-        print("1. Create tournament")
-        print("2. Generate schedule")
-        print("3. Enter match result")
-        print("4. Change team captain")
-        print("5. View statistics")
-        print("6. View schedule")
-        print("b. Back to main menu")
+        self.menu_ui.print_header("ORGANIZER MENU")
+        print("                ║                                                                        ║")
+        print("                ║  Tournament Management:                                                ║")
+        print("                ║  [1] Create tournament                                                 ║")
+        print("                ║  [2] Generate schedule                                                 ║")
+        print("                ║  [3] Enter match result                                                ║")
+        print("                ║                                                                        ║")
+        print("                ║  Team Management:                                                      ║")
+        print("                ║  [4] Change team captain                                               ║")
+        print("                ║                                                                        ║")
+        print("                ║  Reports:                                                              ║")
+        print("                ║  [5] View statistics                                                   ║")
+        print("                ║  [6] View schedule                                                     ║")
+        print("                ║                                                                        ║")
+        print("                ║  [B] Back to main menu                                                 ║")
+        print("                ║                                                                        ║")
+        print("                ╠════════════════════════════════════════════════════════════════════════╣")
+        print("                ║  ➤ Select an option: ", end="")
 
-        # Use the shared menu input validation function
-        choice = self.menu_ui._prompt_choice(["1", "2", "3", "4", "5", "6", "b"])
+        choice = input().lower()
+        print("                ╠════════════════════════════════════════════════════════════════════════╣")
+        print("                ║                    © Reykjavík University - 2025                       ║")
+        print("                ╚════════════════════════════════════════════════════════════════════════╝")
+        
+        if choice not in ["1", "2", "3", "4", "5", "6", "b"]:
+            print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, 6, B")
+            input("Press Enter to continue...")
+            return self.show_menu()
 
         # Based on the choice, call a function and return the next menu state
         if choice == "1":
