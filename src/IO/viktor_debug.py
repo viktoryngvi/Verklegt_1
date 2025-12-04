@@ -19,9 +19,15 @@ from csv import DictReader
 # print(player_list)
 
 
-with open ("data/teams.csv", "r", encoding="utf-8") as teams_file:
-    teams_list = []
-    for line in teams_file:
-        teams_list.append(line.split(",")[0])
-print(teams_list)
-      
+with open ("data/player_info.csv", "r", encoding="utf-8") as player_file:
+    csv_reader = DictReader(player_file)
+    player_list = list(csv_reader)
+
+for player in player_list:
+    #breyta því sem á að breyta
+    pass
+     
+with open ("data/player_info", "w", encoding="utf-8") as player_file:
+    pass
+
+print(player)
