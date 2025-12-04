@@ -19,15 +19,24 @@ from csv import DictReader
 # print(player_list)
 
 
-with open ("data/player_info.csv", "r", encoding="utf-8") as player_file:
-    csv_reader = DictReader(player_file)
-    player_list = list(csv_reader)
+# with open ("data/player_info.csv", "r", encoding="utf-8") as player_file:
+#     csv_reader = DictReader(player_file)
+#     player_list = list(csv_reader)
 
-for player in player_list:
-    #breyta því sem á að breyta
-    pass
+# for player in player_list:
+#     #breyta því sem á að breyta
+#     pass
      
-with open ("data/player_info", "w", encoding="utf-8") as player_file:
-    pass
+# with open ("data/player_info", "w", encoding="utf-8") as player_file:
+#     pass
 
-print(player)
+# print(player)
+
+
+
+
+
+with open ("data/player_info.csv", "r", encoding="utf-8") as player_file:
+    list_of_dicts = list(DictReader(player_file))
+    last_id = int(list_of_dicts[-1]["id"])
+    print(last_id)

@@ -6,16 +6,17 @@ class Player_IO(Player):
     def __init__(self):
         self.file_path = "data/player_info.csv"
 
-    def create_player(player, self):
+    def create_player(self, player: Player):
         if not self.check_if_player_exists(player):
             with open(self.file_path, "a", encoding="utf-8") as player_file:
-                player_file.write(f"{player.id},{player.name},{player.phone},{player.address},{player.dob},{player.email},{player.handle},{player.team}{player.captain}\n")
+                id = self.check_last_id()
+                player_file.write(f"{id},{player.name},{player.phone},{player.address},{player.dob},{player.email},{player.handle},{player.team},{player.captain}\n")
             return "Player created successfully"
         else:
             return "Player already exists"
 # skrifar upplýsingarnar um nýjann player inn í player_creation skjalið
 
-    def check_if_player_exists(player, self):
+    def check_if_player_exists(self, player: Player):
         with open(self.file_path, "r") as player_file:
             for line in player_file:
                 if line.split(",")[1] == (player.name):
@@ -50,6 +51,17 @@ class Player_IO(Player):
             if len(player_list) == 0:
                 return "No players exists"
         return player_list
+    
+
+    def check_if_handle_exists():
+        return True or False
+    
+    def check_last_id(self):
+        with open (self.file_path, "r", encoding="utf-8") as player_file:
+            list_of_dicts = list(DictReader(player_file))
+            last_id = int(list_of_dicts[-1]["id"])
+        return last_id
+
     
 
 # Viktor Yngvi Ísaksson
