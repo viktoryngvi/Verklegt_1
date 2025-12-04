@@ -70,43 +70,127 @@ class OrganizerUI:
     # CREATE TOURNAMENT
     # ================================
     def create_tournament(self) -> None:
-        print("\n==== Create Tournament ====")
+        """Create a new tournament by collecting info and sending it to LL."""
 
-        name = input("Tournament name: ").strip()
-        start_date = input("Start date (YYYY-MM-DD): ").strip()
-        end_date = input("End date (YYYY-MM-DD): ").strip()
-        teams_raw = input("Teams (comma-separated): ").strip()
+        self.menu_ui.print_header("CREATE TOURNAMENT")
+        print("Please enter the following details to create a new tournament.\n")
 
-        teams = [t.strip() for t in teams_raw.split(",") if t.strip()]
+        # 1. Collect raw input (UI only)
+        name = input("Tournament Name: ").strip()
+        location = input("Location: ").strip()
+        start_date = input("Start Date (YYYY-MM-DD): ").strip()
+        end_date = input("End Date (YYYY-MM-DD): ").strip()
 
-        if not name:
-            print("Name is required. Returning to menu.")
-            return
+        print("\nTournament Type:")
+        print("  [1] Single Elimination")
+        print("  [2] Double Elimination")
+        type_choice = input("Select type (1 or 2): ").strip()
 
-        # UI-only handoff. If LL is ready, try to call it; otherwise print a placeholder.
-        try:
-            if hasattr(self.ll, "create_tournament"):
-                result = self.ll.create_tournament(name=name, start_date=start_date, end_date=end_date, teams=teams)
-                if isinstance(result, list):
-                    print("Tournament could not be created. Errors:")
-                    for err in result:
-                        print(f" - {err}")
-                else:
-                    print("Tournament creation submitted to LL.")
-            else:
-                print("LL not implemented yet. Collected data:")
-                print(f" - name: {name}")
-                print(f" - start_date: {start_date}")
-                print(f" - end_date: {end_date}")
-                print(f" - teams: {', '.join(teams) if teams else '(none)'}")
-        except Exception as e:
-            print(f"Unexpected error handing off to LL: {e}")
+        print("\nContact Person Information:")
+        contact_name = input("Full Name: ").strip()
+        contact_email = input("Email: ").strip()
+        contact_phone = input("Phone: ").strip()
+
+        # 2. Forward everything directly to LL 
+        result = self.ll.create_tournament(
+            name=name,
+            location=location,
+            start_date=start_date,
+            end_date=end_date,
+            type_choice=type_choice,          
+            contact_name=contact_name,
+            contact_email=contact_email,
+            contact_phone=contact_phone,
+        )
+
+        # 3. Print whatever LL returns
+        print("\n" + str(result))
+        input("Press Enter to continue...")
+
+
 
     def generate_schedule(self) -> None:
-        print("TODO: Schedule generation will be handled later by LL.")
+    
+        self.menu_ui.print_header("GENERATE TOURNAMENT SCHEDULE")
+        print("Choose a tournament to generate a schedule for:\n")
+
+        tournaments = self.ll.get_tournament_list()
+
+        print("Available Tournaments:")
+        for i, t in enumerate(tournaments, start=1):
+            print(f"  [{i}] {t}")
+        print("")
+
+        choice_idx = int(input("Select Tournament by number: ").strip()) - 1
+        tournament_name = tournaments[choice_idx]
+
+        print("\nSelect schedule type:")
+        print("  [1] Single Elimination")
+        print("  [2] Double Elimination")
+
+        schedule_choice = input("Select type (1 or 2): ").strip()
+
+        # UI does NOT decide validity — just sends raw input to LL
+        result = self.ll.generate_schedule(
+            tournament_name=tournament_name,
+            schedule_type=schedule_choice
+        )
+
+        print("\n" + str(result))
+        input("\nPress Enter to continue...")
+
+
+
 
     def enter_match_result(self) -> None:
-        print("TODO: Match result entry will be implemented later.")
+        """UI for entering a match result. """
+
+        self.menu_ui.print_header("ENTER MATCH RESULT")
+        print("Enter the match details below:\n")
+
+        # 1. Get tournaments from LL (LL owns data/validation)
+        tournaments = self.ll.get_tournament_list()
+
+        print("Available Tournaments:")
+        for i, t in enumerate(tournaments, start=1):
+            print(f"  [{i}] {t}")
+        print("")
+
+        # 2. User selects tournament (UI index conversion only)
+        tournament_idx = int(input("Select Tournament by number: ").strip()) - 1
+        tournament_name = tournaments[tournament_idx]
+
+        # 3. Ask LL for unfinished matches (LL decides format)
+        matches = self.ll.get_unfinished_matches(tournament_name)
+
+        print("\nUnfinished Matches:")
+        for i, match in enumerate(matches, start=1):
+            print(f"  [{i}] {match}")
+        print("")
+
+        # 4. User selects match, UI does not interpret match structure
+        match_idx = int(input("Select Match by number: ").strip()) - 1
+        selected_match = matches[match_idx] # get selected match
+
+        # 5. Read raw scores (simple int conversion allowed)
+        team_a_score = int(input("Enter Team A Score: ").strip())
+        team_b_score = int(input("Enter Team B Score: ").strip())
+
+        # 6. Forward everything directly to LL
+        result = self.ll.enter_match_result(
+            selected_match,
+            team_a_score,
+            team_b_score,
+        )
+
+        # 7. Print LL response
+        print("\n" + str(result))
+        input("Press Enter to continue...")
+
+        
+        
+
+
 
     def change_team_captain(self) -> None:
         print("TODO: Captain change function will be added later.")
@@ -116,3 +200,8 @@ class OrganizerUI:
 
     def view_schedule(self) -> None:
         print("TODO: Schedule viewing will be added later.")
+    
+    def create_team(self) -> None:
+        print("TODO: Team creation will be implemented later.")
+
+
