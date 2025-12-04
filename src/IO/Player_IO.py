@@ -17,7 +17,7 @@ class Player_IO(Player):
 # skrifar upplýsingarnar um nýjann player inn í player_creation skjalið
 
     def check_if_player_exists(self, player: Player):
-        with open(self.file_path, "r") as player_file:
+        with open(self.file_path, "r", encoding="utf-8") as player_file:
             for line in player_file:
                 if line.split(",")[1] == (player.name):
                     return True
@@ -25,7 +25,7 @@ class Player_IO(Player):
                 # checkar hverja línu og skoðar hvort það er "name" sem passar við inslegið nafn
 
     def edit_player_info(self):
-        if not self.check_if_player_exists():
+        if not self.check_if_player_exists(self):
             with open (self.file_path, "r", encoding="utf-8") as player_file:
                 csv_reader = DictReader(player_file)
 
