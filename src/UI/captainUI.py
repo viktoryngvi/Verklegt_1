@@ -3,20 +3,38 @@ from models.player import Player
 
 
 class CaptainUI:
-    def __init__(self, ll, menu_ui):
-        self.ll = ll
+    def __init__(self, ll_wrapper, menu_ui):
+        self.ll = ll_wrapper
         self.menu_ui = menu_ui
 
     def show_menu(self) -> str:
-        print("\n==== Captain Menu ====")
-        print("1. Create player")
-        print("2. Edit player info")
-        print("3. View team")
-        print("4. Change team captain")
-        print("5. View schedule")
-        print("b. Back to main menu")
+        self.menu_ui.print_header("CAPTAIN MENU")
+        print("                ║                                                                        ║")
+        print("                ║  Player Management:                                                    ║")
+        print("                ║  [1] Create player                                                     ║")
+        print("                ║  [2] Edit player info                                                  ║")
+        print("                ║                                                                        ║")
+        print("                ║  Team Management:                                                      ║")
+        print("                ║  [3] View team                                                         ║")
+        print("                ║  [4] Change team captain                                               ║")
+        print("                ║                                                                        ║")
+        print("                ║  Schedule:                                                             ║")
+        print("                ║  [5] View schedule                                                     ║")
+        print("                ║                                                                        ║")
+        print("                ║  [B] Back to main menu                                                 ║")
+        print("                ║                                                                        ║")
+        print("                ╠════════════════════════════════════════════════════════════════════════╣")
+        print("                ║  ➤ Select an option: ", end="")
 
-        choice = self.menu_ui._prompt_choice(["1", "2", "3", "4", "5", "b"])
+        choice = input().lower()
+        print("                ╠════════════════════════════════════════════════════════════════════════╣")
+        print("                ║                    © Reykjavík University - 2025                       ║")
+        print("                ╚════════════════════════════════════════════════════════════════════════╝")
+        
+        if choice not in ["1", "2", "3", "4", "5", "b"]:
+            print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, B")
+            input("Press Enter to continue...")
+            return self.show_menu()
 
         if choice == "1": 
             self.create_player(); 

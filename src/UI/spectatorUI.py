@@ -4,14 +4,28 @@ class SpectatorUI:
         self.menu_ui = menu_ui
 
     def show_menu(self) -> str:
-        print("\n==== Spectator Menu ====")
-        print("1. View schedule")
-        print("2. View teams")
-        print("3. View players")
-        print("4. View clubs")
-        print("b. Back to main menu")
+        self.menu_ui.print_header("SPECTATOR MENU")
+        print("                ║                                                                        ║")
+        print("                ║  Browse Tournament Information:                                        ║")
+        print("                ║  [1] View schedule                                                     ║")
+        print("                ║  [2] View teams                                                        ║")
+        print("                ║  [3] View players                                                      ║")
+        print("                ║  [4] View clubs                                                        ║")
+        print("                ║                                                                        ║")
+        print("                ║  [B] Back to main menu                                                 ║")
+        print("                ║                                                                        ║")
+        print("                ╠════════════════════════════════════════════════════════════════════════╣")
+        print("                ║  ➤ Select an option: ", end="")
 
-        choice = self.menu_ui._prompt_choice(["1", "2", "3", "4", "b"])
+        choice = input().lower()
+        print("                ╠════════════════════════════════════════════════════════════════════════╣")
+        print("                ║                    © Reykjavík University - 2025                       ║")
+        print("                ╚════════════════════════════════════════════════════════════════════════╝")
+        
+        if choice not in ["1", "2", "3", "4", "b"]:
+            print(f"Invalid choice. Valid options: 1, 2, 3, 4, B")
+            input("Press Enter to continue...")
+            return self.show_menu()
 
         if choice == "1": 
             self.view_schedule(); 
