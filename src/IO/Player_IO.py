@@ -1,52 +1,55 @@
-import os
 from models.player import Player
+from csv import DictReader
 
+# player = input("insláðu nýjan player: ")
+class Player_IO(Player):
+    def __init__(self, name, date_of_birth, address, phone_number, email, link, handle, team):
+        file_path = "data/player_info.csv"
+        self.file_path = file_path
 
-class PlayerIO:
-    def __init__(self, file_path: str | None = None):
-        # Geymum slóðina á player_info.csv
-        # Ef þú keyrir main.py úr root, er 'data/player_info.csv' nóg
-        self.file_path = file_path or "data/player_info.csv"
-
-    def _player_exists(self, name: str) -> bool:
-        """Athugar hvort leikmaður með þessu nafni sé til í skránni."""
-        if not os.path.exists(self.file_path):
-            return False
-
-        with open(self.file_path, "r", encoding="utf-8") as f:
-            for line in f:
-                # Sleppum hauslínu ef hún er til
-                if line.startswith("name,") or line.strip() == "":
-                    continue
-                if line.split(",")[0] == name:
-                    return True
-        return False
-
-    def create_player(self, player: Player) -> str:
-        """Bætir leikmanni við CSV ef hann er ekki til nú þegar."""
-        # Athugum hvort hann sé til (þú getur líka tékkað á handle í stað name)
-        if self._player_exists(player.name):
+    def create_player(self):
+        if not self.check_if_player_exists():
+            with open(self.file_path, "a", encoding="utf-8") as player_file:
+                player_file.write(f"{self.id},{self.name},{self.phone},{self.address},{self.dob},{self.email},{self.handle},{self.team}{self.captain}\n")
+            return "Player created successfully"
+        else:
             return "Player already exists"
+# skrifar upplýsingarnar um nýjann player inn í player_creation skjalið
 
-        # Ef skráin er ekki til, búum til header fyrst
-        file_exists = os.path.exists(self.file_path)
+    def check_if_player_exists(self):
+        with open(self.file_path, "r") as player_file:
+            for line in player_file:
+                if line.split(",")[1] == (self.name):
+                    return True
+                # if self.name in line.split(",")[0]:
 
-        with open(self.file_path, "a", encoding="utf-8") as f:
-            if not file_exists:
-                f.write("id,name,phone,address,dob,email,handle,team,captain\n")
+            return False
+                # checkar hverja línu og skoðar hvort það er "name" sem passar við inslegið nafn
 
-            f.write(
-                f"{player.id},"
-                f"{player.name},"
-                f"{player.phone},"
-                f"{player.address},"
-                f"{player.dob},"
-                f"{player.email},"
-                f"{player.handle},"
-                f"{getattr(player, 'team', '')},"
-                f"{getattr(player, 'captain', False)}\n"
-            )
+    def edit_player_info(self):
+        if not self.check_if_player_exists():
+            with open (self.file_path, "r", encoding="utf-8") as player_file:
+                csv_reader = DictReader(player_file)
 
-        return "Player created successfully"
+          
 
+    def load_all_player_short_info(self):
+        with open (self.file_path, "r", encoding="utf-8") as player_file:
+            csv_reader = DictReader(player_file)
+            player_list: list[dict[str, any]] = []
+            short_list = []
+            for line in csv_reader:
+                filtered_player = {"id": line["id"], "name": line["name"], "handle": line["handle"]}
+                short_list.append(filtered_player)
+        return short_list
+    #býr til lista af dicts af id, name og handle hjá öllum players
 
+    def load_all_player_info(self):
+        with open (self.file_path, "r", encoding="utf-8") as player_file:
+            csv_reader = DictReader(player_file)
+            player_list: list[dict[str, any]] = []
+            for line in csv_reader:
+                player_list.append(line)
+            if len(player_list) == 0:
+                return "No players exists"
+        return player_list
