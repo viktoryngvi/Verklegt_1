@@ -40,3 +40,12 @@ class DLWrapper:
         Load Event + Matches from CSV (delegated to EventIO)
         """
         return self.eventio.load_event(tournament_name)
+    
+    def check_if_team_exists(self, player : Player_IO):
+        return self
+    
+    def check_if_player_in_team(self, player : Player_IO):
+        return self
+    
+    def check_if_handle_exists(self, player : Player_IO):
+        return self
