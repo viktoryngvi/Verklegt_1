@@ -1,5 +1,5 @@
 from models.player import Player
-import csv
+from csv import DictReader
 
 # player = input("insláðu nýjan player: ")
 class Player_IO(Player):
@@ -19,7 +19,7 @@ class Player_IO(Player):
     def check_if_player_exists(self):
         with open(self.file_path, "r") as player_file:
             for line in player_file:
-                if line.startswith(self.name):
+                if line.split(",")[1] == (self.name):
                     return True
                 # if self.name in line.split(",")[0]:
 
@@ -27,8 +27,25 @@ class Player_IO(Player):
                 # checkar hverja línu og skoðar hvort það er "name" sem passar við inslegið nafn
 
     def edit_player_info(self):
+        all_players
+
         pass  #TODO
 
     def load_all_player_short_info(self):
-        pass
-    #loada bara þa name, id og handle
+        with open (self.file_path, "r", encoding="utf-8") as player_file:
+            csv_reader = DictReader(player_file)
+            player_list: list[dict[str, any]] = []
+            short_list = []
+            for line in csv_reader:
+                filtered_player = {"id": line["id"], "name": line["name"], "handle": line["handle"]}
+                short_list.append(filtered_player)
+        return short_list
+    #býr til lista af dicts af id, name og handle hjá öllum players
+
+    def load_all_info_all_players(self):
+        with open ("data/player_info.csv", "r", encoding="utf-8") as player_file:
+            csv_reader = DictReader(player_file)
+            player_list: list[dict[str, any]] = []
+            for line in csv_reader:
+                player_list.append(line)
+        return player_list
