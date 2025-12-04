@@ -1,3 +1,4 @@
+from datetime import datetime
 from models.player import Player
 from IO.data_wrapper import DLWrapper
 
@@ -16,19 +17,62 @@ class PlayerLL:
         return "Success"
 
 
-
     def edit_player(id: int) -> id: # id, phone and location
         pass 
 
-    # def check_player_dob(player: Player):
-    #     dob = player.dob
-    # TODO 
+    self.handle = handle
+    self.id = id
+    self.captain = captain
+    self.team = team
+
+    # def check_player_team(player: Player):
+    #     team_str = player.team
+
+    #     if DLWrapper.
+    #TODO
+
+    def check_player_handle(player: Player):
+        handle_str = player.handle
+
+        
+
+
+
+
+    def check_player_address(player: Player):
+        address_str = player.address.strip()
+
+        if not address_str:
+            return "Address cannot be empty"
+        
+        if not any(char.isdigit() for char in address_str):
+            return "Address must contain a number"
+        
+        if "  " in address_str:
+            return "Adress cannot contain consecutive spaces"
+        
+        return True
+
+
+    def check_player_dob(player: Player): 
+        dob_str  = player.dob.strip()
+
+        try:
+            birth_date = datetime.strptime(dob_str, "%Y-%m-%d").date()
+        
+        except ValueError:
+            return "DOB must be in the valid YYYY-MM-DD format"
+        
+        return True
+
 
     def check_player_name(player: Player):
         raw_name = player.name
         stripname = raw_name.strip()
         name_parts = stripname.split()
         
+        if not raw_name:
+            return "Not allow"
 
         if not raw_name.replace(" ","").isalpha():
             return "Not allow"
@@ -53,11 +97,14 @@ class PlayerLL:
     def check_player_phone(player: Player):
         phone = player.phone
 
+        if not phone:
+            return "Not valid"
+
         if len(phone) != 8:
-            return "not valid"
+            return "Not valid"
 
         if "-" not in phone:
-            return "not valid"
+            return "Not valid"
         
         return True
 
@@ -112,25 +159,24 @@ class PlayerLL:
         check_name = PlayerLL.check_player_name(player)
         check_email = PlayerLL.check_player_email(player)
         check_phone = PlayerLL.check_player_phone(player)
-        # check_dob = PlayerLL.check_player_dob(player)
-        #TODO 
+        check_dob = PlayerLL.check_player_dob(player)
+        check_address = PlayerLL.check_player_address(player)
 
 
         if check_name is not True:
             errors.append(f"Name : {check_name}")
 
-        
         if check_email is not True:
             errors.append(f"Email : {check_email}")
-
         
         if check_phone is not True:
             errors.append(f"Phone : {check_phone}")
-        
-        
-        # if check_dob is not True:
-        #     errors.append(f"DOB Error: {check_dob}")
-        #TODO
+                
+        if check_dob is not True:
+             errors.append(f"DOB : {check_dob}")
+
+        if check_address is not True:
+            errors.append(f"Address: {check_address} ")
 
         # If the errors list is not empty, return it
         if errors:
