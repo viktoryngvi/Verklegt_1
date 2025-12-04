@@ -240,12 +240,16 @@ class PlayerLL:
         return None
 
          
-    def edit_player(player: Player):
+    def edit_player(player : Player):
         id = player.id
         phone_str = player.phone
         address_str = player.address
         email_str = player.email
         handle = player.handle 
+        #TODO
+
+
+        
 
         
 
