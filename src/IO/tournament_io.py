@@ -19,7 +19,7 @@ class TournamentIO:
                 writer.writerow([
                     "name",
                     "type",
-                    "location",
+                    "venue",
                     "start_date",
                     "end_date",
                     "contact_name",
@@ -45,7 +45,7 @@ class TournamentIO:
             writer.writerow([
                 tournament.name,
                 tournament.type,
-                tournament.location,
+                tournament.venue,
                 tournament.start_date,
                 tournament.end_date,
                 cp.name if cp else "",
