@@ -39,5 +39,11 @@ from csv import DictReader
 
 
 
+def load_all_player_info():
+    """loads all player info in a list of dictionaries"""
+    with open("data/player_info.csv", "r", encoding="utf-8") as player_file:
+        csv_reader = DictReader(player_file)
+        player_list = list(csv_reader)
+    print(player_list)
 
-teams
+load_all_player_info()
