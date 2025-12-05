@@ -12,6 +12,7 @@ class Team_IO(Team):
         
         
 
+    def change_team_captain(self):
     def change_team_captain(self, find_team, new_captain):
         with open(self.file_path, "w", encoding="utf-8") as teams_file:
             csv_reader = DictReader(teams_file)
