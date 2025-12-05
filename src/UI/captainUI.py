@@ -1,4 +1,11 @@
 from models.player import Player
+from UI.input_helper import (
+    get_non_empty_input,
+    get_integer_input,
+    get_choice_input,
+    choose_from_list,
+    get_optional_input,
+)
 
 class CaptainUI:
     def __init__(self, ll_wrapper, menu_ui):
@@ -54,16 +61,18 @@ class CaptainUI:
     
 
     def create_player(self):
-        print("\n==== Create Player ====\n")
+        self.menu_ui.print_header("CREATE PLAYER")
+        print("Please enter the following details to create a new player:")
+        
 
-        # Collect fields from user (UI does only raw input)
-        name = input("Full name: ").strip()
-        phone = input("Phone: ").strip()
-        address = input("Address: ").strip()
-        dob = input("DOB (YYYY-MM-DD): ").strip()
-        email = input("Email: ").strip()
-        handle = input("Handle (unique): ").strip()
-        team = None  # Captains do not assign teams when creating players
+        # Collect fields from user 
+        name = get_non_empty_input("Full name: ").strip()
+        phone = get_non_empty_input("Phone: ").strip()
+        address = get_non_empty_input("Address: ").strip()
+        dob = get_non_empty_input("DOB (YYYY-MM-DD): ").strip()
+        email = get_non_empty_input("Email: ").strip()
+        handle = get_non_empty_input("Handle (unique): ").strip()
+        
 
         # ID must not be asked by UI — let LL/DL handle it.
         # So we send id=None
@@ -78,30 +87,138 @@ class CaptainUI:
             team=None,
         )
 
-        # Call LL through wrapper
+        # send to LL through wrapper
         result = self.ll.create_player(player)
-        try:
-            pass
-        except Exception as e:
-            print(f"Unexpected error creating player: {e}")
+
+        print("")  # spacing
+
+        # LIST => validation errors, STRING => status ("Success" or error text)
+        if isinstance(result, list):
+            print("Player could not be created:")
+            for err in result:
+                print(f" - {err}")
+        elif isinstance(result, str):
+            # Should be "Success" when all validations pass
+            print(result)
+
+        input("Press Enter to continue...")
+        return "CAPTAIN_MENU"
+
+    def edit_player_info(self):
+        self.menu_ui.print_header("EDIT PLAYER INFO")
+
+        print("Select a team you want to edit a player from:")
+        teams = self.ll.get_teams()
+        if not teams:
+            print("No teams found.")
+            input("Press Enter to continue...")
             return "CAPTAIN_MENU"
 
-        # LL returns list of errors OR a success string
-        if isinstance(result, list):  # validation failed
-            print("Player could not be created. Errors:")
+        select_team = choose_from_list("Enter the number of the team: ", teams)
+
+        players = self.ll.get_players_in_team(select_team)
+        if not players:
+            print("No players found in this team.")
+            input("Press Enter to continue...")
+            return "CAPTAIN_MENU"
+
+        print("Select a player to edit:")
+        select_player = choose_from_list("Enter the number of the player: ", players)
+
+        print(f"You selected to edit player: {select_player} from team: {select_team}")
+
+        # Get current player info from LL
+        player = self.ll.get_player_by_name(select_player)
+
+        print("Enter new details (leave blank to keep current value):")
+        new_phone = get_optional_input(f"Phone [{player.phone}]: ")
+        new_address = get_optional_input(f"Address [{player.address}]: ")
+        new_dob = get_optional_input(f"DOB [{player.dob}]: ")
+        new_email = get_optional_input(f"Email [{player.email}]: ")
+
+        # UI forwards raw values to LL
+        result = self.ll.update_player_info(
+            player_name=select_player,
+            new_phone=new_phone,
+            new_address=new_address,
+            new_dob=new_dob,
+            new_email=new_email,
+        )
+
+        print("")  
+
+        # LIST = validation errors, STRING = status
+        if isinstance(result, list):
+            print("Player info could not be updated:")
             for err in result:
                 print(f" - {err}")
         else:
-            print("Player created successfully!")
+            print(result)
 
+        input("Press Enter to continue...")
         return "CAPTAIN_MENU"
 
-    def edit_player_info(self): 
-        print("TODO")
     def view_team(self): 
-        print("TODO")
+        self.menu_ui.print_header("VIEW TEAM")
+        print("Select the team to view: ")
+
+        teams = self.ll.get_teams()
+        if not teams:
+            print("No teams found.")
+            input("Press Enter to continue...")
+            return "CAPTAIN_MENU"
+        select_team = choose_from_list("Enter the number of the team: ", teams)
+
+        print(f"You selected to view team: {select_team}")
+        players = self.ll.get_players_in_team(select_team)
+        if not players:
+            print("No players found in this team.")
+        else:
+            print(f"Players in team {select_team}:")
+            for player in players:
+                print(f" - {player}")
+        input("Press Enter to continue...")
+        return "CAPTAIN_MENU"
+    
     def change_team_captain(self): 
-        print("TODO")
+        self.menu_ui.print_header("CHANGE TEAM CAPTAIN")
+        print("What team do you want to change the captain for? ")
+        # get the list of teams from LL
+        teams = self.ll.get_teams()
+
+        # check if there are any teams
+        if not teams:
+            print("No teams found.")
+            input("Press Enter to continue...")
+            return "CAPTAIN_MENU"
+        
+        # let user select a team
+        select_team = choose_from_list("Enter the number of the team: ", teams)
+
+        # get players in that team
+        players = self.ll.get_players_in_team(select_team)
+        # check if there are any players
+        if not players:
+            print("No players found in this team.")
+            input("Press Enter to continue...")
+            return "CAPTAIN_MENU"
+        
+        print("Select the new captain from the team players: ")
+        # let user select a player to be the new captain
+        select_player = choose_from_list("Enter the number of the player: ", players)
+
+        print(f"You selected to change the captain of team: {select_team} to player: {select_player}")
+        # send to LL to update
+        result = self.ll.update_team_captain(
+            team_name=select_team,
+            new_captain_name=select_player,
+        )
+        
+        print("")
+        print(result)
+        input("Press Enter to continue...")
+        return "CAPTAIN_MENU"
+    
     def view_schedule(self): 
         print("TODO")
     def create_team(self): 
