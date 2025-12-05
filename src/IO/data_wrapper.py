@@ -1,13 +1,16 @@
+
 import csv
 import os
 from IO.Player_IO import Player_IO
-from IO.event_io import EventIO   # <-- ADD THIS
+from IO.event_io import EventIO
+from IO.tournament_io import TournamentIO
+from models.tournament import Tournament
 
 class DLWrapper:
     def __init__(self):
         self.playerio = Player_IO()
         self.eventio = EventIO()
-        # self.tournamentio = TournamentIO()   # <--- NEW
+        # self.tournamentio = TournamentIO()
 
     # -------------------------
     # Existing Player Methods
@@ -38,7 +41,7 @@ class DLWrapper:
     def check_if_handle_exists(self, player : Player_IO):
         return self.playerio.check_if_handle_exists(player)
 
-    # (your TODO team-related stubs can stay as-is)
+
 
     def check_if_team_exists(self, player : Player_IO):
         return self
@@ -59,3 +62,11 @@ class DLWrapper:
     def load_event(self, tournament_name):
         """Load Event + Matches from CSV (delegated to EventIO)."""
         return self.eventio.load_event(tournament_name)
+
+    # ---- TOURNAMENT METHODS ----
+    def create_tournament(self, tournament: Tournament):
+        return self._tournament_io.create_tournament(tournament)
+
+    def load_all_tournaments(self):
+        return self._tournament_io.load_all_tournaments()
+    
