@@ -3,7 +3,7 @@ from models.player import Player
 
 
 class CaptainUI:
-    def __init__(self, ll_wrapper:LLWrapper, menu_ui):
+    def __init__(self, ll_wrapper, menu_ui):
         self.ll = ll_wrapper
         self.menu_ui = menu_ui
 
