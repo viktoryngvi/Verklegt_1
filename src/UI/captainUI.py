@@ -1,7 +1,5 @@
 from models.player import Player
 
-
-
 class CaptainUI:
     def __init__(self, ll_wrapper, menu_ui):
         self.ll = ll_wrapper

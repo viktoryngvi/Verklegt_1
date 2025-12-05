@@ -5,7 +5,6 @@ from typing import List, Optional
 from models.tournament import Tournament
 from models.person import Person
 
-
 class TournamentIO:
     """
     Data Layer class for storing and loading Tournament metadata.
