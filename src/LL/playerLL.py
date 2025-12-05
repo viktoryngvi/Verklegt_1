@@ -9,12 +9,16 @@ class PlayerLL:
 
         
     def create_player(self, player: Player):
-
+        """
+        Validates the player data and, if valid, passes it to the Data Layer for storage.
+        """
         validate_errors = self.validate_player(player)
 
         if validate_errors:
+            # If a list of errors is returned, stop and return the errors.
             return validate_errors
         
+        # If valid, pass the player object to the Data Layer for creation.
         self._dl_wrapper.create_player(player)
         return "Success"
 
@@ -27,10 +31,11 @@ class PlayerLL:
         """
         self.team_str = player.team
 
-        if self._dl_wrapper.check_if_team_exists(self.team_str):
-            print("Team does not exists")
+        if not self._dl_wrapper.check_if_team_exists(self.team_str):
+            return "Team does not exists"
+        
+        return True
 
-    
     def check_player_handle(self, player: Player):
         """
         Checks if the player's unique handle already exists in the system.
@@ -39,7 +44,7 @@ class PlayerLL:
         self.handle_str = player.handle
 
         if self._dl_wrapper.check_if_handle_exists(self.handle_str):
-            print("Handle does exists")
+            return "Handle does exists"
         
         return True
 
@@ -66,6 +71,9 @@ class PlayerLL:
 
 
     def check_player_dob(self, player: Player):
+        """
+        Validates the player's Date of Birth (DOB) format and age constraints.
+        """
         self.dob_str = player.dob
 
         try:
@@ -89,6 +97,9 @@ class PlayerLL:
         return True
 
     def check_player_name(self, Player: Player):
+        """
+        Validates the player's full name against length, formatting, and content rules.
+        """
         self.name = Player.name.strip()
         parts = self.name.split()
 
@@ -116,6 +127,9 @@ class PlayerLL:
         return True
 
     def check_player_phone(self, person: Person):
+        """
+        Validates the player's phone number format (8 digits with a dash).
+        """
         self.phone = person.phone
 
         if len(self.phone) != 8:
@@ -135,6 +149,9 @@ class PlayerLL:
 
 
     def check_player_email(self, player: Player):
+        """
+        Validates the player's email format against common structural rules (e.g., @ symbol, dots).
+        """
         self.email = player.email
         self.len_email = len(self.email)
 
@@ -217,7 +234,10 @@ class PlayerLL:
 
          
     def edit_player(self, player_name: str, email: str, phone: str, player_data: Player) -> str:
-        
+        """
+        Handles the business logic for updating an existing player's information.
+        """
+
         # Check if player exists
         existing_player = self._dl_wrapper.check_if_player_exists(player_name)
         if not existing_player:
