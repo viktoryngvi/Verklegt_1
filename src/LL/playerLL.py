@@ -35,8 +35,7 @@ class PlayerLL:
             return validate_errors
         
         # If valid, pass the player object to the Data Layer for creation.
-        self._dl_wrapper.create_player(player)
-        return "Success"
+        return self._dl_wrapper.create_player(player)
 
 
     def check_player_team(self, player: Player):
