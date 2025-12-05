@@ -10,7 +10,7 @@ class DLWrapper:
     def __init__(self):
         self.playerio = Player_IO()
         self.eventio = EventIO()
-        # self.tournamentio = TournamentIO()
+        self.tournamentio = TournamentIO()
 
     # -------------------------
     # Existing Player Methods

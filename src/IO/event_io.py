@@ -3,7 +3,7 @@
 
 from models.match import Match
 
-class Event:
+class EventIO:
     def __init__(self, name: str, game_type: str):
         self.name = name
         self.game_type = game_type

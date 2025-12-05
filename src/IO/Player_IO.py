@@ -13,9 +13,9 @@ class Player_IO(Player):
             with open(self.file_path, "a", encoding="utf-8") as player_file:
                 id = self.check_last_id() + 1
                 player_file.write(f"{id},{player.name},{player.phone},{player.address},{player.dob},{player.email},{player.handle},{player.team},{player.captain}\n")
-                return True
+                return "Player succesfully created"
         else:
-            return False
+            return "Player cannot be created"
 # skrifar upplýsingarnar um nýjann player inn í player_creation skjalið
 
     def check_if_player_exists(self, player: Player):
