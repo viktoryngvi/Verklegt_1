@@ -46,6 +46,9 @@ class PlayerLL:
         """
         self.team_str = player.team
 
+        if self.team_str is None:
+            return True
+
         if not self._dl_wrapper.check_if_team_exists(self.team_str):
             return "Team does not exists"
         
@@ -56,9 +59,8 @@ class PlayerLL:
         Checks if the player's unique handle already exists in the system.
         NOTE: This assumes DLWrapper.check_if_handle_exists is implemented.
         """
-        self.handle_str = player.handle
 
-        if self._dl_wrapper.check_if_handle_exists(self.handle_str):
+        if self._dl_wrapper.check_if_handle_exists(player):
             return "Handle does exists"
         
         return True

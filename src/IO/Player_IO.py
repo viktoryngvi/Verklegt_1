@@ -13,19 +13,21 @@ class Player_IO(Player):
             with open(self.file_path, "a", encoding="utf-8") as player_file:
                 id = self.check_last_id() + 1
                 player_file.write(f"{id},{player.name},{player.phone},{player.address},{player.dob},{player.email},{player.handle},{player.team},{player.captain}\n")
-            return "Player created successfully"
+                return True
         else:
-            return "Player already exists"
+            return False
 # skrifar upplýsingarnar um nýjann player inn í player_creation skjalið
 
-    def check_if_player_exists(self):
+    def check_if_player_exists(self, player: Player):
         """checks if some player in the file has the same name as the inputted name"""
         player_list = self.load_all_player_info()
         list_of_names = []
         for players in player_list:
             names = str(players["name"])
             list_of_names.append(names)
-        return list_of_names
+        if player.name in list_of_names:
+            return True
+        return False
         # checkar hverja línu í file-inum og skoðar hvort það er "name" sem passar við inslegið nafn
 
     def edit_player_info(self):
@@ -54,12 +56,9 @@ class Player_IO(Player):
         player_list = self.load_all_player_info()
         list_of_handels = []
         for players in player_list:
-            handles_of_existing_players = str(players["handle"])
+            handles_of_existing_players = players["handle"]
             list_of_handels.append(handles_of_existing_players)
-        if player.handle in list_of_handels:
-            return True
-        else:
-            return False
+        return player.handle in list_of_handels
         
         
     def check_last_id(self):
