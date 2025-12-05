@@ -1,5 +1,6 @@
 from models.player import Player
 from csv import DictReader
+from models.player import Player
 
 # player = input("insláðu nýjan player: ")
 class Player_IO(Player):
@@ -16,8 +17,8 @@ class Player_IO(Player):
             return "Player already exists"
 # skrifar upplýsingarnar um nýjann player inn í player_creation skjalið
 
-    def check_if_player_exists(self, player: Player):
-        with open(self.file_path, "r", encoding="utf-8") as player_file:
+    def check_if_player_exists(player, self):
+        with open(self.file_path, "r") as player_file:
             for line in player_file:
                 if line.split(",")[1] == (player.name):
                     return True

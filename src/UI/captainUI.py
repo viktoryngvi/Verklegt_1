@@ -1,5 +1,6 @@
 from models.player import Player
-from LL.logical_wraper import LLWrapper
+
+
 
 class CaptainUI:
     def __init__(self, ll_wrapper:LLWrapper, menu_ui):
@@ -55,7 +56,7 @@ class CaptainUI:
     
 
     def create_player(self):
-        print("\n==== Create Player ====")
+        print("\n==== Create Player ====\n")
 
         # Collect fields from user (UI does only raw input)
         name = input("Full name: ").strip()
@@ -63,7 +64,6 @@ class CaptainUI:
         address = input("Address: ").strip()
         dob = input("DOB (YYYY-MM-DD): ").strip()
         email = input("Email: ").strip()
-        id = None
         handle = input("Handle (unique): ").strip()
         team = None  # Captains do not assign teams when creating players
 
@@ -105,4 +105,6 @@ class CaptainUI:
     def change_team_captain(self): 
         print("TODO")
     def view_schedule(self): 
+        print("TODO")
+    def create_team(self): 
         print("TODO")

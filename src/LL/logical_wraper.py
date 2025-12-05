@@ -1,5 +1,6 @@
 from IO.data_wrapper import DLWrapper
 from LL.playerLL import PlayerLL
+from models import tournament
 from models.player import Player
 from models.tournament import Tournament
 from models.event import Event
@@ -9,11 +10,12 @@ class LLWrapper:
       self.dl_wrapper = DLWrapper()
       self.player_ll = PlayerLL(self.dl_wrapper)
 
+      
    def create_player(self, player: Player):
       return self.player_ll.create_player(player)
 
-   def create_tournament(self):
-      pass
+   def create_tournament(self, tournament_name: Tournament):
+      return self.dl_wrapper.create_tournament(tournament)
    
    def generate_schedule(tournament: Tournament, event: Event):
       pass
@@ -23,9 +25,12 @@ class LLWrapper:
    
    def change_team_captain(self):
       pass
+   
 
-   def assign_point():
+   
+   def assign_point(self):
       pass
    
-   def get_statistics(ptc: str): #PTC = Player Team Club
+   def get_statistics(self, ptc: str): #PTC = Player Team Club
       pass
+   
