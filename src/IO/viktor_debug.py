@@ -34,33 +34,50 @@ from csv import DictReader
 
 
 
+# # check_if_player_exists()
+
+# with open("data/player_info.csv", "r", encoding="utf-8") as player_file:
+#     pass
 
 
-# with open ("data/player_info.csv", "r", encoding="utf-8") as player_file:
-#     list_of_dicts = list(DictReader(player_file))
-#     last_id = int(list_of_dicts[-1]["id"])
-#     print(last_id)
+
+#load all player info()
+# def check_if_player_exists():
+#     with open("data/player_info.csv", "r", encoding="utf-8") as player_file:
+#         csv_reader = DictReader(player_file)
+#         player_list = list(csv_reader)
+#     return player_list
 
 
-from models.player import Player
-from csv import DictReader
+# # check_if_player_exists()
+# player_list = check_if_player_exists()
+# list_of_names = []
+# for players in player_list:
+#     names = str(players["name"])
+#     list_of_names.append(names)
 
-file_path = "data/player_info.csv"
 
-def create_player(self, player: Player):
-    if not check_if_player_exists(player):
-        with open(file_path, "a", encoding="utf-8") as player_file:
-            id = 8
-            player_file.write(f"{id},{player.name},{player.phone},{player.address},{player.dob},{player.email},{player.handle},{player.team},{player.captain}\n")
-        return "Player created successfully"
-    else:
-        return "Player already exists"
-# skrifar upplýsingarnar um nýjann player inn í player_creation skjalið
 
-def check_if_player_exists(self, player: Player):
-    with open(file_path, "r", encoding="utf-8") as player_file:
-        for line in player_file:
-            if line.split(",")[1] == (player.name):
-                return True
-        return False
+
+# Edit player function
+def edit_player_function(find_player_id, what_to_edit):
+    with open("data/player_info.csv", "r", encoding="utf-8") as player_file:
+        csv_reader = DictReader(player_file)
+        player_list = list(csv_reader)
+        player_list
+
+    for player in player_list:
+        id = int(player["id"])
+        if find_player_id == id:
+            player_to_edit = player
+    return "player does not exist"
     
+
+    with open ("data/player_info_new_test.csv", "w", encoding="utf-8") as player_file:
+        pl
+
+
+
+find_player_id = int(input("hvaða id viltu finna: "))
+finna_player = edit_player_function(find_player_id)
+print(finna_player)

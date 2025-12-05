@@ -8,51 +8,44 @@ class Player_IO(Player):
         self.file_path = "data/player_info.csv"
 
     def create_player(self, player: Player):
+        """takes all inputted info and created a player, and checks the last players id and taked the next number"""
         if not self.check_if_player_exists(player):
             with open(self.file_path, "a", encoding="utf-8") as player_file:
-                id = self.check_last_id()
+                id = self.check_last_id() + 1
                 player_file.write(f"{id},{player.name},{player.phone},{player.address},{player.dob},{player.email},{player.handle},{player.team},{player.captain}\n")
             return "Player created successfully"
         else:
             return "Player already exists"
 # skrifar upplýsingarnar um nýjann player inn í player_creation skjalið
 
-    def check_if_player_exists(player, self):
-        with open(self.file_path, "r") as player_file:
-            for line in player_file:
-                if line.split(",")[1] == (player.name):
-                    return True
-            return False
-                # checkar hverja línu og skoðar hvort það er "name" sem passar við inslegið nafn
+    def check_if_player_exists(self):
+        """checks if some player in the file has the same name as the inputted name"""
+        player_list = self.load_all_player_info()
+        list_of_names = []
+        for players in player_list:
+            names = str(players["name"])
+            list_of_names.append(names)
+        return list_of_names
+        # checkar hverja línu í file-inum og skoðar hvort það er "name" sem passar við inslegið nafn
 
     def edit_player_info(self):
-        if not self.check_if_player_exists(self):
+        """is supposed to edit a single players info in the csv file"""
+        if not self.check_if_player_exists(selfself):
             with open (self.file_path, "r", encoding="utf-8") as player_file:
                 csv_reader = DictReader(player_file)
 
-          
 
-    def load_all_player_short_info(self):
-        with open (self.file_path, "r", encoding="utf-8") as player_file:
-            csv_reader = DictReader(player_file)
-            player_list: list[dict[str, any]] = []
-            short_list = []
-            for line in csv_reader:
-                filtered_player = {"id": line["id"], "name": line["name"], "handle": line["handle"]}
-                short_list.append(filtered_player)
-        return short_list
-    #býr til lista af dicts af id, name og handle hjá öllum players
+
+
+
 
     def load_all_player_info(self):
-        with open (self.file_path, "r", encoding="utf-8") as player_file:
+        """loads all player info in a list of dictionaries"""
+        with open(self.file_path, "r", encoding="utf-8") as player_file:
             csv_reader = DictReader(player_file)
-            player_list: list[dict[str, any]] = []
-            for line in csv_reader:
-                player_list.append(line)
-            if len(player_list) == 0:
-                return "No players exists"
+            player_list = list(csv_reader)
         return player_list
-    
+
 
     def check_if_handle_exists():
         return True or False
@@ -65,9 +58,22 @@ class Player_IO(Player):
 
     
 
-# Viktor Yngvi Ísaksson
-# 849-0903
-# blöndós 5
-# 2004-25-70
-# viktor@gamil.is
-# vikkman
+    def check_if_handle_exists(self, player: Player):
+        """checks ef the inputted handle is in use in the player list"""
+        player_list = self.load_all_player_info()
+        list_of_handels = []
+        for players in player_list:
+            names = str(players["name"])
+            list_of_handels.append(names)
+        if player.name in list_of_handels:
+            return True
+        else:
+            return False
+        
+        
+    def check_last_id(self):
+        """checks the last player and returns the id of said player"""
+        with open (self.file_path, "r", encoding="utf-8") as player_file:
+            list_of_dicts = list(DictReader(player_file))
+            last_id = int(list_of_dicts[-1]["id"])
+        return last_id
