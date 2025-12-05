@@ -30,7 +30,7 @@ class Player_IO(Player):
 
     def edit_player_info(self):
         """is supposed to edit a single players info in the csv file"""
-        if not self.check_if_player_exists(self):
+        if not self.check_if_player_exists(selfself):
             with open (self.file_path, "r", encoding="utf-8") as player_file:
                 csv_reader = DictReader(player_file)
 
@@ -46,6 +46,17 @@ class Player_IO(Player):
             player_list = list(csv_reader)
         return player_list
 
+
+    def check_if_handle_exists():
+        return True or False
+    
+    def check_last_id(self):
+        with open (self.file_path, "r", encoding="utf-8") as player_file:
+            list_of_dicts = list(DictReader(player_file))
+            last_id = int(list_of_dicts[-1]["id"])
+        return last_id
+
+    
 
     def check_if_handle_exists(self, player: Player):
         """checks ef the inputted handle is in use in the player list"""
