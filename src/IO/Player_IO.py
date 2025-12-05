@@ -58,7 +58,7 @@ class Player_IO(Player):
         player_list = self.load_all_player_info()
         list_of_handels = []
         for players in player_list:
-            names = str(players["name"])
+            names = str(players["handel"])
             list_of_handels.append(names)
         if player.name in list_of_handels:
             return True

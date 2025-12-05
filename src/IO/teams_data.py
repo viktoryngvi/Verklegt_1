@@ -2,7 +2,7 @@ from models.team import Team
 from csv import DictReader
 
 class Team_IO(Team):
-    def __init__(self, name, captain, players):
+    def __init__(self,):
         file_path = "data/teams.csv"
         self.file_path = file_path
 
@@ -13,9 +13,22 @@ class Team_IO(Team):
         
 
     def change_team_captain(self):
+    def change_team_captain(self, find_team, new_captain):
         with open(self.file_path, "w", encoding="utf-8") as teams_file:
-            for line in teams_file:
-                if team_name == self.name:
+            csv_reader = DictReader(teams_file)
+            teams_list = list(csv_reader)
+            for each_dict in teams_list:
+                team_captain =str(each_dict[1])
+                if self.captain == team_captain:
+                    each_dict["captain"] = new_captain
+            for each_dict in teams_list:
+                teams_file.write(f"{teams_list[each_dict]},")
+                teams_file.write("\n")
+        return
+
+
+
+
 
         return players in team
 
