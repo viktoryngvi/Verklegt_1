@@ -19,45 +19,46 @@ class PlayerLL:
         return "Success"
 
 
-    def check_player_team(player: Player):
+    def check_player_team(self, player: Player):
         """
         Checks if the provided team name already exists in the system.
         NOTE: This assumes DLWrapper.check_if_team_exists is implemented 
               to perform a check against stored data.
         """
-        team_str = player.team
+        self.team_str = player.team
 
-        if DLWrapper.check_if_team_exists(team_str):
+        if self._dl_wrapper.check_if_team_exists(self.team_str):
             print("Team does not exists")
 
     
-    def check_player_handle(player: Player):
+    def check_player_handle(self, player: Player):
         """
         Checks if the player's unique handle already exists in the system.
         NOTE: This assumes DLWrapper.check_if_handle_exists is implemented.
         """
-        handle_str = player.handle
+        self.handle_str = player.handle
 
-        if DLWrapper.check_if_handle_exists(handle_str):
-            print("Handle does not exists")
+        if self._dl_wrapper.check_if_handle_exists(self.handle_str):
+            print("Handle does exists")
         
+        return True
 
-    def check_player_address(player: Player):
+    def check_player_address(self, player: Player):
         """
         Validates the player's address format.
         - Must not be empty.
         - Must contain at least one digit (for house/street number).
         - Must not contain consecutive spaces.
         """
-        address_str = player.address.strip()
+        self.address_str = player.address.strip()
 
-        if not address_str:
+        if not self.address_str:
             return "Address cannot be empty"
         
-        if not any(char.isdigit() for char in address_str):
+        if not any(char.isdigit() for char in self.address_str):
             return "Address must contain a number"
         
-        if "  " in address_str:
+        if "  " in self.address_str:
             return "Adress cannot contain consecutive spaces"
         
         return True
@@ -178,13 +179,13 @@ class PlayerLL:
         """
         errors_list = [] # A list to hold all error messages
 
-        check_name = PlayerLL.check_player_name(player)
-        check_email = PlayerLL.check_player_email(player)
-        check_phone = PlayerLL.check_player_phone(player)
-        check_dob = PlayerLL.check_player_dob(player)
-        check_address = PlayerLL.check_player_address(player)
-        check_handle = PlayerLL.check_player_handle(player)
-        check_team = PlayerLL.check_player_team(player)
+        check_name = self.check_player_name(player)
+        check_email = self.check_player_email(player)
+        check_phone = self.check_player_phone(player)
+        check_dob = self.check_player_dob(player)
+        check_address = self.check_player_address(player) # This one must be updated to include 'self' in its definition (see below)
+        check_handle = self.check_player_handle(player) # This one must be updated to include 'self' in its definition (see below)
+        check_team = self.check_player_team(player)
 
         if check_name is not True:
             errors_list.append(f"Name: {self.check_name}")
@@ -207,7 +208,7 @@ class PlayerLL:
         if check_team is not True:
             errors_list.append(f"Team : {check_team}")
 
-        # If the errors_list is not empty, return it
+        # If the errors_list is not emQpty, return it
         if errors_list:
             return errors_list
         
