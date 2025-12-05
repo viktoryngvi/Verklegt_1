@@ -12,7 +12,6 @@ class Team_IO(Team):
         
         
 
-    def change_team_captain(self):
     def change_team_captain(self, find_team, new_captain):
         with open(self.file_path, "w", encoding="utf-8") as teams_file:
             csv_reader = DictReader(teams_file)
@@ -33,7 +32,9 @@ class Team_IO(Team):
         return players in team
 
     def view_all_teams(self):
-        with open ("data/teams.csv", "r", encoding="utf-8") as teams_file:
+        with open (self.file_path, "r", encoding="utf-8") as teams_file:
+            csv_reader = DictReader(teams_file)
+            teams_list = list(csv_reader)
             teams_list = []
             for line in teams_file:
                  teams_list.append(line.split(",")[0])
