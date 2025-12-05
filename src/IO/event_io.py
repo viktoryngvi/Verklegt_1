@@ -1,15 +1,15 @@
 # data/event_io.py
 
+# models/event.py
+
 import os
 import csv
 
 class EventIO:
-    """
-    Writes a single match to data/matches.csv
-    """
-
-    def __init__(self):
-        self.matches_file = os.path.join("data", "matches.csv")
+    def __init__(self, name: str, game_type: str):
+        self.name = name
+        self.game_type = game_type
+        self.matches = []
 
     def add_match(self, event_name: str, match):
         """
