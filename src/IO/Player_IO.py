@@ -9,7 +9,7 @@ class Player_IO(Player):
 
     def create_player(self, player: Player):
         """takes all inputted info and created a player, and checks the last players id and taked the next number"""
-        if not self.check_if_player_exists(player):
+        if not self.check_if_handle_exists(player):
             with open(self.file_path, "a", encoding="utf-8") as player_file:
                 id = self.check_last_id() + 1
                 player_file.write(f"{id},{player.name},{player.phone},{player.address},{player.dob},{player.email},{player.handle},{player.team},{player.captain}\n")
@@ -18,21 +18,10 @@ class Player_IO(Player):
             return "Player cannot be created"
 # skrifar upplýsingarnar um nýjann player inn í player_creation skjalið
 
-    def check_if_player_exists(self, player: Player):
-        """checks if some player in the file has the same name as the inputted name"""
-        player_list = self.load_all_player_info()
-        list_of_names = []
-        for players in player_list:
-            names = str(players["name"])
-            list_of_names.append(names)
-        if player.name in list_of_names:
-            return True
-        return False
-        # checkar hverja línu í file-inum og skoðar hvort það er "name" sem passar við inslegið nafn
 
     def edit_player_info(self):
         """is supposed to edit a single players info in the csv file"""
-        if not self.check_if_player_exists(self):
+        if not self.check_if_handle_exists(self):
             with open (self.file_path, "r", encoding="utf-8") as player_file:
                 csv_reader = DictReader(player_file)
 
