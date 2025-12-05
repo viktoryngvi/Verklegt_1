@@ -5,7 +5,7 @@ class Tournament:
     def __init__(self, tournament_id: int, name: str, venue: str, date_start: str, date_end: str, contact_pers: str, contact_mobile: str, contact_email: str):
         self.tournament_id = tournament_id
         self.name = name
-        venue = venue
+        self.venue = venue
         self.date_star = date_start
         self.date_end = date_end
         self.contact_pers = contact_pers
