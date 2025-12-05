@@ -32,16 +32,9 @@ class Player_IO(Player):
             csv_reader = DictReader(player_file)
             player_list = list(csv_reader)
         return player_list
-    
-    def check_last_id(self):
-        with open (self.file_path, "r", encoding="utf-8") as player_file:
-            list_of_dicts = list(DictReader(player_file))
-            last_id = int(list_of_dicts[-1]["id"])
-        return last_id
-
 
     def check_if_handle_exists(self, player: Player):
-        """checks ef the inputted handle is in use in the player list"""
+        """checks if the inputted handle is in use in the player list"""
         player_list = self.load_all_player_info()
         list_of_handels = []
         for players in player_list:
@@ -51,7 +44,7 @@ class Player_IO(Player):
         
         
     def check_last_id(self):
-        """checks the last player and returns the id of said player"""
+        """opens the player file and checks the last player and returns the id of said player"""
         with open (self.file_path, "r", encoding="utf-8") as player_file:
             list_of_dicts = list(DictReader(player_file))
             last_id = int(list_of_dicts[-1]["id"])
