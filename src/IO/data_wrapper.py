@@ -37,20 +37,12 @@ class DLWrapper:
 
     def check_if_player_in_team(self, player : Player_IO):
         return self
+    #TODO
 
     def check_if_handle_exists(self, player : Player_IO):
         return self.playerio.check_if_handle_exists(player)
 
 
-
-    def check_if_team_exists(self, player : Player_IO):
-        return self
-    
-    def check_if_player_in_team(self, player : Player_IO):
-        return self
-    
-    def check_if_handle_exists(self, player : Player_IO):
-        return self
 
     # -------------------------
     # Event / Schedule Methods
