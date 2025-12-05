@@ -27,6 +27,17 @@ class DLWrapper:
     
     def load_all_player_info(self, player: Player_IO):
         return self.playerio.load_all_player_info(player)
+    
+
+
+    def check_if_team_exists(self, player : Player_IO):
+        return self
+
+    def check_if_player_in_team(self, player : Player_IO):
+        return self
+
+    def check_if_handle_exists(self, player : Player_IO):
+        return self.playerio.check_if_handle_exists(player)
 
     # (your TODO team-related stubs can stay as-is)
 

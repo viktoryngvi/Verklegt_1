@@ -19,15 +19,39 @@ from csv import DictReader
 # print(player_list)
 
 
-with open ("data/player_info.csv", "r", encoding="utf-8") as player_file:
-    csv_reader = DictReader(player_file)
-    player_list = list(csv_reader)
+# with open ("data/player_info.csv", "r", encoding="utf-8") as player_file:
+#     csv_reader = DictReader(player_file)
+#     player_list = list(csv_reader)
 
-for player in player_list:
-    #breyta því sem á að breyta
-    pass
+# for player in player_list:
+#     #breyta því sem á að breyta
+#     pass
      
-with open ("data/player_info", "w", encoding="utf-8") as player_file:
-    pass
+# with open ("data/player_info", "w", encoding="utf-8") as player_file:
+#     pass
 
-print(player)
+# print(player)
+
+
+
+# # check_if_player_exists()
+
+# with open("data/player_info.csv", "r", encoding="utf-8") as player_file:
+#     pass
+
+
+
+#load all player info()
+def check_if_player_exists():
+    with open("data/player_info.csv", "r", encoding="utf-8") as player_file:
+        csv_reader = DictReader(player_file)
+        player_list = list(csv_reader)
+    return player_list
+
+
+# check_if_player_exists()
+player_list = check_if_player_exists()
+list_of_names = []
+for players in player_list:
+    names = str(players["name"])
+    list_of_names.append(names)
