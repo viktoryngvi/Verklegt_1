@@ -1,9 +1,8 @@
 from models.player import Player
-
-
+from LL.logical_wraper import LLWrapper
 
 class CaptainUI:
-    def __init__(self, ll_wrapper, menu_ui):
+    def __init__(self, ll_wrapper:LLWrapper, menu_ui):
         self.ll = ll_wrapper
         self.menu_ui = menu_ui
 
@@ -64,6 +63,7 @@ class CaptainUI:
         address = input("Address: ").strip()
         dob = input("DOB (YYYY-MM-DD): ").strip()
         email = input("Email: ").strip()
+        id = None
         handle = input("Handle (unique): ").strip()
         team = None  # Captains do not assign teams when creating players
 
@@ -81,8 +81,9 @@ class CaptainUI:
         )
 
         # Call LL through wrapper
+        result = self.ll.create_player(player)
         try:
-            result = self.ll.create_player(player)
+            pass
         except Exception as e:
             print(f"Unexpected error creating player: {e}")
             return "CAPTAIN_MENU"

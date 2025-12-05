@@ -26,7 +26,7 @@ class PlayerLL:
         return "Success"
 
 
-    def check_player_team(player: Player):
+    def check_player_team(self, player: Player):
         """
         Checks if the provided team name already exists in the system.
         NOTE: This assumes DLWrapper.check_if_team_exists is implemented 
@@ -38,18 +38,17 @@ class PlayerLL:
             print("Team does not exists")
 
     
-    def check_player_handle(player: Player):
+    def check_player_handle(self, player: Player):
         """
         Checks if the player's unique handle already exists in the system.
         NOTE: This assumes DLWrapper.check_if_handle_exists is implemented.
         """
         handle_str = player.handle
 
-        if DLWrapper.check_if_handle_exists(handle_str):
+        if self._dl_wrapper.check_if_handle_exists(handle_str):
             print("Handle does not exists")
         
-
-    def check_player_address(player: Player):
+    def check_player_address(self, player: Player):
         """
         Validates the player's address format.
         - Must not be empty.
@@ -70,7 +69,7 @@ class PlayerLL:
         return True
 
 
-    def check_player_dob(player: Player): 
+    def check_player_dob(self, player: Player): 
         """
         Validates the player's Date of Birth (DOB).
         - Must be in the exact YYYY-MM-DD format.
@@ -87,7 +86,7 @@ class PlayerLL:
         return True
 
 
-    def check_player_name(player: Player):
+    def check_player_name(self, player: Player):
         """
         Validates the player's full name.
         - Must not be empty.
@@ -108,7 +107,7 @@ class PlayerLL:
         if not raw_name.replace(" ","").isalpha():
             return "Not allow"
 
-        if DLWrapper.check_if_player_exists(raw_name):
+        if self._dl_wrapper.check_if_player_exists(player):
              return "Already in Data" 
 
         if len(raw_name) < 2 or len(raw_name) > 60:
@@ -126,7 +125,7 @@ class PlayerLL:
         return True
 
 
-    def check_player_phone(player: Player):
+    def check_player_phone(self, player: Player):
         """
         Validates the player's phone number format.
         - Must not be empty.
@@ -155,7 +154,7 @@ class PlayerLL:
         return True
 
 
-    def check_player_email(player: Player):
+    def check_player_email(self, player: Player):
         """
         Validates the player's email address using a series of specific checks.
         """
@@ -203,13 +202,13 @@ class PlayerLL:
         """
         errors_list = [] # A list to hold all error messages
 
-        check_name = PlayerLL.check_player_name(player)
-        check_email = PlayerLL.check_player_email(player)
-        check_phone = PlayerLL.check_player_phone(player)
-        check_dob = PlayerLL.check_player_dob(player)
-        check_address = PlayerLL.check_player_address(player)
-        check_handle = PlayerLL.check_player_handle(player)
-        check_team = PlayerLL.check_player_team(player)
+        check_name = self.check_player_name(player)
+        check_email = self.check_player_email(player)
+        check_phone = self.check_player_phone(player)
+        check_dob = self.check_player_dob(player)
+        check_address = self.check_player_address(player)
+        check_handle = self.check_player_handle(player)
+        check_team = self.check_player_team(player)
 
         if check_name is not True:
             errors_list.append(f"Name : {check_name}")
@@ -240,12 +239,18 @@ class PlayerLL:
         return None
 
          
-    def edit_player(player: Player):
+    def edit_player(self, player : Player):
         id = player.id
         phone_str = player.phone
         address_str = player.address
         email_str = player.email
         handle = player.handle 
+        #TODO
+
+
+        
+
+        
 
     
     

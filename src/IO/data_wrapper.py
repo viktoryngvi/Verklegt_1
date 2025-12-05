@@ -35,6 +35,9 @@ class DLWrapper:
     
     def check_if_handle_exists(self, player : Player_IO):
         return self
+    
+    def create_tournament(self, player: Player_IO):##TODO
+        pass
 
     # -------------------------
     # NEW Tournament Schedule Methods
