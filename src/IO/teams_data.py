@@ -12,7 +12,7 @@ class Team_IO(Team):
         
         
 
-    def change_team_captain(self):#############TODO
+    def change_team_captain(self):
         with open(self.file_path, "w", encoding="utf-8") as teams_file:
             for line in teams_file:
                 if team_name == self.name:
