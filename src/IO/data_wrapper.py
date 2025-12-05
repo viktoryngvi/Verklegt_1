@@ -44,6 +44,11 @@ class DLWrapper:
     # -------------------------
     # NEW Tournament Methods
     # -------------------------
+    def create_tournament(self, tournament):
+        """Forward Tournament object to TournamentIO for creation."""
+        return self.tournamentio.create_tournament(tournament)
+    #TODO add more tournament methods as needed - KRISTO ADDED
+    
     def save_tournament(self, tournament):
         """Forward Tournament object to TournamentIO for storage."""
         return self.tournamentio.save_tournament(tournament)

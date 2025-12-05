@@ -1,22 +1,15 @@
 from datetime import datetime
 from models.player import Player
 from IO.data_wrapper import DLWrapper
+from models.person import Person
 
 class PlayerLL:
-    """
-    The Player Logical Layer (LL) handles business logic and validation 
-    for Player objects before data is passed to or from the Data Layer (DL).
-    """
-    def __init__(self, dl_wrapper):
-        # Stores the DLWrapper instance, which is the gateway to data persistence.
+    def __init__(self, dl_wrapper: DLWrapper):
         self._dl_wrapper = dl_wrapper
 
-
+        
     def create_player(self, player: Player):
-        """
-        Validates the Player object and, if successful, passes it to the DL 
-        for creation/storage.
-        """
+
         validate_errors = self.validate_player(player)
 
         if validate_errors:
@@ -26,235 +19,160 @@ class PlayerLL:
         return "Success"
 
 
-    def check_player_team(player: Player):
-        """
-        Checks if the provided team name already exists in the system.
-        NOTE: This assumes DLWrapper.check_if_team_exists is implemented 
-              to perform a check against stored data.
-        """
-        team_str = player.team
-
-        if DLWrapper.check_if_team_exists(team_str):
-            print("Team does not exists")
-
-    
-    def check_player_handle(player: Player):
-        """
-        Checks if the player's unique handle already exists in the system.
-        NOTE: This assumes DLWrapper.check_if_handle_exists is implemented.
-        """
-        handle_str = player.handle
-
-        if DLWrapper.check_if_handle_exists(handle_str):
-            print("Handle does not exists")
+    def edit_player(self, player_name: str, email: str, phone: str, player_data: Player) -> str:
         
+        # Check if player exists
+        existing_player = self._dl_wrapper.check_if_player_exists(player_name)
+        if not existing_player:
+            return "Error: Player not found"
 
-    def check_player_address(player: Player):
-        """
-        Validates the player's address format.
-        - Must not be empty.
-        - Must contain at least one digit (for house/street number).
-        - Must not contain consecutive spaces.
-        """
-        address_str = player.address.strip()
+        # Build updated Player object
+        updated_player = Player(
+            name=player_name,
+            email=email,
+            phone=phone,
+            dob=existing_player.dob
+        )
 
-        if not address_str:
-            return "Address cannot be empty"
+        # Validate the updated data
+        validate_errors = self.validate_player(updated_player)
+        if validate_errors:
+            return validate_errors
         
-        if not any(char.isdigit() for char in address_str):
-            return "Address must contain a number"
-        
-        if "  " in address_str:
-            return "Adress cannot contain consecutive spaces"
-        
-        return True
+        updated = self._dl_wrapper.edit_player_info(player_name, email, phone)
+        if updated:
+            return "Success: Player information updated"
+        else:
+            return "Error: Failed to update player"
 
 
-    def check_player_dob(player: Player): 
-        """
-        Validates the player's Date of Birth (DOB).
-        - Must be in the exact YYYY-MM-DD format.
-        - Must be a valid date (e.g., no Feb 30th).
-        """
-        dob_str  = player.dob.strip()
+    def check_player_name(self, Player: Player):
+        self.name = Player.name.strip()
+        parts = self.name.split()
 
-        try:
-            birth_date = datetime.strptime(dob_str, "%Y-%m-%d").date()
-        
-        except ValueError:
-            return "DOB must be in the valid YYYY-MM-DD format"
-        
-        return True
+        if len(self.name) < 2 or len(self.name) > 60:
+            return "Name must be between 2 and 60 characters."
 
-
-    def check_player_name(player: Player):
-        """
-        Validates the player's full name.
-        - Must not be empty.
-        - Must contain only letters and spaces.
-        - Must not already exist in the data layer.
-        - Must be between 2 and 60 characters long.
-        - Must not contain consecutive spaces.
-        - Must be capitalized correctly (Title case).
-        - Must have between 2 and 5 parts (first name, last name, etc.).
-        """
-        raw_name = player.name
-        stripname = raw_name.strip()
-        name_parts = stripname.split()
-        
-        if not raw_name:
-            return "Not allow"
-
-        if not raw_name.replace(" ","").isalpha():
-            return "Not allow"
-
-        if DLWrapper.check_if_player_exists(raw_name):
-             return "Already in Data" 
-
-        if len(raw_name) < 2 or len(raw_name) > 60:
-            return "Not valid"
-
-        if '  ' in stripname:
+        if "  " in self.name:
             return "Name cannot contain consecutive spaces."
 
-        if raw_name != raw_name.title():
-            return "Name must contain Capitalize letters"
+        if self.name != self.name.title():
+        # Auto-capitalize each word in the full name and update the player object.
+            corrected = ' '.join(part.capitalize() for part in parts)
+            if self.name != corrected:
+                self.name = corrected
         
-        if len(name_parts) < 2 or len (name_parts) > 5:
-            return "Not valid" 
+        if self.name != self.name.isalpha() and " " not in self.name:
+            return "Name can only contain alphabetic characters and spaces."
+        
+        if len(parts) < 2:
+            return "Full name must have at least 2 words."
+
+        if len(parts) > 5:
+            return "Full name cannot have more than 5 words."
+
+        return True
+            
+
+    def check_player_phone(self, person: Person):
+        self.phone = person.phone
+
+        if len(self.phone) != 8:
+            return "Phone number must be in format 123-4567."
+
+        if "-" not in self.phone:
+            return "Invalid format. Example: 123-4567"
+        
+        left, right = self.phone.split("-")
+    
+        if not (left.isdigit() and right.isdigit()):
+            return "Phone can only contain digits and one dash."
+        if len(left) != 3 or len(right) != 4:
+            return "Phone number must be in format 123-4567."
         
         return True
 
 
-    def check_player_phone(player: Player):
-        """
-        Validates the player's phone number format.
-        - Must not be empty.
-        - Must be exactly 8 characters long.
-        - Must contain a hyphen ('-') specifically at the 4th position.
-        - All non-hyphen characters must be digits.
-        - Example 444-4444
-        """
-        phone_str = player.phone
+    def check_player_email(self, player: Player):
+        self.email = player.email
+        self.len_email = len(self.email)
 
-        if not phone_str:
-            return "Not valid"
+        att_symbol = self.email.find("@")
+        email_split = self.email.split("@")
+        two_dots = self.email.find("..")
+        size = self.email.count("@")
+        pat = self.email.find(".@")
 
-        if len(phone_str) != 8:
-            return "Not valid"
-
-        if phone_str[3] != "-":
-            return "Not valid"
-        
-        part1 = phone_str[:3]
-        part2 = phone_str[4:]
-
-        if not (part1.isdigit() and part2.isdigit()):
-            return "Not valid"
-
-        return True
-
-
-    def check_player_email(player: Player):
-        """
-        Validates the player's email address using a series of specific checks.
-        """
-        email = player.email
-        lenemail = len(email)
-
-        att_symbol = email.find("@")
-        email_split = email.split("@")
-        two_dots = email.find("..")
-        size = email.count("@")
-        pat = email.find(".@")
-
-        if "@" not in email:
-            return ("@ symbol is missing.")
+        if "@" not in self.email:
+            return "@ symbol is missing."
 
         if size > 1:
-            second_at = email.find("@", att_symbol+1)
-            return f"{email}\n{' '*second_at}^--there is an extra @ symbol here."
+            second_at = self.email.find("@", att_symbol+1)
+            return f"{self.email}\n{' '*second_at}^--there is an extra @ symbol here."
         
-        if email[0] == "@" and att_symbol == 0:
+        if self.email[0] == "@" and att_symbol == 0:
             return "There is nothing before the @ symbol."
         
-        if att_symbol == lenemail - 1:
-            return f'{email}\n{" "*att_symbol + " "}^--there is nothing after the @ symbol.'
+        if att_symbol == self.len_email - 1:
+            return f'{self.email}\n{" "*att_symbol}^--there is nothing after the @ symbol.'
         
-        if email[0] == ".":
+        if self.email[0] == ".":
             return "Email address starts with a dot."
         
-        if ".." in email:
-            return f"{email}\n{' '*two_dots}^--there are consecutive dots here."
+        if ".." in self.email:
+            return f"{self.email}\n{' '*two_dots}^--there are consecutive dots here."
         
-        if ".@" in email:
-            return f"{email}\n{' '*pat}^--there is an extra dot here."
+        if ".@" in self.email:
+            return f"{self.email}\n{' '*pat}^--there is an extra dot here."
         
         if "." not in email_split[1]:
-            return "Top-level-domain is missing."
+            return "Top-level domain is missing."
         
         return True
 
 
-    def validate_player(self, player: Player) -> None:
-        """
-        Aggregates all individual validation checks.
-        Returns a LIST of error strings if any check fails, or None if the player is valid.
-        """
-        errors_list = [] # A list to hold all error messages
+    def check_player_dob(self, player: Player):
+        self.dob_str = player.dob
 
-        check_name = PlayerLL.check_player_name(player)
-        check_email = PlayerLL.check_player_email(player)
-        check_phone = PlayerLL.check_player_phone(player)
-        check_dob = PlayerLL.check_player_dob(player)
-        check_address = PlayerLL.check_player_address(player)
-        check_handle = PlayerLL.check_player_handle(player)
-        check_team = PlayerLL.check_player_team(player)
+        try:
+            self.dob: datetime = datetime.strptime(self.dob_str, "%Y-%m-%d")
+        except ValueError:
+            return "DOB must be in YYYY-MM-DD format."
 
-        if check_name is not True:
-            errors_list.append(f"Name : {check_name}")
+        self.today = datetime.today()
 
-        if check_email is not True:
-            errors_list.append(f"Email : {check_email}")
-        
-        if check_phone is not True:
-            errors_list.append(f"Phone : {check_phone}")
-                
-        if check_dob is not True:
-             errors_list.append(f"DOB : {check_dob}")
+        if self.dob >= self.today:
+            return "DOB cannot be in the future."
 
-        if check_address is not True:
-            errors_list.append(f"Address: {check_address} ")
+        self.age = (self.today - self.dob).days // 365
 
-        if check_handle is not True:
-            errors_list.append(f"Handle : {check_handle}")
+        if self.age < 5:
+            return "Player must be at least 5 years old."
 
-        if check_team is not True:
-            errors_list.append(f"Team : {check_team}")
+        if self.age > 100:
+            return "Player age cannot exceed 100."
 
-        # If the errors_list is not empty, return it
-        if errors_list:
-            return errors_list
-        
-        # Otherwise, all checks passed
-        return None
-
-         
-    def edit_player(player : Player):
-        id = player.id
-        phone_str = player.phone
-        address_str = player.address
-        email_str = player.email
-        handle = player.handle 
-        #TODO
+        return True
 
 
-        
+    def validate_player(self, player: Player):
+        self.errors = []
 
-        
+        self.check_name = self.check_player_name(player)
+        self.check_email = self.check_player_email(player)
+        self.check_phone = self.check_player_phone(player)
+        self.check_dob = self.check_player_dob(player)
 
-    
-    
-    
-    
-    
+        if self.check_name is not True:
+            self.errors.append(f"Name: {self.check_name}")
+
+        if self.check_email is not True:
+            self.errors.append(f"Email: {self.check_email}")
+
+        if self.check_phone is not True:
+            self.errors.append(f"Phone: {self.check_phone}")
+
+        if self.check_dob is not True:
+            self.errors.append(f"DOB: {self.check_dob}")
+
+        return self.errors if self.errors else None

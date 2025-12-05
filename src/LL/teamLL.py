@@ -1,6 +1,10 @@
+from LL.playerLL import PlayerLL
+
+
 class TeamLL:
     def __init__(self, dl_wrapper):
         self._dl_wrapper = dl_wrapper
+        self.player_ll = PlayerLL(self._dl_wrapper)
 
     # ----------------------------------------------------------------------
     # CHANGE TEAM CAPTAIN
@@ -35,22 +39,17 @@ class TeamLL:
             return "Success: Captain changed successfully"
         else:
             return "Error: Failed to change captain"
+        
+
 
     # ----------------------------------------------------------------------
     # EDIT PLAYER
     # ----------------------------------------------------------------------
+
+
+
+
     def edit_player(self, team_name: str, player_name: str, new_data: dict) -> str:
-        """
-        Edit a player's information within a team.
-
-        Args:
-            team_name: Name of the team
-            player_name: Name of the player to edit
-            new_data: Dictionary containing fields to update (e.g., {"phone": "123-4567"})
-
-        Returns:
-            str: Success or error message
-        """
 
         # Fetch current team data
         team_data = self._dl_wrapper.get_team(team_name)
@@ -64,10 +63,5 @@ class TeamLL:
             return "Error: Player not found in the team"
 
         # TODO: Validate new_data fields if needed
-
-        # Update player info in data layer
-        updated = self._dl_wrapper.update_player(team_name, player_name, new_data)
-        if updated:
-            return "Success: Player information updated"
-        else:
-            return "Error: Failed to update player"
+        # Delegate update to PlayerLL
+        return self.player_ll.edit_player(team_name, player_name, new_data)
