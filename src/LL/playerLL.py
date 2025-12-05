@@ -4,7 +4,23 @@ from IO.data_wrapper import DLWrapper
 from models.person import Person
 
 class PlayerLL:
+    """
+    The Player Logical Layer (LL) class.
+    
+    This layer is responsible for handling business logic related to Player objects,
+    including validation of data fields (e.g., name, email, DOB) and coordinating 
+    data persistence by interacting with the Data Layer (DLWrapper).
+    """
     def __init__(self, dl_wrapper: DLWrapper):
+        """
+        Initializes the PlayerLL instance with a Data Layer wrapper.
+        
+        This dependency injection allows the PlayerLL to access storage functions 
+        without knowing the underlying storage implementation (e.g., CSV, database).
+
+        :param dl_wrapper: An instance of DLWrapper used for all data access operations.
+        :type dl_wrapper: DLWrapper
+        """
         self._dl_wrapper = dl_wrapper
 
         
@@ -205,7 +221,7 @@ class PlayerLL:
         check_team = self.check_player_team(player)
 
         if check_name is not True:
-            errors_list.append(f"Name: {self.check_name}")
+            errors_list.append(f"Name: {check_name}")
 
         if check_email is not True:
             errors_list.append(f"Email : {check_email}")
