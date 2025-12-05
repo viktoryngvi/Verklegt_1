@@ -1,3 +1,6 @@
+from UI.shared_ui_helpers import view_teams
+from UI.shared_ui_helpers import view_schedule
+
 class PlayerUI:
     def __init__(self, ll, menu_ui):
         self.ll = ll
@@ -48,7 +51,12 @@ class PlayerUI:
         print("TODO")
     def edit_player(self): 
         print("TODO")
+
     def view_team(self): 
-        print("TODO")
+        view_teams(self.ll, self.menu_ui)
+        return "PLAYER_MENU"
+    
     def view_schedule(self): 
-        print("TODO")
+        view_schedule(self.ll, self.menu_ui)
+        return "PLAYER_MENU"
+    

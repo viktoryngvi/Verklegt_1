@@ -1,4 +1,5 @@
 from models.player import Player
+from UI.shared_ui_helpers import view_teams, create_team, view_schedule
 from UI.input_helper import (
     get_non_empty_input,
     get_integer_input,
@@ -73,9 +74,7 @@ class CaptainUI:
         email = get_non_empty_input("Email: ").strip()
         handle = get_non_empty_input("Handle (unique): ").strip()
         
-
-        # ID must not be asked by UI — let LL/DL handle it.
-        # So we send id=None
+        # send to LL through Player model
         player = Player(
             name=name,
             phone=phone,
@@ -92,7 +91,7 @@ class CaptainUI:
 
         print("")  # spacing
 
-        # LIST => validation errors, STRING => status ("Success" or error text)
+        # list => validation errors, string => status "Success" or error text
         if isinstance(result, list):
             print("Player could not be created:")
             for err in result:
@@ -157,30 +156,16 @@ class CaptainUI:
 
         input("Press Enter to continue...")
         return "CAPTAIN_MENU"
+    
+
 
     def view_team(self): 
-        self.menu_ui.print_header("VIEW TEAM")
-        print("Select the team to view: ")
-
-        teams = self.ll.get_teams()
-        if not teams:
-            print("No teams found.")
-            input("Press Enter to continue...")
-            return "CAPTAIN_MENU"
-        select_team = choose_from_list("Enter the number of the team: ", teams)
-
-        print(f"You selected to view team: {select_team}")
-        players = self.ll.get_players_in_team(select_team)
-        if not players:
-            print("No players found in this team.")
-        else:
-            print(f"Players in team {select_team}:")
-            for player in players:
-                print(f" - {player}")
-        input("Press Enter to continue...")
+        view_teams(self.ll, self.menu_ui)
         return "CAPTAIN_MENU"
     
-    def change_team_captain(self): 
+
+    
+    def change_team_captain(self):
         self.menu_ui.print_header("CHANGE TEAM CAPTAIN")
         print("What team do you want to change the captain for? ")
         # get the list of teams from LL
@@ -212,7 +197,7 @@ class CaptainUI:
         result = self.ll.update_team_captain(
             team_name=select_team,
             new_captain_name=select_player,
-        )
+            )
         
         print("")
         print(result)
@@ -220,6 +205,8 @@ class CaptainUI:
         return "CAPTAIN_MENU"
     
     def view_schedule(self): 
-        print("TODO")
+        view_schedule(self.ll, self.menu_ui)
+        return "CAPTAIN_MENU"
+    
     def create_team(self): 
         print("TODO")
