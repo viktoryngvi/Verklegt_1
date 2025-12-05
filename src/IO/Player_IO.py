@@ -30,7 +30,7 @@ class Player_IO(Player):
 
     def edit_player_info(self):
         """is supposed to edit a single players info in the csv file"""
-        if not self.check_if_player_exists(selfself):
+        if not self.check_if_player_exists(self):
             with open (self.file_path, "r", encoding="utf-8") as player_file:
                 csv_reader = DictReader(player_file)
 
