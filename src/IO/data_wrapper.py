@@ -70,3 +70,8 @@ class DLWrapper:
     def load_all_tournaments(self):
         return self._tournament_io.load_all_tournaments()
     
+    def save_match_result(self):
+        pass #TODO Match Result
+    
+
+    
