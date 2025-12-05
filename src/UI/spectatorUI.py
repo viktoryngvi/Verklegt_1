@@ -1,3 +1,8 @@
+from UI.shared_ui_helpers import view_teams
+from UI.shared_ui_helpers import view_schedule
+
+
+
 class SpectatorUI:
     def __init__(self, ll, menu_ui):
         self.ll = ll
@@ -43,9 +48,15 @@ class SpectatorUI:
             return "MAIN_MENU"
 
     def view_schedule(self): 
-        print("TODO")
-    def view_teams(self): 
-        print("TODO")
+        self.menu_ui.print_header("VIEW SCHEDULE")
+        view_schedule(self)
+        return "SPECTATOR_MENU"
+
+    def view_team(self): 
+        self.menu_ui.print_header("VIEW TEAM")
+        view_teams(self.ll, self.menu_ui)
+        return "SPECTATOR_MENU"
+    
     def view_players(self): 
         print("TODO")
     def view_clubs(self): 

@@ -1,4 +1,6 @@
 from typing import Any, Optional, Dict, Tuple
+from UI.shared_ui_helpers import create_team
+from UI.shared_ui_helpers import view_schedule
 from UI.input_helper import (
     get_non_empty_input,
     get_integer_input,
@@ -230,20 +232,9 @@ class OrganizerUI:
 
 
     def view_schedule(self) -> None:
-        self.menu_ui.print_header("VIEW TOURNAMENT SCHEDULE")
-        print("Select a tournament to view its schedule:\n")
-
-        # Get list of tournaments from LL
-        tournaments = self.ll.get_tournament_list()  
-
-        # choose tournament basic validation with input helper
-        tournament_name = choose_from_list("Select Tournament by number: ", tournaments)   
-
-        # get schedule from LL
-        schedule = self.ll.get_tournament_schedule(tournament_name)   
-        print(f"\nSchedule for {tournament_name}:\n")
-        print(schedule)
-        input("\nPress Enter to continue...")
+        view_schedule(self.ll, self.menu_ui)
+        return "ORGANIZER_MENU"
+        
 
     
     def create_team(self) -> None:
