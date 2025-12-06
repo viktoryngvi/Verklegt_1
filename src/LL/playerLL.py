@@ -145,8 +145,8 @@ class PlayerLL:
         updated = self._dl_wrapper.edit_player_info(id, "email", email)
         if updated:
             return "Success: Player information updated"
-        else:
-            return "Error: Failed to update player"
+
+        return "Error: Failed to update player"
 
 
     def edit_player_address(self, id: int, address: str) -> str:
