@@ -254,7 +254,6 @@ class PlayerLL:
         """
         Handles the business logic for updating an existing player's information.
         """
-
         # Check if player exists
         existing_player = self._dl_wrapper.check_if_player_exists(player_name)
         if not existing_player:
