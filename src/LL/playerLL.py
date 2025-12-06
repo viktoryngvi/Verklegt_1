@@ -59,7 +59,6 @@ class PlayerLL:
         Checks if the player's unique handle already exists in the system.
         NOTE: This assumes DLWrapper.check_if_handle_exists is implemented.
         """
-
         if self._dl_wrapper.check_if_handle_exists(player):
             return "Handle does exists"
         
@@ -113,11 +112,11 @@ class PlayerLL:
 
         return True
 
-    def check_player_name(self, Player: Player):
+    def check_player_name(self, player: Player):
         """
         Validates the player's full name against length, formatting, and content rules.
         """
-        self.name = Player.name.strip()
+        self.name = player.name.strip()
         parts = self.name.split()
 
         if len(self.name) < 2 or len(self.name) > 60:
@@ -143,11 +142,11 @@ class PlayerLL:
 
         return True
 
-    def check_player_phone(self, person: Person):
+    def check_player_phone(self, player: Person):
         """
         Validates the player's phone number format (8 digits with a dash).
         """
-        self.phone = person.phone
+        self.phone = player.phone
 
         if len(self.phone) != 8:
             return "Phone number must be in format 123-4567."
@@ -217,8 +216,8 @@ class PlayerLL:
         check_email = self.check_player_email(player)
         check_phone = self.check_player_phone(player)
         check_dob = self.check_player_dob(player)
-        check_address = self.check_player_address(player) # This one must be updated to include 'self' in its definition (see below)
-        check_handle = self.check_player_handle(player) # This one must be updated to include 'self' in its definition (see below)
+        check_address = self.check_player_address(player) 
+        check_handle = self.check_player_handle(player) 
         check_team = self.check_player_team(player)
 
         if check_name is not True:
@@ -242,41 +241,84 @@ class PlayerLL:
         if check_team is not True:
             errors_list.append(f"Team : {check_team}")
 
-        # If the errors_list is not emQpty, return it
+        # If the errors_list is not empty, return it
         if errors_list:
             return errors_list
         
         # Otherwise, all checks passed
         return None
 
-         
-    def edit_player(self, player_name: str, email: str, phone: str, player_data: Player) -> str:
+
+    def edit_player_phone(self, id: int, phone: str) -> str:
         """
         Handles the business logic for updating an existing player's information.
         """
-        # Check if player exists
-        existing_player = self._dl_wrapper.check_if_player_exists(player_name)
-        if not existing_player:
-            return "Error: Player not found"
-
-        # Build updated Player object
-        updated_player = Player(
-            name=player_name,
-            email=email,
-            phone=phone,
-            dob=existing_player.dob
-        )
-
         # Validate the updated data
-        validate_errors = self.validate_player(updated_player)
-        if validate_errors:
-            return validate_errors
+        validate_error = self.validate_player(phone)
+        if validate_error:
+            return validate_error
         
-        updated = self._dl_wrapper.edit_player_info(player_name, email, phone)
+        updated = self._dl_wrapper.edit_player_info(id, "phone", phone)
         if updated:
             return "Success: Player information updated"
         else:
             return "Error: Failed to update player"
+
+
+    def edit_player_email(self, id: int, email: str) -> str:
+        """
+        Handles the business logic for updating an existing player's information.
+        """
+        # Validate the updated data
+        validate_error = self.validate_player(email)
+        if validate_error:
+            return validate_error
+        
+        updated = self._dl_wrapper.edit_player_info(id, "email", email)
+        if updated:
+            return "Success: Player information updated"
+        else:
+            return "Error: Failed to update player"
+
+
+    def edit_player_address(self, id: int, address: str) -> str:
+        """
+        Handles the business logic for updating an existing player's information.
+        """
+        # Validate the updated data
+        validate_error = self.validate_player(address)
+        if validate_error:
+            return validate_error
+        
+        updated = self._dl_wrapper.edit_player_info(id, "address", address)
+        if updated:
+            return "Success: Player information updated"
+        else:
+            return "Error: Failed to update player"
+
+
+    def edit_player_handle(self, id: int, handle: str) -> str:
+        """
+        Handles the business logic for updating an existing player's information.
+        """
+        # Check if player exists
+        existing_player = self._dl_wrapper.check_if_player_exists(id)
+        if not existing_player:
+            return "Error: Player not found"
+
+        # Validate the updated data
+        validate_error = self.validate_player(handle)
+        if validate_error:
+            return validate_error
+        
+        updated = self._dl_wrapper.edit_player_info(handle)
+        if updated:
+            return "Success: Player information updated"
+        else:
+            return "Error: Failed to update player"
+
+
+
 
 
 
