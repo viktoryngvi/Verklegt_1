@@ -57,6 +57,7 @@ class Player_IO(Player):
                 filtered_player = {"id": line["id"], "name": line["name"], "handle": line["handle"]}
                 short_list.append(filtered_player)
         return short_list
+    #TODO
     #býr til lista af dicts af id, name og handle hjá öllum players
     
     def check_last_id(self):
