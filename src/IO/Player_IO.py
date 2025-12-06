@@ -13,9 +13,9 @@ class Player_IO(Player):
             with open(self.file_path, "a", encoding="utf-8") as player_file:
                 id = self.check_last_id() + 1
                 player_file.write(f"{id},{player.name},{player.phone},{player.address},{player.dob},{player.email},{player.handle},{player.team},{player.captain}\n")
-                return True
+                return "Player successfully created!"
         else:
-            return False
+            return "Player already exists"
 # skrifar upplýsingarnar um nýjann player inn í player_creation skjalið
 
     def check_if_player_exists(self, player: Player):
@@ -30,16 +30,26 @@ class Player_IO(Player):
         return False
         # checkar hverja línu í file-inum og skoðar hvort það er "name" sem passar við inslegið nafn
 
-    def edit_player_info(self):
-        """is supposed to edit a single players info in the csv file"""
-        if not self.check_if_player_exists(self):
-            with open (self.file_path, "r", encoding="utf-8") as player_file:
-                csv_reader = DictReader(player_file)
+    def edit_player_info(self, find_player_id, what_to_edit, new_information):
+        with open(self.file_path, "r", encoding="utf-8") as player_file:
+            csv_reader = DictReader(player_file)
+            player_list = list(csv_reader)
 
+        for player in player_list:
+            id = int(player["id"])
+            if find_player_id == id:
+                player_to_edit = player
+                break
+        player_to_edit[what_to_edit] = new_information
 
-
-
-
+        with open (self.file_path, "w", encoding="utf-8") as player_file:
+            player_file.write("id,name,phone,address,dob,email,handle,team,captain\n")
+            for players in player_list:
+                values = players.values()
+                values = [str(v) for v in values]
+                player_file.write(",".join(values))
+                player_file.write("\n")
+        return True
 
     def load_all_player_info(self):
         """loads all player info in a list of dictionaries"""

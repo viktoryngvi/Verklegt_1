@@ -34,6 +34,9 @@ class DLWrapper:
     
     def check_if_handle_exists_with_handle(self, handle):
         return self.playerio.check_if_handle_exists_with_handle(handle)
+    
+    def check_last_id(self, player :Player_IO):
+        return self.playerio.check_last_id(player)
 
     
 
