@@ -1,8 +1,9 @@
-id,name,phone,address,dob,email,handle,team,captain1,Tristan Danielsson,555-5555,sfggs,2005-12-27,tds@gmail.com,tristan17,none,False
+id,name,phone,address,dob,email,handle,team,captain
+1,Tristan Danielsson,555-5555,sfggs,2005-12-27,tds@gmail.com,tristan17,none,False
 2,Trisan Danielsson,333-3333,dsfasdg,2005-12-27,tds@gmail.com,tristan78,none,False
 3,Viktor Yngvi Ísaksson,849-0903,blöndós 5,2004-12-12,viktor@gamil.is,vikk,None,False
 4,viir tadsi,849-0000,blönduhlíð 20,2004-09-26,viktor@gmail.com,vikkman,None,False
-5,gunni fedjeaoid,849-0000,blönduhlíð 20,2004-09-26,viktor@gmail.com,vikkkkkkkkkiiiiiiiiii,None,False
+5,gunni fedjeaoid,849-0000,blönduhlíð 20,2004-09-26,viktor@gmail.com,aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,None,False
 6,gunni fruuui,849-0000,blönduhlíð 20,2004-09-26,viktor@gmail.com,tristan th eman,None,False
 7,Jeremias Borjas Tablante,659-2893,Hafnarbraut 14,2006-03-13,jeremiahbor@gmail.com,jerry21,None,False
 8,mama pin,849-0000,blönduhlíð 20,2004-09-26,viktor@gmail.com,mama pin,None,False
