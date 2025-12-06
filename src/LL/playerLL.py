@@ -45,7 +45,7 @@ class PlayerLL:
         """
         last_id = self._dl_wrapper.check_last_id
         if id > last_id:
-            return "Id does not Exist"
+            return "Id does not exist"
         # Validate the updated data
         validate_error = self._validate.validate_phone(phone)
         if validate_error:

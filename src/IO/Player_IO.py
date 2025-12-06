@@ -25,7 +25,7 @@ class Player_IO(Player):
         for players in player_list:
             handle = str(players["handle"])
             list_of_handles.append(handle)
-        if player.hande in list_of_handles:
+        if player.handle in list_of_handles:
             return True
         return False
         # checkar hverja línu í file-inum og skoðar hvort það er "name" sem passar við inslegið nafn
