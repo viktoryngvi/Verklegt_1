@@ -1,6 +1,5 @@
 from models.player import Player
 from csv import DictReader
-from models.player import Player
 
 # player = input("insláðu nýjan player: ")
 class Player_IO(Player):
@@ -104,15 +103,28 @@ class Player_IO(Player):
             # return playerhandle in listofhandles
 
 
-    def check_if_specific_id_exists(self, id):
+    def check_if_playerid_in_team(self, id):    ##TODO
         player_list = self.load_all_player_info() 
         for players in player_list:
             if id == int(players["id"]):
                 return True
         return False
+    # notað til að checka hvort id passar við player sem er ekki í liði
+    
+    def turn_handle_into_id(self, handle):
+        player_list = self.load_all_player_info() 
+        for players in player_list:
+            if handle == str(players["handle"]):
+                return int(players["id"])
+        return False
+    
     
     def take_id_return_handle(self, id):
-        pass
+        player_list = self.load_all_player_info() 
+        for players in player_list:
+            if id == str(players["id"]):
+                return int(players["handle"])
+        return False
 
         # return playerhandle in listofhandles
         

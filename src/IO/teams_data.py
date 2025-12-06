@@ -11,7 +11,19 @@ class Team_IO(Team):
         the teams.csv file"""
         with open(self.file_path, "a", encoding="utf-8") as teams_file:
             teams_file.write(f"{self.name},{self.captain},{self.players}")
-        
+
+    
+
+
+    def take_player_ids_return_handles(player_list_of_ids):
+        player_list = Player_IO.load_all_player_info()
+        list_of_handles = []
+        for id in player_list_of_ids:
+            for player in player_list:
+                if id == int(player["id"]):
+                list_of_handles.append(player["handle"])
+        return list_of_handles
+
         
 
 
