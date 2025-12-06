@@ -3,6 +3,10 @@ from models.player import Player
 from IO.data_wrapper import DLWrapper
 from models.person import Person
 
+
+###TODO LISTI
+# 
+
 class PlayerLL:
     def __init__(self, dl_wrapper: DLWrapper):
         self._dl_wrapper = dl_wrapper

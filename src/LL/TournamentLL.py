@@ -1,14 +1,14 @@
 from datetime import datetime
-from models.tournament import TournamentLL
+from models.tournament import Tournament
 from models.team import Team
 from IO.data_wrapper import DLWrapper
 
 
-class Tournament:
+class TournamentLL:
     def __init__(self, dl_wrapper: DLWrapper):
         self._dl_wrapper = dl_wrapper
 
-    def create_tournament(self, tournament: TournamentLL):
+    def create_tournament(self, tournament: Tournament):
         validate_errors = self.validate_tournament(tournament)
 
 
@@ -24,7 +24,7 @@ class Tournament:
 
        
 
-    def register_teams(self, tournament: TournamentLL, teams: list[str]):
+    def register_teams(self, tournament: Tournament, teams: list[str]):
         # TODO: Implement team registration logic
         pass
 
@@ -41,13 +41,13 @@ class Tournament:
      # tournament name validation
     # ----------------------------------------------------------------------
     
-    def check_tournament_name(self, tournament: TournamentLL):
-        self.name = tournament.name.strip()
+    def check_tournament_name(self, tournament: Tournament):
+        self.tournament_name = tournament.name.strip()
 
-        if len(self.name) == 0:
+        if len(self.tournament_name) == 0:
             return "Tournament name cannot be empty."
 
-        if len(self.name) < 3 or len(self.name) > 60:
+        if len(self.tournament_name) < 3 or len(self.tournament_name) > 60:
             return "Tournament name must be between 3–60 characters."
 
         return True
@@ -58,8 +58,8 @@ class Tournament:
 # ----------------------------------------------------------------------
 
 
-    def check_tournament_type(self,tournament: TournamentLL):
-        self.tournament_type = tournament.tournament_type.strip()
+    def check_tournament_type(self, tournament_type: str):
+        self.tournament_type = tournament_type.strip()
 
         allowed_names = ["Knockout", "Double Elimination"]
 
@@ -73,7 +73,7 @@ class Tournament:
      # date validation
     # ----------------------------------------------------------------------
 
-    def check_dates(self, tournament: TournamentLL):
+    def check_dates(self, tournament: Tournament):
         try:
             self.start = datetime.strptime(tournament.start_date, "%Y.%m.%d")
             self.end = datetime.strptime(tournament.end_date, "%Y.%m.%d")
@@ -92,12 +92,12 @@ class Tournament:
     # VALIDATE TOURNAMENT 
     # ----------------------------------------------------------------------
 
-    def validate_tournament(self, tournament: TournamentLL):
+    def validate_tournament(self, tournament: Tournament):
         errors = []
 
-        check_name = Tournament.check_tournament_name(tournament)
-        check_type = Tournament.check_tournament_type(tournament)
-        check_dates = Tournament.check_dates(tournament)
+        check_name = self.check_tournament_name(tournament)
+        check_type = self.check_tournament_type(tournament.type)
+        check_dates = self.check_dates(tournament)
 
         if check_name is not True:
             errors.append(f"Name: {check_name}")
@@ -169,3 +169,4 @@ class GenerateTournamentSchedule:
         schedule = []
         # Single-elimination bracket → TODO
         return schedule
+
