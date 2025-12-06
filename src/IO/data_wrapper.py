@@ -31,9 +31,11 @@ class DLWrapper:
         return self.playerio.load_all_player_info(player)
     
     def check_if_handle_exists_with_player(self, player : Player_IO):
-        return self.playerio.check_if_handle_exists(player)
+        return self.playerio.check_if_handle_exists_with_player(player)
     
-    def check_if_handle_exists_with_handle(self)
+    def check_if_handle_exists_with_handle(self, handle):
+        return self.playerio.check_if_handle_exists_with_handle(handle)
+
     
 
 
