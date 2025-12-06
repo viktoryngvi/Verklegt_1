@@ -47,6 +47,18 @@ class Player_IO(Player):
             csv_reader = DictReader(player_file)
             player_list = list(csv_reader)
         return player_list
+
+    def load_all_player_short_info(self):
+        with open (self.file_path, "r", encoding="utf-8") as player_file:
+            csv_reader = DictReader(player_file)
+            player_list: list[dict[str, any]] = []
+            short_list = []
+            for line in csv_reader:
+                filtered_player = {"id": line["id"], "name": line["name"], "handle": line["handle"]}
+                short_list.append(filtered_player)
+        return short_list
+    #TODO
+    #býr til lista af dicts af id, name og handle hjá öllum players
     
     def check_last_id(self):
         """checks the last player and returns the id of said player"""
@@ -69,14 +81,14 @@ class Player_IO(Player):
             return False
         
 
-    def check_if_handle_exists_with_player(self, handle):
+    def check_if_handle_exists_with_handle(self, handle):
         """checks ef the inputted handle is in use in the player list"""
         player_list = self.load_all_player_info() 
         list_of_handels = []
         for players in player_list:
             handles_of_existing_players = str(players["handle"])
             list_of_handels.append(handles_of_existing_players)
-        if player.handle in list_of_handels:
+        if handle in list_of_handels:
             return True
         else:
             return False
