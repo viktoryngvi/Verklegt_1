@@ -2,14 +2,14 @@
 import csv
 import os
 from IO.Player_IO import Player_IO
-from IO.event_io import EventIO
+# from IO.event_io import EventIO
 from IO.tournament_io import TournamentIO
 from models.tournament import Tournament
 
 class DLWrapper:
     def __init__(self):
         self.playerio = Player_IO()
-        self.eventio = EventIO()
+        # self.eventio = EventIO()
         # self.tournamentio = TournamentIO()
 
     # -------------------------
