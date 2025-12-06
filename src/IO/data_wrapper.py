@@ -1,4 +1,3 @@
-
 import csv
 import os
 from IO.Player_IO import Player_IO
@@ -33,8 +32,9 @@ class DLWrapper:
     def check_if_handle_exists_with_player(self, player : Player_IO):
         return self.playerio.check_if_handle_exists_with_player(player)
     
-    def check_if_handle_exists_with_handle(self):
-        pass
+    def check_if_handle_exists_with_handle(self, handle):
+        return self.playerio.check_if_handle_exists_with_handle(handle)
+
     
 
 

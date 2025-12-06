@@ -15,12 +15,13 @@ def edit_player_function(find_player_id, what_to_edit, new_information):
     player_to_edit[what_to_edit] = new_information
 
     with open ("data/player_info_new_test.csv", "w", encoding="utf-8") as player_file:
+        player_file.write("id,name,phone,address,dob,email,handle,team,captain")
         for players in player_list:
-            player_file.write(f"{players.values},")
+            values = players.values()
+            values = [str(v) for v in values]
+            player_file.write(",".join(values))
             player_file.write("\n")
-            # for values in players:
-            #     player_file.write(f"{players.values},")
-            #     player_file.write("\n")
+
     print("Done!")
 
     # with open ("data/player_info_new_test.csv", "w", encoding="utf-8") as player_file:
