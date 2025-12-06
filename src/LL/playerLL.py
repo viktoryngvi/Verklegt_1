@@ -39,90 +39,15 @@ class PlayerLL:
         return self._dl_wrapper.create_player(player)
 
 
-    def validate_phone(phone: str) -> None:
-        """
-        Validates the new updated phone number format (8 digits with a dash).
-        """
-        if len(phone) != 8:
-            return "Phone number must be in format 123-4567."
-
-        if "-" not in phone:
-            return "Invalid format. Example: 123-4567"
-        
-        left, right = phone.split("-")
-    
-        if not (left.isdigit() and right.isdigit()):
-            return "Phone can only contain digits and one dash."
-        
-        if len(left) != 3 or len(right) != 4:
-            return "Phone number must be in format 123-4567."
-        
-        return None
-
-    def validate_email(email: str) -> None:
-        """
-        Validates the new updated email format against common structural rules (e.g., @ symbol, dots).
-        """
-        len_email = len(email)
-
-        att_symbol = email.find("@")
-        email_split = email.split("@")
-        two_dots = email.find("..")
-        size = email.count("@")
-        pat = email.find(".@")
-
-        if "@" not in email:
-            return "@ symbol is missing."
-
-        if size > 1:
-            second_at = email.find("@", att_symbol+1)
-            return f"{email}\n{' '*second_at}^--there is an extra @ symbol here."
-        
-        if email[0] == "@" and att_symbol == 0:
-            return "There is nothing before the @ symbol."
-        
-        if att_symbol == len_email - 1:
-            return f'{email}\n{" "*att_symbol}^--there is nothing after the @ symbol.'
-        
-        if email[0] == ".":
-            return "Email address starts with a dot."
-        
-        if ".." in email:
-            return f"{email}\n{' '*two_dots}^--there are consecutive dots here."
-        
-        if ".@" in email:
-            return f"{email}\n{' '*pat}^--there is an extra dot here."
-        
-        if "." not in email_split[1]:
-            return "Top-level domain is missing."
-        
-        return None
-
-    def validate_address(address: str) -> None:
-        """
-        Validates the new address format.
-        - Must not be empty.
-        - Must contain at least one digit (for house/street number).
-        - Must not contain consecutive spaces.
-        """
-        if not address:
-            return "Address cannot be empty"
-        
-        if not any(char.isdigit() for char in address):
-            return "Address must contain a number"
-        
-        if "  " in address:
-            return "Adress cannot contain consecutive spaces"
-        
-        return None
-
-
     def edit_player_phone(self, id: int, phone: str) -> str:
         """
         Handles the business logic for updating an existing player's information.
         """
+        last_id = self._dl_wrapper.check_last_id
+        if id > last_id:
+            return "Id does not Exist"
         # Validate the updated data
-        validate_error = self.validate_phone(phone)
+        validate_error = self._validate.validate_phone(phone)
         if validate_error:
             return validate_error
         
@@ -137,8 +62,11 @@ class PlayerLL:
         """
         Handles the business logic for updating an existing player's information.
         """
+        last_id = self._dl_wrapper.check_last_id
+        if id > last_id:
+            return "Id does not Exist"
         # Validate the updated data
-        validate_error = self.validate_email(email)
+        validate_error = self._validate.validate_email(email)
         if validate_error:
             return validate_error
         
@@ -153,8 +81,11 @@ class PlayerLL:
         """
         Handles the business logic for updating an existing player's information.
         """
+        last_id = self._dl_wrapper.check_last_id
+        if id > last_id:
+            return "Id does not Exist"
         # Validate the updated data
-        validate_error = self.validate_address(address)
+        validate_error = self._validate.validate_address(address)
         if validate_error:
             return validate_error
         
@@ -169,6 +100,10 @@ class PlayerLL:
         """
         Handles the business logic for updating an existing player's information.
         """
+        last_id = self._dl_wrapper.check_last_id
+        if id > last_id:
+            return "Id does not Exist"
+        
         # Check if player exists
         existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
         if existing_player:
