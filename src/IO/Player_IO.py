@@ -25,7 +25,7 @@ class Player_IO(Player):
         for players in player_list:
             handle = str(players["handle"])
             list_of_handles.append(handle)
-        if player.hande in list_of_handles:
+        if player.handle in list_of_handles:
             return True
         return False
         # checkar hverja línu í file-inum og skoðar hvort það er "name" sem passar við inslegið nafn
@@ -68,7 +68,7 @@ class Player_IO(Player):
                 short_list.append(filtered_player)
         return short_list
     #býr til lista af dicts af id, name og handle hjá öllum players
-    
+
     def check_last_id(self):
         """checks the last player and returns the id of said player"""
         with open (self.file_path, "r", encoding="utf-8") as player_file:
@@ -101,5 +101,18 @@ class Player_IO(Player):
             return True
         else:
             return False
+            # return playerhandle in listofhandles
+
+
+    def check_if_specific_id_exists(self, id):
+        player_list = self.load_all_player_info() 
+        for players in player_list:
+            if id == int(players["id"]):
+                return True
+        return False
+    
+    def take_id_return_handle(self, id):
+        pass
+
         # return playerhandle in listofhandles
         

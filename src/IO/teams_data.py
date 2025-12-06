@@ -14,6 +14,11 @@ class Team_IO(Team):
         
         
 
+
+
+
+
+
     def change_team_captain(self, find_team, new_captain):
         """This checks all team captains and compares them with the inputted captains, then updates
         the captain value and finds the inputted new team captain in the team and makes him the new captain"""
@@ -46,6 +51,9 @@ class Team_IO(Team):
             for line in teams_file:
                  teams_list.append(line.split(",")[0])
         return teams_list
+    
+    def players_team_none(self):
+        return list_of_non_team_players
             
     def view_all_players_in_team(self):
         """views_all_teams() and select a team and returns all players in  said team"""
