@@ -3,8 +3,8 @@ import csv
 import os
 from IO.Player_IO import Player_IO
 # from IO.event_io import EventIO
-from IO.tournament_io import TournamentIO
-from models.tournament import Tournament
+# from IO.tournament_io import TournamentIO
+# from models.tournament import Tournament
 
 class DLWrapper:
     def __init__(self):
@@ -30,6 +30,9 @@ class DLWrapper:
     def load_all_player_info(self, player: Player_IO):
         return self.playerio.load_all_player_info(player)
     
+    def check_if_handle_exists(self, player : Player_IO):
+        return self.playerio.check_if_handle_exists(player)
+    
 
 
     def check_if_team_exists(self, player : Player_IO):
@@ -39,8 +42,6 @@ class DLWrapper:
         return self
     #TODO
 
-    def check_if_handle_exists(self, player : Player_IO):
-        return self.playerio.check_if_handle_exists(player)
 
 
 
@@ -55,15 +56,15 @@ class DLWrapper:
         """Load Event + Matches from CSV (delegated to EventIO)."""
         return self.eventio.load_event(tournament_name)
 
-    # ---- TOURNAMENT METHODS ----
-    def create_tournament(self, tournament: Tournament):
-        return self._tournament_io.create_tournament(tournament)
+    # # ---- TOURNAMENT METHODS ----
+    # def create_tournament(self, tournament: Tournament):
+    #     return self._tournament_io.create_tournament(tournament)
 
-    def load_all_tournaments(self):
-        return self._tournament_io.load_all_tournaments()
+    # def load_all_tournaments(self):
+    #     return self._tournament_io.load_all_tournaments()
     
-    def save_match_result(self):
-        pass #TODO Match Result
+    # def save_match_result(self):
+    #     pass #TODO Match Result
     
 
     

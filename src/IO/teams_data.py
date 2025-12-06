@@ -1,25 +1,31 @@
 from models.team import Team
 from csv import DictReader
+from IO.Player_IO import Player_IO
 
 class Team_IO(Team):
     def __init__(self,):
-        file_path = "data/teams.csv"
-        self.file_path = file_path
+        self.file_path = "data/teams.csv"
 
     def create_team(self):
+        """Takes three variables team_name, team_captain, list af players and writes it into 
+        the teams.csv file"""
         with open(self.file_path, "a", encoding="utf-8") as teams_file:
             teams_file.write(f"{self.name},{self.captain},{self.players}")
         
         
 
     def change_team_captain(self, find_team, new_captain):
+        """This checks all team captains and compares them with the inputted captains, then updates
+        the captain value and finds the inputted new team captain in the team and makes him the new captain"""
         with open(self.file_path, "w", encoding="utf-8") as teams_file:
             csv_reader = DictReader(teams_file)
             teams_list = list(csv_reader)
+
             for each_dict in teams_list:
                 team_captain =str(each_dict[1])
                 if self.captain == team_captain:
                     each_dict["captain"] = new_captain
+
             for each_dict in teams_list:
                 teams_file.write(f"{teams_list[each_dict]},")
                 teams_file.write("\n")
@@ -32,6 +38,7 @@ class Team_IO(Team):
         return players in team
 
     def view_all_teams(self):
+        """checks all teams and their captain and returns a list""" #TODO
         with open (self.file_path, "r", encoding="utf-8") as teams_file:
             csv_reader = DictReader(teams_file)
             teams_list = list(csv_reader)
@@ -40,7 +47,11 @@ class Team_IO(Team):
                  teams_list.append(line.split(",")[0])
         return teams_list
             
-    def view_all_players_in_teams(self):
+    def view_all_players_in_team(self):
+        """views_all_teams() and select a team and returns all players in  said team"""
+        with open(self.file_path, "r", encoding="utf-8") as team_file:
+
+
 
     
 
