@@ -1,7 +1,7 @@
 import csv
 import os
 from IO.Player_IO import Player_IO
-from Teams_IO import Team_IO
+#from Teams_IO import Team_IO
 from IO.Tournament_Blueprint_IO import Tournament_Blueprint_IO
 # from IO.event_io import EventIO
 # from IO.tournament_io import TournamentIO
@@ -10,7 +10,7 @@ from IO.Tournament_Blueprint_IO import Tournament_Blueprint_IO
 class DLWrapper:
     def __init__(self):
         self.playerio = Player_IO()
-        self.teamio = Team_IO()
+       # self.teamio = Team_IO()
         self.empty_tournament = Tournament_Blueprint_IO()
         # self.eventio = EventIO()
         # self.tournamentio = TournamentIO()
@@ -23,7 +23,7 @@ class DLWrapper:
         return self.playerio.check_if_player_exists(player)
     
     def edit_player_info(self, handle, str_to_change, new_change):
-        return self.playerio.edit_player_info(self)
+        return self.playerio.edit_player_info(handle, str_to_change, new_change)
     
     def load_all_player_short_info(self):
         return self.playerio.load_all_player_short_info(self)

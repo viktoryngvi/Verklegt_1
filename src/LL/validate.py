@@ -220,7 +220,7 @@ class Validate:
         return None
     
 
-    def validate_phone(phone: str) -> None:
+    def validate_phone(self, phone: str) -> None:
         """
         Validates the new updated phone number format (8 digits with a dash).
         """
