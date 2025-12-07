@@ -23,7 +23,7 @@ class DLWrapper:
         return self.playerio.check_if_player_exists(player)
     
     def edit_player_info(self, handle, str_to_change, new_change):
-        return self.playerio.edit_player_info(self)
+        return self.playerio.edit_player_info(handle, str_to_change, new_change)
     
     def load_all_player_short_info(self):
         return self.playerio.load_all_player_short_info(self)
