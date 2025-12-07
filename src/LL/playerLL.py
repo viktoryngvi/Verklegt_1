@@ -39,77 +39,80 @@ class PlayerLL:
         return self._dl_wrapper.create_player(player)
 
 
-    def edit_player_phone(self, id: int, phone: str) -> str:
+    def edit_player_phone(self, handle: str, phone: str) -> str:
         """
         Handles the business logic for updating an existing player's information.
         """
-        last_id = self._dl_wrapper.check_last_id
-        if id > last_id:
-            return "Id does not exist"
+        existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        if not existing_player:
+            return "Error: Player handle does not exists"
+        
         # Validate the updated data
         validate_error = self._validate.validate_phone(phone)
         if validate_error:
             return validate_error
         
-        updated = self._dl_wrapper.edit_player_info(id, "phone", phone)
+        updated = self._dl_wrapper.edit_player_info(handle, "phone", phone)
         if updated:
             return "Success: Player information updated"
         else:
             return "Error: Failed to update player"
 
 
-    def edit_player_email(self, id: int, email: str) -> str:
+    def edit_player_email(self, handle: str, email: str) -> str:
         """
         Handles the business logic for updating an existing player's information.
         """
-        last_id = self._dl_wrapper.check_last_id
-        if id > last_id:
-            return "Id does not Exist"
+        existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        if not existing_player:
+            return "Error: Player handle does not exists"
+        
         # Validate the updated data
         validate_error = self._validate.validate_email(email)
         if validate_error:
             return validate_error
         
-        updated = self._dl_wrapper.edit_player_info(id, "email", email)
+        updated = self._dl_wrapper.edit_player_info(handle, "email", email)
         if updated:
             return "Success: Player information updated"
 
         return "Error: Failed to update player"
 
 
-    def edit_player_address(self, id: int, address: str) -> str:
+    def edit_player_address(self, handle: str, address: str) -> str:
         """
         Handles the business logic for updating an existing player's information.
         """
-        last_id = self._dl_wrapper.check_last_id
-        if id > last_id:
-            return "Id does not Exist"
+        existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        if not existing_player:
+            return "Error: Player handle does not exists"
+        
         # Validate the updated data
         validate_error = self._validate.validate_address(address)
         if validate_error:
             return validate_error
         
-        updated = self._dl_wrapper.edit_player_info(id, "address", address)
+        updated = self._dl_wrapper.edit_player_info(handle, "address", address)
         if updated:
             return "Success: Player information updated"
         else:
             return "Error: Failed to update player"
 
 
-    def edit_player_handle(self, id: int, handle: str) -> str:
+    def edit_player_handle(self, handle: str, handle_str: str) -> str:
         """
         Handles the business logic for updating an existing player's information.
         """
-        last_id = self._dl_wrapper.check_last_id
-        if id > last_id:
-            return "Id does not Exist"
-        
         # Check if player exists
         existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
-        if existing_player:
-            return "Error: Player not found"
-
-        updated = self._dl_wrapper.edit_player_info(id, "handle", handle)
+        if not existing_player:
+            return "Error: Player handle does not exists"
+        
+        existing_new_handle = self._dl_wrapper.check_if_handle_exists_with_handle(handle_str)
+        if existing_new_handle:
+            return "Error: New handle already exists"
+        
+        updated = self._dl_wrapper.edit_player_info(handle, "handle", handle_str)
         if updated:
             return "Success: Player information updated"
         else:
