@@ -70,27 +70,30 @@ class PlayerUI:
         choice = input("Enter your choice: ").strip().lower()
 
         if choice == "1":
-            new_phone = input("Enter new phone number: ").strip()
-            self.ll.edit_player_phone(handle, new_phone)
-            print("Phone number updated successfully.")
-            return
-        if choice == "2":
+            new_phone = input("Enter new phone: ").strip()
+            result = self.ll.edit_player_phone(handle, new_phone)
+        
+        elif choice == "2":
             new_email = input("Enter new email: ").strip()
-            self.ll.edit_player_email(handle, new_email)
-            print("Email updated successfully.")
-            return
-        if choice == "3":
+            result = self.ll.edit_player_email(handle, new_email)
+
+        elif choice == "3":
             new_address = input("Enter new address: ").strip()
-            self.ll.edit_player_address(handle, new_address)
-            print("Address updated successfully.")
-            return
-        if choice == "4":
-            new_handle = input("Enter new handle: ").strip()
-            self.ll.edit_player_handle(handle, new_handle)
-            print("Handle updated successfully.")
-            return
+            result = self.ll.edit_player_address(handle, new_address)
+
+        elif choice == "4":
+            new_handle = input("Enter new handle: ").strip().lower()
+            result = self.ll.edit_player_handle(handle, new_handle)
+
         elif choice == "b":
             return "PLAYER_MENU"
+        
+        else:
+            print("Invalid choice. Valid options are 1, 2, 3, 4, B.")
+            input("Press Enter to continue...")
+            return
+        
+        print("\n" + str(result))
         
 
 
