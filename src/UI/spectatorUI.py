@@ -79,7 +79,7 @@ class SpectatorUI:
             return
         
 
-        print("TODO")
+        
     def view_clubs(self): 
         print("TODO")
 
