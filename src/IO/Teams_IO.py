@@ -93,6 +93,13 @@ class Team_IO(Team):
         for team in all_teams:
             if team["team"] == team_find_name:
                 return team
+            
+    def view_captains_team(self, find_captain_handle):
+        """views_all_teams() and select a team and returns all players in  said team"""
+        all_teams = self.view_all_teams()
+        for team in all_teams:
+            if team["handle"] == find_captain_handle:
+                return team
     
     def check_if_team_name_exists(self, team_name):
         all_teams = self.view_all_teams()
