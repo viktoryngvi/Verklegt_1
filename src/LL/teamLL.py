@@ -1,67 +1,23 @@
-from LL.playerLL import PlayerLL
-
+from IO.data_wrapper import DLWrapper
 
 class TeamLL:
-    def __init__(self, dl_wrapper):
+    def __init__(self, dl_wrapper: DLWrapper):
         self._dl_wrapper = dl_wrapper
-        self.player_ll = PlayerLL(self._dl_wrapper)
 
-    # ----------------------------------------------------------------------
-    # CHANGE TEAM CAPTAIN
-    # ----------------------------------------------------------------------
-    def change_captain(self, team_name: str, new_captain: str) -> str:
-        """
-        Change the captain of a team.
-
-        Args:
-            team_name: Name of the team
-            new_captain: Name of the new captain
-
-        Returns:
-            str: Success or error message
-        """
-
-        # Fetch current team data from data layer
-        team_data = self._dl_wrapper.get_team(team_name)
-        if not team_data:
-            return "Error: Team not found"
-
-        current_captain = team_data.get("captain")
-        players = team_data.get("players", [])
-
-        # Check if new captain is part of the team
-        if new_captain not in players:
-            return "Error: New captain is not a member of the team"
-
-        # Update captain in data source
-        updated = self._dl_wrapper.update_captain(team_name, new_captain)
-        if updated:
-            return "Success: Captain changed successfully"
-        else:
-            return "Error: Failed to change captain"
+    def create_team(self, cap_id: int, team_name: str, players_id: list):
+        last_id = self._dl_wrapper.check_last_id
+        if cap_id > last_id:
+            return "Captain id does not exist "
         
+        check_team_name = self._dl_wrapper.check_if_team_name_exist(team_name)
+        if check_team_name:
+            return "Team name already exists"
+        
+        for player_id in players_id:
+            if not self._dl_wrapper.check_if_player_id_in_team(players_id): # check if the id of the player is not in the list of valid id 
+                return "Player's id does not exist" 
+            
+        create_team = self._dl_wrapper.create_team(cap_id, team_name, players_id)
 
-
-    # ----------------------------------------------------------------------
-    # EDIT PLAYER
-    # ----------------------------------------------------------------------
-
-
-
-
-    def edit_player(self, team_name: str, player_name: str, new_data: dict) -> str:
-
-        # Fetch current team data
-        team_data = self._dl_wrapper.get_team(team_name)
-        if not team_data:
-            return "Error: Team not found"
-
-        players = team_data.get("players", [])
-
-        # Check if player exists in the team
-        if player_name not in players:
-            return "Error: Player not found in the team"
-
-        # TODO: Validate new_data fields if needed
-        # Delegate update to PlayerLL
-        return self.player_ll.edit_player(team_name, player_name, new_data)
+    def load_player_short_info(self):
+        return self._dl_wrapper.load_all_player_short_info()
