@@ -100,6 +100,10 @@ class Team_IO(Team):
             if teams["team"] == team_name:
                 return True
         return False
-
-
-
+    
+    def check_if_player_handle_in_team(self, team, handle):
+        players_in_team = self.view_all_players_in_team(team)
+        for handles_in_team in players_in_team[2:]:
+            if handles_in_team == handle:
+                return True
+        return False
