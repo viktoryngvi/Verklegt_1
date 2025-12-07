@@ -52,12 +52,33 @@ class SpectatorUI:
         view_schedule(self)
         return "SPECTATOR_MENU"
 
-    def view_team(self): 
-        self.menu_ui.print_header("VIEW TEAM")
-        view_teams(self.ll, self.menu_ui)
-        return "SPECTATOR_MENU"
-    
-    def view_players(self): 
+    def view_teams_and_players(self): 
+        # name, id, handle, team
+        print("==== View Teams and Players ====")
+        self.menu_ui.print_header("VIEW TEAMS AND PLAYERS")
+
+        print(" [1] View all teams")
+        print(" [2] View all players")
+        print(" [B] Back to Spectator Menu")
+        print("                ║  ➤ Select an option: ", end="")
+
+        choice = input().lower()
+        if choice not in ["1", "2", "b"]:
+            print(f"Invalid choice. Valid options: 1, 2, B")
+            input("Press Enter to continue...")
+            return 
+        if choice == "1":
+            self.ll.get_teams()
+            view_teams(self.ll, self.menu_ui)
+        if choice == "2":
+            self.ll.load_all_player_short_info()
+            for player in self.ll.all_players_short_info:
+                print(f" - {player}")
+            input("Press Enter to continue...")
+        if choice == "b":
+            return
+        
+
         print("TODO")
     def view_clubs(self): 
         print("TODO")

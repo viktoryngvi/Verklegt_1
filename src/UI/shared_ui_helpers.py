@@ -5,7 +5,7 @@ def view_teams(ll, menu_ui):
     menu_ui.print_header("VIEW TEAM")
     print("Select the team to view: ")
 
-    teams = ll.get_teams()
+    teams = ll.view_all_teams()
     if not teams:
         print("No teams found.")
         input("Press Enter to continue...")
