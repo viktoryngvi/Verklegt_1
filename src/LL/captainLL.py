@@ -31,6 +31,9 @@ class CaptainLL:
 
     def edit_player_email_cap(self, team: str, handle: str, email: str) -> str:
         """
+        existing_player_team = self._dl_wrapper.check_if_player_handle_in_team(team, handle)
+        if not existing_player_team:
+            return "Error: Player handle does not exists in this team"
         Handles the business logic for updating an existing player's information.
         """
         existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
