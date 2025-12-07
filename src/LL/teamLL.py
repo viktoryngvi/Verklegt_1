@@ -10,7 +10,7 @@ class TeamLL:
             return "Captain id does not exist "
         
         for player_id in players_id:
-            if not self._dl_wrapper.check_player_id(playesr_id):
-                return "Player id does not exist" 
+            if not self._dl_wrapper.check_if_player_id_in_team(players_id): # check if the id of the player is not in the list of valid id 
+                return "Player's id does not exist" 
             
         create_team = self._dl_wrapper.create_team(cap_id, team_name, players_id)
