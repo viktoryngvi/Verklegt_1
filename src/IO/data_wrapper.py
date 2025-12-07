@@ -22,7 +22,7 @@ class DLWrapper:
     def check_if_player_exists(self, player : Player_IO):
         return self.playerio.check_if_player_exists(player)
     
-    def edit_player_info(self, player: Player_IO):
+    def edit_player_info(self, handle, str_to_change, new_change):
         return self.playerio.edit_player_info(player)
     
     def load_all_player_short_info(self, player: Player_IO):
@@ -40,7 +40,7 @@ class DLWrapper:
     def check_last_id(self, player :Player_IO):
         return self.playerio.check_last_id(player)
     
-    def Check_if_specific_id_exists(self)
+    def Check_if_specific_id_exists(self):
         
 
 
