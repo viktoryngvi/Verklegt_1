@@ -2,6 +2,7 @@ from IO.data_wrapper import DLWrapper
 from LL.playerLL import PlayerLL
 from LL.validate import Validate
 from LL.teamLL import TeamLL
+from LL.clubLL import ClubLL
 from models import tournament
 from models.player import Player
 from models.tournament import Tournament
@@ -13,6 +14,7 @@ class LLWrapper:
       self.validate = Validate(self.dl_wrapper)
       self.player_ll = PlayerLL(self.dl_wrapper, self.validate)
       self.team_ll = TeamLL(self.dl_wrapper)
+      self.club_ll = ClubLL(self.dl_wrapper)
 
    def create_player(self, player: Player):
       return self.player_ll.create_player(player)
@@ -27,13 +29,16 @@ class LLWrapper:
       return self.player_ll.edit_player_address(handle, address)
 
    def edit_player_handle(self, handle: str, handle_str: str) -> str:
-      return self.player_ll.edit_player_handle(handle, handle_str=)
+      return self.player_ll.edit_player_handle(handle, handle_str)
 
    def create_team(self, cap_id: int, team_name: str, players_id: list):
       return self.team_ll.create_team(cap_id, team_name, players_id)
    
    def load_player_short_info(self):
-      return self.team_ll.load_player_short_info(self)
+      return self.team_ll.load_player_short_info()
+   
+   def load_clubs(self):
+      return self.club_ll.load_clubs()
    
    def generate_schedule(tournament: Tournament, event: Event):
       pass
