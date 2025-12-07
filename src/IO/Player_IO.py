@@ -60,10 +60,10 @@ class Player_IO(Player):
     def load_all_player_short_info(self):
         with open (self.file_path, "r", encoding="utf-8") as player_file:
             csv_reader = DictReader(player_file)
-            player_list: list[dict[str, any]] = []
+            player_list = list(csv_reader)
             short_list = []
             for line in csv_reader:
-                filtered_player = {"id": line["id"], "name": line["name"], "handle": line["handle"]}
+                filtered_player = {"id": line["id"], "name": line["name"], "handle": line["handle"], "team": line["team"]}
                 short_list.append(filtered_player)
         return short_list
     #býr til lista af dicts af id, name og handle hjá öllum players
