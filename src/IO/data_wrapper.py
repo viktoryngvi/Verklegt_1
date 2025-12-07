@@ -2,6 +2,7 @@ import csv
 import os
 from IO.Player_IO import Player_IO
 from Teams_IO import Team_IO
+from IO.Empty_Tournament_IO import Empty_tournament_IO
 # from IO.event_io import EventIO
 # from IO.tournament_io import TournamentIO
 # from models.tournament import Tournament
@@ -47,11 +48,11 @@ class DLWrapper:
     def create_team(self, team_name, captain_id, list_of_player_ids):
         return self.teamio.create_team(self)
 
-    def check_if_team_name_exists(self, player : Player_IO):
+    def check_if_team_name_exists(self):
         return self.teamio.check_if_team_name_exists(self)
 
-    def check_if_player_in_team(self, player : Player_IO):
-        return self
+    # def check_if_player_in_team(self):
+    #     return self
     
     def change_team_captain(self, find_team, new_captain):
         return self.teamio.change_team_captain(self)
@@ -69,7 +70,8 @@ class DLWrapper:
     def view_all_teams_nae_and_captains(self):
         return self.teamio.view_all_players_in_team(self)
 
-    
+    def check_if_player_handle_in_team(self, handle):
+        return self.teamio.check_if_player_handle_in_team(self)
     
 
 
