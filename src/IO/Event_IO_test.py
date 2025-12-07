@@ -3,7 +3,7 @@ from models.event import Event
 from IO.Teams_IO import Team_IO
 
 class Event_IO_test(Event):
-    def __init__(self, ):
+    def __init__(self,):
         self.file_path = "data/tournament_blueprint.csv"
 
     def read_file_as_list_of_dict(self):
@@ -38,10 +38,10 @@ class Event_IO_test(Event):
         return f"{team} is now a part of this event!"
     
     def find_next_useable_id(self):
-        with open(self.file_path, "r", encoding="utf-8") as event_file:
-            for line in event_file:
-                if line["team_name"] == None:
-                    return line["id"]
+        event_file = self.read_file_as_list_of_dict()
+        for line in event_file:
+            if line["team_name"] == None:
+                return line["id"]
 
     def check_if_team_in_event(self, team):
         event_data = self.read_file_as_list_of_dict()
