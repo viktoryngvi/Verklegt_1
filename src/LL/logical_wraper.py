@@ -16,10 +16,10 @@ class LLWrapper:
       self.team_ll = TeamLL(self.dl_wrapper)
       self.club_ll = ClubLL(self.dl_wrapper)
 
-   def create_player(self, player: Player):
+   def create_player(self, player: Player): 
       return self.player_ll.create_player(player)
    
-   def edit_player_email(self, handle: str, email: str) -> str:
+   def edit_player_email(self, handle: str, email: str) -> str: 
       return self.player_ll.edit_player_email(handle, email)
 
    def edit_player_phone(self, handle: str, phone: str) -> str:
@@ -31,10 +31,10 @@ class LLWrapper:
    def edit_player_handle(self, handle: str, handle_str: str) -> str:
       return self.player_ll.edit_player_handle(handle, handle_str)
 
-   def create_team(self, cap_id: int, team_name: str, players_id: list):
+   def create_team(self, cap_id: int, team_name: str, players_id: list): 
       return self.team_ll.create_team(cap_id, team_name, players_id)
    
-   def load_player_short_info(self):
+   def load_player_short_info(self): # Id, Name, Handle, Team PUBLIC INFO
       return self.team_ll.load_player_short_info()
    
    def load_clubs(self):

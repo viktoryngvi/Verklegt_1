@@ -9,6 +9,10 @@ class TeamLL:
         if cap_id > last_id:
             return "Captain id does not exist "
         
+        check_team_name = self._dl_wrapper.check_if_team_name_exist(team_name)
+        if check_team_name:
+            return "Team name already exists"
+        
         for player_id in players_id:
             if not self._dl_wrapper.check_if_player_id_in_team(players_id): # check if the id of the player is not in the list of valid id 
                 return "Player's id does not exist" 
