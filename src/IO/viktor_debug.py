@@ -108,12 +108,12 @@ from csv import DictReader
 
 
 
-from Player_IO import Player_IO
+# from Player_IO import Player_IO
 
-def players_team_none():
-    list_of_non_team_players_short_info = []
-    all_players = Player_IO.load_all_player_info()
-    for players in all_players:
-        if players["team"] == None:
-            list_of_non_team_players_short_info.append({"id":["id"], "name": line["name"], "handle": line["handle"]})
-    return list_of_non_team_players_short_info
+# def players_team_none():
+#     list_of_non_team_players_short_info = []
+#     all_players = Player_IO.load_all_player_info()
+#     for players in all_players:
+#         if players["team"] == None:
+#             list_of_non_team_players_short_info.append({"id":["id"], "name": line["name"], "handle": line["handle"]})
+#     return list_of_non_team_players_short_info

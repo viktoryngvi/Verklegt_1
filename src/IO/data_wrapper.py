@@ -2,16 +2,15 @@ import csv
 import os
 from IO.Player_IO import Player_IO
 from Teams_IO import Team_IO
-from IO.Event_IO_test import Tournament_Blueprint_IO
-# from IO.event_io import EventIO
+from IO.Event_IO_test import Event_IO_test
 # from IO.tournament_io import TournamentIO
 # from models.tournament import Tournament
 
 class DLWrapper:
     def __init__(self):
         self.playerio = Player_IO()
-       # self.teamio = Team_IO()
-        self.empty_tournament = Tournament_Blueprint_IO()
+        self.teamio = Team_IO()
+        self.event_blueprint = Event_IO_test()
         # self.eventio = EventIO()
         # self.tournamentio = TournamentIO()
 
@@ -41,8 +40,7 @@ class DLWrapper:
         return self.playerio.check_last_id(self)
     
     def Check_if_specific_id_exists(self):
-        pass
-        
+        pass     # TODO þarf maður þetta??????????????????????????????????????
 
 
     # team methods
@@ -52,9 +50,6 @@ class DLWrapper:
 
     def check_if_team_name_exists(self):
         return self.teamio.check_if_team_name_exists(self)
-
-    # def check_if_player_in_team(self):
-    #     return self
     
     def change_team_captain(self, find_team, new_captain):
         return self.teamio.change_team_captain(self)
@@ -78,6 +73,20 @@ class DLWrapper:
     def view_captains_team(self, find_captains_handle):
         return self.teamio.view_captains_team(self, find_captains_handle)
 
+
+
+    # event blueprint methods
+    def create_empty_event(self):
+        return self.event_blueprint.create_empty_event(self)
+    
+    def write_team_into_empty_event(self, team):
+        return self.event_blueprint.write_team_into_empty_event(self, team)
+    
+    def check_if_team_in_event(self, team):
+        return self.event_blueprint.check_if_team_in_event(self, team)
+    
+    def how_many_teams_in_event(self):
+        return self.event_blueprint.how_many_teams_in_event(self)
     
 
 
