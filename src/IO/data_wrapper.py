@@ -2,7 +2,7 @@ import csv
 import os
 from IO.Player_IO import Player_IO
 from Teams_IO import Team_IO
-from IO.Empty_Tournament_IO import Empty_tournament_IO
+from IO.Tournament_Blueprint_IO import Tournament_Blueprint_IO
 # from IO.event_io import EventIO
 # from IO.tournament_io import TournamentIO
 # from models.tournament import Tournament
@@ -11,6 +11,7 @@ class DLWrapper:
     def __init__(self):
         self.playerio = Player_IO()
         self.teamio = Team_IO()
+        self.empty_tournament = Tournament_Blueprint_IO()
         # self.eventio = EventIO()
         # self.tournamentio = TournamentIO()
 
@@ -21,14 +22,14 @@ class DLWrapper:
     def check_if_player_exists(self, player : Player_IO):
         return self.playerio.check_if_player_exists(player)
     
-    def edit_player_info(self, player: Player_IO):
-        return self.playerio.edit_player_info(player)
+    def edit_player_info(self, handle, str_to_change, new_change):
+        return self.playerio.edit_player_info(self)
     
-    def load_all_player_short_info(self, player: Player_IO):
-        return self.playerio.load_all_player_short_info(player)
+    def load_all_player_short_info(self):
+        return self.playerio.load_all_player_short_info(self)
     
-    def load_all_player_info(self, player: Player_IO):
-        return self.playerio.load_all_player_info(player)
+    def load_all_player_info(self):
+        return self.playerio.load_all_player_info(self)
     
     def check_if_handle_exists_with_player(self, player : Player_IO):
         return self.playerio.check_if_handle_exists_with_player(player)
@@ -36,10 +37,11 @@ class DLWrapper:
     def check_if_handle_exists_with_handle(self, handle):
         return self.playerio.check_if_handle_exists_with_handle(handle)
     
-    def check_last_id(self, player :Player_IO):
-        return self.playerio.check_last_id(player)
+    def check_last_id(self):
+        return self.playerio.check_last_id(self)
     
-    def Check_if_specific_id_exists(self)
+    def Check_if_specific_id_exists(self):
+        pass
         
 
 
