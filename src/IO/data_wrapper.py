@@ -2,7 +2,7 @@ import csv
 import os
 from IO.Player_IO import Player_IO
 from Teams_IO import Team_IO
-from IO.Empty_Tournament_IO import Empty_tournament_IO
+from IO.Tournament_Blueprint_IO import Tournament_Blueprint_IO
 # from IO.event_io import EventIO
 # from IO.tournament_io import TournamentIO
 # from models.tournament import Tournament
@@ -11,6 +11,7 @@ class DLWrapper:
     def __init__(self):
         self.playerio = Player_IO()
         self.teamio = Team_IO()
+        self.empty_tournament = Tournament_Blueprint_IO()
         # self.eventio = EventIO()
         # self.tournamentio = TournamentIO()
 
