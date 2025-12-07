@@ -29,14 +29,14 @@ class Player_IO(Player):
         return False
         # checkar hverja línu í file-inum og skoðar hvort það er "name" sem passar við inslegið nafn
 
-    def edit_player_info(self, find_player_id, what_to_edit, new_information):
+    def edit_player_info(self, find_player_handle, what_to_edit, new_information):
         with open(self.file_path, "r", encoding="utf-8") as player_file:
             csv_reader = DictReader(player_file)
             player_list = list(csv_reader)
 
         for player in player_list:
-            id = int(player["id"])
-            if find_player_id == id:
+            handle = int(player["handle"])
+            if find_player_handle == handle:
                 player_to_edit = player
                 break
         player_to_edit[what_to_edit] = new_information
