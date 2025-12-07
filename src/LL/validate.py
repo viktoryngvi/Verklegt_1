@@ -17,7 +17,7 @@ class Validate:
         if self.team_str is None:
             return True
 
-        if not self._dl_wrapper.check_if_team_exists(self.team_str):
+        if not self._dl_wrapper.check_if_team_name_exists(self.team_str):
             return "Team does not exists"
         
         return True
