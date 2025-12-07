@@ -43,6 +43,7 @@ class Team_IO(Team):
             csv_reader = DictReader(teams_file)
             teams_list = list(csv_reader)
         # býr til lista af dicts af liðunum
+        
             for each_dict in teams_list:
                 team_name =str(each_dict["team"])
                 if team_name == find_team:
