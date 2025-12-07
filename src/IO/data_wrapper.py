@@ -10,7 +10,7 @@ from IO.Event_IO_test import Tournament_Blueprint_IO
 class DLWrapper:
     def __init__(self):
         self.playerio = Player_IO()
-        self.teamio = Team_IO()
+       # self.teamio = Team_IO()
         self.empty_tournament = Tournament_Blueprint_IO()
         # self.eventio = EventIO()
         # self.tournamentio = TournamentIO()
