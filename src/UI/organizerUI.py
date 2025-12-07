@@ -186,7 +186,7 @@ class OrganizerUI:
         self.menu_ui.print_header("CHANGE TEAM CAPTAIN")
         print("Select a team to change its captain:\n")
 
-        teams = self.ll.get_team_list()   # get the list of teams from LL
+        teams = self.ll.view_all_teams()   # get the list of teams from LL
         team_name = choose_from_list("Select Team by number: ", teams)      # choose team
         current_captain = self.ll.get_team_captain(team_name)       # get current captain from LL
 
@@ -194,7 +194,7 @@ class OrganizerUI:
         print(f"\nTeam: {team_name}\n")
         print(f"Current Captain: {current_captain}\n")
 
-        players = self.ll.get_players_in_team(team_name)   # get players in the selected team from LL
+        players = self.ll.view_all_players_in_tam(team_name)   # get players in the selected team from LL
         new_captain = choose_from_list("Select New Captain by number: ", players)  # choose new captain
         result = self.ll.change_team_captain(
             team_name=team_name,
@@ -206,29 +206,8 @@ class OrganizerUI:
 
 
     def view_statistics(self) -> None:
-        self.menu_ui.print_header("VIEW TOURNAMENT STATISTICS")
-        # Ask what statistics to view
-        print("What statistics would you like to view?")
-        print("  [1] Player Statistics")
-        print("  [2] Team Statistics")
-        print("  [3] Club Statistics")
-
-        # Get choice with input helper
-        stats_choice = get_choice_input("Select option (1, 2, or 3): ", ["1", "2", "3"])
-        # Based on choice, get relevant list from LL
-        if stats_choice == "1":
-            stats = self.ll.get_player_list()
-        elif stats_choice == "2":
-            stats = self.ll.get_team_list()
-        elif stats_choice == "3":
-            stats = self.ll.get_club_list()
+        pass
         
-        # Ask user to select an item from the list
-        selected_item = choose_from_list("Select one: ", stats)
-        statistics = self.ll.get_statistics(stats_choice, selected_item) # Get statistics from LL
-        print("Statistics:\n")
-        print(statistics)
-        input("Press Enter to continue...")
 
 
     def view_schedule(self) -> None:

@@ -104,60 +104,10 @@ class CaptainUI:
         return "CAPTAIN_MENU"
 
     def edit_player_info(self):
-        self.menu_ui.print_header("EDIT PLAYER INFO")
+        # ask for captain id
+        # 
 
-        print("Select a team you want to edit a player from:")
-        teams = self.ll.get_teams()
-        if not teams:
-            print("No teams found.")
-            input("Press Enter to continue...")
-            return "CAPTAIN_MENU"
-
-        select_team = choose_from_list("Enter the number of the team: ", teams)
-
-        players = self.ll.get_players_in_team(select_team)
-        if not players:
-            print("No players found in this team.")
-            input("Press Enter to continue...")
-            return "CAPTAIN_MENU"
-
-        print("Select a player to edit:")
-        select_player = choose_from_list("Enter the number of the player: ", players)
-
-        print(f"You selected to edit player: {select_player} from team: {select_team}")
-
-        # Get current player info from LL
-        player = self.ll.get_player_by_name(select_player)
-
-        print("Enter new details (leave blank to keep current value):")
-        new_phone = get_optional_input(f"Phone [{player.phone}]: ")
-        new_address = get_optional_input(f"Address [{player.address}]: ")
-        new_dob = get_optional_input(f"DOB [{player.dob}]: ")
-        new_email = get_optional_input(f"Email [{player.email}]: ")
-
-        # UI forwards raw values to LL
-        result = self.ll.update_player_info(
-            player_name=select_player,
-            new_phone=new_phone,
-            new_address=new_address,
-            new_dob=new_dob,
-            new_email=new_email,
-        )
-
-        print("")  
-
-        # LIST = validation errors, STRING = status
-        if isinstance(result, list):
-            print("Player info could not be updated:")
-            for err in result:
-                print(f" - {err}")
-        else:
-            print(result)
-
-        input("Press Enter to continue...")
-        return "CAPTAIN_MENU"
-    
-
+        pass
 
     def view_team(self): 
         view_teams(self.ll, self.menu_ui)
