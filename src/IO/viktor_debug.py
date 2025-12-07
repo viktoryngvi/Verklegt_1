@@ -71,19 +71,19 @@ from csv import DictReader
 #     print("Done!")
 
 
-from IO.Player_IO import Player_IO
 
-def create_team(name, captain_id, list_of_player_ids):
-    """Takes three variables team_name, team_captain-in id, list af player_id´s and writes it into 
-    the teams.csv file"""
-    with open("data/teams_test.csv", "a", encoding="utf-8") as teams_file:
-        captain_handle = Player_IO.take_id_return_handle(captain_id)
-        teams_file.write(f"{name},{captain_handle},")
-        for player_id in list_of_player_ids:
-            player_handle = Player_IO.take_id_return_handle(player_id)
-            teams_file.write(player_handle)
-        teams_file.write("\n")
-    print("Done!")
+
+# def create_team(name, captain_id, list_of_player_ids):
+#     """Takes three variables team_name, team_captain-in id, list af player_id´s and writes it into 
+#     the teams.csv file"""
+#     with open("data/teams_test.csv", "a", encoding="utf-8") as teams_file:
+#         captain_handle = Player_IO.take_id_return_handle(captain_id)
+#         teams_file.write(f"{name},{captain_handle},")
+#         for player_id in list_of_player_ids:
+#             player_handle = Player_IO.take_id_return_handle(player_id)
+#             teams_file.write(player_handle)
+#         teams_file.write("\n")
+#     print("Done!")
 
 
 
@@ -108,7 +108,7 @@ def create_team(name, captain_id, list_of_player_ids):
 
 
 
-
+from Player_IO import Player_IO
 
 def players_team_none():
     list_of_non_team_players_short_info = []

@@ -16,19 +16,17 @@ class Team_IO(Team):
                 player_handle = Player_IO.take_id_return_handle(player_id)
                 teams_file.write(player_handle)
             teams_file.write("\n")
-        print("Done!")
-
-    
+        print("Team created!")
 
 
-    def take_player_ids_return_handles(self, player_list_of_ids):
-        player_list = Player_IO.load_all_player_info()
-        list_of_handles = []
-        for id in player_list_of_ids:
-            for player in player_list:
-                if id == int(player["id"]):
-                list_of_handles.append(player["handle"])
-        return list_of_handles
+    # def take_player_ids_return_handles(self, player_list_of_ids):
+    #     player_list = Player_IO.load_all_player_info()
+    #     list_of_handles = []
+    #     for id in player_list_of_ids:
+    #         for player in player_list:
+    #             if id == int(player["id"]):
+    #             list_of_handles.append(player["handle"])
+    #     return list_of_handles
     # TODO nota ég þetta eitthvað?????????
 
         
@@ -66,13 +64,17 @@ class Team_IO(Team):
         with open (self.file_path, "r", encoding="utf-8") as teams_file:
             csv_reader = DictReader(teams_file)
             teams_list = list(csv_reader)
-            # for teams in teams_list:
-            #      teams_list.append(line.split(",")[0])
         return teams_list
-    # TODO hvað viljum við fá frá þessu?
 
-    def view_all_teams_name_and_captains
-    
+
+    def view_all_teams_name_and_captains(self):
+        all_teams = self.view_all_teams()
+        list_of_team_name_and_captain_name = []
+        for team in all_teams:
+            list_of_team_name_and_captain_name.append({"team": team["team"], "captain": team["captain"]})
+        return list_of_team_name_and_captain_name
+
+
     def players_team_none(self):
         """opens a file and returns a list of players short info
             that have not yet been assigned to a team"""
@@ -85,60 +87,19 @@ class Team_IO(Team):
         return list_of_non_team_players_short_info
             
             
-    def view_all_players_in_team(self, team_name):
+    def view_all_players_in_team(self, team_find_name):
         """views_all_teams() and select a team and returns all players in  said team"""
-        all_teams = view_all_teams()
-        for teams in all_teams:
-            if 
-        with open(self.file_path, "r", encoding="utf-8") as team_file:
-
-
-
+        all_teams = self.view_all_teams()
+        for team in all_teams:
+            if team["team"] == team_find_name:
+                return team
     
+    def check_if_team_name_exists(self, team_name):
+        all_teams = self.view_all_teams()
+        for teams in all_teams:
+            if teams["team"] == team_name:
+                return True
+        return False
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# from typing import List
-
-
-# class TeamsData:
-#     """
-#     Minimal data-layer class for loading teams from a local CSV/text file.
-#     """
-
-#     def __init__(self, filepath: str) -> None:
-#         self.filepath: str = filepath
-#         self.teams: List[str] = []
-
-#     def load_teams(self) -> List[str]:
-#         """Load team names from the local file and return them as a list."""
-#         self.teams = []  # reset in case loaded before
-
-#         with open(self.filepath, "r", encoding="utf-8") as file:
-#             for line in file:
-#                 name: str = line.strip()
-#                 if name:  # ignore empty lines
-#                     self.teams.append(name)
-
-#         return self.teams
