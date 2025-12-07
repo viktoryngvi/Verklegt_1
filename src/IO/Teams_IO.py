@@ -18,24 +18,6 @@ class Team_IO(Team):
             teams_file.write("\n")
         return "Done!"
 
-
-    # def take_player_ids_return_handles(self, player_list_of_ids):
-    #     player_list = Player_IO.load_all_player_info()
-    #     list_of_handles = []
-    #     for id in player_list_of_ids:
-    #         for player in player_list:
-    #             if id == int(player["id"]):
-    #             list_of_handles.append(player["handle"])
-    #     return list_of_handles
-    # TODO nota ég þetta eitthvað?????????
-
-        
-
-
-
-
-
-
     def change_team_captain(self, find_team, new_captain):
         """This checks all team captains and compares them with the inputted captains, then updates
         the captain value and finds the inputted new team captain in the team and makes him the new captain"""
@@ -69,6 +51,7 @@ class Team_IO(Team):
 
 
     def view_all_teams_name_and_captains(self):
+        """returns all team names and cpatains of that team"""
         all_teams = self.view_all_teams()
         list_of_team_name_and_captain_name = []
         for team in all_teams:
@@ -88,11 +71,11 @@ class Team_IO(Team):
         return list_of_non_team_players_short_info
             
             
-    def view_all_players_in_team(self, team_find_name):
+    def view_all_players_in_team(self, team_name):
         """views_all_teams() and select a team and returns all players in  said team"""
         all_teams = self.view_all_teams()
         for team in all_teams:
-            if team["team"] == team_find_name:
+            if team["team"] == team_name:
                 return team
             
     def view_captains_team(self, find_captain_handle):
@@ -103,6 +86,7 @@ class Team_IO(Team):
                 return team
     
     def check_if_team_name_exists(self, team_name):
+        """takes a team name and checks if that team name is already in use"""
         all_teams = self.view_all_teams()
         for teams in all_teams:
             if teams["team"] == team_name:
@@ -110,6 +94,7 @@ class Team_IO(Team):
         return False
     
     def check_if_player_handle_in_team(self, team, handle):
+        """takes a player handle and checks if that player handle is in the team"""
         players_in_team = self.view_all_players_in_team(team)
         for handles_in_team in players_in_team[2:]:
             if handles_in_team == handle:

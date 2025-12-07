@@ -1,5 +1,3 @@
-import csv
-import os
 from IO.Player_IO import Player_IO
 from Teams_IO import Team_IO
 from IO.Event_IO_test import Event_IO_test
@@ -16,76 +14,89 @@ class DLWrapper:
 
     # Player methods
     def create_player(self, player : Player_IO):
-         return self.playerio.create_player(player)
+        """takes all player info and appends that into the player file"""
+        return self.playerio.create_player(player)
 
-    def check_if_player_exists(self, player : Player_IO):
-        return self.playerio.check_if_player_exists(player)
-    
     def edit_player_info(self, handle, str_to_change, new_change):
+        """takes new value and changes the old value to the new desired input"""
         return self.playerio.edit_player_info(handle, str_to_change, new_change)
-    
-    def load_all_player_short_info(self):
-        return self.playerio.load_all_player_short_info(self)
-    
+
     def load_all_player_info(self):
+        """returns a list of dictionarys of all players"""
         return self.playerio.load_all_player_info(self)
-    
-    def check_if_handle_exists_with_player(self, player : Player_IO):
-        return self.playerio.check_if_handle_exists_with_player(player)
-    
+
+    def load_all_player_short_info(self):
+        """loads all the players and gives a list of dictionarys of each players id, name, handle and team name"""
+        return self.playerio.load_all_player_short_info(self)
+
     def check_if_handle_exists_with_handle(self, handle):
-        return self.playerio.check_if_handle_exists_with_handle(handle)
-    
+        """takes handle and checks player_list if that handle is in use"""
+        return self.playerio.check_if_handle_in_use(handle)
+
+    def check_if_handle_exists_with_player(self, player: Player_IO):
+        """takes player object and gets the handle and checks if that handle is in use"""
+        return self.playerio.check_if_handle_exists_with_player(player)
+
     def check_last_id(self):
+        """checks the last players id (used to check how many players have been created)"""
         return self.playerio.check_last_id(self)
-    
-    def Check_if_specific_id_exists(self):
-        pass     # TODO þarf maður þetta??????????????????????????????????????
 
 
     # team methods
 
     def create_team(self, team_name, captain_id, list_of_player_ids):
+        """takes team_name, team_captain_id and a list of player_ids and creates the team in the csv file"""
         return self.teamio.create_team(self)
 
     def check_if_team_name_exists(self):
+        """takes a team name and checks if that team name is in use"""
         return self.teamio.check_if_team_name_exists(self)
     
     def change_team_captain(self, find_team, new_captain):
-        return self.teamio.change_team_captain(self)
+        """takes the team name, new captain and changes the captain of the team"""
+        return self.teamio.change_team_captain(self, find_team, new_captain)
     
     def view_all_teams(self):
+        """returns a list of dictionarys of all teams"""
         return self.teamio.view_all_teams(self)
     
     def players_team_none(self):
-        """retruns a list of players(id, name and handle) that dont have a team"""
+        """returns a list of players(id, name and handle) that dont have a team"""
         return self.teamio.players_team_none(self)
     
-    def view_all_players_in_team(self):
-        return self.teamio.view_all_players_in_team(self)
+    def view_all_players_in_team(self, team_name):
+        """takes a team name and returns a list of dictionary containing: team_name, team_captain and a list of all players in team"""
+        return self.teamio.view_all_players_in_team(self, team_name)
     
     def view_all_teams_name_and_captains(self):
+        """gives only team_name and team_captain of all teams in file"""
         return self.teamio.view_all_players_in_team(self)
 
-    def check_if_player_handle_in_team(self, handle):
-        return self.teamio.check_if_player_handle_in_team(self)
+    def check_if_player_handle_in_team(self, team, handle):
+        """takes team_name and handle and checks if the handle is in in the team"""
+        return self.teamio.check_if_player_handle_in_team(self, team, handle)
     
     def view_captains_team(self, find_captains_handle):
+        """takes a captains handle and gives all the information of the team"""
         return self.teamio.view_captains_team(self, find_captains_handle)
 
 
 
     # event blueprint methods
     def create_empty_event(self):
+        """creates an empty event for organizer to fill out before making public"""
         return self.event_blueprint.create_empty_event(self)
     
     def write_team_into_empty_event(self, team):
+        """takes team name and puts into the event"""
         return self.event_blueprint.write_team_into_empty_event(self, team)
     
     def check_if_team_in_event(self, team):
+        """checks if the team is already in the event_blueprint"""
         return self.event_blueprint.check_if_team_in_event(self, team)
     
     def how_many_teams_in_event(self):
+        """checks how many teams have been registered intp the event_blueprint returns int"""
         return self.event_blueprint.how_many_teams_in_event(self)
     
 
