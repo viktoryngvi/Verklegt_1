@@ -60,8 +60,6 @@ from csv import DictReader
 #     player_file.write(",".join(values))
 #     player_file.write("\n")
 
-from Player_IO import Player_IO
-
 # def create_team(name, captain, players):
 #     with open("data/teams_test.csv", "a", encoding="utf-8") as teams_file:
 #         teams_file.write(f"{name},{captain},")
@@ -73,25 +71,49 @@ from Player_IO import Player_IO
 #     print("Done!")
 
 
+from IO.Player_IO import Player_IO
 
-def take_player_ids_return_handles(player_list_of_ids):
-    player_list = Player_IO.load_all_player_info()
-    list_of_handles = []
-    for id in player_list_of_ids:
-        for player in player_list:
-            if id == int(player["id"]):
-                list_of_handles.append(player["handle"])
-    print(list_of_handles)
+def create_team(name, captain_id, list_of_player_ids):
+    """Takes three variables team_name, team_captain-in id, list af player_id´s and writes it into 
+    the teams.csv file"""
+    with open("data/teams_test.csv", "a", encoding="utf-8") as teams_file:
+        captain_handle = Player_IO.take_id_return_handle(captain_id)
+        teams_file.write(f"{name},{captain_handle},")
+        for player_id in list_of_player_ids:
+            player_handle = Player_IO.take_id_return_handle(player_id)
+            teams_file.write(player_handle)
+        teams_file.write("\n")
+    print("Done!")
 
-player_list_of_ids = [2, 6, 20]
-take_player_ids_return_handles(player_list_of_ids)
 
-# player_dicts = [{"dict1": "hehehe"}, {"dict2": "hihihi"}, {"dict3": "hohohoho", "dict3,1": "hahahaha"}]
+
+# def take_player_ids_return_handles(player_list_of_ids):
+#     player_list = Player_IO.load_all_player_info()
+#     list_of_handles = []
+#     for id in player_list_of_ids:
+#         for player in player_list:
+#             if id == int(player["id"]):
+#                 list_of_handles.append(player["handle"])
+#     print(list_of_handles)
+
+# player_list_of_ids = [2, 6, 20]
+# take_player_ids_return_handles(player_list_of_ids)
+
+# player_ids = [1, 5, 2]
 # name = input("input name of team::")
-# captain = input("input id of captain: ")
-# players = player_dicts
+# captain_id = input("input id of captain: ")
+
+
+# created_team = create_team(name, captain_id, player_ids)
 
 
 
 
-# created_team = create_team(name, captain, players)
+
+def players_team_none():
+    list_of_non_team_players_short_info = []
+    all_players = Player_IO.load_all_player_info()
+    for players in all_players:
+        if players["team"] == None:
+            list_of_non_team_players_short_info.append({"id":["id"], "name": line["name"], "handle": line["handle"]})
+    return list_of_non_team_players_short_info
