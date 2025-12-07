@@ -158,7 +158,7 @@ class OrganizerUI:
         matches = self.ll.get_unfinished_matches(tournament_name)
 
         print("\nUnfinished Matches:")
-        selected_match = choose_from_list("Select Match by number: ", matches)      # choose match
+        selected_match = choose_from_list("Select Match by number: ", matches)      
 
         # get scores and make sure they are integers with input helper
         print("\nEnter the scores for the match:")
