@@ -16,7 +16,7 @@ class Team_IO(Team):
                 player_handle = Player_IO.take_id_return_handle(player_id)
                 teams_file.write(player_handle)
             teams_file.write("\n")
-        print("Team created!")
+        return "Done!"
 
 
     # def take_player_ids_return_handles(self, player_list_of_ids):

@@ -35,7 +35,7 @@ class Player_IO(Player):
             player_list = list(csv_reader)
 
         for player in player_list:
-            handle = int(player["handle"])
+            handle = str(player["handle"])
             if find_player_handle == handle:
                 player_to_edit = player
                 break
