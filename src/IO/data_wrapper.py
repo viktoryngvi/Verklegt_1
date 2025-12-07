@@ -41,7 +41,6 @@ class DLWrapper:
         """checks the last players id (used to check how many players have been created)"""
         return self.playerio.check_last_id(self)
 
-
     # team methods
 
     def create_team(self, team_name, captain_id, list_of_player_ids):

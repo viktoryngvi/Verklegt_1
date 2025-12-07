@@ -122,39 +122,39 @@ from csv import DictReader
 
 
 
-def check_if_player_handle_exists(self, player: Player):
-    """checks if some player in the file has the same name as the inputted handle"""
-    player_list = self.load_all_player_info()
-    list_of_handles = []
-    for players in player_list:
-        handle = str(players["handle"])
-        list_of_handles.append(handle)
-    if player.handle in list_of_handles:
-        return True
-    return False
+# def check_if_player_handle_exists(self, player: Player):
+#     """checks if some player in the file has the same name as the inputted handle"""
+#     player_list = self.load_all_player_info()
+#     list_of_handles = []
+#     for players in player_list:
+#         handle = str(players["handle"])
+#         list_of_handles.append(handle)
+#     if player.handle in list_of_handles:
+#         return True
+#     return False
 
-def check_if_handle_exists_with_player(self, player: Player):
-    """checks ef the inputted handle is in use in the player list"""
-    player_list = self.load_all_player_info()
-    list_of_handels = []
-    for players in player_list:
-        if player.handle
-        handles_of_existing_players = str(players["handle"])
-        list_of_handels.append(handles_of_existing_players)
-    if player.handle in list_of_handels:
-        return True
-    else:
-        return False
+# def check_if_handle_exists_with_player(self, player: Player):
+#     """checks ef the inputted handle is in use in the player list"""
+#     player_list = self.load_all_player_info()
+#     list_of_handels = []
+#     for players in player_list:
+#         if player.handle
+#         handles_of_existing_players = str(players["handle"])
+#         list_of_handels.append(handles_of_existing_players)
+#     if player.handle in list_of_handels:
+#         return True
+#     else:
+#         return False
         
 
-def check_if_handle_exists_with_handle(self, handle):
-    """checks ef the inputted handle is in use in the player list"""
-    player_list = self.load_all_player_info() 
-    list_of_handels = []
-    for players in player_list:
-        handles_of_existing_players = str(players["handle"])
-        list_of_handels.append(handles_of_existing_players)
-    if handle in list_of_handels:
-        return True
-    else:
-        return False
+# def check_if_handle_exists_with_handle(self, handle):
+#     """checks ef the inputted handle is in use in the player list"""
+#     player_list = self.load_all_player_info() 
+#     list_of_handels = []
+#     for players in player_list:
+#         handles_of_existing_players = str(players["handle"])
+#         list_of_handels.append(handles_of_existing_players)
+#     if handle in list_of_handels:
+#         return True
+#     else:
+#         return False

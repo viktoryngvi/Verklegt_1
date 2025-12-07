@@ -3,16 +3,19 @@ from models.event import Event
 from IO.Teams_IO import Team_IO
 
 class Event_IO_test(Event):
-    def __init__(self,):
+    def __init__(self):
         self.file_path = "data/tournament_blueprint.csv"
 
     def read_file_as_list_of_dict(self):
+        """shortcut for reusable code"""
         with open(self.file_path, "r", encoding="utf-8") as event_file:
             csv_reader = DictReader(event_file)
             event_data = list(csv_reader)
-            return event_data
+        return event_data
     
     def create_empty_event(self):
+        """takes event details and rewrites the event blueprint file to have all the details of the event in
+        the file"""
         with open(self.file_path, "w", encoding="utf-8") as event_file:
             event_file.write(f"{"id"}{"team_name"}{self.name},{self.game_type},\n")
             team_id = 1
@@ -22,6 +25,7 @@ class Event_IO_test(Event):
         return "Event created!"
 
     def write_team_into_empty_event(self, team):
+        """takes a team name and writes it into the blueprint"""
         event_data = self.read_file_as_list_of_dict()        
         next_id = self.find_next_useable_id()
         for line in event_data:
@@ -36,22 +40,23 @@ class Event_IO_test(Event):
                 event_file.write(",".join(values))
                 event_file.write("\n")
         return f"{team} is now a part of this event!"
-    
+
+    def check_if_team_in_event(self, team):
+        """takes team name and checks if the team is in the event"""
+        event_data = self.read_file_as_list_of_dict()
+        for line in event_data:
+            if line["team_name"] == team:
+                return True
+        return False
+
     def find_next_useable_id(self):
+        """checks the next id that has no team associated with it"""
         event_file = self.read_file_as_list_of_dict()
         for line in event_file:
             if line["team_name"] == None:
                 return line["id"]
 
-    def check_if_team_in_event(self, team):
-        event_data = self.read_file_as_list_of_dict()
-        for line in event_data:
-            if line["team_name"] == team:
-                return True
-        return False    
-
     def how_many_teams_in_event(self):
-        event_data = self.read_file_as_list_of_dict()
-        for line in event_data:
-            if line["team_name"] == None:
-                return line["id"]
+        """checks how many teams are in the event"""
+        next_empty_id = self.find_next_useable_id()
+        return int(next_empty_id) - 1
