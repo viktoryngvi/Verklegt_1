@@ -1,8 +1,8 @@
 import csv
 import os
 from IO.Player_IO import Player_IO
-#from Teams_IO import Team_IO
-from IO.Tournament_Blueprint_IO import Tournament_Blueprint_IO
+from Teams_IO import Team_IO
+from IO.Event_IO_test import Tournament_Blueprint_IO
 # from IO.event_io import EventIO
 # from IO.tournament_io import TournamentIO
 # from models.tournament import Tournament
@@ -69,11 +69,15 @@ class DLWrapper:
     def view_all_players_in_team(self):
         return self.teamio.view_all_players_in_team(self)
     
-    def view_all_teams_nae_and_captains(self):
+    def view_all_teams_name_and_captains(self):
         return self.teamio.view_all_players_in_team(self)
 
     def check_if_player_handle_in_team(self, handle):
         return self.teamio.check_if_player_handle_in_team(self)
+    
+    def view_captains_team(self, find_captains_handle):
+        return self.teamio.view_captains_team(self, find_captains_handle)
+
     
 
 
