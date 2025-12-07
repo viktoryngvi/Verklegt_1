@@ -37,6 +37,8 @@ class DLWrapper:
     
     def check_last_id(self, player :Player_IO):
         return self.playerio.check_last_id(player)
+    
+    def Check_if_specific_id_exists(self)
 
     
 

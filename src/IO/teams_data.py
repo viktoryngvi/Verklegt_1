@@ -11,8 +11,25 @@ class Team_IO(Team):
         the teams.csv file"""
         with open(self.file_path, "a", encoding="utf-8") as teams_file:
             teams_file.write(f"{self.name},{self.captain},{self.players}")
+
+    
+
+
+    def take_player_ids_return_handles(player_list_of_ids):
+        player_list = Player_IO.load_all_player_info()
+        list_of_handles = []
+        for id in player_list_of_ids:
+            for player in player_list:
+                if id == int(player["id"]):
+                list_of_handles.append(player["handle"])
+        return list_of_handles
+
         
-        
+
+
+
+
+
 
     def change_team_captain(self, find_team, new_captain):
         """This checks all team captains and compares them with the inputted captains, then updates
@@ -46,6 +63,9 @@ class Team_IO(Team):
             for line in teams_file:
                  teams_list.append(line.split(",")[0])
         return teams_list
+    
+    def players_team_none(self):
+        return list_of_non_team_players
             
     def view_all_players_in_team(self):
         """views_all_teams() and select a team and returns all players in  said team"""
