@@ -241,7 +241,7 @@ class Validate:
         return None
     
 
-    def validate_email(email: str) -> None:
+    def validate_email(self, email: str) -> None:
         """
         Validates the new updated email format against common structural rules (e.g., @ symbol, dots).
         """
@@ -281,7 +281,7 @@ class Validate:
         return None
     
 
-    def validate_address(address: str) -> None:
+    def validate_address(self, address: str) -> None:
         """
         Validates the new address format.
         - Must not be empty.
