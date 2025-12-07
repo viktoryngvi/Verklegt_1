@@ -14,3 +14,6 @@ class TeamLL:
                 return "Player's id does not exist" 
             
         create_team = self._dl_wrapper.create_team(cap_id, team_name, players_id)
+
+    def load_player_short_info(self):
+        return self._dl_wrapper.load_all_player_short_info
