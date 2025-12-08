@@ -1,7 +1,8 @@
 from UI.shared_ui_helpers import view_teams
 from UI.shared_ui_helpers import view_schedule
-
-
+from UI.input_helper import (
+    clear_screen,
+)
 
 class SpectatorUI:
     def __init__(self, ll, menu_ui):
@@ -9,6 +10,7 @@ class SpectatorUI:
         self.menu_ui = menu_ui
 
     def show_menu(self) -> str:
+        clear_screen()
         self.menu_ui.print_header("SPECTATOR MENU")
         print("                ║                                                                        ║")
         print("                ║  Browse Tournament Information:                                        ║")

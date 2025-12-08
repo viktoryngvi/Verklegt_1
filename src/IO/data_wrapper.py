@@ -1,5 +1,5 @@
 from IO.Player_IO import Player_IO
-from Teams_IO import Team_IO
+# from Teams_IO import Team_IO
 from IO.Event_IO_test import Event_IO_test
 # from IO.tournament_io import TournamentIO
 # from models.tournament import Tournament
@@ -7,7 +7,7 @@ from IO.Event_IO_test import Event_IO_test
 class DLWrapper:
     def __init__(self):
         self.playerio = Player_IO()
-        self.teamio = Team_IO()
+        # self.teamio = Team_IO()
         self.event_blueprint = Event_IO_test()
         # self.eventio = EventIO()
         # self.tournamentio = TournamentIO()
