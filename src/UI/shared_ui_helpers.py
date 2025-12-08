@@ -36,9 +36,21 @@ def view_schedule(ll, menu_ui):
     # choose tournament basic validation with input helper
     tournament_name = choose_from_list("Select Tournament by number: ", tournaments)   
 
-    # get schedule from LL
-    schedule = ll.get_tournament_schedule(tournament_name)   
-    print(f"\nSchedule for {tournament_name}:\n")
-    print(schedule)
-    input("\nPress Enter to continue...")
-    
+    print(f"\nYou selected: {tournament_name}\n")
+
+    # print the list of events in that tournament
+    events_in_tournament = choose_from_list("Select Event by number: ", ll.get_events_in_tournament(tournament_name))
+    print(f"\nYou selected event: {events_in_tournament}\n")
+
+    # get schedule from ll for that tournament and event
+    schedule = ll.get_tournament_schedule(tournament_name, events_in_tournament)
+    if not schedule:
+        print("No schedule found for this tournament/event.")
+    else:
+        print(f"Schedule for {tournament_name} - {events_in_tournament}:")
+        for match in schedule:
+            print(f" - {match}")
+    input("Press Enter to continue...")
+    return
+
+
