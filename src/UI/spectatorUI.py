@@ -21,13 +21,11 @@ class SpectatorUI:
         print("                ║                                                                        ║")
         print("                ║  [B] Back to main menu                                                 ║")
         print("                ║                                                                        ║")
-        print("                ╠════════════════════════════════════════════════════════════════════════╣")
-        print("                ║  ➤ Select an option: ", end="")
+        print("                ╚════════════════════════════════════════════════════════════════════════╝")
+        print("                   ➤ Select an option: ", end="")
 
         choice = input().lower()
-        print("                ╠════════════════════════════════════════════════════════════════════════╣")
-        print("                ║                    © Reykjavík University - 2025                       ║")
-        print("                ╚════════════════════════════════════════════════════════════════════════╝")
+    
         
         if choice not in ["1", "2", "3", "4", "b"]:
             print(f"Invalid choice. Valid options: 1, 2, 3, 4, B")
@@ -70,7 +68,7 @@ class SpectatorUI:
             input("Press Enter to continue...")
             return 
         if choice == "1":
-            self.ll.get_teams()
+            self.ll.view_all_teams()
             view_teams(self.ll, self.menu_ui)
         if choice == "2":
             self.ll.load_all_player_short_info()

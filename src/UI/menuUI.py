@@ -18,7 +18,6 @@ class MenuUI:
             print("                ╔════════════════════════════════════════════════════════════════════════╗")
             print("                ║" + title.center(72) + "║")
             print("                ╠════════════════════════════════════════════════════════════════════════╣")
-            print("                ║                                                                        ║")
         except Exception:
             # Fallback without unicode/ANSI if terminal doesn't support it
             print("="*80)
@@ -50,7 +49,7 @@ class MenuUI:
         print("                ╚════════════════════════════════════════════════════════════════════════╝")
         print("                  ➤ Select an option: ", end="")
         choice = input().lower()
-        print("                ╚════════════════════════════════════════════════════════════════════════╝")
+        
         
       
         

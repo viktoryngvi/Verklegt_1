@@ -25,14 +25,12 @@ class PlayerUI:
         print("                ║                                                                        ║")
         print("                ║  [B] Back to main menu                                                 ║")
         print("                ║                                                                        ║")
-        print("                ╠════════════════════════════════════════════════════════════════════════╣")
-        print("                ║  ➤ Select an option: ", end="")
+        print("                ╚════════════════════════════════════════════════════════════════════════╝")
+        print("                   ➤ Select an option: ", end="")
 
         choice = input().lower()
-        print("                ╠════════════════════════════════════════════════════════════════════════╣")
-        print("                ║                    © Reykjavík University - 2025                       ║")
-        print("                ╚════════════════════════════════════════════════════════════════════════╝")
-        
+       
+       
         if choice not in ["1", "2", "3", "4", "b"]:
             print(f"Invalid choice. Valid options: 1, 2, 3, 4, B")
             input("Press Enter to continue...")
@@ -57,7 +55,7 @@ class PlayerUI:
         self.menu_ui.print_header("MY PROFILE")
         handle = get_non_empty_input("Enter your player handle: ").strip().lower()
 
-        profile = self.ll.get_player_profile(handle)
+        profile = self.ll.load_player_info(handle)
         if profile:
             print("\n" + str(profile))
         else:
