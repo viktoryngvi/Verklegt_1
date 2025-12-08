@@ -2,12 +2,11 @@ from models.person import Person
 from models.event import Event
 
 class Tournament:
-    def __init__(self, name: str, type: str, location: str, start_date: str, end_date: str, contact_person: Person, events: list[Event]):
+    def __init__(self, tournament_id: int, name: str, venue: str, date_start: str, date_end: str, contact_mobile: str, contact_email: str):
+        self.tournament_id = tournament_id
         self.name = name
-        self.type = type
-        self.location = location
-        self.start_date = start_date
-        self.end_date = end_date
-        self.contact_person = contact_person
-        self.events = events
-        pass
+        self.venue = venue
+        self.date_star = date_start
+        self.date_end = date_end
+        self.contact_mobile = contact_mobile
+        self.contact_email = contact_email

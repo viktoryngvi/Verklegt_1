@@ -1,49 +1,12 @@
-from models.player import Player
 from IO.data_wrapper import DLWrapper
 from LL.validate import Validate
 
-
-
-###TODO LISTI
-# 
-
-class PlayerLL:
-    """
-    The Player Logical Layer (LL) class.
-    
-    This layer is responsible for handling business logic related to Player objects,
-    including validation of data fields (e.g., name, email, DOB) and coordinating 
-    data persistence by interacting with the Data Layer (DLWrapper).
-    """
+class CaptainLL:
     def __init__(self, dl_wrapper: DLWrapper, validate: Validate):
-        """
-        Initializes the PlayerLL instance with a Data Layer wrapper.
-        
-        This dependency injection allows the PlayerLL to access storage functions 
-        without knowing the underlying storage implementation (e.g., CSV, database).
-
-        :param dl_wrapper: An instance of DLWrapper used for all data access operations.
-        :type dl_wrapper: DLWrapper
-        """
         self._dl_wrapper = dl_wrapper
         self._validate = validate
 
-        
-    def create_player(self, player: Player):
-        """
-        Validates the player data and, if valid, passes it to the Data Layer for storage.
-        """
-        validate_errors = self._validate.validate_player(player)
-
-        if validate_errors:
-            # If a list of errors is returned, stop and return the errors.
-            return validate_errors
-        
-        # If valid, pass the player object to the Data Layer for creation.
-        return self._dl_wrapper.create_player(player)
-
-
-    def edit_player_phone(self, handle: str, phone: str) -> str:
+    def edit_player_phone_cap(self, team: str, handle: str, phone: str) -> str:
         """
         Handles the business logic for updating an existing player's information.
         """
@@ -51,6 +14,9 @@ class PlayerLL:
         if not existing_player:
             return "Error: Player handle does not exists"
         
+        existing_player_team = self._dl_wrapper.check_if_player_handle_in_team(team, handle)
+        if not existing_player_team:
+            return "Error: Player handle does not exists in this team"
         # Validate the updated data
         validate_error = self._validate.validate_phone(phone)
         if validate_error:
@@ -63,13 +29,20 @@ class PlayerLL:
             return "Error: Failed to update player"
 
 
-    def edit_player_email(self, handle: str, email: str) -> str:
+    def edit_player_email_cap(self, team: str, handle: str, email: str) -> str:
         """
+        existing_player_team = self._dl_wrapper.check_if_player_handle_in_team(team, handle)
+        if not existing_player_team:
+            return "Error: Player handle does not exists in this team"
         Handles the business logic for updating an existing player's information.
         """
         existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
+        
+        existing_player_team = self._dl_wrapper.check_if_player_handle_in_team(team, handle)
+        if not existing_player_team:
+            return "Error: Player handle does not exists in this team"
         
         # Validate the updated data
         validate_error = self._validate.validate_email(email)
@@ -83,13 +56,17 @@ class PlayerLL:
         return "Error: Failed to update player"
 
 
-    def edit_player_address(self, handle: str, address: str) -> str:
+    def edit_player_address_cap(self, team: str, handle: str, address: str) -> str:
         """
         Handles the business logic for updating an existing player's information.
         """
         existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
+        
+        existing_player_team = self._dl_wrapper.check_if_player_handle_in_team(team, handle)
+        if not existing_player_team:
+            return "Error: Player handle does not exists in this team"
         
         # Validate the updated data
         validate_error = self._validate.validate_address(address)
@@ -103,7 +80,7 @@ class PlayerLL:
             return "Error: Failed to update player"
 
 
-    def edit_player_handle(self, handle: str, handle_str: str) -> str:
+    def edit_player_handle_cap(self, team: str, handle: str, handle_str: str) -> str:
         """
         Handles the business logic for updating an existing player's information.
         """
@@ -111,6 +88,11 @@ class PlayerLL:
         existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
+        
+
+        existing_player_team = self._dl_wrapper.check_if_player_handle_in_team(team, handle)
+        if not existing_player_team:
+            return "Error: Player handle does not exists in this team"
         
         existing_new_handle = self._dl_wrapper.check_if_handle_exists_with_handle(handle_str)
         if existing_new_handle:
@@ -121,32 +103,3 @@ class PlayerLL:
             return "Success: Player information updated"
         else:
             return "Error: Failed to update player"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        
-
-    
-    
-    
-    
-    

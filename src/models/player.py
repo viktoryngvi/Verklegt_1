@@ -9,3 +9,4 @@ class Player(Person):
         self.team = team
 
     #Team hjá player byrjar sem None, sem þýðir að hann er ekki í neinu liði til að byrja með
+    

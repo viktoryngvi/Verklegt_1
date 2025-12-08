@@ -1,6 +1,7 @@
 from LL.logical_wraper import LLWrapper
 from UI.mainUI import UIMain
 
+
 def main():
     ll = LLWrapper()
     ui = UIMain(ll)
@@ -8,10 +9,11 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# Viktor Yngvi Ísaksson
-# 849-0903
-# blöndós 5
-# 2004-12-12
-# viktor@gamil.is
-# vikkman
+"""
+Viktor Yngvi Ísaksson
+849-0000
+blönduhlíð 20
+2004-09-26
+viktor@gmail.com
+vikkman
+"""

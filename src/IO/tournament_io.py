@@ -1,123 +1,110 @@
-import os
 import csv
-from typing import List, Optional
-
+import os
 from models.tournament import Tournament
 from models.person import Person
 
 
 class TournamentIO:
     """
-    Data Layer class for storing and loading Tournament metadata.
-
-    Responsibilities:
-    - Map Tournament <-> CSV rows
-    - Never validate or apply business rules
-    - Never touch UI or Logic classes
+    Handles storing and loading tournaments from tournaments.csv
     """
 
-    def __init__(self, base_path: str = "data") -> None:
-        self.base_path = base_path
-        os.makedirs(self.base_path, exist_ok=True)
-        self.file_path = os.path.join(self.base_path, "tournaments.csv")
+    def __init__(self):
+        self.file_path = os.path.join("data", "tournaments.csv")
+        os.makedirs("data", exist_ok=True)
 
-    # -----------------------------
-    # SAVE
-    # -----------------------------
-    def save_tournament(self, tournament: Tournament) -> bool:
-        """
-        Append (or create) a tournament row in tournaments.csv.
-        DL does NOT check for duplicates or validate anything.
-        """
-
-        file_exists = os.path.exists(self.file_path)
-
-        with open(self.file_path, "a", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
-
-            # write header once
-            if not file_exists:
+        if not os.path.exists(self.file_path):
+            with open(self.file_path, "w", newline="", encoding="utf-8") as f:
+                writer = csv.writer(f)
                 writer.writerow([
                     "name",
                     "type",
-                    "location",
+                    "venue",
                     "start_date",
                     "end_date",
                     "contact_name",
                     "contact_phone",
-                    "contact_email",
+                    "contact_email"
                 ])
+
+    # ----------------------------------------------------------------------
+    # SAVE TOURNAMENT
+    # ----------------------------------------------------------------------
+    def create_tournament(self, tournament: Tournament) -> bool:
+        """Append a new tournament to the CSV file."""
+
+        # Check if name exists
+        if self._tournament_exists(tournament.name):
+            return False
+
+        with open(self.file_path, "a", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
 
             cp = tournament.contact_person
 
             writer.writerow([
                 tournament.name,
                 tournament.type,
-                tournament.location,
+                tournament.venue,
                 tournament.start_date,
                 tournament.end_date,
                 cp.name if cp else "",
                 cp.phone if cp else "",
-                cp.email if cp else "",
+                cp.email if cp else ""
             ])
 
         return True
 
-    # -----------------------------
-    # LOAD SINGLE TOURNAMENT
-    # -----------------------------
-    def load_tournament(self, name: str) -> Optional[Tournament]:
-        """
-        Load a single tournament by name.
-        Returns a Tournament object, or None if not found.
-        Events list is left as None/empty; LL will attach events.
-        """
-
-        if not os.path.exists(self.file_path):
-            return None
-
-        with open(self.file_path, "r", encoding="utf-8") as f:
-            reader = csv.DictReader(f)
-
-            for row in reader:
-                if row.get("name") == name:
-                    contact = Person(
-                        name=row.get("contact_name", ""),
-                        phone=row.get("contact_phone", ""),
-                        address=None,
-                        dob=None,
-                        email=row.get("contact_email", ""),
-                    )
-
-                    return Tournament(
-                        name=row.get("name", ""),
-                        type=row.get("type", ""),
-                        location=row.get("location", ""),
-                        start_date=row.get("start_date", ""),
-                        end_date=row.get("end_date", ""),
-                        contact_person=contact,
-                        events=[]  # LL can later load events via EventIO
-                    )
-
-        return None
-
-    # -----------------------------
-    # LIST ALL TOURNAMENTS (for UI lists)
-    # -----------------------------
-    def list_tournaments(self) -> List[str]:
-        """
-        Return a list of all tournament names stored in tournaments.csv.
-        Useful for 'view tournament schedule' menus in LL/UI.
-        """
+    # ----------------------------------------------------------------------
+    # LOAD ALL
+    # ----------------------------------------------------------------------
+    def load_all_tournaments(self):
+        """Return a list of Tournament objects."""
 
         if not os.path.exists(self.file_path):
             return []
 
-        names: List[str] = []
+        tournaments = []
+
+        with open(self.file_path, "r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+
+            for row in reader:
+                contact = Person(
+                    name=row["contact_name"],
+                    phone=row["contact_phone"],
+                    address=None,
+                    dob=None,
+                    email=row["contact_email"]
+                )
+
+                t = Tournament(
+                    name=row["name"],
+                    type=row["type"],
+                    location=row["location"],
+                    start_date=row["start_date"],
+                    end_date=row["end_date"],
+                    contact_person=contact,
+                    events=[]
+                )
+
+                tournaments.append(t)
+
+        return tournaments
+
+    # ----------------------------------------------------------------------
+    # EXISTS CHECK
+    # ----------------------------------------------------------------------
+    def _tournament_exists(self, name: str) -> bool:
+        """Return True if tournament with this name already exists."""
+
+        if not os.path.exists(self.file_path):
+            return False
+
         with open(self.file_path, "r", encoding="utf-8") as f:
             reader = csv.DictReader(f)
             for row in reader:
-                if row.get("name"):
-                    names.append(row["name"])
+                if row["name"] == name:
+                    return True
 
-        return names
+        return False
