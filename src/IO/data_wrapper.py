@@ -1,6 +1,6 @@
 from IO.Player_IO import Player_IO
-from Teams_IO import Team_IO
-from IO.Event_IO_test import Event_IO_test
+from IO.Teams_IO import Team_IO
+# from IO.Event_IO_test import Event_IO_test
 # from IO.tournament_io import TournamentIO
 # from models.tournament import Tournament
 
@@ -8,7 +8,7 @@ class DLWrapper:
     def __init__(self):
         self.playerio = Player_IO()
         self.teamio = Team_IO()
-        self.event_blueprint = Event_IO_test()
+        # self.event_blueprint = Event_IO_test()
         # self.eventio = EventIO()
         # self.tournamentio = TournamentIO()
 
@@ -102,26 +102,5 @@ class DLWrapper:
 
 
 
-    # -------------------------
-    # Event / Schedule Methods
-    # -------------------------
-    def save_event(self, tournament_name, event):
-        """Save Event + Matches into CSV (delegated to EventIO)."""
-        return self.eventio.save_event(tournament_name, event)
-
-    def load_event(self, tournament_name):
-        """Load Event + Matches from CSV (delegated to EventIO)."""
-        return self.eventio.load_event(tournament_name)
-
-    # # ---- TOURNAMENT METHODS ----
-    # def create_tournament(self, tournament: Tournament):
-    #     return self._tournament_io.create_tournament(tournament)
-
-    # def load_all_tournaments(self):
-    #     return self._tournament_io.load_all_tournaments()
-    
-    # def save_match_result(self):
-    #     pass #TODO Match Result
-    
 
     

@@ -42,12 +42,12 @@ class TournamentLL:
     # ----------------------------------------------------------------------
     
     def check_tournament_name(self, tournament: Tournament):
-        self.tournament_name = tournament.name.strip()
+        tournament_name = tournament.name.strip()
 
-        if len(self.tournament_name) == 0:
+        if len(tournament_name) == 0:
             return "Tournament name cannot be empty."
 
-        if len(self.tournament_name) < 3 or len(self.tournament_name) > 60:
+        if len(tournament_name) < 3 or len(tournament_name) > 60:
             return "Tournament name must be between 3–60 characters."
 
         return True
@@ -59,7 +59,7 @@ class TournamentLL:
 
 
     def check_tournament_type(self, tournament_type: str):
-        self.tournament_type = tournament_type.strip()
+        tournament_type_stripped = tournament_type.strip()
 
         allowed_names = ["Knockout", "Double Elimination"]
 
@@ -83,8 +83,8 @@ class TournamentLL:
         if self.start >= self.end:
             return "Start date must be before end date."
 
-        if (self.end - self.start).days != 2:
-            return "Tournament must span exactly 3 days."
+        if (self.end - self.start).days < 4:
+            return "Tournament must span more then 4 days."
 
         return True
 
@@ -96,14 +96,14 @@ class TournamentLL:
         errors = []
 
         check_name = self.check_tournament_name(tournament)
-        check_type = self.check_tournament_type(tournament.type)
+        #check_type = self.check_tournament_type(tournament.type)
         check_dates = self.check_dates(tournament)
 
         if check_name is not True:
             errors.append(f"Name: {check_name}")
 
-        if check_type is not True:
-            errors.append(f"Type: {check_type}")
+        # if check_type is not True:
+        #     errors.append(f"Type: {check_type}")
 
         if check_dates is not True:
             errors.append(f"Dates: {check_dates}")
