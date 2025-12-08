@@ -1,3 +1,6 @@
+import os
+import platform
+
 """
 Input helper for the functions in the UI modules
 only to validate basic inputs for example empty inputs or integer inputs
@@ -46,3 +49,17 @@ def choose_from_list(prompt: str, items: list):
     print("")
     idx = get_integer_input(prompt) - 1
     return items[idx]
+
+
+def clear_screen():
+    """Clear the screen between menus
+        the function works different on windows and mac/linux
+        so first check what OS the program is running on then use the correct command"""
+    
+    if platform.system() == "Windows":
+        # cls means clearing the screen 
+        os.system("cls")
+    else:
+        # on mac and linux use clear command to clear the screen
+        os.system("clear")
+

@@ -5,6 +5,7 @@ from IO.Teams_IO import Team_IO
 class Event_IO(Event):
     def __init__(self):
         self.file_path = "data/tournament_blueprint.csv"
+        self.public_file = "data/schedule.csv"
 
     def read_file_as_list_of_dict(self):
         """shortcut for reusable code"""
@@ -61,16 +62,16 @@ class Event_IO(Event):
         next_empty_id = self.find_next_useable_id()
         return int(next_empty_id) - 1
     
-    
+
     def move_blueprint_to_public(self):
         """should take the filled event_blueprint and make a knockout schedule in the event file for that"""
-        with open(self.get_event_file, "r", encoding="utf-8") as old_event_file:
-            csv_reader = DictReader(old_event_file)
-            old_event_file = list(csv_reader)
+        with open(self.file_path, "r", encoding="utf-8") as event_blueprint:
+            csv_reader = DictReader(event_blueprint)
+            event_blueprint = list(csv_reader)
         
-        with open(self.public_file_path, "w", encoding="utf-8") as public_event_file:
+        with open(self.public_file, "w", encoding="utf-8") as public_event_file:
             public_event_file.write("id,team_name,event_name,event_type")
-            for every_line in old_event_file:
+            for every_line in event_blueprint:
                 public_event_file.write(",".join(every_line.values()))
                 public_event_file.write("\n")
         return "Event is now public"
@@ -78,10 +79,7 @@ class Event_IO(Event):
 
 
 
-    
 
-
-    
     def if_type_is_last_team_standing(self):
         pass
     # mögulega þarf ekki að setja inn í schedule????????? #TODO

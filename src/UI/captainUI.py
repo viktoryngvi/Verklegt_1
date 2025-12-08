@@ -6,6 +6,7 @@ from UI.input_helper import (
     get_choice_input,
     choose_from_list,
     get_optional_input,
+    clear_screen,
 )
 
 class CaptainUI:
@@ -14,6 +15,7 @@ class CaptainUI:
         self.menu_ui = menu_ui
 
     def show_menu(self) -> str:
+        clear_screen()
         self.menu_ui.print_header("CAPTAIN MENU")
         print("                ║                                                                        ║")
         print("                ║  Player Management:                                                    ║")
@@ -30,12 +32,10 @@ class CaptainUI:
         print("                ║  [B] Back to main menu                                                 ║")
         print("                ║                                                                        ║")
         print("                ╠════════════════════════════════════════════════════════════════════════╣")
-        print("                ║  ➤ Select an option: ", end="")
+        print("                  ➤ Select an option: ", end="")
 
         choice = input().lower()
-        print("                ╠════════════════════════════════════════════════════════════════════════╣")
-        print("                ║                    © Reykjavík University - 2025                       ║")
-        print("                ╚════════════════════════════════════════════════════════════════════════╝")
+      
         
         if choice not in ["1", "2", "3", "4", "5", "b"]:
             print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, B")
@@ -105,9 +105,77 @@ class CaptainUI:
 
     def edit_player_info(self):
         # ask for captain id
-        # 
+        self.menu_ui.print_header("EDIT PLAYER INFO")
+        print("                ║                                                                        ║")
+        print("                ║ Enter your handle:                                                     ║")
+        captain_handle = input().strip().lower()
 
-        pass
+        if not captain_handle:
+            print("Handle cannot be empty.")
+            input("Press Enter to continue...")
+            return
+        
+        # show captain's team
+        print("Your team is: ")
+        view_team = self.ll.view_captains_team(captain_handle)
+        if not view_team:
+            print("No team found for this captain.")
+            input("Press Enter to continue...")
+            return
+        
+        print(view_team) # displays the captains team and the players in it
+
+        print("")
+
+        # get the list of players in the captains team
+        print("Select the player you want to edit from your team: ")
+        team_players = self.ll.get_players_in_team(view_team)
+        if not team_players:
+            print("No players found in your team.")
+            input("Press Enter to continue...")
+            return
+        
+        # let the captain choose a player to edit from his team
+        selected_player = choose_from_list("Enter the number of the player: ", team_players)
+        print(f"You selected to edit player: {selected_player}")
+        print("")
+
+        # phone, email, address, handle
+        print("Player selected: ", selected_player)
+        print("Select the information you want to edit: ")
+        print("   [1] Phone")
+        print("   [2] Email")
+        print("   [3] Address")
+        print("   [4] Handle")
+        print("   [B] Back to Captain Menu")
+        choice = input("Enter your choice: ").strip().lower()
+
+        if choice == "1":
+            new_phone = input("Enter new phone number: ").strip()
+            results = self.ll.edit_player_phone_captain(captain_handle, selected_player, new_phone)
+
+        elif choice == "2":
+            new_email = input("Enter new email: ").strip()
+            results = self.ll.edit_player_email_captain(captain_handle, selected_player, new_email)
+        
+        elif choice == "3":
+            new_address = input("Enter new address: ").strip()
+            results = self.ll.edit_player_address_captain(captain_handle, selected_player, new_address)
+
+        elif choice == "4":
+            new_handle = input("Enter new handle: ").strip().lower()
+            results = self.ll.edit_player_handle_captain(captain_handle, selected_player, new_handle)
+        
+        elif choice == "b":
+            return "CAPTAIN_MENU"
+        
+        else:
+            print("Invalid choice. Valid options are 1, 2, 3, 4, B.")
+            input("Press Enter to continue...")
+            return
+        
+        print("\n" + str(results))
+        
 
     def view_team(self): 
         view_teams(self.ll, self.menu_ui)

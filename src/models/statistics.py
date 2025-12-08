@@ -1,1 +1,2 @@
 class Statistics:
+    pass

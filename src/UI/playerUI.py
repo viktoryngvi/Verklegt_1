@@ -1,5 +1,10 @@
 from UI.shared_ui_helpers import view_teams
 from UI.shared_ui_helpers import view_schedule
+from UI.input_helper import (
+    get_non_empty_input,
+    clear_screen,
+)
+
 
 class PlayerUI:
     def __init__(self, ll, menu_ui):
@@ -7,6 +12,7 @@ class PlayerUI:
         self.menu_ui = menu_ui
 
     def show_menu(self) -> str:
+        clear_screen()
         self.menu_ui.print_header("PLAYER MENU")
         print("                ║                                                                        ║")
         print("                ║  My Profile:                                                           ║")
@@ -48,7 +54,21 @@ class PlayerUI:
             return "MAIN_MENU"
 
     def show_profile(self):
-        print("TODO")
+        self.menu_ui.print_header("MY PROFILE")
+        handle = get_non_empty_input("Enter your player handle: ").strip().lower()
+
+        profile = self.ll.get_player_profile(handle)
+        if profile:
+            print("\n" + str(profile))
+        else:
+            print("Player not found.")
+        input("\nPress Enter to continue...")
+
+
+
+        
+
+
     def edit_player(self): 
         # phone, email, address, handle
         # spurja um handle, senda new info til LL
@@ -70,27 +90,30 @@ class PlayerUI:
         choice = input("Enter your choice: ").strip().lower()
 
         if choice == "1":
-            new_phone = input("Enter new phone number: ").strip()
-            self.ll.edit_player_phone(handle, new_phone)
-            print("Phone number updated successfully.")
-            return
-        if choice == "2":
+            new_phone = input("Enter new phone: ").strip()
+            result = self.ll.edit_player_phone(handle, new_phone)
+        
+        elif choice == "2":
             new_email = input("Enter new email: ").strip()
-            self.ll.edit_player_email(handle, new_email)
-            print("Email updated successfully.")
-            return
-        if choice == "3":
+            result = self.ll.edit_player_email(handle, new_email)
+
+        elif choice == "3":
             new_address = input("Enter new address: ").strip()
-            self.ll.edit_player_address(handle, new_address)
-            print("Address updated successfully.")
-            return
-        if choice == "4":
-            new_handle = input("Enter new handle: ").strip()
-            self.ll.edit_player_handle(handle, new_handle)
-            print("Handle updated successfully.")
-            return
+            result = self.ll.edit_player_address(handle, new_address)
+
+        elif choice == "4":
+            new_handle = input("Enter new handle: ").strip().lower()
+            result = self.ll.edit_player_handle(handle, new_handle)
+
         elif choice == "b":
             return "PLAYER_MENU"
+        
+        else:
+            print("Invalid choice. Valid options are 1, 2, 3, 4, B.")
+            input("Press Enter to continue...")
+            return
+        
+        print("\n" + str(result))
         
 
 
