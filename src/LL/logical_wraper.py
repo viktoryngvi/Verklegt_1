@@ -15,7 +15,7 @@ class LLWrapper:
       self.validate = Validate(self.dl_wrapper)
       self.team_ll = TeamLL(self.dl_wrapper)
       self.club_ll = ClubLL(self.dl_wrapper)
-      self.captain_ll = CaptainLL(self.dl_wrapper)
+      self.captain_ll = CaptainLL(self.dl_wrapper, self.validate)
       self.player_ll = PlayerLL(self.dl_wrapper, self.validate)
       self.tournament_ll = TournamentLL(self.dl_wrapper)
 
@@ -104,7 +104,7 @@ class LLWrapper:
    def get_tournament_schedule(self, tournament_name, event_in_tournament):
       return self.tournament_ll.get_tournament_schedule(tournament_name, event_in_tournament)
    
-   
+
    def assign_point(self):
       pass
    
