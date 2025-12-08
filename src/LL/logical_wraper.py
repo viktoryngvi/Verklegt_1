@@ -52,12 +52,9 @@ class LLWrapper:
 
    def edit_player_handle_captain(self, team: str, handle: str, handle_str: str) -> str:
       return self.captain_ll.edit_player_handle_cap(team, handle, handle_str)
-   
-   def get_team_captain(self, team_name):
-      return self.captain_ll.get_team_captain(self, team_name)
-   
-   def view_captain_team(self, handle):
-      return self.captain_ll.view_captain_team(self, handle)
+
+   def view_all_players_in_team(self, team_name): # Players in captains team
+      return self.captain_ll.view_all_players_in_team(self, team_name)
    
    def update_team_captain(self, team_name, handle):
       return self.captain_ll.update_team_captain(self, team_name, handle)
@@ -72,9 +69,6 @@ class LLWrapper:
    
    def view_all_teams(self):
       return self.team_ll.view_all_teams(self)
-   
-   def view_all_players_in_team(self, team_name):
-      return self.team_ll.view_all_players_in_team(self,team_name)
    
    #MATCH METHODS
 
