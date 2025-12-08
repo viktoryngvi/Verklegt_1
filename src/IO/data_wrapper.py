@@ -1,16 +1,15 @@
 from IO.Player_IO import Player_IO
-from IO.Teams_IO import Team_IO
-# from IO.Event_IO_test import Event_IO_test
-# from IO.tournament_io import TournamentIO
-# from models.tournament import Tournament
+from Teams_IO import Team_IO
+from IO.Event_IO import Event_IO
+from IO.Knockout_IO import Knockout
 
 class DLWrapper:
     def __init__(self):
         self.playerio = Player_IO()
         self.teamio = Team_IO()
-        # self.event_blueprint = Event_IO_test()
-        # self.eventio = EventIO()
-        # self.tournamentio = TournamentIO()
+        self.event_blueprint = Event_IO()
+        self.knockout = Knockout()
+
 
     # Player methods
     def create_player(self, player : Player_IO):
@@ -80,7 +79,6 @@ class DLWrapper:
         return self.teamio.view_captains_team(self, find_captains_handle)
 
 
-
     # event blueprint methods
     def create_empty_event(self):
         """creates an empty event for organizer to fill out before making public"""
@@ -98,9 +96,17 @@ class DLWrapper:
         """checks how many teams have been registered intp the event_blueprint returns int"""
         return self.event_blueprint.how_many_teams_in_event(self)
     
+    def move_blueprint_to_public(self):
+        return self.event_blueprint.move_blueprint_to_public(self)
+
+    # knockout style mothods:
+
+    def input_match_result(self, match_id, team_a_score, team_b_score):
+        return self.knockout.input_match_results(self, match_id, team_a_score, team_b_score)
+
+    def create_first_round(self):
+        return self.knockout.create_first_round(self)
 
 
-
-
-
-    
+    def create_tournament(self):
+        pass

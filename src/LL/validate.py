@@ -119,19 +119,9 @@ class Validate:
         """
         self.phone = player.phone
 
-        if len(self.phone) != 8:
-            return "Phone number must be in format 123-4567."
+        if not self.validate_phone(self.phone):
+            return self.validate_phone(self.phone)
 
-        if "-" not in self.phone:
-            return "Invalid format. Example: 123-4567"
-        
-        left, right = self.phone.split("-")
-    
-        if not (left.isdigit() and right.isdigit()):
-            return "Phone can only contain digits and one dash."
-        if len(left) != 3 or len(right) != 4:
-            return "Phone number must be in format 123-4567."
-        
         return True
 
 
