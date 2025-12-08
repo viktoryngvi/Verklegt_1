@@ -17,3 +17,13 @@ blönduhlíð 20
 viktor@gmail.com
 vikkman
 """
+"""
+CAPA TOURNY
+HR
+2025.12.20
+2025.12.24
+1
+Kristófer Kristjan Erlendsson
+email@gmail.com
+787-2550
+"""

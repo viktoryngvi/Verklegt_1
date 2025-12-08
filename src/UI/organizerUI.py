@@ -8,7 +8,7 @@ from UI.input_helper import (
     choose_from_list,
     clear_screen,
 )
-
+from models.tournament import Tournament
 
 class OrganizerUI:
     def __init__(self, ll: Any, menu_ui: Any):
@@ -101,7 +101,7 @@ class OrganizerUI:
         contact_phone = get_non_empty_input("Phone: ")
 
         # Forward everything directly to LL 
-        result = self.ll.create_tournament(
+        result = Tournament(
             name=name,
             location=location,
             start_date=start_date,
@@ -111,6 +111,7 @@ class OrganizerUI:
             contact_phone=contact_phone,
         )
 
+        result = self.ll.create_tournament(result)
         # Print whatever LL returns
         print("\n" + str(result))
         input("Press Enter to continue...")
