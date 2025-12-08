@@ -2,6 +2,7 @@ from IO.Player_IO import Player_IO
 from IO.Teams_IO import Team_IO
 from IO.Event_IO import Event_IO
 from IO.Knockout_IO import Knockout
+from IO.Tournament_IO import Tournament_IO
 
 class DLWrapper:
     def __init__(self):
@@ -9,6 +10,7 @@ class DLWrapper:
         self.teamio = Team_IO()
         self.event_blueprint = Event_IO()
         self.knockout = Knockout()
+        self.tournament = Tournament_IO()
 
 
     # Player methods
@@ -108,5 +110,9 @@ class DLWrapper:
         return self.knockout.create_first_round(self)
 
 
-    def create_tournament(self):
-        pass
+
+    # tournament methods
+    def create_tournament(self, tournament_name):
+        return self.tournament.create_tournament(self, tournament_name)
+    
+    def put_event_into_
