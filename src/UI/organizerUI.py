@@ -259,4 +259,10 @@ class OrganizerUI:
     def create_team(self):
         print("TODO: Team creation will be implemented later.")
 
+    def register_club(self):
+        pass
+
+    # add team to club
+    # view clubs
+    # view club information
 
