@@ -10,8 +10,7 @@ class Event_IO(Event):
     def read_file_as_list_of_dict(self):
         """shortcut for reusable code"""
         with open(self.file_path, "r", encoding="utf-8") as event_file:
-            csv_reader = DictReader(event_file)
-            event_data = list(csv_reader)
+            event_data = list(DictReader(event_file))
         return event_data
     
     def create_empty_event(self):
