@@ -103,5 +103,28 @@ class CaptainLL:
             return "Success: Player information updated"
         else:
             return "Error: Failed to update player"
+        
+    def view_all_players_in_team(self, team_name):
+        existing_team = self._dl_wrapper.check_if_team_name_exists(team_name)
+        if not existing_team:
+            return "Error: Team does not exists"
+        
+        return self._dl_wrapper.view_all_players_in_team(team_name)
+    
+    def update_team_captain(self, team_name, handle):
+        existing_team = self._dl_wrapper.check_if_team_name_exists(team_name)
+        if not existing_team:
+            return "Error: Team does not exists"
+        
+        existing_handle_in_team = self._dl_wrapper.check_if_player_handle_in_team(handle)
+        if not existing_handle_in_team:
+            return "Error: Player's handle is not in team"
+        
+        return self._dl_wrapper.change_team_captain(team_name, handle)
+    
+
+
+
+
 
 

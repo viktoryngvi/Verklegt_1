@@ -9,7 +9,7 @@ class TeamLL:
         if cap_id > last_id:
             return "Captain id does not exist "
         
-        check_team_name = self._dl_wrapper.check_if_team_name_exist(team_name)
+        check_team_name = self._dl_wrapper.check_if_team_name_exists(team_name)
         if check_team_name:
             return "Team name already exists"
         
@@ -21,3 +21,6 @@ class TeamLL:
 
     def load_player_short_info(self):
         return self._dl_wrapper.load_all_player_short_info()
+    
+    def view_all_teams(self):
+        return self._dl_wrapper.view_all_teams()
