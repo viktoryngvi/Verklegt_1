@@ -6,6 +6,7 @@ from UI.input_helper import (
     get_choice_input,
     choose_from_list,
     get_optional_input,
+    clear_screen,
 )
 
 class CaptainUI:
@@ -14,6 +15,7 @@ class CaptainUI:
         self.menu_ui = menu_ui
 
     def show_menu(self) -> str:
+        clear_screen()
         self.menu_ui.print_header("CAPTAIN MENU")
         print("                ║                                                                        ║")
         print("                ║  Player Management:                                                    ║")
@@ -30,12 +32,10 @@ class CaptainUI:
         print("                ║  [B] Back to main menu                                                 ║")
         print("                ║                                                                        ║")
         print("                ╠════════════════════════════════════════════════════════════════════════╣")
-        print("                ║  ➤ Select an option: ", end="")
+        print("                  ➤ Select an option: ", end="")
 
         choice = input().lower()
-        print("                ╠════════════════════════════════════════════════════════════════════════╣")
-        print("                ║                    © Reykjavík University - 2025                       ║")
-        print("                ╚════════════════════════════════════════════════════════════════════════╝")
+      
         
         if choice not in ["1", "2", "3", "4", "5", "b"]:
             print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, B")
@@ -106,7 +106,8 @@ class CaptainUI:
     def edit_player_info(self):
         # ask for captain id
         self.menu_ui.print_header("EDIT PLAYER INFO")
-        print("Enter your handle: ")
+        print("                ║                                                                        ║")
+        print("                ║ Enter your handle:                                                     ║")
         captain_handle = input().strip().lower()
 
         if not captain_handle:

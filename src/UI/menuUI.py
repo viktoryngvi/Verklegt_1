@@ -1,5 +1,9 @@
+from UI.input_helper import (
+    clear_screen,
+)
 class MenuUI:
     def print_header(self, title: str):
+        clear_screen()
         try:
             print("\n")
             print("                ██████╗ ██╗   ██╗██╗███████╗    ███████╗      ███████╗██████╗  ██████╗ ██████╗ ████████╗")
@@ -14,6 +18,7 @@ class MenuUI:
             print("                ╔════════════════════════════════════════════════════════════════════════╗")
             print("                ║" + title.center(72) + "║")
             print("                ╠════════════════════════════════════════════════════════════════════════╣")
+            print("                ║                                                                        ║")
         except Exception:
             # Fallback without unicode/ANSI if terminal doesn't support it
             print("="*80)
@@ -42,12 +47,14 @@ class MenuUI:
         print("                ║                                                                        ║")
         print("                ║  [Q] Quit                                                              ║")
         print("                ║                                                                        ║")
-        print("                ╠════════════════════════════════════════════════════════════════════════╣")
-        print("                ║  ➤ Select an option: ", end="", flush=True)
-        
-        choice = input().lower()
-        
         print("                ╚════════════════════════════════════════════════════════════════════════╝")
+        print("                  ➤ Select an option: ", end="")
+        choice = input().lower()
+        print("                ╚════════════════════════════════════════════════════════════════════════╝")
+        
+      
+        
+        
         
         
         if choice not in ['1', '2', '3', '4', 'q']:

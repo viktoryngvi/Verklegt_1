@@ -1,5 +1,10 @@
 from UI.shared_ui_helpers import view_teams
 from UI.shared_ui_helpers import view_schedule
+from UI.input_helper import (
+    get_non_empty_input,
+    clear_screen,
+)
+
 
 class PlayerUI:
     def __init__(self, ll, menu_ui):
@@ -7,6 +12,7 @@ class PlayerUI:
         self.menu_ui = menu_ui
 
     def show_menu(self) -> str:
+        clear_screen()
         self.menu_ui.print_header("PLAYER MENU")
         print("                ║                                                                        ║")
         print("                ║  My Profile:                                                           ║")
@@ -48,7 +54,21 @@ class PlayerUI:
             return "MAIN_MENU"
 
     def show_profile(self):
-        print("TODO")
+        self.menu_ui.print_header("MY PROFILE")
+        handle = get_non_empty_input("Enter your player handle: ").strip().lower()
+
+        profile = self.ll.get_player_profile(handle)
+        if profile:
+            print("\n" + str(profile))
+        else:
+            print("Player not found.")
+        input("\nPress Enter to continue...")
+
+
+
+        
+
+
     def edit_player(self): 
         # phone, email, address, handle
         # spurja um handle, senda new info til LL
