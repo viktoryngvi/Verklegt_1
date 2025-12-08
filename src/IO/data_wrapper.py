@@ -68,9 +68,9 @@ class DLWrapper:
         """takes a team name and returns a list of dictionary containing: team_name, team_captain and a list of all players in team"""
         return self.teamio.view_all_players_in_team(self, team_name)
     
-    def view_all_teams_name_and_captains(self):
+    def view_all_team_names_and_captains(self):
         """gives only team_name and team_captain of all teams in file"""
-        return self.teamio.view_all_players_in_team(self)
+        return self.teamio.view_all_team_names_and_captains(self)
 
     def check_if_player_handle_in_team(self, team, handle):
         """takes team_name and handle and checks if the handle is in in the team"""
@@ -79,9 +79,13 @@ class DLWrapper:
     def view_captains_team(self, find_captains_handle):
         """takes a captains handle and gives all the information of the team"""
         return self.teamio.view_captains_team(self, find_captains_handle)
+    
+    def view_captain_team_by_team_name(self, team_name):
+        return self.teamio.view_captain_team_by_team_name(self, team_name)
 
 
-    # event blueprint methods
+    # event blueprint methods:
+
     def create_empty_event(self):
         """creates an empty event for organizer to fill out before making public"""
         return self.event_blueprint.create_empty_event(self)
@@ -125,10 +129,8 @@ class DLWrapper:
         return self.knockout.how_many_matches_have_winners(self)
     
 
-    # tournament metods
-
-
     # tournament methods
+
     def create_tournament(self, tournament_name):
         return self.tournament.create_tournament(self, tournament_name)
     
@@ -140,3 +142,5 @@ class DLWrapper:
     
     def view_events_in_tournaments(self, tournament_name):
         return self.tournament.view_events_in_tournament(self, tournament_name)
+    
+    # club methods:

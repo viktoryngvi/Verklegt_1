@@ -22,8 +22,7 @@ class Team_IO(Team):
         """This checks all team captains and compares them with the inputted captains, then updates
         the captain value and finds the inputted new team captain in the team and makes him the new captain"""
         with open(self.file_path, "r", encoding="utf-8") as teams_file:
-            csv_reader = DictReader(teams_file)
-            teams_list = list(csv_reader)
+            teams_list = list(DictReader(teams_file))
         # býr til lista af dicts af liðunum
         
             for each_dict in teams_list:
@@ -43,11 +42,10 @@ class Team_IO(Team):
     def view_all_teams(self):
         """checks all teams and their captain and returns a list of dicts of teams""" #TODO
         with open (self.file_path, "r", encoding="utf-8") as teams_file:
-            csv_reader = DictReader(teams_file)
-            teams_list = list(csv_reader)
-        return teams_list
+            teams_data = list(DictReader(teams_file))
+        return teams_data
 
-    def view_all_teams_name_and_captains(self):
+    def view_all_team_names_and_captains(self):
         """returns all team names and cpatains of that team"""
         all_teams = self.view_all_teams()
         list_of_team_name_and_captain_name = []
@@ -95,3 +93,10 @@ class Team_IO(Team):
             if handles_in_team == handle:
                 return True
         return False
+    
+    def view_captain_team_by_team_name(self, team_name):
+        team_file = self.view_all_teams()
+        for line in team_file:
+            if line["team_name"] == team_name:
+                return line["captain"]
+        return "Team does not exist"

@@ -10,16 +10,15 @@ class Knockout(Match):
 
     def read_schedule_file_as_list_of_dict(self):
         with open(self.file_path, "r", encoding="utf-8") as schedule_file:
-            csv_reader = DictReader(schedule_file)
-            schedule_file = list(csv_reader)
+            schedule_file = list(DictReader(schedule_file))
             return schedule_file
     
 
     def get_match_id(self):
-        match_id = 0
-        match_id +=1
-        return match_id
-    
+        schedule_file = self.read_schedule_file_as_list_of_dict()
+        last_id = int(schedule_file[-1]["match_id"])
+        return last_id + 1
+
     def input_match_results(self, match_id, team_a_score, team_b_score):
         schedule_file = self.read_schedule_file_as_list_of_dict()
         for line in schedule_file:
@@ -37,8 +36,7 @@ class Knockout(Match):
 
     def create_first_round(self):
         with open(self.public_file_path, "r", encoding="utf-8") as public_event_file:
-            csv_reader = DictReader(public_event_file)
-            dict_list = list(csv_reader)
+            dict_list = list(DictReader(public_event_file))
 
         all_team_list = []
         for team in dict_list:
@@ -51,11 +49,9 @@ class Knockout(Match):
             all_team_list.remove(team_a)
             team_b = random.choice(teamsvs)
             all_team_list.remove(team_b)
-
             with open(self.file_path, "a", encoding="utf-8") as schedule_file:
                 schedule_file.write(f"{self.server_id},{int(self.get_match_id())},{self.schedule_time},{team_a},{team_b},team_a_score,team_b_score,winner,")
-            # TODO
-    
+
     def create_round_2_3_and_4(self, round: int):
         schedule_file = self.read_schedule_file_as_list_of_dict()
         list_of_winners_from_bracket = []
