@@ -1,5 +1,5 @@
 from IO.Player_IO import Player_IO
-from Teams_IO import Team_IO
+from IO.Teams_IO import Team_IO
 from IO.Event_IO import Event_IO
 from IO.Knockout_IO import Knockout
 
