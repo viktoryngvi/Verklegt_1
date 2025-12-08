@@ -2,6 +2,7 @@ from IO.Player_IO import Player_IO
 from IO.Teams_IO import Team_IO
 from IO.Event_IO import Event_IO
 from IO.Knockout_IO import Knockout
+from IO.Tournament_IO import Tournament_IO
 
 class DLWrapper:
     def __init__(self):
@@ -9,6 +10,7 @@ class DLWrapper:
         self.teamio = Team_IO()
         self.event_blueprint = Event_IO()
         self.knockout = Knockout()
+        self.tournament = Tournament_IO()
 
 
     # Player methods
@@ -46,9 +48,9 @@ class DLWrapper:
         """takes team_name, team_captain_id and a list of player_ids and creates the team in the csv file"""
         return self.teamio.create_team(self)
 
-    def check_if_team_name_exists(self):
+    def check_if_team_name_exists(self, team_name):
         """takes a team name and checks if that team name is in use"""
-        return self.teamio.check_if_team_name_exists(self)
+        return self.teamio.check_if_team_name_exists(self, team_name)
     
     def change_team_captain(self, find_team, new_captain):
         """takes the team name, new captain and changes the captain of the team"""
@@ -125,5 +127,9 @@ class DLWrapper:
 
     # tournament metods
 
-    def create_tournament(self):
-        pass
+
+    # tournament methods
+    def create_tournament(self, tournament_name):
+        return self.tournament.create_tournament(self, tournament_name)
+    
+    def put_event_into_

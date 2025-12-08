@@ -85,7 +85,7 @@ class Player_IO(Player):
         player_list = self.load_all_player_info()
         for players in player_list:
             if id == int(players["id"]):
-                if players["team"] == None:
+                if players["team"] is None:
                     return False
         return True
     # notað til að checka hvort id passar við player sem er ekki í liði
