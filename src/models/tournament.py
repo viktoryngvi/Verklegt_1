@@ -1,12 +1,19 @@
 from models.person import Person
 from models.event import Event
+from models.contact_person import contact_person
 
-class Tournament:
-    def __init__(self, tournament_id: int, name: str, venue: str, date_start: str, date_end: str, contact_mobile: str, contact_email: str):
+class Tournament(contact_person):
+    def __init__(self, name: str, location: str, start_date: str, end_date: str,
+                 type_choice: int, contact_name: str, contact_email: str,
+                 contact_phone: str, tournament_id: int = None):
+        super().__init__(contact_name,contact_email,contact_phone)
+        
+        
         self.tournament_id = tournament_id
         self.name = name
-        self.venue = venue
-        self.date_star = date_start
-        self.date_end = date_end
-        self.contact_mobile = contact_mobile
-        self.contact_email = contact_email
+        self.location = location
+        self.start_date = start_date   
+        self.end_date = end_date       
+        self.type = type_choice        
+
+

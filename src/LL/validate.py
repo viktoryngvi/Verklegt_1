@@ -43,14 +43,32 @@ class Validate:
         """
         self.address_str = player.address.strip()
 
-        if not self.address_str:
-            return "Address cannot be empty"
+        if self.validate_address(self.address_str):
+            return self.validate_address
         
-        if not any(char.isdigit() for char in self.address_str):
-            return "Address must contain a number"
-        
-        if "  " in self.address_str:
-            return "Adress cannot contain consecutive spaces"
+        return True
+
+
+    def check_player_phone(self, player: Player):
+        """
+        Validates the player's phone number format (8 digits with a dash).
+        """
+        self.phone = player.phone
+
+        if self.validate_phone(self.phone):
+            return self.validate_phone(self.phone)
+
+        return True
+
+
+    def check_player_email(self, player: Player):
+        """
+        Validates the player's email format against common structural rules (e.g., @ symbol, dots).
+        """
+        self.email = player.email
+
+        if self.validate_email(self.email):
+            return self.validate_address(self.email)
         
         return True
 
@@ -112,69 +130,6 @@ class Validate:
 
         return True
     
-
-    def check_player_phone(self, player: Player):
-        """
-        Validates the player's phone number format (8 digits with a dash).
-        """
-        self.phone = player.phone
-
-        if len(self.phone) != 8:
-            return "Phone number must be in format 123-4567."
-
-        if "-" not in self.phone:
-            return "Invalid format. Example: 123-4567"
-        
-        left, right = self.phone.split("-")
-    
-        if not (left.isdigit() and right.isdigit()):
-            return "Phone can only contain digits and one dash."
-        if len(left) != 3 or len(right) != 4:
-            return "Phone number must be in format 123-4567."
-        
-        return True
-
-
-    def check_player_email(self, player: Player):
-        """
-        Validates the player's email format against common structural rules (e.g., @ symbol, dots).
-        """
-        self.email = player.email
-        self.len_email = len(self.email)
-
-        att_symbol = self.email.find("@")
-        email_split = self.email.split("@")
-        two_dots = self.email.find("..")
-        size = self.email.count("@")
-        pat = self.email.find(".@")
-
-        if "@" not in self.email:
-            return "@ symbol is missing."
-
-        if size > 1:
-            second_at = self.email.find("@", att_symbol+1)
-            return f"{self.email}\n{' '*second_at}^--there is an extra @ symbol here."
-        
-        if self.email[0] == "@" and att_symbol == 0:
-            return "There is nothing before the @ symbol."
-        
-        if att_symbol == self.len_email - 1:
-            return f'{self.email}\n{" "*att_symbol}^--there is nothing after the @ symbol.'
-        
-        if self.email[0] == ".":
-            return "Email address starts with a dot."
-        
-        if ".." in self.email:
-            return f"{self.email}\n{' '*two_dots}^--there are consecutive dots here."
-        
-        if ".@" in self.email:
-            return f"{self.email}\n{' '*pat}^--there is an extra dot here."
-        
-        if "." not in email_split[1]:
-            return "Top-level domain is missing."
-        
-        return True
-
 
     def validate_player(self, player: Player) -> None:
         """
@@ -299,4 +254,5 @@ class Validate:
         
         return None
 
+    
     
