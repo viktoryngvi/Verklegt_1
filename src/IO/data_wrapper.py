@@ -1,8 +1,14 @@
 from IO.Player_IO import Player_IO
+<<<<<<< HEAD
 from Teams_IO import Team_IO
 from IO.Event_IO_test import Event_IO_test
 # from IO.tournament_io import TournamentIO
 # from models.tournament import Tournament
+=======
+from IO.Teams_IO import Team_IO
+from IO.Event_IO import Event_IO
+from IO.Knockout_IO import Knockout
+>>>>>>> e16d35a9702868b280c052a38e0d176afc981b5a
 
 class DLWrapper:
     def __init__(self):
