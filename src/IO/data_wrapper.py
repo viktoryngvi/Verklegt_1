@@ -3,15 +3,16 @@ from IO.Teams_IO import Team_IO
 from IO.Event_IO import Event_IO
 from IO.Knockout_IO import Knockout
 from IO.Tournament_IO import Tournament_IO
+from IO.Club_IO import Club_IO
 
 class DLWrapper:
     def __init__(self):
         self.playerio = Player_IO()
         self.teamio = Team_IO()
-        self.event_blueprint = Event_IO()
-        self.knockout = Knockout()
-        self.tournament = Tournament_IO()
-
+        self.event_blueprintio = Event_IO()
+        self.knockoutio = Knockout()
+        self.tournamentio = Tournament_IO()
+        self.clubio = Club_IO()
 
     # Player methods
     def create_player(self, player : Player_IO):
@@ -88,59 +89,74 @@ class DLWrapper:
 
     def create_empty_event(self):
         """creates an empty event for organizer to fill out before making public"""
-        return self.event_blueprint.create_empty_event(self)
+        return self.event_blueprintio.create_empty_event(self)
     
     def write_team_into_empty_event(self, team):
         """takes team name and puts into the event"""
-        return self.event_blueprint.write_team_into_empty_event(self, team)
+        return self.event_blueprintio.write_team_into_empty_event(self, team)
     
     def check_if_team_in_event(self, team):
         """checks if the team is already in the event_blueprint"""
-        return self.event_blueprint.check_if_team_in_event(self, team)
+        return self.event_blueprintio.check_if_team_in_event(self, team)
     
     def how_many_teams_in_event(self):
         """checks how many teams have been registered intp the event_blueprint returns int"""
-        return self.event_blueprint.how_many_teams_in_event(self)
+        return self.event_blueprintio.how_many_teams_in_event(self)
     
     def move_blueprint_to_public(self):
-        return self.event_blueprint.move_blueprint_to_public(self)
+        return self.event_blueprintio.move_blueprint_to_public(self)
 
     # knockout style mothods:
 
     def input_match_result(self, match_id, team_a_score, team_b_score):
-        return self.knockout.input_match_results(self, match_id, team_a_score, team_b_score)
+        return self.knockoutio.input_match_results(self, match_id, team_a_score, team_b_score)
 
     def create_first_round(self):
-        return self.knockout.create_first_round(self)
+        return self.knockoutio.create_first_round(self)
 
     def create_second_round(self):
-        return self.knockout.create_second_round(self)
+        return self.knockoutio.create_second_round(self)
     
-    def create_third_round(self, round):
-        return self.knockout.create_second_round(self)
-    
-    def create_second_round(self):
-        return self.knockout.create_second_round(self)
+    def create_third_round(self):
+        return self.knockoutio.create_second_round(self)
+
+    def create_fourth_round(self):
+        return self.knockoutio.create_fourth_round(self)
     
     def declare_winner(self):
-        return self.knockout.declare_winner(self)
+        return self.knockoutio.declare_winner(self)
     
     def how_many_matches_have_winners(self):
-        return self.knockout.how_many_matches_have_winners(self)
+        return self.knockoutio.how_many_matches_have_winners(self)
     
 
     # tournament methods
 
     def create_tournament(self, tournament_name):
-        return self.tournament.create_tournament(self, tournament_name)
+        return self.tournamentio.create_tournament(self, tournament_name)
     
     def put_event_into_tournament(self, torunament_name, event_name):
-        return self.tournament.put_event_into_tournament(self, torunament_name, event_name)
+        return self.tournamentio.put_event_into_tournament(self, torunament_name, event_name)
     
     def view_tournaments(self):
-        return self.tournament.view_tournaments(self)
+        return self.tournamentio.view_tournaments(self)
     
     def view_events_in_tournaments(self, tournament_name):
-        return self.tournament.view_events_in_tournament(self, tournament_name)
+        return self.tournamentio.view_events_in_tournament(tournament_name)
     
     # club methods:
+
+    def register_club(self, club: Club_IO):
+        return self.clubio.register_club(club)
+    
+    def add_team_to_club(self, club_name, team_name):
+        return self.clubio.add_team_to_club(club_name, team_name)
+    
+    def view_clubs(self):
+        return self.clubio.view_clubs(self)
+    
+    def view_club_information(self, club_name):
+        return self.clubio.view_club_information(club_name)
+    
+    def check_if_club_name_in_use(self, club_name):
+        return self.clubio.check_if_club_name_in_use(club_name)
