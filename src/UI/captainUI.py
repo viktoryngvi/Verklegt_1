@@ -31,14 +31,13 @@ class CaptainUI:
         print("                ║                                                                        ║")
         print("                ║  [B] Back to main menu                                                 ║")
         print("                ║                                                                        ║")
-        print("                ╠════════════════════════════════════════════════════════════════════════╣")
-        print("                  ➤ Select an option: ", end="")
+        print("                ╚════════════════════════════════════════════════════════════════════════╝")
+        print("                ➤ Select an option: ", end="")
 
         choice = input().lower()
       
-        
         if choice not in ["1", "2", "3", "4", "5", "b"]:
-            print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, B")
+            print("Invalid choice. Valid options: 1, 2, 3, 4, 5, B")
             input("Press Enter to continue...")
             return self.show_menu()
 
@@ -63,16 +62,16 @@ class CaptainUI:
 
     def create_player(self):
         self.menu_ui.print_header("CREATE PLAYER")
-        print("Please enter the following details to create a new player:")
+        print("                ║  Please enter the following details to create a new player:")
         
 
         # Collect fields from user 
-        name = get_non_empty_input("Full name: ").strip()
-        phone = get_non_empty_input("Phone: ").strip()
-        address = get_non_empty_input("Address: ").strip()
-        dob = get_non_empty_input("DOB (YYYY-MM-DD): ").strip()
-        email = get_non_empty_input("Email: ").strip()
-        handle = get_non_empty_input("Handle (unique): ").strip()
+        name = get_non_empty_input("                ║  Full name: ").strip()
+        phone = get_non_empty_input("                ║  Phone: ").strip()
+        address = get_non_empty_input("                ║  Address: ").strip()
+        dob = get_non_empty_input("                ║  DOB (YYYY-MM-DD): ").strip()
+        email = get_non_empty_input("                ║  Email: ").strip()
+        handle = get_non_empty_input("                ║  Handle (unique): ").strip()
         
         # send to LL through Player model
         player = Player(
@@ -89,7 +88,7 @@ class CaptainUI:
         # send to LL through wrapper
         result = self.ll.create_player(player)
 
-        print("")  # spacing
+        print("")  
 
         # list => validation errors, string => status "Success" or error text
         if isinstance(result, list):
@@ -106,64 +105,66 @@ class CaptainUI:
     def edit_player_info(self):
         # ask for captain id
         self.menu_ui.print_header("EDIT PLAYER INFO")
-        print("                ║                                                                        ║")
-        print("                ║ Enter your handle:                                                     ║")
-        captain_handle = input().strip().lower()
+        print("                 ║  Enter your handle: ", end="")                                     
+        captain_handle = input().strip().lower() 
+        
 
         if not captain_handle:
-            print("Handle cannot be empty.")
-            input("Press Enter to continue...")
+            print("                 ║  Handle cannot be empty.")
+            input("                 ║  Press Enter to continue...")
             return
         
         # show captain's team
-        print("Your team is: ")
-        view_team = self.ll.view_captains_team(captain_handle)
-        if not view_team:
-            print("No team found for this captain.")
+        print("                 ║")
+        print("                 ║  Your team is: ", end="")
+        team_name = self.ll.view_captain_team(captain_handle)
+        if not team_name:
+            print("                 ║  No team found for this captain.")
             input("Press Enter to continue...")
             return
         
-        print(view_team) # displays the captains team and the players in it
+        print(team_name) # displays the captains team and the players in it
 
         print("")
 
         # get the list of players in the captains team
-        print("Select the player you want to edit from your team: ")
-        team_players = self.ll.get_players_in_team(view_team)
+        print("                 ║  Select the player you want to edit from your team: ")
+        team_players = self.ll.view_all_players_in_team(team_name)
         if not team_players:
             print("No players found in your team.")
             input("Press Enter to continue...")
             return
         
         # let the captain choose a player to edit from his team
-        selected_player = choose_from_list("Enter the number of the player: ", team_players)
-        print(f"You selected to edit player: {selected_player}")
+        selected_player = choose_from_list("                ║  Enter the number of the player: ", team_players)
+        print(f"                ║  You selected to edit player: {selected_player}")
         print("")
 
         # phone, email, address, handle
-        print("Player selected: ", selected_player)
-        print("Select the information you want to edit: ")
-        print("   [1] Phone")
-        print("   [2] Email")
-        print("   [3] Address")
-        print("   [4] Handle")
-        print("   [B] Back to Captain Menu")
-        choice = input("Enter your choice: ").strip().lower()
+        print("                 ║  Player selected: ", selected_player)
+        print("                 ║  Select the information you want to edit: ")
+        print("                 ║  [1] Phone")
+        print("                 ║  [2] Email")
+        print("                 ║  [3] Address")
+        print("                 ║  [4] Handle")
+        print("                 ║  [B] Back to Captain Menu")
+        print("                 ║  Enter your choice: ", end="")
+        choice = input().strip().lower()
 
         if choice == "1":
-            new_phone = input("Enter new phone number: ").strip()
+            new_phone = input("                ║  Enter new phone number: ").strip()
             results = self.ll.edit_player_phone_captain(captain_handle, selected_player, new_phone)
 
         elif choice == "2":
-            new_email = input("Enter new email: ").strip()
+            new_email = input("                ║  Enter new email: ").strip()
             results = self.ll.edit_player_email_captain(captain_handle, selected_player, new_email)
         
         elif choice == "3":
-            new_address = input("Enter new address: ").strip()
+            new_address = input("                ║  Enter new address: ").strip()
             results = self.ll.edit_player_address_captain(captain_handle, selected_player, new_address)
 
         elif choice == "4":
-            new_handle = input("Enter new handle: ").strip().lower()
+            new_handle = input("                ║  Enter new handle: ").strip().lower()
             results = self.ll.edit_player_handle_captain(captain_handle, selected_player, new_handle)
         
         elif choice == "b":
@@ -185,9 +186,9 @@ class CaptainUI:
     
     def change_team_captain(self):
         self.menu_ui.print_header("CHANGE TEAM CAPTAIN")
-        print("What team do you want to change the captain for? ")
+        print("                 ║  What team do you want to change the captain for? ")
         # get the list of teams from LL
-        teams = self.ll.get_teams()
+        teams = self.ll.view_all_teams()
 
         # check if there are any teams
         if not teams:
@@ -196,25 +197,25 @@ class CaptainUI:
             return "CAPTAIN_MENU"
         
         # let user select a team
-        select_team = choose_from_list("Enter the number of the team: ", teams)
+        select_team = choose_from_list("                ║  Enter the number of the team: ", teams)
 
         # get players in that team
-        players = self.ll.get_players_in_team(select_team)
+        players = self.ll.view_all_players_in_team(select_team)
         # check if there are any players
         if not players:
             print("No players found in this team.")
             input("Press Enter to continue...")
             return "CAPTAIN_MENU"
         
-        print("Select the new captain from the team players: ")
+        print("                ║  Select the new captain from the team players: ")
         # let user select a player to be the new captain
-        select_player = choose_from_list("Enter the number of the player: ", players)
+        select_player = choose_from_list("                ║  Enter the number of the player: ", players)
 
-        print(f"You selected to change the captain of team: {select_team} to player: {select_player}")
+        print(f"                ║  You selected to change the captain of team: {select_team} to player: {select_player}")
         # send to LL to update
         result = self.ll.update_team_captain(
             team_name=select_team,
-            new_captain_name=select_player,
+            new_captain_handle=select_player,
             )
         
         print("")
