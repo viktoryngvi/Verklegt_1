@@ -1,6 +1,6 @@
 from IO.Player_IO import Player_IO
 from Teams_IO import Team_IO
-from IO.Event_IO_test import Event_IO_test
+from IO.Event_IO import Event_IO_test
 # from IO.tournament_io import TournamentIO
 # from models.tournament import Tournament
 

@@ -40,15 +40,12 @@ class Team_IO(Team):
         # skrifar það aftur í skránna
         return "Successfully changed team captain"
 
-
-
     def view_all_teams(self):
         """checks all teams and their captain and returns a list of dicts of teams""" #TODO
         with open (self.file_path, "r", encoding="utf-8") as teams_file:
             csv_reader = DictReader(teams_file)
             teams_list = list(csv_reader)
         return teams_list
-
 
     def view_all_teams_name_and_captains(self):
         """returns all team names and cpatains of that team"""
@@ -57,7 +54,6 @@ class Team_IO(Team):
         for team in all_teams:
             list_of_team_name_and_captain_name.append({"team": team["team"], "captain": team["captain"]})
         return list_of_team_name_and_captain_name
-
 
     def players_team_none(self):
         """opens a file and returns a list of players short info
@@ -69,22 +65,21 @@ class Team_IO(Team):
                 filtered_player = {"id":players["id"], "name": players["name"], "handle": players["handle"]}
                 list_of_non_team_players_short_info.append(filtered_player)
         return list_of_non_team_players_short_info
-            
-            
+
     def view_all_players_in_team(self, team_name):
         """views_all_teams() and select a team and returns all players in  said team"""
         all_teams = self.view_all_teams()
         for team in all_teams:
             if team["team"] == team_name:
                 return team
-            
+
     def view_captains_team(self, find_captain_handle):
         """views_all_teams() and select a team and returns all players in  said team"""
         all_teams = self.view_all_teams()
         for team in all_teams:
             if team["handle"] == find_captain_handle:
                 return team
-    
+
     def check_if_team_name_exists(self, team_name):
         """takes a team name and checks if that team name is already in use"""
         all_teams = self.view_all_teams()
@@ -92,7 +87,7 @@ class Team_IO(Team):
             if teams["team"] == team_name:
                 return True
         return False
-    
+
     def check_if_player_handle_in_team(self, team, handle):
         """takes a player handle and checks if that player handle is in the team"""
         players_in_team = self.view_all_players_in_team(team)
