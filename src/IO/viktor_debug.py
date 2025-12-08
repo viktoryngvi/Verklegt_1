@@ -162,22 +162,26 @@ from csv import DictReader
 
 
 
-def test_lists_in_files(captain, players):
-    with open ("data/testing_the_lists_in_file.csv", "w", encoding="utf-8") as list_file:
-        list_file.write("captain,players,\n")
-        list_file.write(f"{captain},{players},")
+# def test_lists_in_files(captain, players):
+#     with open ("data/testing_the_lists_in_file.csv", "w", encoding="utf-8") as list_file:
+#         list_file.write("captain,players,\n")
+#         list_file.write(f"{captain},{players},")
 
-def view_list():
-    with open ("data/testing_the_lists_in_file.csv", "r", encoding="utf-8") as list_file:
-        player_list = []
-        for player in players:
-            player_list.append(player)
-        print(player_list)
+# def view_list():
+#     with open ("data/testing_the_lists_in_file.csv", "r", encoding="utf-8") as list_file:
+#         player_list = []
+#         for player in players:
+#             player_list.append(player)
+#         print(player_list)
 
 
-list_of_players = ["player1", "player2", "player3"]
-# captain = input("captain: ")
-players = list_of_players
+# list_of_players = ["player1", "player2", "player3"]
+# # captain = input("captain: ")
+# players = list_of_players
 
-view_list()
+# view_list()
 # test_lists_in_files(captain, players)
+import random
+
+list = [1, 2, 3, 4, 5, 6, 7, 8]
+print(random.choice(list))

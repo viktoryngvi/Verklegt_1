@@ -2,7 +2,7 @@ from csv import DictReader
 from models.event import Event
 from IO.Teams_IO import Team_IO
 
-class Event_IO_test(Event):
+class Event_IO(Event):
     def __init__(self):
         self.file_path = "data/tournament_blueprint.csv"
 
@@ -60,6 +60,24 @@ class Event_IO_test(Event):
         """checks how many teams are in the event"""
         next_empty_id = self.find_next_useable_id()
         return int(next_empty_id) - 1
+    
+    
+    def move_blueprint_to_public(self):
+        """should take the filled event_blueprint and make a knockout schedule in the event file for that"""
+        with open(self.get_event_file, "r", encoding="utf-8") as old_event_file:
+            csv_reader = DictReader(old_event_file)
+            old_event_file = list(csv_reader)
+        
+        with open(self.public_file_path, "w", encoding="utf-8") as public_event_file:
+            public_event_file.write("id,team_name,event_name,event_type")
+            for every_line in old_event_file:
+                public_event_file.write(",".join(every_line.values()))
+                public_event_file.write("\n")
+        return "Event is now public"
+    # TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
     
 
 
