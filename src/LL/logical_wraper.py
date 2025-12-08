@@ -12,11 +12,7 @@ from models.event import Event
 class LLWrapper:
    def __init__(self):
       self.dl_wrapper = DLWrapper()
-      self.validate = Validate(self.dl_wrapper)
       self.player_ll = PlayerLL(self.dl_wrapper, self.validate)
-      self.team_ll = TeamLL(self.dl_wrapper)
-      self.club_ll = ClubLL(self.dl_wrapper)
-      self.captain_ll = CaptainLL(self.dl_wrapper, self.validate)
       self.tournament_ll = TournamentLL(self.dl_wrapper)
       
    def create_player(self, player: Player): 

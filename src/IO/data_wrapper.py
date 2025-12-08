@@ -107,6 +107,23 @@ class DLWrapper:
     def create_first_round(self):
         return self.knockout.create_first_round(self)
 
+    def create_second_round(self):
+        return self.knockout.create_second_round(self)
+    
+    def create_third_round(self, round):
+        return self.knockout.create_second_round(self)
+    
+    def create_second_round(self):
+        return self.knockout.create_second_round(self)
+    
+    def declare_winner(self):
+        return self.knockout.declare_winner(self)
+    
+    def how_many_matches_have_winners(self):
+        return self.knockout.how_many_matches_have_winners(self)
+    
+
+    # tournament metods
 
     def create_tournament(self):
         pass
