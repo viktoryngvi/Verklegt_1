@@ -8,7 +8,7 @@ from models.event import Event
 class LLWrapper:
    def __init__(self):
       self.dl_wrapper = DLWrapper()
-      self.player_ll = PlayerLL(self.dl_wrapper)
+      self.player_ll = PlayerLL(self.dl_wrapper, self.validate)
       self.tournament_ll = TournamentLL(self.dl_wrapper)
 
       
