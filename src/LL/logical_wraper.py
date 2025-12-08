@@ -14,6 +14,8 @@ class LLWrapper:
       self.dl_wrapper = DLWrapper()
       self.player_ll = PlayerLL(self.dl_wrapper, self.validate)
       self.tournament_ll = TournamentLL(self.dl_wrapper)
+
+   #PLAYER METHODS   
       
    def create_player(self, player: Player): 
       return self.player_ll.create_player(player)
@@ -48,13 +50,41 @@ class LLWrapper:
    def load_player_short_info(self): # Id, Name, Handle, Team PUBLIC INFO
       return self.team_ll.load_player_short_info()
    
+   def load_player_info(self, handle):
+      return self.player_ll.load_player_info(handle)
+
    def load_clubs(self):
       return self.club_ll.load_clubs()
+   
    def create_tournament(self, tournament: Tournament):
       return self.tournament_ll.create_tournament(tournament)
    
+   def get_tournament_list(self):
+      return self.tournament_ll.get_tournament_list(self)
+   
+   def get_events_in_tournament(self):
+      return self.tournament_ll.get_events_in_tournament(self)
+   
+   def get_team_captain(self, team_name):
+      return self.captain_ll.get_team_captain(self, team_name)
+   
+   def view_captain_team(self, handle):
+      return self.captain_ll.view_captain_team(self, handle)
+   
+   def view_all_teams(self):
+      return self.team_ll.view_all_teams(self)
+   
+   def view_all_players_in_team(self, team_name):
+      return self.team_ll.view_all_players_in_team(self,team_name)
+   
+   def update_team_captain(self, team_name, handle):
+      return self.captain_ll.update_team_captain(self, team_name, handle)
+
    def generate_schedule(tournament: Tournament, event: Event):
       pass
+
+   def get_tournament_schedule(self, tournament_name, event_in_tournament):
+      return self.tournament_ll.get_tournament_schedule(tournament_name, event_in_tournament)
    
    def enter_match_result(self):
       pass
