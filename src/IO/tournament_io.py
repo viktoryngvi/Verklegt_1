@@ -11,7 +11,7 @@ class Tournament_IO(Tournament):
 
     def create_tournament(self):
         """tournaments should have a list of tournaments that have event names"""
-        with open(self.file_path, "a", encoding)
+        with open(self.file_path, "a", encoding="utf-8") as tournament_file
     
     def view_tournaments():
         pass
