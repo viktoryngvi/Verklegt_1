@@ -8,7 +8,7 @@ class Player_IO(Player):
 
     def create_player(self, player: Player):
         """takes all inputted info and created a player, and checks the last players id and taked the next number"""
-        if not self.check_if_handle_exists_with_handle(player.handle):
+        if not self.check_if_handle_in_use(player.handle):
             #TODO er logic layer að gera þetta?
             with open(self.file_path, "a", encoding="utf-8") as player_file:
                 id = self.check_last_id() + 1
