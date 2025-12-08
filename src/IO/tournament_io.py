@@ -7,9 +7,11 @@ class Tournament_IO(Tournament):
     def __init__(self):
         self.file_path = "data/tournament.csv"
 
-    def create_tournament():
+    def 
+
+    def create_tournament(self):
         """tournaments should have a list of tournaments that have event names"""
-        pass
+        with open(self.file_path, "a", encoding)
     
     def view_tournaments():
         pass

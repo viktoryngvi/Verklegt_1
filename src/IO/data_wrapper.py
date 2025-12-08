@@ -46,9 +46,9 @@ class DLWrapper:
         """takes team_name, team_captain_id and a list of player_ids and creates the team in the csv file"""
         return self.teamio.create_team(self)
 
-    def check_if_team_name_exists(self):
+    def check_if_team_name_exists(self, team_name):
         """takes a team name and checks if that team name is in use"""
-        return self.teamio.check_if_team_name_exists(self)
+        return self.teamio.check_if_team_name_exists(self, team_name)
     
     def change_team_captain(self, find_team, new_captain):
         """takes the team name, new captain and changes the captain of the team"""
