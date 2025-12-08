@@ -121,6 +121,14 @@ class PlayerLL:
             return "Success: Player information updated"
         else:
             return "Error: Failed to update player"
+        
+    def load_player_info(self, handle: str):
+        existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        if not existing_player:
+            return "Error: Player handle does not exists"
+        
+        return self._dl_wrapper.load_single_player_info(handle)
+        
 
 
 
