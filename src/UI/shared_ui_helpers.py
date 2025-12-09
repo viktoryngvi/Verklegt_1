@@ -25,7 +25,9 @@ def view_teams(ll, menu_ui):
 def create_team(ll, menu_ui):
     menu_ui.print_header("CREATE TEAM")
     pass
+"""
 
+"""
 def view_schedule(ll, menu_ui):
     menu_ui.print_header("VIEW TOURNAMENT SCHEDULE")
     print("Select a tournament to view its schedule:\n")
