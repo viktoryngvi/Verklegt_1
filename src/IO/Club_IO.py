@@ -16,7 +16,7 @@ class Club_IO(Club):
         last_id = int(club_file[-1]["match_id"])
         return last_id + 1
                 
-    def register_club(self, club: Club_IO):
+    def register_club(self, club: Club):
         with open(self.file_path, "a", encoding="utf-8") as club_file:
             club_file.write(f"{self.add_club_id()},{self.name},{self.home_town},{self.country},{self.colors}")
 
@@ -41,7 +41,7 @@ class Club_IO(Club):
         return club_list
     
     def view_club_information(self, club_name):
-        club_file = self.read_club_file_as_list_of_dict():
+        club_file = self.read_club_file_as_list_of_dict()
         for line in club_file:
             if line["club_name"] == club_name:
                 return line
