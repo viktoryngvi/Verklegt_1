@@ -57,8 +57,8 @@ class LLWrapper:
    def view_all_players_in_team(self, team_name): # Players in captains team
       return self.captain_ll.view_all_players_in_team(self, team_name)
    
-   def update_team_captain(self, team_name, handle):
-      return self.captain_ll.update_team_captain(self, team_name, handle)
+   def update_team_captain(self, team_name): #handle
+      return self.captain_ll.update_team_captain(self, team_name)#, handle)
    
    #TEAM METHODS
 
@@ -69,7 +69,7 @@ class LLWrapper:
       return self.team_ll.load_player_short_info()
    
    def view_all_teams(self):
-      return self.team_ll.view_all_teams(self)
+      return self.team_ll.view_all_teams()
    
    #MATCH METHODS
 
