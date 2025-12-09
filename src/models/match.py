@@ -11,3 +11,4 @@ class Match:
         self.winner = winner
         self.schedule_time = schedule_time
         self.server_id = server_id
+# breyta team_a og team_b bara í lista af liðum
