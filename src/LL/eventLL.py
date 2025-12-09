@@ -7,4 +7,6 @@ class EventLL:
     
     def create_event(self, event: Event):
         self.validate.check_name_of_event(event.name)
+
+
         
