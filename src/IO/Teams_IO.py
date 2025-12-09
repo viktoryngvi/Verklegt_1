@@ -89,6 +89,8 @@ class Team_IO(Team):
     def check_if_player_handle_in_team(self, team, handle):
         """takes a player handle and checks if that player handle is in the team"""
         players_in_team = self.view_all_players_in_team(team)
+        if not players_in_team:
+            return "No players in this team"
         for handles_in_team in players_in_team[2:]:
             if handles_in_team == handle:
                 return True

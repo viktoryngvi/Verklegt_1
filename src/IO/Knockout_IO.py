@@ -42,14 +42,16 @@ class Knockout(Match):
             all_team_list.append(team["team_name"])
         
         with open(self.file_path, "a", encoding="utf-8") as schedule_file:
-            schedule_file.write("server_id,match_id,time_of_match,game_name,game_type,team_a,team_b,team_a_score,team_b_score,winner,match_result")
+            schedule_file.write("tournament_name,server_id,match_id,time_of_match,game_name,game_type,team_a,team_b,team_a_score,team_b_score,winner,match_result")
         for teamsvs in all_team_list:
             team_a = random.choice(teamsvs)
             all_team_list.remove(team_a)
             team_b = random.choice(teamsvs)
             all_team_list.remove(team_b)
             with open(self.file_path, "a", encoding="utf-8") as schedule_file:
-                schedule_file.write(f'{self.server_id},{int(self.get_match_id())},{self.schedule_time},{dict_list["game_name"]},{dict_list["game_type"]}{team_a},{team_b},team_a_score,team_b_score,winner,')
+                schedule_file.write(f'{self.tournament_name}{self.server_id},{int(self.get_match_id())},{self.schedule_time},{dict_list["game_name"]},{dict_list["game_type"]}{team_a},{team_b},team_a_score,team_b_score,winner,')
+        # þarf tournament name
+
 
     def create_round_2_3_and_4(self, round: int):
         schedule_file = self.read_schedule_file_as_list_of_dict()
@@ -102,4 +104,5 @@ class Knockout(Match):
     def view_finnished_games(self):
         pass
 
-    def get_results_from_one_game
+    def get_results_from_one_game():
+        pass
