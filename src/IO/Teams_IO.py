@@ -67,9 +67,12 @@ class Team_IO(Team):
     def view_all_players_in_team(self, team_name):
         """views_all_teams() and select a team and returns all players in  said team"""
         all_teams = self.view_all_teams()
+        players_in_team = []
         for team in all_teams:
             if team["team_name"] == team_name:
-                return team
+                for players in team["players"]:
+                    players_in_team.append(players)
+                return players_in_team
 
     def view_captains_team(self, find_captain_handle):
         """views_all_teams() and select a team and returns all players in  said team"""
