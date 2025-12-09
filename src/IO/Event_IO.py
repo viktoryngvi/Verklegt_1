@@ -43,14 +43,14 @@ class Event_IO(Event):
                 team_id += 1
         return "Event created!"
 # #############################################
-    def write_team_into_empty_event(self, team):
+    def write_team_into_empty_event(self, tournament_name, team):
         """takes a team name and writes it into the blueprint"""
         event_data = self.read_file_as_list_of_dict()        
         next_id = self.find_next_useable_id()
         for line in event_data:
             if line["id"] == next_id:
                 line["team_name"] = f"{team},"
-                line["tournament"] = 
+                line["tournament"] = f"{tournament_name}"
                 line["event_name"] = f"{self.name},"
                 line["event_type"] = self.game_type
 
