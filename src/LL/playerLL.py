@@ -59,8 +59,8 @@ class PlayerLL:
         updated = self._dl_wrapper.edit_player_info(handle, "phone", phone)
         if updated:
             return "Success: Player information updated"
-        else:
-            return "Error: Failed to update player"
+        
+        return "Error: Failed to update player"
 
 
     def edit_player_email(self, handle: str, email: str) -> str:
@@ -99,8 +99,8 @@ class PlayerLL:
         updated = self._dl_wrapper.edit_player_info(handle, "address", address)
         if updated:
             return "Success: Player information updated"
-        else:
-            return "Error: Failed to update player"
+        
+        return "Error: Failed to update player"
 
 
     def edit_player_handle(self, handle: str, handle_str: str) -> str:
@@ -119,16 +119,15 @@ class PlayerLL:
         updated = self._dl_wrapper.edit_player_info(handle, "handle", handle_str)
         if updated:
             return "Success: Player information updated"
-        else:
-            return "Error: Failed to update player"
+        
+        return "Error: Failed to update player"
         
     def load_player_info(self, handle: str):
         existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
         
-        return self._dl_wrapper.load_single_player_info(handle)
-        
+        return self._dl_wrapper.load_all_player_short_info(handle)
 
 
 
