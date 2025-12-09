@@ -132,8 +132,8 @@ class DLWrapper:
 
     # tournament methods
 
-    def create_tournament(self, tournament_name):
-        return self.tournamentio.create_tournament(self, tournament_name)
+    def create_tournament(self):
+        return self.tournamentio.create_tournament(self)
     
     def put_event_into_tournament(self, torunament_name, event_name):
         return self.tournamentio.put_event_into_tournament(self, torunament_name, event_name)
