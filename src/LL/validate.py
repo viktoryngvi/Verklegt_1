@@ -253,6 +253,27 @@ class Validate:
             return "Adress cannot contain consecutive spaces"
         
         return None
+    
+    def validate_club(self, club: Club):
+        errors_list = []
 
+        club_country = self.validate_club_country(club.country)
+        if club_country is not True:
+            errors_list.append(f"Country: {club_country}") 
+        
+        club_home_town = self.validate_club_home_town(club_home_town)
+        if club_home_town is not True:
+            errors_list.append(f"Home Town: {club_home_town}")
+
+        club_color = self.validate_club_color(club_color)
+        if club_color is not True:
+            errors_list.append(f"Color: {club_color}")
+
+    def validate_club_country(self, club_country: str):
+        pass
+    def validate_club_home_town(self, club_home_town: str):
+        pass
+    def validate_club_color(self, club_color: str):
+        pass
     
     
