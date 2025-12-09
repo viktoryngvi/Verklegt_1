@@ -104,9 +104,5 @@ class Knockout(Match):
     def view_finnished_games(self):
         pass
 
-<<<<<<< HEAD
-    def get_results_from_one_game(self):
-=======
     def get_results_from_one_game():
->>>>>>> 9d4cde93bffff7a8587f51eb586e3cf4a258857a
         pass

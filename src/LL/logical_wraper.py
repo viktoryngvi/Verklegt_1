@@ -71,8 +71,8 @@ class LLWrapper:
    def view_all_teams(self):
       return self.team_ll.view_all_teams()
    
-   def get_players_in_team(self, handle):
-      return self.team_ll.check_if_player_handle_in_team(handle)
+   def get_players_in_team(self, team_name):
+      return self.team_ll.view_all_players_in_team(team_name)
    
    #MATCH METHODS
 

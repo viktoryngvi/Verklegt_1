@@ -31,18 +31,18 @@ class Event_IO(Event):
         
 ###############################################################
 
-    def create_empty_event(self):
+    def create_empty_event(self, tournament_name):
         """takes event details and rewrites the event blueprint file to have all the details of the event in
         the file"""
         with open(self.file_path, "w", encoding="utf-8") as event_file:
-            event_file.write("id,team_name,event_name,event_type,")
+            event_file.write("id,team_name,tournament_name,event_name,event_type,")
             # láta event name og type mögulega bara koma einusinni til að gera þetta fallegt
             team_id = 1
             for team in range(len(self.teams) + 1):
                 event_file.write(f"{team_id},\n")
                 team_id += 1
         return "Event created!"
-
+# #############################################
     def write_team_into_empty_event(self, team):
         """takes a team name and writes it into the blueprint"""
         event_data = self.read_file_as_list_of_dict()        
@@ -50,6 +50,7 @@ class Event_IO(Event):
         for line in event_data:
             if line["id"] == next_id:
                 line["team_name"] = f"{team},"
+                line["tournament"] = 
                 line["event_name"] = f"{self.name},"
                 line["event_type"] = self.game_type
 
