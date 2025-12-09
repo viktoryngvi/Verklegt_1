@@ -11,10 +11,22 @@ class EventLL:
         validate_errors = self.validate.validate_event(event)
         if validate_errors:
             return validate_errors
-    
-    def write_team_into_event(self, event: Event):
-        self.dl_wrapper.create_empty_event(event.tournament_name)
-        self.dl_wrapper.write_team_into_empty_event(event.team)
+        
+        return self.dl_wrapper.create_empty_event(event)
+        
+
+    def write_team_into_event(self, event: Event, team):
+        
+        if self.dl_wrapper.check_if_name_event_exists(event.name):
+            return "Event name does not exists"
+
+        if not self.dl_wrapper.check_if_team_name_exists(team):
+            return "Team Does not exists"
+        
+        if self.dl_wrapper.check_if_team_in_event(team):
+            return "Team already in event"
+        
+        return self.dl_wrapper.write_team_into_empty_event(event.name, team)
         
 
         

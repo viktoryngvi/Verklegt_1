@@ -1,8 +1,8 @@
 from models.player import Player
 from models.club import Club
+from models.event import Event
 from IO.data_wrapper import DLWrapper
 from datetime import datetime
-from models.club import Club
 
 class Validate:  
     def __init__(self, dl_wrapper: DLWrapper):
@@ -260,21 +260,27 @@ class Validate:
         errors_list = []
 
         club_country = self.validate_club_country(club.country)
+        club_home_town = self.validate_club_home_town(club_home_town)
+        club_color = self.validate_club_color(club_color)
+        club_teams = self.validate_club_teams(club.teams)
+
         if club_country is not True:
             errors_list.append(f"Error: {club_country}") 
         
-        club_home_town = self.validate_club_home_town(club_home_town)
         if club_home_town is not True:
             errors_list.append(f"Error: {club_home_town}")
 
-        club_color = self.validate_club_color(club_color)
         if club_color is not True:
             errors_list.append(f"Error: {club_color}")
 
-        club_teams = self.validate_club_teams(club.teams)
         if club_teams is not True:
             errors_list.append(f"Error: {club_teams}")
 
+        if errors_list:
+            return errors_list
+        
+        return None
+        
     def validate_club_country(self, club_country: str):
         pass
     def validate_club_home_town(self, club_home_town: str):
@@ -283,4 +289,71 @@ class Validate:
         pass
     def validate_club_teams(self, club_teams: list):
         pass
+
+    #EVENTS VALIDATION AND CHECKS
+
+    def validate_event(self, event: Event):
+        errors_list = []
+
+        event_name = self.check_event_name(event.name)
+        event_start = self.check_start_date_event(event.start_date, event.tournament_name)
+        event_end = self.check_end_date_event(event.end_date, event.tournament_name)
+
+        if event_name is not True:
+            errors_list.append(f"Name: {event_name}")
+        
+        if event_start is not True:
+            errors_list.append(f"Start date: {event_start}")
+        
+        if event_end is not True:
+            errors_list.append(f"End date: {event_end}")
+
+        if errors_list:
+            return errors_list
+        
+        return None
+    
+    def check_event_name(self, event_name: str):
+        if not event_name or not event_name.strip():
+            return "Event name cannot be empty."
+
+        if not event_name[0].isupper():
+            return "Event name must start with an uppercase letter."
+        
+        if not event_name.isalpha():
+            return "Event name must contain only letters"
+
+        if len(event_name) > 20:
+            return "Event name is too long (max 20 characters)."
+        
+        return True 
+
+    def check_start_date_event(self, start_date: str, tournament_name: str):
+        try:
+            start_date_event: datetime = datetime.strptime(start_date, "%Y-%m-%d")
+        except ValueError:
+            return "Event must be in YYYY-MM-DD format."
+                
+        start_tournament = self._dl_wrapper.start_date_tournament(tournament_name)
+
+        if start_date_event.date() < start_tournament.date():
+            return f"Event cannot start before the tournament start date ({self.start_tournament})."
+        
+        return True
+
+    def check_end_date_event(self, end_date: str, tournament_name):
+        try:
+            end_date_event: datetime = datetime.strptime(end_date, "%Y-%m-%d")
+        except ValueError:
+            return "Event must be in YYYY-MM-DD format."
+                
+        end_tournament: datetime = self._dl_wrapper.end_date_tournament(tournament_name)
+
+        if end_date_event.date() > end_tournament.date():
+            return f"Event cannot end after the tournament end date ({end_tournament})."
+        
+        return True
+
+
+
     
