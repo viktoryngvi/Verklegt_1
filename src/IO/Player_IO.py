@@ -59,10 +59,12 @@ class Player_IO(Player):
     def check_last_id(self):
         """checks the last player and returns the id of said player"""
         player_data = self.read_player_file_as_list_of_dict()
-        last_id = int(player_data[-1]["id"])
-        if last_id == "":
-            last_id = 1
-        return last_id
+        if not player_data:
+            next_useable_id = 1
+        else:
+            next_useable_id = int(player_data[-1]["id"])
+            next_useable_id += 1
+        return next_useable_id
     
     def check_if_handle_in_use(self, handle):
         """checks ef the inputted handle is in use in the player list"""

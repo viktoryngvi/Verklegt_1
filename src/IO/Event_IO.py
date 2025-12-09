@@ -9,6 +9,7 @@ class Event_IO(Event):
         self.knockout_file = "data/knockout.csv"
         self.Last_team_file = "data/last_team_standing.csv"
         self.knockout = Knockout()
+        self.server_id = 0
 
     def read_file_as_list_of_dict(self):
         """shortcut for reusable code"""
@@ -25,7 +26,8 @@ class Event_IO(Event):
                 return useable_id
     
     def find_next_server_id(self):
-        pass
+        
+        
 ###############################################################
 
 
@@ -60,7 +62,6 @@ class Event_IO(Event):
                 event_file.write(f'{",".join(values) },\n')
                 event_file.write("\n")
         return f"{team} is now a part of this event!"
-    # virkar ekki!!!!!#TODO
 
     def check_if_team_in_event(self, team):
         """takes team name and checks if the team is in the event"""
