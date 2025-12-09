@@ -26,7 +26,7 @@ class Tournament_IO(Tournament):
         """tournaments should have a list of tournaments that have event names"""
         id = self.get_next_tournament_id()
         with open(self.file_path, "a", encoding="utf-8") as tournament_file:
-            tournament_file.write(f"{id},{tournament.name},{tournament.location},{tournament.start_date},{tournament.end_date},event_list")
+            tournament_file.write(f"{id},{tournament.name},{tournament.location},{tournament.start_date},{tournament.end_date},event_list\n")
         return "Tournament created!"
 
     def put_event_into_tournament(self, tournament_name, event_name):
