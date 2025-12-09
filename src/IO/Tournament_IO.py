@@ -16,10 +16,12 @@ class Tournament_IO(Tournament):
     def get_next_tournament_id(self):
         """checks the last player and returns the id of said player"""
         tournament_data = self.read_file_as_list_of_dicts()
-        last_id = int(tournament_data[-1]["id"])
-        if last_id == "":
-            last_id = 1
-        return last_id
+        if not tournament_data:
+            next_useable_id = 1
+        else:
+            next_useable_id = int(tournament_data[-1]["id"])
+            next_useable_id += 1
+        return next_useable_id
 
     def create_tournament(self, tournament: Tournament):
         """tournaments should have a list of tournaments that have event names"""

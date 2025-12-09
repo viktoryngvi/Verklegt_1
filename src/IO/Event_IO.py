@@ -122,9 +122,7 @@ class Event_IO(Event):
         with open(self.Last_team_file, "w", encoding="utf-8") as last_team_file:
             last_team_file.write("game_name,game_type,server_id,match_id,time_of_match,winner,match_result,teams_list")
             for every_line in read_last_team_file:
-                last_team_file.write(",".join(every_line.values()))
-        with open(self.file_path, "w", encoding="utf-8") as new_torunament_file:
-            pass
+                last_team_file.write(f'{",".join(every_line.values())}')
         return f"{team_that_won}, is the winner of {self.name}"
         # hvað er time of match??????????????????????????????????????#TODO
 
