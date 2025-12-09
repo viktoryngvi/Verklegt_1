@@ -51,7 +51,7 @@ class DLWrapper:
 
     def check_if_team_name_exists(self, team_name):
         """takes a team name and checks if that team name is in use"""
-        return self.teamio.check_if_team_name_exists(self, team_name)
+        return self.teamio.check_if_team_name_exists(team_name)
     
     def change_team_captain(self, find_team, new_captain):
         """takes the team name, new captain and changes the captain of the team"""
@@ -59,7 +59,7 @@ class DLWrapper:
     
     def view_all_teams(self):
         """returns a list of dictionarys of all teams"""
-        return self.teamio.view_all_teams(self)
+        return self.teamio.view_all_teams()
     
     def players_team_none(self):
         """returns a list of players(id, name and handle) that dont have a team"""

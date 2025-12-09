@@ -228,7 +228,7 @@ class OrganizerUI:
 
         teams = self.ll.view_all_teams()   # get the list of teams from LL
         team_name = choose_from_list("                ║ Select Team by number: ", teams)      # choose team
-        current_captain = self.ll.get_team_captain(team_name)       # get current captain from LL
+        current_captain = self.ll.update_team_captain(team_name)       # get current captain from LL
 
 
         print(f"\n                ║ Team: {team_name}\n")
