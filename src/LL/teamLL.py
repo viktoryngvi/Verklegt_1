@@ -24,3 +24,6 @@ class TeamLL:
     
     def view_all_teams(self):
         return self._dl_wrapper.view_all_teams()
+    
+    def check_if_player_handle_in_team(self, handle):
+        return self._dl_wrapper.check_if_player_handle_in_team(self, handle)
