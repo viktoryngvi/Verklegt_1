@@ -1,1 +1,1 @@
-server_id,match_id,time_of_match,teams,winner,match_result
+game_name,game_type,server_id,match_id,time_of_match,teams,winner,match_result
