@@ -1,11 +1,16 @@
 from csv import DictReader
 from models.event import Event
 from IO.Teams_IO import Team_IO
+from IO.Knockout_IO import Knockout
+from IO.Last_team_IO import Last_team_standing_IO
 
 class Event_IO(Event):
     def __init__(self):
         self.file_path = "data/event_blueprint.csv"
-        self.public_file = "data/knockout.csv"
+        self.knockout_file = "data/knockout.csv"
+        self.Last_team_file = "data/last_team_standing.csv"
+        self.knockout = Knockout()
+        self.last_team = Last_team_standing_IO()
 
     def read_file_as_list_of_dict(self):
         """shortcut for reusable code"""
@@ -21,11 +26,18 @@ class Event_IO(Event):
                 useable_id = int(line["id"])
         return useable_id
     
+    def find_next_server_id(self):
+        pass
+###############################################################
+
+
+
     def create_empty_event(self):
         """takes event details and rewrites the event blueprint file to have all the details of the event in
         the file"""
         with open(self.file_path, "w", encoding="utf-8") as event_file:
             event_file.write(f"{"id"}{"team_name"}{self.name},{self.game_type},\n")
+            # láta event name og type mögulega bara koma einusinni til að gera þetta fallegt
             team_id = 1
             for team in range(len(self.teams) + 1):
                 event_file.write(f"{team_id},\n")
@@ -65,19 +77,66 @@ class Event_IO(Event):
         next_empty_id = self.find_next_useable_id()
         return int(next_empty_id) - 1
 
+    def make_event_public(self):
+        blueprint_file = self.read_file_as_list_of_dict()
+        for line in blueprint_file:
+            if line["id"] == 1:
+                type_of_event = line["event_type"]
+        if type_of_event == "knockout":
+            return self.move_blueprint_to_knockout()
+        if type_of_event == "last_team_standing":
+            return self.move_blueprint_to_last_team_standing()
+        # if type_of_event == "double_elimination":
+        #     return self.move_blueprint_to_double_elimination()
+
     def move_blueprint_to_knockout(self):
         """should take the filled event_blueprint and make a knockout schedule in the event file for that"""
         with open(self.file_path, "r", encoding="utf-8") as event_blueprint:
-            csv_reader = DictReader(event_blueprint)
-            event_blueprint = list(csv_reader)
-        
-        with open(self.public_file, "w", encoding="utf-8") as public_event_file:
-            public_event_file.write("id,team_name,event_name,event_type")
+            event_blueprint = list(DictReader(event_blueprint))
+
+        with open(self.knockout_file, "w", encoding="utf-8") as knockout_file:
+            knockout_file.write("id,team_name,event_name,event_type")
             for every_line in event_blueprint:
-                public_event_file.write(",".join(every_line.values()))
-                public_event_file.write("\n")
+                knockout_file.write(",".join(every_line.values()))
+                knockout_file.write("\n")
         return "Event is now public"
 
+    def move_blueprint_to_last_team_standing(self):
+        with open(self.file_path, "r", encoding="utf-8") as event_blueprint:
+            event_blueprint = list(DictReader(event_blueprint))
+        
+        list_of_teams = []
+        for teams in event_blueprint:
+            list_of_teams.append(teams["team_name"])
 
+        with open(self.Last_team_file, "w", encoding="utf-8") as last_team_file:
+            last_team_file.write("game_name,game_type,server_id,match_id,time_of_match,winner,match_result,teams_list")
+                last_team_file.write(f"{self.name},{self.game_type},{self.find_next_server_id()},1,{self.time_of_match},winner,match_result{list_of_teams},")
+        return "Event is now public"
+    
+    def input_last_team_standing_result(self, team_that_won):
+        with open(self.Last_team_file, "r", encoding="utf-8") as read_last_team_file:
+            read_last_team_file = list(DictReader(read_last_team_file))
+        
+        for line in read_last_team_file:
+            if int(line["match_id"]) == 1:
+                line["winner"] = team_that_won
+########################## á eftir að velja score!!!!!!!!!!!!!!!!!
+        with open(self.Last_team_file, "w", encoding="utf-8") as last_team_file:
+            last_team_file.write("game_name,game_type,server_id,match_id,time_of_match,winner,match_result,teams_list")
+            for every_line in read_last_team_file:
+                last_team_file.write(",".join(every_line.values()))
+        return f"{team_that_won}, is the winner of {self.name}"
+        # hvað er time of match??????????????????????????????????????#TODO
 
+    def check_if_last_team_has_winner(self):
+        with open(self.Last_team_file, "r", encoding="utf-8") as read_last_team_file:
+            read_last_team_file = list(DictReader(read_last_team_file))
+        for line in read_last_team_file:
+            if int(line["match_id"]) == 1:
+                if line["winner"] != "winner":
+                    return f"Game winner is {line["winner"]}"
+        return "Game is not finnished"    
 
+    def move_blueprint_to_double_elimination(self):
+        pass
