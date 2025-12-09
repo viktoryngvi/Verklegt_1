@@ -26,14 +26,8 @@ class Event_IO(Event):
             if line["team_name"] == "":
                 return useable_id
     
-<<<<<<< HEAD
-    def find_next_server_id(self):
-        pass
-        
-=======
     def get_server_id(self):
         return str(uuid.uuid4())
->>>>>>> 13837eea3707397f68bb03796ce3dca1a715973e
         
 ###############################################################
 
