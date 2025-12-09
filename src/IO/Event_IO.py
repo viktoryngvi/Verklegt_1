@@ -2,7 +2,6 @@ from csv import DictReader
 from models.event import Event
 from IO.Teams_IO import Team_IO
 from IO.Knockout_IO import Knockout
-# from IO.Last_team_IO import Last_team_standing_IO
 
 class Event_IO(Event):
     def __init__(self):
@@ -10,7 +9,6 @@ class Event_IO(Event):
         self.knockout_file = "data/knockout.csv"
         self.Last_team_file = "data/last_team_standing.csv"
         self.knockout = Knockout()
-        # self.last_team = Last_team_standing_IO()
 
     def read_file_as_list_of_dict(self):
         """shortcut for reusable code"""
@@ -22,9 +20,9 @@ class Event_IO(Event):
         """checks the next id that has no team associated with it"""
         event_file = self.read_file_as_list_of_dict()
         for line in event_file:
-            if line["team_name"] != None:
-                useable_id = int(line["id"])
-        return useable_id
+            useable_id = int(line["id"])
+            if line["team_name"] == "":
+                return useable_id
     
     def find_next_server_id(self):
         pass
