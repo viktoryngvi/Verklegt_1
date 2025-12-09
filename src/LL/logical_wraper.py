@@ -4,7 +4,8 @@ from LL.validate import Validate
 from LL.teamLL import TeamLL
 from LL.clubLL import ClubLL
 from LL.captainLL import CaptainLL
-from LL.TournamentLL import TournamentLL   # ← FIXED IMPORT
+from LL.TournamentLL import TournamentLL
+from LL.eventLL import EventLL   
 from models.club import Club
 from models.player import Player
 from models.tournament import Tournament
@@ -19,6 +20,7 @@ class LLWrapper:
       self.captain_ll = CaptainLL(self.dl_wrapper, self.validate)
       self.player_ll = PlayerLL(self.dl_wrapper, self.validate)
       self.tournament_ll = TournamentLL(self.dl_wrapper)
+      self.event_ll = EventLL(self.dl_wrapper, self.validate)
 
    #PLAYER METHODS   
       
@@ -111,6 +113,12 @@ class LLWrapper:
    
    def get_statistics(self, ptc: str): #PTC = Player Team Club
       pass
+
+   #EVENT METHODS
+
+   def create_event(self, tournament_name: str, event: Event):
+      return self.event_ll.create_event(tournament_name, event)
+   
    
 
 # ----------------------------------------------------------------------
