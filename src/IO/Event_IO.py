@@ -95,8 +95,7 @@ class Event_IO(Event):
         with open(self.knockout_file, "w", encoding="utf-8") as knockout_file:
             knockout_file.write("id,team_name,event_name,event_type")
             for every_line in event_blueprint:
-                knockout_file.write(",".join(every_line.values()))
-                knockout_file.write("\n")
+                knockout_file.write(f"{",".join(every_line.values())}\n")
         return "Event is now public"
 
     def move_blueprint_to_last_team_standing(self):
@@ -133,10 +132,9 @@ class Event_IO(Event):
         for line in read_last_team_file:
             if int(line["match_id"]) == 1:
                 if line["winner"] != "winner":
-                    my_string = f"Game winner is {line['winner']}"
-                    return my_string
-                
-        return "Game is not finnished"    
+                    final_string = f"Game winner is {line['winner']}"
+                    return final_string
+        return "Game is not finnished"
 
     def move_blueprint_to_double_elimination(self):
         pass
