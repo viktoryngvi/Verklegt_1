@@ -2,14 +2,15 @@ from csv import DictReader
 from models.event import Event
 from IO.Teams_IO import Team_IO
 from IO.Knockout_IO import Knockout
+import uuid
 
 class Event_IO(Event):
     def __init__(self):
         self.file_path = "data/event_blueprint.csv"
         self.knockout_file = "data/knockout.csv"
         self.Last_team_file = "data/last_team_standing.csv"
+        self.public_event_file = "data/puclic_event.csv"
         self.knockout = Knockout()
-        self.server_id = 0
 
     def read_file_as_list_of_dict(self):
         """shortcut for reusable code"""
@@ -25,13 +26,16 @@ class Event_IO(Event):
             if line["team_name"] == "":
                 return useable_id
     
+<<<<<<< HEAD
     def find_next_server_id(self):
         pass
         
+=======
+    def get_server_id(self):
+        return str(uuid.uuid4())
+>>>>>>> 13837eea3707397f68bb03796ce3dca1a715973e
         
 ###############################################################
-
-
 
     def create_empty_event(self):
         """takes event details and rewrites the event blueprint file to have all the details of the event in
@@ -94,10 +98,10 @@ class Event_IO(Event):
         with open(self.file_path, "r", encoding="utf-8") as event_blueprint:
             event_blueprint = list(DictReader(event_blueprint))
 
-        with open(self.knockout_file, "w", encoding="utf-8") as knockout_file:
-            knockout_file.write("id,team_name,event_name,event_type")
+        with open(self.public_event_file, "w", encoding="utf-8") as public_event_file:
+            public_event_file.write("id,team_name,event_name,event_type")
             for every_line in event_blueprint:
-                knockout_file.write(f'{",".join(every_line.values())}\n')
+                public_event_file.write(f'{",".join(every_line.values())}\n')
         return "Event is now public"
 
     def move_blueprint_to_last_team_standing(self):
@@ -109,8 +113,8 @@ class Event_IO(Event):
             list_of_teams.append(teams["team_name"])
 
         with open(self.Last_team_file, "w", encoding="utf-8") as last_team_file:
-            last_team_file.write("game_name,game_type,server_id,match_id,time_of_match,winner,match_result,teams_list")
-            last_team_file.write(f"{self.name},{self.game_type},{self.find_next_server_id()},1,{self.time_of_match},winner,match_result{list_of_teams},")
+            last_team_file.write("game_name,game_type,server_id,time_of_match,winner,match_result,teams_list")
+            last_team_file.write(f"{self.name},{self.game_type},{self.get_server_id},{self.time_of_match},winner,match_result{list_of_teams},")
         return "Event is now public"
     
     def input_last_team_standing_result(self, team_that_won):
@@ -122,7 +126,7 @@ class Event_IO(Event):
                 line["winner"] = team_that_won
 ########################## á eftir að velja score!!!!!!!!!!!!!!!!!
         with open(self.Last_team_file, "w", encoding="utf-8") as last_team_file:
-            last_team_file.write("game_name,game_type,server_id,match_id,time_of_match,winner,match_result,teams_list")
+            last_team_file.write("game_name,game_type,server_id,time_of_match,winner,match_result,teams_list")
             for every_line in read_last_team_file:
                 last_team_file.write(f'{",".join(every_line.values())}')
         return f"{team_that_won}, is the winner of {self.name}"

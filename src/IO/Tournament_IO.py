@@ -11,8 +11,7 @@ class Tournament_IO(Tournament):
             csv_reader = DictReader(Tournament_file)
             tournament_data = list(csv_reader)
         return tournament_data
-    
-            
+
     def get_next_tournament_id(self):
         """checks the last player and returns the id of said player"""
         tournament_data = self.read_file_as_list_of_dicts()

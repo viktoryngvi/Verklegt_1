@@ -26,7 +26,7 @@ class Team_IO(Team):
         # býr til lista af dicts af liðunum
         
             for each_dict in teams_list:
-                team_name =str(each_dict["team"])
+                team_name =str(each_dict["team_name"])
                 if team_name == find_team:
                     each_dict["captain"] = new_captain
         # finnur réttan captain og breytir honum í capteinin
@@ -50,7 +50,7 @@ class Team_IO(Team):
         all_teams = self.view_all_teams()
         list_of_team_name_and_captain_name = []
         for team in all_teams:
-            list_of_team_name_and_captain_name.append({"team": team["team"], "captain": team["captain"]})
+            list_of_team_name_and_captain_name.append({"team_name": team["team_name"], "captain": team["captain"]})
         return list_of_team_name_and_captain_name
 
     def players_team_none(self):
@@ -59,7 +59,7 @@ class Team_IO(Team):
         list_of_non_team_players_short_info = []
         all_players = Player_IO.load_all_player_info()
         for players in all_players:
-            if players["team"] == None:
+            if players["team_name"] == None:
                 filtered_player = {"id":players["id"], "name": players["name"], "handle": players["handle"]}
                 list_of_non_team_players_short_info.append(filtered_player)
         return list_of_non_team_players_short_info
@@ -68,7 +68,7 @@ class Team_IO(Team):
         """views_all_teams() and select a team and returns all players in  said team"""
         all_teams = self.view_all_teams()
         for team in all_teams:
-            if team["team"] == team_name:
+            if team["team_name"] == team_name:
                 return team
 
     def view_captains_team(self, find_captain_handle):
@@ -82,7 +82,7 @@ class Team_IO(Team):
         """takes a team name and checks if that team name is already in use"""
         all_teams = self.view_all_teams()
         for teams in all_teams:
-            if teams["team"] == team_name:
+            if teams["team_name"] == team_name:
                 return True
         return False
 
