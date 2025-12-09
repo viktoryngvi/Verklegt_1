@@ -17,7 +17,7 @@ class Event_IO(Event):
         """takes event details and rewrites the event blueprint file to have all the details of the event in
         the file"""
         with open(self.file_path, "w", encoding="utf-8") as event_file:
-            event_file.write(f"{"id"}{"team_name"}{self.name},{self.game_type},\n")
+            #event_file.write(f"{"id"}{"team_name"}{self.name},{self.game_type},\n")
             team_id = 1
             for team in range(len(self.teams) + 1):
                 event_file.write(f"{team_id},\n")
