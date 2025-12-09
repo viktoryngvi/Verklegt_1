@@ -10,4 +10,3 @@ class Event:
         self.start_date = start_date
         self.end_date = end_date
         self.teams = teams # 16 liði
-        self.matches = matches 
