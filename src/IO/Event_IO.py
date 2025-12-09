@@ -2,7 +2,7 @@ from csv import DictReader
 from models.event import Event
 from IO.Teams_IO import Team_IO
 from IO.Knockout_IO import Knockout
-from IO.Last_team_IO import Last_team_standing_IO
+# from IO.Last_team_IO import Last_team_standing_IO
 
 class Event_IO(Event):
     def __init__(self):
@@ -10,7 +10,7 @@ class Event_IO(Event):
         self.knockout_file = "data/knockout.csv"
         self.Last_team_file = "data/last_team_standing.csv"
         self.knockout = Knockout()
-        self.last_team = Last_team_standing_IO()
+        # self.last_team = Last_team_standing_IO()
 
     def read_file_as_list_of_dict(self):
         """shortcut for reusable code"""
@@ -59,7 +59,7 @@ class Event_IO(Event):
             for teams in event_data:
                 values = teams.values()
                 values = [str(v) for v in values]
-                event_file.write(f"{",".join(values)},\n")
+                event_file.write(f"{ ','.join(values) },\n")
                 event_file.write("\n")
         return f"{team} is now a part of this event!"
     # virkar ekki!!!!!#TODO
@@ -111,7 +111,7 @@ class Event_IO(Event):
 
         with open(self.Last_team_file, "w", encoding="utf-8") as last_team_file:
             last_team_file.write("game_name,game_type,server_id,match_id,time_of_match,winner,match_result,teams_list")
-                last_team_file.write(f"{self.name},{self.game_type},{self.find_next_server_id()},1,{self.time_of_match},winner,match_result{list_of_teams},")
+            last_team_file.write(f"{self.name},{self.game_type},{self.find_next_server_id()},1,{self.time_of_match},winner,match_result{list_of_teams},")
         return "Event is now public"
     
     def input_last_team_standing_result(self, team_that_won):
@@ -135,7 +135,9 @@ class Event_IO(Event):
         for line in read_last_team_file:
             if int(line["match_id"]) == 1:
                 if line["winner"] != "winner":
-                    return f"Game winner is {line["winner"]}"
+                    my_string = f"Game winner is {line['winner']}"
+                    return my_string
+                
         return "Game is not finnished"    
 
     def move_blueprint_to_double_elimination(self):
