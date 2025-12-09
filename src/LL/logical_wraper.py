@@ -73,6 +73,9 @@ class LLWrapper:
    def view_all_teams(self):
       return self.team_ll.view_all_teams()
    
+   def get_players_in_team(self, team_name):
+      return self.team_ll.view_all_players_in_team(team_name)
+   
    #MATCH METHODS
 
    def enter_match_result(self):
@@ -94,8 +97,8 @@ class LLWrapper:
    def get_tournament_list(self):
       return self.tournament_ll.get_tournament_list()
    
-   def get_events_in_tournament(self):
-      return self.tournament_ll.get_events_in_tournament(self)
+   def get_events_in_tournament(self, tournament_name):
+      return self.tournament_ll.get_events_in_tournament(tournament_name)
    
 
    def generate_schedule(tournament: Tournament, event: Event):
@@ -116,3 +119,14 @@ class LLWrapper:
    def create_event(self, tournament_name: str, event: Event):
       return self.event_ll.create_event(tournament_name, event)
    
+   
+
+# ----------------------------------------------------------------------
+# date validation
+# ----------------------------------------------------------------------   
+
+   def get_event_types(self):
+        return [
+            "Single Elimination",
+            "Double Elimination",
+            "Last Team Standing"]

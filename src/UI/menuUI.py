@@ -4,11 +4,31 @@ from UI.input_helper import (
 
 
 class MenuUI:
+
+    box_width = 120
+
+    def print_box_top(self):
+        print("╔" + "═" * (self.box_width - 2) + "╗")
+        
+    def print_box_bottom(self):
+        print("╚" + "═" * (self.box_width - 2) + "╝")
+
+    def print_box_line(self, text=""):
+        print("║ " + text.ljust(self.box_width - 4) + " ║")
+
+
+        
+    
+    
+
+    
+    
+
+    
     def print_header(self, title: str):
         clear_screen()
         try:
             print("\n")
-            # RU'S E-SPORT + EXTRAVAGANZA logo block-art
             print(" ███████████   █████  █████  ██            ██████████             █████████  ███████████     ███████    ███████████   ███████████                              ")
             print("░░███░░░░░███ ░░███  ░░███  ███           ░░███░░░░░█            ███░░░░░███░░███░░░░░███  ███░░░░░███ ░░███░░░░░███ ░█░░░███░░░█                              ")
             print(" ░███    ░███  ░███   ░███ ░░░   █████     ░███  █ ░            ░███    ░░░  ░███    ░███ ███     ░░███ ░███    ░███ ░   ░███  ░                               ")
@@ -29,9 +49,10 @@ class MenuUI:
             print()
             print()
             print()
-            print("                ╔════════════════════════════════════════════════════════════════════════╗")
-            print("                ║" + title.center(72) + "║")
-            print("                ╠════════════════════════════════════════════════════════════════════════╣")
+            self.print_box_top()
+            centered = f"{title.center(self.box_width - 4)}"
+            print(centered)
+            self.print_box_bottom()
         except Exception:
             # Fallback without unicode/ANSI if terminal doesn't support it
             print("="*80)
@@ -52,22 +73,18 @@ class MenuUI:
     # MAIN MENU
     def main_menu(self) -> str:
         self.print_header("MAIN MENU")
-        print("                ║                                                                        ║")
-        print(f"               ║  [1] Organizer  - Manage tournaments                                   ║")
-        print("                ║  [2] Captain     - Manage teams and players                            ║")
-        print("                ║  [3] Player      - View your profile and team                          ║")
-        print("                ║  [4] Spectator   - View tournament information                         ║")
-        print("                ║                                                                        ║")
-        print("                ║  [Q] Quit                                                              ║")
-        print("                ║                                                                        ║")
-        print("                ╚════════════════════════════════════════════════════════════════════════╝")
-        print("                  ➤ Select an option: ", end="")
-        choice = input().lower()
-        
-        
-      
-        
-        
+        self.print_box_top()
+        self.print_box_line()
+        self.print_box_line("  [1] Organizer   - Manage tournaments ")
+        self.print_box_line("  [2] Captain     - Manage teams and players")
+        self.print_box_line("  [3] Player      - View your profile and team")
+        self.print_box_line("  [4] Spectator   - View tournament information")
+        self.print_box_line()
+        self.print_box_line("  [Q] Quit")
+        self.print_box_line()
+        self.print_box_bottom() 
+        choice = input(" ➤ Select an option: ").lower()
+    
         
         
         if choice not in ['1', '2', '3', '4', 'q']:

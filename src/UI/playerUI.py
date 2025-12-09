@@ -14,21 +14,23 @@ class PlayerUI:
     def show_menu(self) -> str:
         clear_screen()
         self.menu_ui.print_header("PLAYER MENU")
-        print("                ║                                                                        ║")
-        print("                ║  My Profile:                                                           ║")
-        print("                ║  [1] View profile                                                      ║")
-        print("                ║  [2] Edit my info                                                      ║")
-        print("                ║                                                                        ║")
-        print("                ║  My Team:                                                              ║")
-        print("                ║  [3] View team                                                         ║")
-        print("                ║  [4] View schedule                                                     ║")
-        print("                ║                                                                        ║")
-        print("                ║  [B] Back to main menu                                                 ║")
-        print("                ║                                                                        ║")
-        print("                ╚════════════════════════════════════════════════════════════════════════╝")
-        print("                   ➤ Select an option: ", end="")
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line("  My Profile: ")
+        self.menu_ui.print_box_line("  [1] View profile")
+        self.menu_ui.print_box_line("  [2] Edit my info")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line("  My Team: ")
+        self.menu_ui.print_box_line("  [3] View team")
+        self.menu_ui.print_box_line("  [4] View schedule")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line("  [B] Back to main menu")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_bottom()
+        choice = input(" ➤ Select an option: ").lower()
+    
 
-        choice = input().lower()
+        
        
        
         if choice not in ["1", "2", "3", "4", "b"]:
@@ -53,65 +55,101 @@ class PlayerUI:
 
     def show_profile(self):
         self.menu_ui.print_header("MY PROFILE")
-        handle = get_non_empty_input("Enter your player handle: ").strip().lower()
+        self.menu_ui.print_box_top()
+        handle = get_non_empty_input("\tEnter your player handle: ").strip().lower()
+        self.menu_ui.print_box_bottom()
+
+        # display profile info
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(f" Loading profile for handle: {handle} ")
+        self.menu_ui.print_box_bottom()
 
         profile = self.ll.load_player_info(handle)
-        if profile:
-            print("\n" + str(profile))
+        if profile:  
+            self.menu_ui.print_box_top()
+            self.menu_ui.print_box_line(f" Profile Information for {handle} ")
+            self.menu_ui.print_box_line(f" Name   : {profile['name']}")
+            self.menu_ui.print_box_line(f" Phone  : {profile['phone']}")
+            self.menu_ui.print_box_line(f" Address: {profile['address']}")
+            self.menu_ui.print_box_line(f" DOB    : {profile['dob']}")
+            self.menu_ui.print_box_line(f" Email  : {profile['email']}")
+            self.menu_ui.print_box_line(f" Handle : {profile['handle']}")
+            self.menu_ui.print_box_line(f" Team   : {profile['team']}")
+            self.menu_ui.print_box_bottom()
         else:
-            print("Player not found.")
-        input("\nPress Enter to continue...")
+            self.menu_ui.print_box_top()
+            self.menu_ui.print_box_line(" Player not found.")
+            self.menu_ui.print_box_bottom()
 
-
-
-        
+        input("Press Enter to continue...")
 
 
     def edit_player(self): 
         # phone, email, address, handle
         # spurja um handle, senda new info til LL
         self.menu_ui.print_header("EDIT MY INFO")
-        print("Enter your player handle: ")
-        handle = input().strip().lower()
-    
+        self.menu_ui.print_box_top()
+        handle = input("\tEnter your player handle: ").strip().lower()
+        self.menu_ui.print_box_bottom() 
+
         if not handle:
             print("Handle cannot be empty.")
             input("Press Enter to continue...")
             return
+        while True:
+
+            self.menu_ui.print_box_top()
+            self.menu_ui.print_box_line(f" Editing info for handle: {handle} ")
+            self.menu_ui.print_box_bottom()
+            self.menu_ui.print_box_top()
+            self.menu_ui.print_box_line(" Choose info to edit: ")
+            self.menu_ui.print_box_line()
+            self.menu_ui.print_box_line("\t-  [1] Phone")
+            self.menu_ui.print_box_line("\t-  [2] Email")
+            self.menu_ui.print_box_line("\t-  [3] Address")
+            self.menu_ui.print_box_line("\t-  [4] Handle")
+            self.menu_ui.print_box_line()
+            self.menu_ui.print_box_line("\t-  [B] Back to Player Menu")
+            self.menu_ui.print_box_bottom()
+            choice = input(" ➤ Select an option: ").lower()
+            
+
+            if choice == "1":
+                self.menu_ui.print_box_top()
+                new_phone = input(" Enter new phone (format 123-4567): ").strip()
+                result = self.ll.edit_player_phone(handle, new_phone)
+                self.menu_ui.print_box_bottom()
         
-        print("Select the information you want to edit: ")
-        print("   [1] Phone")
-        print("   [2] Email")
-        print("   [3] Address")
-        print("   [4] Handle")
-        print("   [B] Back to Player Menu")
-        choice = input("Enter your choice: ").strip().lower()
+            elif choice == "2":
+                self.menu_ui.print_box_top()
+                new_email = input(" Enter new email: ").strip()
+                result = self.ll.edit_player_email(handle, new_email)
+                self.menu_ui.print_box_bottom()
 
-        if choice == "1":
-            new_phone = input("Enter new phone: ").strip()
-            result = self.ll.edit_player_phone(handle, new_phone)
+            elif choice == "3":
+                self.menu_ui.print_box_top()
+                new_address = input(" Enter new address: ").strip()
+                result = self.ll.edit_player_address(handle, new_address)
+                self.menu_ui.print_box_bottom()
+
+            elif choice == "4":
+                self.menu_ui.print_box_top()
+                new_handle = input(" Enter new handle: ").strip().lower()
+                result = self.ll.edit_player_handle(handle, new_handle)
+                self.menu_ui.print_box_bottom()
+
+            elif choice == "b":
+                return "PLAYER_MENU"
         
-        elif choice == "2":
-            new_email = input("Enter new email: ").strip()
-            result = self.ll.edit_player_email(handle, new_email)
-
-        elif choice == "3":
-            new_address = input("Enter new address: ").strip()
-            result = self.ll.edit_player_address(handle, new_address)
-
-        elif choice == "4":
-            new_handle = input("Enter new handle: ").strip().lower()
-            result = self.ll.edit_player_handle(handle, new_handle)
-
-        elif choice == "b":
-            return "PLAYER_MENU"
+            else:
+                print("Invalid choice. Valid options are 1, 2, 3, 4, B.")
+                input("Press Enter to continue...")
+                continue
         
-        else:
-            print("Invalid choice. Valid options are 1, 2, 3, 4, B.")
+            print("\n" + str(result))
             input("Press Enter to continue...")
-            return
-        
-        print("\n" + str(result))
+
+
         
 
 

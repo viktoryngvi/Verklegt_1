@@ -17,24 +17,25 @@ class CaptainUI:
     def show_menu(self) -> str:
         clear_screen()
         self.menu_ui.print_header("CAPTAIN MENU")
-        print("                ║                                                                        ║")
-        print("                ║  Player Management:                                                    ║")
-        print("                ║  [1] Create player                                                     ║")
-        print("                ║  [2] Edit player info                                                  ║")
-        print("                ║                                                                        ║")
-        print("                ║  Team Management:                                                      ║")
-        print("                ║  [3] View team                                                         ║")
-        print("                ║  [4] Change team captain                                               ║")
-        print("                ║                                                                        ║")
-        print("                ║  Schedule:                                                             ║")
-        print("                ║  [5] View schedule                                                     ║")
-        print("                ║                                                                        ║")
-        print("                ║  [B] Back to main menu                                                 ║")
-        print("                ║                                                                        ║")
-        print("                ╚════════════════════════════════════════════════════════════════════════╝")
-        print("                ➤ Select an option: ", end="")
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line("  Player Management: ")
+        self.menu_ui.print_box_line("  [1] Create player")
+        self.menu_ui.print_box_line("  [2] Edit player info")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line("  Team Management: ")
+        self.menu_ui.print_box_line("  [3] View team")
+        self.menu_ui.print_box_line("  [4] Change team captain")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line("  Schedule: ")
+        self.menu_ui.print_box_line("  [5] View schedule")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line("  [B] Back to main menu")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_bottom()
+        choice = input(" ➤ Select an option: ").strip().lower()
+        
 
-        choice = input().lower()
       
         if choice not in ["1", "2", "3", "4", "5", "b"]:
             print("Invalid choice. Valid options: 1, 2, 3, 4, 5, B")
@@ -62,16 +63,18 @@ class CaptainUI:
 
     def create_player(self):
         self.menu_ui.print_header("CREATE PLAYER")
-        print("                ║  Please enter the following details to create a new player:")
-        
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(" Please provide the following details to create a new player: ")
+        self.menu_ui.print_box_bottom()        
 
-        # Collect fields from user 
-        name = get_non_empty_input("                ║  Full name: ").strip()
-        phone = get_non_empty_input("                ║  Phone: ").strip()
-        address = get_non_empty_input("                ║  Address: ").strip()
-        dob = get_non_empty_input("                ║  DOB (YYYY-MM-DD): ").strip()
-        email = get_non_empty_input("                ║  Email: ").strip()
-        handle = get_non_empty_input("                ║  Handle (unique): ").strip()
+        # get player details
+        name = get_non_empty_input("\t- Full name: ").strip()
+        phone = get_non_empty_input("\t- Phone: ").strip()
+        address = get_non_empty_input("\t- Address: ").strip()
+        dob = get_non_empty_input("\t- DOB (YYYY-MM-DD): ").strip()
+        email = get_non_empty_input("\t- Email: ").strip()
+        handle = get_non_empty_input("\t- Handle (unique): ").strip().lower()
+        self.menu_ui.print_box_bottom()
         
         # send to LL through Player model
         player = Player(
@@ -105,66 +108,81 @@ class CaptainUI:
     def edit_player_info(self):
         # ask for captain id
         self.menu_ui.print_header("EDIT PLAYER INFO")
-        print("                 ║  Enter your handle: ", end="")                                     
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(" To edit a player's information, please provide your captain handle: ")
+        self.menu_ui.print_box_line()
+        print("\t-  Enter your captain handle: ", end="")
+                                            
         captain_handle = input().strip().lower() 
+        self.menu_ui.print_box_bottom()
         
 
         if not captain_handle:
-            print("                 ║  Handle cannot be empty.")
-            input("                 ║  Press Enter to continue...")
-            return
-        
-        # show captain's team
-        print("                 ║")
-        print("                 ║  Your team is: ", end="")
-        team_name = self.ll.view_captain_team(captain_handle)
-        if not team_name:
-            print("                 ║  No team found for this captain.")
+            print("\tHandle cannot be empty.")
             input("Press Enter to continue...")
             return
         
-        print(team_name) # displays the captains team and the players in it
-
+        # show captain's team
         print("")
+        self.menu_ui.print_box_top()
+        team_name = self.ll.view_captain_team(captain_handle)
+        self.menu_ui.print_box_line(f"\t-  Your team is: {team_name}")
+        self.menu_ui.print_box_line()
+        
+        if not team_name:
+            print("No team found for this captain.")
+            input("Press Enter to continue...")
+            return
+        
+        
 
         # get the list of players in the captains team
-        print("                 ║  Select the player you want to edit from your team: ")
+        self.menu_ui.print_box_line(" Select the player to edit:")
+
         team_players = self.ll.view_all_players_in_team(team_name)
         if not team_players:
             print("No players found in your team.")
             input("Press Enter to continue...")
             return
         
+        
         # let the captain choose a player to edit from his team
-        selected_player = choose_from_list("                ║  Enter the number of the player: ", team_players)
-        print(f"                ║  You selected to edit player: {selected_player}")
+        selected_player = choose_from_list(" Enter the number of the player: ", team_players)
+        self.menu_ui.print_box_bottom()
         print("")
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_line(" You selected to edit player: {selected_player}")
+        self.menu_ui.print_box_line()
 
         # phone, email, address, handle
-        print("                 ║  Player selected: ", selected_player)
-        print("                 ║  Select the information you want to edit: ")
-        print("                 ║  [1] Phone")
-        print("                 ║  [2] Email")
-        print("                 ║  [3] Address")
-        print("                 ║  [4] Handle")
-        print("                 ║  [B] Back to Captain Menu")
-        print("                 ║  Enter your choice: ", end="")
-        choice = input().strip().lower()
+        self.menu_ui.print_box_line(" Select the information you want to edit:")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line("\t-  [1] Phone")
+        self.menu_ui.print_box_line("\t-  [2] Email")
+        self.menu_ui.print_box_line("\t-  [3] Address")
+        self.menu_ui.print_box_line("\t-  [4] Handle")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line("\t-  [B] Back to Captain Menu")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_bottom()
+        choice = input(" ➤ Select an option: ").strip.lower()
+        print("")
 
+    
         if choice == "1":
-            new_phone = input("                ║  Enter new phone number: ").strip()
+            new_phone = self.menu_ui.print_box_line("\t-  Enter new phone number: ").strip()
             results = self.ll.edit_player_phone_captain(captain_handle, selected_player, new_phone)
 
         elif choice == "2":
-            new_email = input("                ║  Enter new email: ").strip()
+            new_email = self.menu_ui.print_box_line("\t-  Enter new email: ").strip()
             results = self.ll.edit_player_email_captain(captain_handle, selected_player, new_email)
         
         elif choice == "3":
-            new_address = input("                ║  Enter new address: ").strip()
+            new_address = self.menu_ui.print_box_line("\t-  Enter new address: ").strip()
             results = self.ll.edit_player_address_captain(captain_handle, selected_player, new_address)
 
         elif choice == "4":
-            new_handle = input("                ║  Enter new handle: ").strip().lower()
+            new_handle = self.menu_ui.print_box_line("\t-  Enter new handle: ").strip().lower()
             results = self.ll.edit_player_handle_captain(captain_handle, selected_player, new_handle)
         
         elif choice == "b":
@@ -186,7 +204,11 @@ class CaptainUI:
     
     def change_team_captain(self):
         self.menu_ui.print_header("CHANGE TEAM CAPTAIN")
-        print("                 ║  What team do you want to change the captain for? ")
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(" To change the team captain, please follow the steps below: ")
+        self.menu_ui.print_box_bottom()
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(" Select the team you want to change the captain for: ")
         # get the list of teams from LL
         teams = self.ll.view_all_teams()
 
@@ -197,7 +219,7 @@ class CaptainUI:
             return "CAPTAIN_MENU"
         
         # let user select a team
-        select_team = choose_from_list("                ║  Enter the number of the team: ", teams)
+        select_team = choose_from_list(" Enter the number of the team: ", teams)
 
         # get players in that team
         players = self.ll.view_all_players_in_team(select_team)
@@ -207,11 +229,19 @@ class CaptainUI:
             input("Press Enter to continue...")
             return "CAPTAIN_MENU"
         
-        print("                ║  Select the new captain from the team players: ")
-        # let user select a player to be the new captain
-        select_player = choose_from_list("                ║  Enter the number of the player: ", players)
+        self.menu_ui.print_box_bottom()
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(f" You selected team: {select_team} ")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line(" Select the new captain from the team players: ")
 
-        print(f"                ║  You selected to change the captain of team: {select_team} to player: {select_player}")
+
+        # let user select a player to be the new captain
+        select_player = choose_from_list(" Enter the number of the player: ", players)
+
+        self.menu_ui.print_box_line(" You selected player: {select_player} as the new captain. ")
+        self.menu_ui.print_box_bottom()
+        
         # send to LL to update
         result = self.ll.update_team_captain(
             team_name=select_team,

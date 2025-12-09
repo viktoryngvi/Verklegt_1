@@ -7,6 +7,9 @@ only to validate basic inputs for example empty inputs or integer inputs
 so that the program does not crash on invalid inputs and will deliver an error message instead.
 """
 
+def __init__(self, menu_ui):
+    self.menu_ui = menu_ui
+    
 def get_non_empty_input(prompt: str) -> str:
     """Get input that is not empty."""
     while True:

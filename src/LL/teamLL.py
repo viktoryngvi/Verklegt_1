@@ -25,3 +25,6 @@ class TeamLL:
     
     def view_all_teams(self):
         return self._dl_wrapper.view_all_teams()
+   
+    def view_all_players_in_team(self, team_name):
+        return self._dl_wrapper.view_all_players_in_team(team_name)

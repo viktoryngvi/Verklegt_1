@@ -12,19 +12,19 @@ class SpectatorUI:
     def show_menu(self) -> str:
         clear_screen()
         self.menu_ui.print_header("SPECTATOR MENU")
-        print("                ║                                                                        ║")
-        print("                ║  Browse Tournament Information:                                        ║")
-        print("                ║  [1] View schedule                                                     ║")
-        print("                ║  [2] View teams                                                        ║")
-        print("                ║  [3] View players                                                      ║")
-        print("                ║  [4] View clubs                                                        ║")
-        print("                ║                                                                        ║")
-        print("                ║  [B] Back to main menu                                                 ║")
-        print("                ║                                                                        ║")
-        print("                ╚════════════════════════════════════════════════════════════════════════╝")
-        print("                   ➤ Select an option: ", end="")
-
-        choice = input().lower()
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line("  Browse Tournament Information: ")
+        self.menu_ui.print_box_line("  [1] View schedule")
+        self.menu_ui.print_box_line("  [2] View teams")
+        self.menu_ui.print_box_line("  [3] View players")
+        self.menu_ui.print_box_line("  [4] View clubs")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line("  [B] Back to main menu")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_bottom()
+        choice = input(" ➤ Select an option: ").lower()
+        
     
         
         if choice not in ["1", "2", "3", "4", "b"]:
@@ -51,32 +51,52 @@ class SpectatorUI:
         self.menu_ui.print_header("VIEW SCHEDULE")
         view_schedule(self)
         return "SPECTATOR_MENU"
-
+        
     def view_teams_and_players(self): 
-        # name, id, handle, team
-        print("==== View Teams and Players ====")
         self.menu_ui.print_header("VIEW TEAMS AND PLAYERS")
 
-        print(" [1] View all teams")
-        print(" [2] View all players")
-        print(" [B] Back to Spectator Menu")
-        print("                ║  ➤ Select an option: ", end="")
+    
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(" Select what you want to view: ")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line("\t-  [1] View all teams")
+        self.menu_ui.print_box_line("\t-  [2] View all players")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line("\t-  [B] Back to Spectator Menu")
+        self.menu_ui.print_box_bottom()
 
-        choice = input().lower()
+        choice = input(" ➤ Select an option: ").lower()
+
         if choice not in ["1", "2", "b"]:
-            print(f"Invalid choice. Valid options: 1, 2, B")
+            print("Invalid choice. Valid options: 1, 2, B")
             input("Press Enter to continue...")
             return 
+
+        # view all teams
         if choice == "1":
-            self.ll.view_all_teams()
+            self.menu_ui.print_header("ALL TEAMS")
             view_teams(self.ll, self.menu_ui)
+            return
+
+        # view all players
         if choice == "2":
-            self.ll.load_all_player_short_info()
-            for player in self.ll.all_players_short_info:
-                print(f" - {player}")
+            self.menu_ui.print_header("ALL PLAYERS")
+            players = self.ll.load_all_player_short_info()
+
+            self.menu_ui.print_box_top()
+            if not players:
+                self.menu_ui.print_box_line("No players found.")
+            else:
+                for player in self.ll.all_players_short_info:
+                    self.menu_ui.print_box_line(f" - {player}")
+            self.menu_ui.print_box_bottom()
+
             input("Press Enter to continue...")
+            return
+
         if choice == "b":
             return
+
         
 
         
