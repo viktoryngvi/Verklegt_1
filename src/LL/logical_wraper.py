@@ -5,6 +5,7 @@ from LL.teamLL import TeamLL
 from LL.clubLL import ClubLL
 from LL.captainLL import CaptainLL
 from LL.TournamentLL import TournamentLL   # ← FIXED IMPORT
+from models.club import Club
 from models.player import Player
 from models.tournament import Tournament
 from models.event import Event
@@ -14,7 +15,7 @@ class LLWrapper:
       self.dl_wrapper = DLWrapper()
       self.validate = Validate(self.dl_wrapper)
       self.team_ll = TeamLL(self.dl_wrapper)
-      self.club_ll = ClubLL(self.dl_wrapper)
+      self.club_ll = ClubLL(self.dl_wrapper, self.validate)
       self.captain_ll = CaptainLL(self.dl_wrapper, self.validate)
       self.player_ll = PlayerLL(self.dl_wrapper, self.validate)
       self.tournament_ll = TournamentLL(self.dl_wrapper)
@@ -79,6 +80,9 @@ class LLWrapper:
 
    def load_clubs(self):
       return self.club_ll.load_clubs()
+   
+   def create_club(self, club: Club):
+      return self.club_ll.create_club(club)
    
    #TOURNAMENT METHODS
 
