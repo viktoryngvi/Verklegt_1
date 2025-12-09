@@ -4,14 +4,22 @@ from IO.Teams_IO import Team_IO
 
 class Event_IO(Event):
     def __init__(self):
-        self.file_path = "data/tournament_blueprint.csv"
-        self.public_file = "data/schedule.csv"
+        self.file_path = "data/event_blueprint.csv"
+        self.public_file = "data/knockout.csv"
 
     def read_file_as_list_of_dict(self):
         """shortcut for reusable code"""
         with open(self.file_path, "r", encoding="utf-8") as event_file:
             event_data = list(DictReader(event_file))
         return event_data
+    
+    def find_next_useable_id(self):
+        """checks the next id that has no team associated with it"""
+        event_file = self.read_file_as_list_of_dict()
+        for line in event_file:
+            if line["team_name"] != None:
+                useable_id = int(line["id"])
+        return useable_id
     
     def create_empty_event(self):
         """takes event details and rewrites the event blueprint file to have all the details of the event in
@@ -30,16 +38,19 @@ class Event_IO(Event):
         next_id = self.find_next_useable_id()
         for line in event_data:
             if line["id"] == next_id:
-                line["team_name"] = team
+                line["team_name"] = f"{team},"
+                line["event_name"] = f"{self.name},"
+                line["event_type"] = self.game_type
 
         with open(self.file_path, "w", encoding="utf-8") as event_file:
             event_file.write("id,team_name,event_name,event_type,")
             for teams in event_data:
                 values = teams.values()
                 values = [str(v) for v in values]
-                event_file.write(",".join(values))
+                event_file.write(f"{",".join(values)},\n")
                 event_file.write("\n")
         return f"{team} is now a part of this event!"
+    # virkar ekki!!!!!#TODO
 
     def check_if_team_in_event(self, team):
         """takes team name and checks if the team is in the event"""
@@ -48,21 +59,13 @@ class Event_IO(Event):
             if line["team_name"] == team:
                 return True
         return False
-
-    def find_next_useable_id(self):
-        """checks the next id that has no team associated with it"""
-        event_file = self.read_file_as_list_of_dict()
-        for line in event_file:
-            if line["team_name"] == None:
-                return line["id"]
-
+            
     def how_many_teams_in_event(self):
         """checks how many teams are in the event"""
         next_empty_id = self.find_next_useable_id()
         return int(next_empty_id) - 1
-    
 
-    def move_blueprint_to_public(self):
+    def move_blueprint_to_knockout(self):
         """should take the filled event_blueprint and make a knockout schedule in the event file for that"""
         with open(self.file_path, "r", encoding="utf-8") as event_blueprint:
             csv_reader = DictReader(event_blueprint)
@@ -74,11 +77,7 @@ class Event_IO(Event):
                 public_event_file.write(",".join(every_line.values()))
                 public_event_file.write("\n")
         return "Event is now public"
-    # TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 
 
-    def if_type_is_last_team_standing(self):
-        pass
-    # mögulega þarf ekki að setja inn í schedule????????? #TODO
