@@ -12,7 +12,11 @@ from models.event import Event
 class LLWrapper:
    def __init__(self):
       self.dl_wrapper = DLWrapper()
-      self.player_ll = PlayerLL(self.dl_wrapper,Validate)
+      self.validate = Validate(self.dl_wrapper)
+      self.team_ll = TeamLL(self.dl_wrapper)
+      self.club_ll = ClubLL(self.dl_wrapper)
+      self.captain_ll = CaptainLL(self.dl_wrapper, self.validate)
+      self.player_ll = PlayerLL(self.dl_wrapper, self.validate)
       self.tournament_ll = TournamentLL(self.dl_wrapper)
 
    #PLAYER METHODS   
@@ -32,6 +36,11 @@ class LLWrapper:
    def edit_player_handle(self, handle: str, handle_str: str) -> str:
       return self.player_ll.edit_player_handle(handle, handle_str)
    
+   def load_player_info(self, handle):
+      return self.player_ll.load_player_info(handle)
+   
+   #CAPTAIN METHODS
+   
    def edit_player_email_captain(self, team: str, handle: str, email: str) -> str: 
       return self.captain_ll.edit_player_email_cap(team, handle, email)
 
@@ -44,18 +53,35 @@ class LLWrapper:
    def edit_player_handle_captain(self, team: str, handle: str, handle_str: str) -> str:
       return self.captain_ll.edit_player_handle_cap(team, handle, handle_str)
 
+   def view_all_players_in_team(self, team_name): # Players in captains team
+      return self.captain_ll.view_all_players_in_team(self, team_name)
+   
+   def update_team_captain(self, team_name, handle):
+      return self.captain_ll.update_team_captain(self, team_name, handle)
+   
+   #TEAM METHODS
+
    def create_team(self, cap_id: int, team_name: str, players_id: list): 
       return self.team_ll.create_team(cap_id, team_name, players_id)
    
    def load_player_short_info(self): # Id, Name, Handle, Team PUBLIC INFO
       return self.team_ll.load_player_short_info()
    
-   def load_player_info(self, handle):
-      return self.player_ll.load_player_info(handle)
+   def view_all_teams(self):
+      return self.team_ll.view_all_teams(self)
+   
+   #MATCH METHODS
+
+   def enter_match_result(self):
+      pass
+
+   #CLUBS METHODS
 
    def load_clubs(self):
       return self.club_ll.load_clubs()
    
+   #TOURNAMENT METHODS
+
    def create_tournament(self, tournament: Tournament):
       return self.tournament_ll.create_tournament(tournament)
    
@@ -65,20 +91,6 @@ class LLWrapper:
    def get_events_in_tournament(self):
       return self.tournament_ll.get_events_in_tournament(self)
    
-   def get_team_captain(self, team_name):
-      return self.captain_ll.get_team_captain(self, team_name)
-   
-   def view_captain_team(self, handle):
-      return self.captain_ll.view_captain_team(self, handle)
-   
-   def view_all_teams(self):
-      return self.team_ll.view_all_teams(self)
-   
-   def view_all_players_in_team(self, team_name):
-      return self.team_ll.view_all_players_in_team(self,team_name)
-   
-   def update_team_captain(self, team_name, handle):
-      return self.captain_ll.update_team_captain(self, team_name, handle)
 
    def generate_schedule(tournament: Tournament, event: Event):
       pass
@@ -86,12 +98,7 @@ class LLWrapper:
    def get_tournament_schedule(self, tournament_name, event_in_tournament):
       return self.tournament_ll.get_tournament_schedule(tournament_name, event_in_tournament)
    
-   def enter_match_result(self):
-      pass
-   
-   def change_team_captain(self):
-      pass
-   
+
    def assign_point(self):
       pass
    
