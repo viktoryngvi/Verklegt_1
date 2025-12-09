@@ -43,7 +43,7 @@ class Tournament_IO(Tournament):
         with open(self.file_path, "w", encoding="utf-8") as new_torunament_file:
             new_torunament_file.write("id,tournament_name,tournament_location, start_date, end_date,event_list")
             for line in tournament_file:
-                new_torunament_file.write(f"{",".join(line.values())}\n")
+                new_torunament_file.write(f'{",".join(line.values())}\n')
 
         return "Done!"
 
