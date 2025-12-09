@@ -28,9 +28,9 @@ class Event_IO(Event):
     
     def get_server_id(self):
         return str(uuid.uuid4())
-        
-###############################################################
 
+
+# laga þetta
     def create_empty_event(self, tournament_name):
         """takes event details and rewrites the event blueprint file to have all the details of the event in
         the file"""
@@ -38,10 +38,11 @@ class Event_IO(Event):
             event_file.write("id,team_name,tournament_name,event_name,event_type,")
             # láta event name og type mögulega bara koma einusinni til að gera þetta fallegt
             team_id = 1
-            for team in range(len(self.teams) + 1):
+            for team in range(self.teams):
                 event_file.write(f"{team_id},\n")
                 team_id += 1
         return "Event created!"
+    
 # #############################################
     def write_team_into_empty_event(self, tournament_name, team):
         """takes a team name and writes it into the blueprint"""
@@ -71,11 +72,6 @@ class Event_IO(Event):
                 return True
         return False
             
-    def how_many_teams_in_event(self):
-        """checks how many teams are in the event"""
-        next_empty_id = self.find_next_useable_id()
-        return int(next_empty_id) - 1
-
     def make_event_public(self):
         blueprint_file = self.read_file_as_list_of_dict()
         for line in blueprint_file:
