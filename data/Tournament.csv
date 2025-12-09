@@ -1,1 +1,1 @@
-id,tournament_name,event_list,tournament_location, start_date, end_date<IO.data_wrapper.DLWrapper object at 0x0000028902B1CC10>,event_list<IO.data_wrapper.DLWrapper object at 0x0000028902B1CC10>,event_list
+id,tournament_name,tournament_location, start_date, end_date,event_list
