@@ -2,39 +2,49 @@ from datetime import datetime
 from models.tournament import Tournament
 from models.team import Team
 from IO.data_wrapper import DLWrapper
+from LL.validate import Validate
 
 
 class TournamentLL:
     def __init__(self, dl_wrapper: DLWrapper):
         self._dl_wrapper = dl_wrapper
+        self.validator = Validate(dl_wrapper)
 
     def create_tournament(self, tournament: Tournament):
         validate_errors = self.validate_tournament(tournament)
 
 
-        # TODO: Route to data storage
         if validate_errors:
             return validate_errors
         else:
             #return "Successfully created tournament."
             return self._dl_wrapper.create_tournament(tournament)
 
-        # TODO: Generate schedule
-        # schedule = GenerateTournamentSchedule(tournament).generate()
-
-       
-
-    def register_teams(self, tournament: Tournament, teams: list[str]):
-        # TODO: Implement team registration logic
-        pass
-
-
-
 
     # ----------------------------------------------------------------------
-    # VALIDATION HELPERS 
+    # VALIDATE TOURNAMENT 
     # ----------------------------------------------------------------------
 
+    def validate_tournament(self, tournament: Tournament):
+        errors = []
+
+        check_name = self.check_tournament_name(tournament)
+        #check_type = self.check_tournament_type(tournament.type)
+        check_dates = self.check_dates(tournament)
+        check_contact_name = self.check_contact_name(tournament)
+        check_contact_email = self.check_contact_email(tournament)
+        check_contact_phone = self.check_contact_phone(tournament)
+
+        if check_name is not True:
+            errors.append(f"Name: {check_name}")
+
+        # if check_type is not True:
+        #     errors.append(f"Type: {check_type}")
+
+        if check_dates is not True:
+            errors.append(f"Dates: {check_dates}")
+
+        return errors if errors else None
 
 
     # ----------------------------------------------------------------------    
@@ -88,27 +98,63 @@ class TournamentLL:
 
         return True
 
-    # ----------------------------------------------------------------------
-    # VALIDATE TOURNAMENT 
-    # ----------------------------------------------------------------------
 
-    def validate_tournament(self, tournament: Tournament):
-        errors = []
+    
+# --------------------------------------------------------------------------
+# VALIDATE CONTACT NAME
+# --------------------------------------------------------------------------   
 
-        check_name = self.check_tournament_name(tournament)
-        #check_type = self.check_tournament_type(tournament.type)
-        check_dates = self.check_dates(tournament)
+    def check_contact_name(self, tournament: Tournament):
+        check_contact_name = tournament.contact_name.strip()
 
-        if check_name is not True:
-            errors.append(f"Name: {check_name}")
+        if len(check_contact_name) == 0:
+            return "Contact name cannot be empty."
 
-        # if check_type is not True:
-        #     errors.append(f"Type: {check_type}")
+        if len(check_contact_name) < 3:
+            return "Contact name must be at least 3 characters."
 
-        if check_dates is not True:
-            errors.append(f"Dates: {check_dates}")
+        return True
 
-        return errors if errors else None
+# --------------------------------------------------------------------------
+# VALIDATE CONTACT EMAIL
+# --------------------------------------------------------------------------  
+    def check_contact_email(self, tournament: Tournament):
+        check_contact_email = tournament.contact_email.strip()
+
+        result = self.validator.validate_email(check_contact_email)
+
+        if result is not None:
+            return f"Invalid email: {result}"
+
+        return True
+    
+
+# --------------------------------------------------------------------------
+# VALIDATE CONTACT PHONE
+# --------------------------------------------------------------------------  
+    def check_contact_phone(self, tournament: Tournament):
+        check_contact_phone = tournament.contact_email.strip()
+
+        result = self.validator.validate_phone(check_contact_phone)
+
+        if result is not None:
+            return f"Invalid phone: {result}"
+
+        return True
+    
+# --------------------------------------------------------------------------
+# GET_TOURNAMENT_LIST 
+# --------------------------------------------------------------------------
+    def get_tournament_list(self):
+        return self._dl_wrapper.view_tournaments()
+
+
+
+
+
+
+
+
 
 
 # --------------------------------------------------------------------------
