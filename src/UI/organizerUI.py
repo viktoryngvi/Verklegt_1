@@ -204,6 +204,13 @@ class OrganizerUI:
         print("\n" + str(results))
         input("Press Enter to continue...")
 
+    def Register_team_into_event(self):
+        pass
+    """
+    list of events
+    write team into event
+    """
+
 
  
     def generate_schedule(self):

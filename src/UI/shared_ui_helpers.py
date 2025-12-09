@@ -26,6 +26,9 @@ def create_team(ll, menu_ui):
     menu_ui.print_header("CREATE TEAM")
     pass
 """
+name of team
+captain id
+list of players
 
 """
 def view_schedule(ll, menu_ui):
