@@ -57,7 +57,7 @@ class Event_IO(Event):
             for teams in event_data:
                 values = teams.values()
                 values = [str(v) for v in values]
-                event_file.write(f"{ ','.join(values) },\n")
+                event_file.write(f'{",".join(values) },\n')
                 event_file.write("\n")
         return f"{team} is now a part of this event!"
     # virkar ekki!!!!!#TODO
@@ -95,7 +95,7 @@ class Event_IO(Event):
         with open(self.knockout_file, "w", encoding="utf-8") as knockout_file:
             knockout_file.write("id,team_name,event_name,event_type")
             for every_line in event_blueprint:
-                knockout_file.write(f"{",".join(every_line.values())}\n")
+                knockout_file.write(f'{",".join(every_line.values())}\n')
         return "Event is now public"
 
     def move_blueprint_to_last_team_standing(self):
@@ -123,6 +123,8 @@ class Event_IO(Event):
             last_team_file.write("game_name,game_type,server_id,match_id,time_of_match,winner,match_result,teams_list")
             for every_line in read_last_team_file:
                 last_team_file.write(",".join(every_line.values()))
+        with open(self.file_path, "w", encoding="utf-8") as new_torunament_file:
+            pass
         return f"{team_that_won}, is the winner of {self.name}"
         # hvað er time of match??????????????????????????????????????#TODO
 
