@@ -14,13 +14,17 @@ class TeamLL:
             return "Team name already exists"
         
         for player_id in players_id:
-            if not self._dl_wrapper.check_if_player_id_in_team(players_id): # check if the id of the player is not in the list of valid id 
+            if not self._dl_wrapper.check_if_player_id_in_team(player_id): # check if the id of the player is not in the list of valid id 
                 return "Player's id does not exist" 
             
         create_team = self._dl_wrapper.create_team(cap_id, team_name, players_id)
+        return create_team
 
     def load_player_short_info(self):
         return self._dl_wrapper.load_all_player_short_info()
     
     def view_all_teams(self):
         return self._dl_wrapper.view_all_teams()
+    
+    def check_if_player_handle_in_team(self, handle):
+        return self._dl_wrapper.check_if_player_handle_in_team(self, handle)
