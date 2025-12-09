@@ -12,10 +12,11 @@ class Team_IO(Team):
         with open(self.file_path, "a", encoding="utf-8") as teams_file:
             captain_handle = Player_IO.take_id_return_handle(captain_id)
             teams_file.write(f"{name},{captain_handle},")
+            list_of_player_handles = []
             for player_id in list_of_player_ids:
                 player_handle = Player_IO.take_id_return_handle(player_id)
-                teams_file.write(player_handle)
-            teams_file.write("\n")
+                list_of_player_handles.append(player_handle)
+            teams_file.write(f"{list_of_player_handles}\n")
         return "Done!"
 
     def change_team_captain(self, find_team, new_captain):
