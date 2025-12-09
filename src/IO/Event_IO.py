@@ -2,7 +2,6 @@ from csv import DictReader
 from models.event import Event
 from IO.Teams_IO import Team_IO
 from IO.Knockout_IO import Knockout
-# from IO.Last_team_IO import Last_team_standing_IO
 
 class Event_IO(Event):
     def __init__(self):
@@ -10,7 +9,6 @@ class Event_IO(Event):
         self.knockout_file = "data/knockout.csv"
         self.Last_team_file = "data/last_team_standing.csv"
         self.knockout = Knockout()
-        # self.last_team = Last_team_standing_IO()
 
     def read_file_as_list_of_dict(self):
         """shortcut for reusable code"""
@@ -22,9 +20,9 @@ class Event_IO(Event):
         """checks the next id that has no team associated with it"""
         event_file = self.read_file_as_list_of_dict()
         for line in event_file:
-            if line["team_name"] != None:
-                useable_id = int(line["id"])
-        return useable_id
+            useable_id = int(line["id"])
+            if line["team_name"] == "":
+                return useable_id
     
     def find_next_server_id(self):
         pass
@@ -59,7 +57,7 @@ class Event_IO(Event):
             for teams in event_data:
                 values = teams.values()
                 values = [str(v) for v in values]
-                event_file.write(f"{ ','.join(values) },\n")
+                event_file.write(f'{",".join(values) },\n')
                 event_file.write("\n")
         return f"{team} is now a part of this event!"
     # virkar ekki!!!!!#TODO
@@ -97,8 +95,7 @@ class Event_IO(Event):
         with open(self.knockout_file, "w", encoding="utf-8") as knockout_file:
             knockout_file.write("id,team_name,event_name,event_type")
             for every_line in event_blueprint:
-                knockout_file.write(",".join(every_line.values()))
-                knockout_file.write("\n")
+                knockout_file.write(f'{",".join(every_line.values())}\n')
         return "Event is now public"
 
     def move_blueprint_to_last_team_standing(self):
@@ -126,6 +123,8 @@ class Event_IO(Event):
             last_team_file.write("game_name,game_type,server_id,match_id,time_of_match,winner,match_result,teams_list")
             for every_line in read_last_team_file:
                 last_team_file.write(",".join(every_line.values()))
+        with open(self.file_path, "w", encoding="utf-8") as new_torunament_file:
+            pass
         return f"{team_that_won}, is the winner of {self.name}"
         # hvað er time of match??????????????????????????????????????#TODO
 
@@ -135,10 +134,9 @@ class Event_IO(Event):
         for line in read_last_team_file:
             if int(line["match_id"]) == 1:
                 if line["winner"] != "winner":
-                    my_string = f"Game winner is {line['winner']}"
-                    return my_string
-                
-        return "Game is not finnished"    
+                    final_string = f"Game winner is {line['winner']}"
+                    return final_string
+        return "Game is not finnished"
 
     def move_blueprint_to_double_elimination(self):
         pass
