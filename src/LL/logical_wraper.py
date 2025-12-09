@@ -112,3 +112,13 @@ class LLWrapper:
    def get_statistics(self, ptc: str): #PTC = Player Team Club
       pass
    
+
+# ----------------------------------------------------------------------
+# date validation
+# ----------------------------------------------------------------------   
+
+   def get_event_types(self):
+        return [
+            "Single Elimination",
+            "Double Elimination",
+            "Last Team Standing"]
