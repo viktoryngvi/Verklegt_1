@@ -19,10 +19,9 @@ vikkman
 """
 """
 CAPA TOURNY
-HR
+CAPA TOURNY
 2025.12.20
 2025.12.24
-1
 Kristófer Kristjan Erlendsson
 email@gmail.com
 787-2550

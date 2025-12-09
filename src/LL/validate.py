@@ -1,6 +1,7 @@
 from models.player import Player
 from IO.data_wrapper import DLWrapper
 from datetime import datetime
+from models.club import Club
 
 class Validate:  
     def __init__(self, dl_wrapper: DLWrapper):
