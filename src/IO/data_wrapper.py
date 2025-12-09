@@ -139,7 +139,7 @@ class DLWrapper:
         return self.tournamentio.put_event_into_tournament(self, torunament_name, event_name)
     
     def view_tournaments(self):
-        return self.tournamentio.view_tournaments(self)
+        return self.tournamentio.view_tournaments()
     
     def view_events_in_tournaments(self, tournament_name):
         return self.tournamentio.view_events_in_tournament(tournament_name)

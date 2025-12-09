@@ -60,7 +60,7 @@ class LLWrapper:
       return self.tournament_ll.create_tournament(tournament)
    
    def get_tournament_list(self):
-      return self.tournament_ll.get_tournament_list(self)
+      return self.tournament_ll.get_tournament_list()
    
    def get_events_in_tournament(self):
       return self.tournament_ll.get_events_in_tournament(self)
