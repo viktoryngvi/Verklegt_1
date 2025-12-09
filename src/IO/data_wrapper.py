@@ -47,7 +47,7 @@ class DLWrapper:
 
     def create_team(self, team_name, captain_id, list_of_player_ids):
         """takes team_name, team_captain_id and a list of player_ids and creates the team in the csv file"""
-        return self.teamio.create_team(self)
+        return self.teamio.create_team(team_name, captain_id, list_of_player_ids)
 
     def check_if_team_name_exists(self, team_name):
         """takes a team name and checks if that team name is in use"""
@@ -103,8 +103,11 @@ class DLWrapper:
         """checks how many teams have been registered intp the event_blueprint returns int"""
         return self.event_blueprintio.how_many_teams_in_event(self)
     
-    def move_blueprint_to_public(self):
-        return self.event_blueprintio.move_blueprint_to_public(self)
+    def move_blueprint_to_knockout(self):
+        return self.event_blueprintio.move_blueprint_to_knockout(self)
+    
+    def move_blueprint_to_last_team_standing(self):
+        return self.event_blueprintio.move_blueprint_to_last_team_standing()
 
     # knockout style mothods:
 
@@ -132,14 +135,14 @@ class DLWrapper:
 
     # tournament methods
 
-    def create_tournament(self, tournament):
-        return self.tournamentio.create_tournament(self)
+    def create_tournament(self, tournament: Tournament_IO):
+        return self.tournamentio.create_tournament(tournament)
     
     def put_event_into_tournament(self, torunament_name, event_name):
         return self.tournamentio.put_event_into_tournament(self, torunament_name, event_name)
     
     def view_tournaments(self):
-        return self.tournamentio.view_tournaments(self)
+        return self.tournamentio.view_tournaments()
     
     def view_events_in_tournaments(self, tournament_name):
         return self.tournamentio.view_events_in_tournament(tournament_name)
