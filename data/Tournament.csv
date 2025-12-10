@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 id,tournament_name,event_list,tournament_location,start_date,end_date,contact_person,event_list
+=======
+id,tournament_name,event_list,tournament_location,start_date,end_date,event_list
+>>>>>>> 011afc5842341b899a1a3af20ff942b565d4ae36

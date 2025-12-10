@@ -1,6 +1,5 @@
 from csv import DictReader
 
-
 class Event_IO:
     def __init__(self):
         self.file_path = "data/event_blueprint.csv"
