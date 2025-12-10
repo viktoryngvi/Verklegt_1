@@ -156,13 +156,13 @@ class PlayerLL:
         return short_list
     #býr til lista af dicts af id, name og
 
-    def check_last_id(self):
+    def check_last_id(self, player: Player):
         """checks the last player and returns the id of said player"""
         player_data = self._dl_wrapper.load_all_player_info()
         if not player_data:
             next_useable_id = 1
         else:
-            next_useable_id = int(player_data[-1]["id"])
+            next_useable_id = int(player.id[-1])
             next_useable_id += 1
         return next_useable_id
     
@@ -171,33 +171,33 @@ class PlayerLL:
     def check_if_player_id_in_team(self, player: Player, id):
         """takes id and check if that player is in a team"""
         player_list = self._dl_wrapper.load_all_player_info()
-        for row in player_list:
+        for  in player_list:
             if id == int(player.id):
                 if player.team is None:
                     return False
         return True
 
 
-    def turn_handle_into_id(self, handle: str):
+    def turn_handle_into_id(self, handle: str, player: Player):
         """takes handle and returns the players id"""
         player_list = self._dl_wrapper.load_all_player_info() 
         for players in player_list:
-            if handle == str(players["handle"]):
-                return int(players["id"])
+            if handle == str(player.handle):
+                return int(player.id)
         return False
 
-    def take_id_return_handle(self, id: int):
+    def take_id_return_handle(self, id: int, player: Player):
         """takes an id and returns the players handle"""
         player_list = self._dl_wrapper.load_all_player_info() 
         for players in player_list:
-            if id == int(players["id"]):
-                return str(players["handle"])
+            if id == int(player.id):
+                return str(player.handle)
         return False
 
-    def load_single_player_info(self, handle):
+    def load_single_player_info(self, handle, player: Player):
         player_data = self._dl_wrapper.load_all_player_info
         for player in player_data:
-            if player["handle"] == handle:
+            if player.handle == handle:
                 return player
         return "Player does not exist"
     
