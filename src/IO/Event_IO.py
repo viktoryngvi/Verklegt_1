@@ -18,6 +18,39 @@ class Event_IO(Event):
             event_data = list(DictReader(event_file))
         return event_data
     
+    def write_into_event_blueprint(self, event_data):
+        with open(self.file_path, "w", encoding="utf-8") as event_file:
+            event_file.write(event_data)
+
+
+
+    def move_to_knockout(self, public_data):
+        with open(self.file_path, "a", encoding="utf-8") as schedule_file:
+            schedule_file.write("tournament_name,server_id,match_id,time_of_match,game_name,game_type,team_a,team_b,team_a_score,team_b_score,winner,match_result")              
+            schedule_file.write(f'{self.tournament_name}{self.server_id},{int(self.get_match_id())},{self.schedule_time},{dict_list["game_name"]},{dict_list["game_type"]}{team_a},{team_b},team_a_score,team_b_score,winner,')
+        return "done!" 
+        
+    def move_to_last_team_standing(self, public_data):
+        with open(self.Last_team_file, "a", encoding="utf-8") as last_team_file:
+            last_team_file.write("game_name,game_type,server_id,time_of_match,winner,match_result,teams_list")
+            last_team_file.write(public_data)
+        return "done"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     def find_next_useable_id(self):
         """checks the next id that has no team associated with it"""
         event_file = self.read_file_as_list_of_dict()
