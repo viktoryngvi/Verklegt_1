@@ -1,11 +1,11 @@
 # models/event.py
 
 from models.team import Team
-from models.match import Match
+# from models.match import Match
 
 class Event:
     def __init__(self, tournament_name: str = None, name :str = None, game_type: str = None, start_date: str = None,
-                  end_date: str = None, team: list[Team] = None, matches: list[Match] = None):
+                  end_date: str = None, team: list[Team] = None):
         
         self.tournament_name = tournament_name 
         self.name = name
