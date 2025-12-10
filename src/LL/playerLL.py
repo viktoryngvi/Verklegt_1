@@ -36,17 +36,15 @@ class PlayerLL:
             # If a list of errors is returned, stop and return the errors.
             return validate_errors
         
-        id = self.check_last_id()
-        Player.id = id
+        id = self.get_new_player_id()
+        player.id = id
         create_player = self.create_player_to_data(player)
         return create_player
     
     def create_player_to_data(self, player: Player):
         """takes all inputted info and created a player, and checks the last players id and taked the next number"""
-        player_data = self._dl_wrapper.load_all_player_info()
-        player_data.append(player)
 
-        if self._dl_wrapper.write_into_file(player_data):
+        if self._dl_wrapper.write_into_file(player):
             return "PLayer successfully created"
         
         return "Player was not created" 
@@ -156,14 +154,14 @@ class PlayerLL:
         return short_list
     #býr til lista af dicts af id, name og
 
-    def check_last_id(self, player: Player):
+    def get_new_player_id(self):
         """checks the last player and returns the id of said player"""
-        player_data = self._dl_wrapper.load_all_player_info()
+        player_data: list[Player] = self._dl_wrapper.load_all_player_info()
         if not player_data:
-            next_useable_id = 1
-        else:
-            next_useable_id = int(player.id[-1])
-            next_useable_id += 1
+            return 1
+        
+        next_useable_id: Player = player_data[-1]
+        next_useable_id.id += 1
         return next_useable_id
     
     # notað til að checka hvort id passar við player sem er ekki í liði
@@ -171,7 +169,7 @@ class PlayerLL:
     def check_if_player_id_in_team(self, player: Player, id):
         """takes id and check if that player is in a team"""
         player_list = self._dl_wrapper.load_all_player_info()
-        for  in player_list:
+        for row  in player_list:
             if id == int(player.id):
                 if player.team is None:
                     return False
