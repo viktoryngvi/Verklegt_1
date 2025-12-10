@@ -53,18 +53,3 @@ class Event_IO:
             results_file.write("game_name,game_type,server_id,time_of_match,winner,match_result,teams_list")
             results_file.write(new_results_file)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
