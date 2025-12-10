@@ -13,6 +13,10 @@ class Player_IO(Player):
                 player = Player()
                 for i in range(len(headers)):
                     setattr(player, headers[i], attributes[i])
+<<<<<<< HEAD
+=======
+
+>>>>>>> bea3bbc58c79d66034a3f8dd1d77b0697144ac8e
         return player_data
 
     def write_into_player_file(self, player_data):

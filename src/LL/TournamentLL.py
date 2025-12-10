@@ -46,10 +46,10 @@ class TournamentLL:
         # return "Tournament created!"
 
 
-    def put_event_into_tournament(self, tournament_name, event_name):
+    def put_event_into_tournament(self, tournament_name, event_name, tournament: Tournament):
         tournament_file = self._dl_wrapper.read_tournament_file()
         for line in tournament_file:
-            if line["tournament_name"] == tournament_name:
+            if tournament.name == tournament_name:
                 if line["event_list"] == "event_list":
                     line["event_list"] = []
                     line["event_list"].append(event_name)
