@@ -5,7 +5,7 @@ from models.contact_person import contact_person
 class Tournament(contact_person):
     def __init__(self, name: str = None, location: str = None, start_date: str = None, end_date: str = None
                  , contact_name: str = None, contact_email: str = None,
-                 contact_phone: str = None, tournament_id: int = None, event_list: list[Event]):
+                 contact_phone: str = None, tournament_id: int = None, event_list: list[Event] = None):
         super().__init__(contact_name,contact_email,contact_phone)
         
         
