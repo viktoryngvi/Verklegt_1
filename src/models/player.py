@@ -1,11 +1,11 @@
 from models.person import Person
 
 class Player(Person):
-    def __init__(self, name: str, phone: str, address: str, dob: str, email: str, id: int, handle: str, team: None, captain: bool = False):
+    def __init__(self, name: str = None, phone: str = None, address: str = None, dob: str = None,
+                  email: str = None, id: int = None, handle: str = None, team: None = None):
         super().__init__(name, phone, address, dob, email)
         self.handle = handle
         self.id = id
-        self.captain = captain
         self.team = team
     def __str__(self):
         return 
