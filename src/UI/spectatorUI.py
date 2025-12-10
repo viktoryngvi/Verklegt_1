@@ -66,7 +66,7 @@ class SpectatorUI:
         self.menu_ui.print_box_top()
         events_in_tournament = choose_from_list("Select Event by number: ", self.ll.get_events_in_tournament(tournament_name))
         self.menu_ui.print_box_line()
-        self.menu_ui.print_box_line(f" You selected Event: ", {events_in_tournament})
+        self.menu_ui.print_box_line(f" You selected Event: {events_in_tournament}")
     
         self.menu_ui.print_box_bottom()
         # get schedule from ll for that tournament and event
@@ -141,7 +141,17 @@ class SpectatorUI:
 
         
     def view_clubs(self): 
-        print("TODO")
+        self.menu_ui.print_header("VIEW CLUBS")
+        clubs = self.ll.load_clubs()
+        self.menu_ui.print_box_top()
+        if not clubs:
+            self.menu_ui.print_box_line("No clubs found.")
+        else:
+            for club in clubs:
+                self.menu_ui.print_box_line(f" - {club}")
+        self.menu_ui.print_box_bottom()
+        input("Press Enter to continue...")
+        return
 
 
         

@@ -1,44 +1,20 @@
-from models.team import Team
 from csv import DictReader
-from IO.Player_IO import Player_IO
 
-class Team_IO(Team):
+class Team_IO:
     def __init__(self,):
         self.file_path = "data/teams.csv"
 
-    def create_team(self, name, captain_id, list_of_player_ids):
-        """Takes three variables team_name, team_captain-in id, list af player_id´s and writes it into 
-        the teams.csv file"""
-        with open(self.file_path, "a", encoding="utf-8") as teams_file:
-            captain_handle = Player_IO.take_id_return_handle(captain_id)
-            teams_file.write(f"{name},{captain_handle},")
-            list_of_player_handles = []
-            for player_id in list_of_player_ids:
-                player_handle = Player_IO.take_id_return_handle(player_id)
-                list_of_player_handles.append(player_handle)
-            teams_file.write(f"{list_of_player_handles}\n")
-        return "Done!"
 
-    def change_team_captain(self, find_team, new_captain):
-        """This checks all team captains and compares them with the inputted captains, then updates
-        the captain value and finds the inputted new team captain in the team and makes him the new captain"""
-        with open(self.file_path, "r", encoding="utf-8") as teams_file:
-            teams_list = list(DictReader(teams_file))
-        # býr til lista af dicts af liðunum
-        
-            for each_dict in teams_list:
-                team_name =str(each_dict["team_name"])
-                if team_name == find_team:
-                    each_dict["captain"] = new_captain
+
         # finnur réttan captain og breytir honum í capteinin
-
+    def _write_team_into_file(self, teams_file):
         with open(self.file_path, "w", encoding="utf-8") as teams_file:
-            teams_file.write("team,captainhandle,player1handle,player2handle,player3handle,player4handle,player5handle")
-            for each_dict in teams_list:
+            teams_file.write("team,captain_handle,player_list")
+            for each_dict in teams_file:
                 teams_file.write(",".join(each_dict.values()))
                 teams_file.write("\n")
         # skrifar það aftur í skránna
-        return "Successfully changed team captain"
+        return True
 
     def view_all_teams(self):
         """checks all teams and their captain and returns a list of dicts of teams""" #TODO
@@ -46,63 +22,4 @@ class Team_IO(Team):
             teams_data = list(DictReader(teams_file))
         return teams_data
 
-    def view_all_team_names_and_captains(self):
-        """returns all team names and cpatains of that team"""
-        all_teams = self.view_all_teams()
-        list_of_team_name_and_captain_name = []
-        for team in all_teams:
-            list_of_team_name_and_captain_name.append({"team_name": team["team_name"], "captain": team["captain"]})
-        return list_of_team_name_and_captain_name
-
-    def players_team_none(self):
-        """opens a file and returns a list of players short info
-            that have not yet been assigned to a team"""
-        list_of_non_team_players_short_info = []
-        all_players = Player_IO.load_all_player_info()
-        for players in all_players:
-            if players["team_name"] == None:
-                filtered_player = {"id":players["id"], "name": players["name"], "handle": players["handle"]}
-                list_of_non_team_players_short_info.append(filtered_player)
-        return list_of_non_team_players_short_info
-
-    def view_all_players_in_team(self, team_name):
-        """views_all_teams() and select a team and returns all players in  said team"""
-        all_teams = self.view_all_teams()
-        players_in_team = []
-        for team in all_teams:
-            if team["team_name"] == team_name:
-                for players in team["players"]:
-                    players_in_team.append(players)
-                return players_in_team
-
-    def view_captains_team(self, find_captain_handle):
-        """views_all_teams() and select a team and returns all players in  said team"""
-        all_teams = self.view_all_teams()
-        for team in all_teams:
-            if team["handle"] == find_captain_handle:
-                return team
-
-    def check_if_team_name_exists(self, team_name):
-        """takes a team name and checks if that team name is already in use"""
-        all_teams = self.view_all_teams()
-        for teams in all_teams:
-            if teams["team_name"] == team_name:
-                return True
-        return False
-
-    def check_if_player_handle_in_team(self, team, handle):
-        """takes a player handle and checks if that player handle is in the team"""
-        players_in_team = self.view_all_players_in_team(team)
-        if not players_in_team:
-            return "No players in this team"
-        for handles_in_team in players_in_team[2:]:
-            if handles_in_team == handle:
-                return True
-        return False
     
-    def view_captain_team_by_team_name(self, team_name):
-        team_file = self.view_all_teams()
-        for line in team_file:
-            if line["team_name"] == team_name:
-                return line["captain"]
-        return "Team does not exist"

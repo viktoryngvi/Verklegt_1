@@ -47,45 +47,13 @@ class DLWrapper:
         return self.playerio.check_if_player_id_in_team(player_id)
     # team methods
 
-    def create_team(self, team_name, captain_id, list_of_player_ids):
-        """takes team_name, team_captain_id and a list of player_ids and creates the team in the csv file"""
-        return self.teamio.create_team(team_name, captain_id, list_of_player_ids)
 
-    def check_if_team_name_exists(self, team_name):
-        """takes a team name and checks if that team name is in use"""
-        return self.teamio.check_if_team_name_exists(team_name)
-    
-    def change_team_captain(self, find_team, new_captain):
-        """takes the team name, new captain and changes the captain of the team"""
-        return self.teamio.change_team_captain(find_team, new_captain)
-    
     def view_all_teams(self):
         """returns a list of dictionarys of all teams"""
         return self.teamio.view_all_teams()
     
-    def players_team_none(self):
-        """returns a list of players(id, name and handle) that dont have a team"""
-        return self.teamio.players_team_none()
-    
-    def view_all_players_in_team(self, team_name):
-        """takes a team name and returns a list of dictionary containing: team_name, team_captain and a list of all players in team"""
-        return self.teamio.view_all_players_in_team(team_name)
-    
-    def view_all_team_names_and_captains(self):
-        """gives only team_name and team_captain of all teams in file"""
-        return self.teamio.view_all_team_names_and_captains()
-
-    def check_if_player_handle_in_team(self, team, handle):
-        """takes team_name and handle and checks if the handle is in in the team"""
-        return self.teamio.check_if_player_handle_in_team(team, handle)
-    
-    def view_captains_team(self, find_captains_handle):
-        """takes a captains handle and gives all the information of the team"""
-        return self.teamio.view_captains_team(find_captains_handle)
-    
-    def view_captain_team_by_team_name(self, team_name):
-        return self.teamio.view_captain_team_by_team_name(team_name)
-
+    def write_team_into_file(self, teams_file):
+        return self.teamio._write_team_into_file
 
     # event blueprint methods:
 

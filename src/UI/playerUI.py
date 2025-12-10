@@ -149,9 +149,7 @@ class PlayerUI:
             input("Press Enter to continue...")
 
 
-        
-
-
+    
 
     def view_team(self): 
         self.menu_ui.print_header("VIEW TEAMS")
@@ -161,7 +159,7 @@ class PlayerUI:
 
         team_name = choose_from_list("Select Team by number: ", teams)
 
-        print(f"\nYou selected: {team_name}\n")
+        print(f"\nYou selected: {team_name}")
 
         players_in_team = self.ll.get_players_in_team(team_name)
         print(f"Players in {team_name}:")
@@ -190,7 +188,7 @@ class PlayerUI:
         self.menu_ui.print_box_top()
         events_in_tournament = choose_from_list("Select Event by number: ", self.ll.get_events_in_tournament(tournament_name))
         self.menu_ui.print_box_line()
-        self.menu_ui.print_box_line(f" You selected Event: ", {events_in_tournament})
+        self.menu_ui.print_box_line(f" You selected Event: {events_in_tournament}")
     
         self.menu_ui.print_box_bottom()
         # get schedule from ll for that tournament and event
