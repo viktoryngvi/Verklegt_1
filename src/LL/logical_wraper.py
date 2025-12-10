@@ -6,23 +6,26 @@ from LL.clubLL import ClubLL
 from LL.captainLL import CaptainLL
 from LL.TournamentLL import TournamentLL 
 from LL.eventLL import EventLL  
+from LL.teamLL import TeamLL
 from models.club import Club
 from models.player import Player
 from models.tournament import Tournament
 from models.event import Event
+
 
 class LLWrapper:
    def __init__(self):
       self.dl_wrapper = DLWrapper()
       self.validate = Validate(self.dl_wrapper)
       self.club_ll = ClubLL(self.dl_wrapper, self.validate)
-      self.captain_ll = CaptainLL(self.dl_wrapper, self.validate)
+      self.team = TeamLL(self.dl_wrapper, self.validate)
+      self.captain_ll = CaptainLL(self.dl_wrapper, self.validate, self.team)
       self.player_ll = PlayerLL(self.dl_wrapper, self.validate)
       self.team_ll = TeamLL(self.dl_wrapper, self.player_ll)
       self.tournament_ll = TournamentLL(self.dl_wrapper)
       self.create_event_ll = EventLL(self.dl_wrapper)
       self.get_event_types_ll = EventLL(self)
-      self.get_team_captain_ll = CaptainLL(self.dl_wrapper, self.validate)
+      self.get_team_captain_ll = CaptainLL(self.dl_wrapper, self.validate, self.team)
       self.load_all_player_ll = PlayerLL(self.dl_wrapper, self.validate)
 
    #PLAYER METHODS   

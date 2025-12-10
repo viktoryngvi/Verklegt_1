@@ -1,10 +1,12 @@
 from IO.data_wrapper import DLWrapper
 from LL.validate import Validate
+from LL.teamLL import TeamLL
 
 class CaptainLL:
-    def __init__(self, dl_wrapper: DLWrapper, validate: Validate):
+    def __init__(self, dl_wrapper: DLWrapper, validate: Validate, team: TeamLL):
         self._dl_wrapper = dl_wrapper
         self._validate = validate
+        self._team = team
 
     def edit_player_phone_cap(self, team: str, handle: str, phone: str) -> str:
         """
@@ -105,20 +107,19 @@ class CaptainLL:
             return "Error: Failed to update player"
         
     def view_all_players_in_team(self, team_name):
-        existing_team = self._dl_wrapper.check_if_team_name_exists(team_name)
+        existing_team = self._team.check_if_team_name_exists(team_name)
         if not existing_team:
             return "Error: Team does not exists"
         
-        return self._dl_wrapper.view_all_players_in_team(team_name)
+        return self._team.view_all_players_in_team(team_name)
     
 
     def view_captains_teams(self, handle):
-        existing_handle = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        existing_handle = self._validate.check_player_handle(handle)
         if not existing_handle:
             return "Error: Handle does not exists"
 
-        return self._dl_wrapper.view_captains_team   
-    
+        return existing_handle    
     
     def update_team_captain(self, team_name, handle):
         existing_team = self._dl_wrapper.check_if_team_name_exists(team_name)
