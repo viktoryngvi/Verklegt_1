@@ -1,4 +1,5 @@
-from csv import DictReader
+from models.team import Team
+
 
 class Team_IO:
     def __init__(self,):
@@ -19,7 +20,13 @@ class Team_IO:
     def view_all_teams(self):
         """checks all teams and their captain and returns a list of dicts of teams""" #TODO
         with open (self.file_path, "r", encoding="utf-8") as teams_file:
-            teams_data = list(DictReader(teams_file))
-        return teams_data
+            header = teams_file.readline().split(",")
+            for row in teams_file:
+                attributes = row.split(",")
+                team = Team()
+                for i in range(len(header)):
+                    setattr(Team, header[i], attributes[i])
+
+        return teams_file
 
     
