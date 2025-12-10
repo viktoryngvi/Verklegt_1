@@ -224,6 +224,15 @@ class OrganizerUI:
             more = get_choice_input(" Register another team? (y/n): ", ["y", "n"])
             if more == "n":
                 break
+
+        results = self.ll.register_teams_into_event(
+            tournament_name=tournament_name,
+            event_name=event_name,
+            team_names=registered_teams
+        )
+        print("\n" + str(results))
+        input("Press Enter to continue...")
+        
     """
     list of events
     write team into event
