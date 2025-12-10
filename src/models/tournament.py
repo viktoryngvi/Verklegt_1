@@ -3,9 +3,9 @@ from models.event import Event
 from models.contact_person import contact_person
 
 class Tournament(contact_person):
-    def __init__(self, name: str, location: str, start_date: str, end_date: str
-                 , contact_name: str, contact_email: str,
-                 contact_phone: str, tournament_id: int = None):
+    def __init__(self, name: str = None, location: str = None, start_date: str = None, end_date: str = None
+                 , contact_name: str = None, contact_email: str = None,
+                 contact_phone: str = None, tournament_id: int = None):
         super().__init__(contact_name,contact_email,contact_phone)
         
         

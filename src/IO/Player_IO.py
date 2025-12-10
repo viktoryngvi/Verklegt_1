@@ -13,6 +13,7 @@ class Player_IO(Player):
                 player = Player()
                 for i in range(len(headers)):
                     setattr(player, headers[i], attributes[i])
+
         return player_data
 
     def write_into_player_file(self, player_data):
