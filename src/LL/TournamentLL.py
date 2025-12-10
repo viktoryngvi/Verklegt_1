@@ -50,39 +50,39 @@ class TournamentLL:
         tournament_file = self._dl_wrapper.read_tournament_file()
         for line in tournament_file:
             if tournament.name == tournament_name:
-                if line["event_list"] == "event_list":
-                    line["event_list"] = []
-                    line["event_list"].append(event_name)
+                if tournament.event_list == "event_list":
+                    tournament.event_list = []
+                    tournament.event_list.append(event_name)
                     if self._dl_wrapper.write_into_file(tournament_file):
                         return "Done!"
                 else:
-                    line["event_list"].append(event_name)
+                    tournament.event_list.append(event_name)
                     if self._dl_wrapper.write_into_file(tournament_name):
                         return "Done!"
                  
         return "Tournament does not exist."
 
 
-    def view_tournaments(self):
+    def view_tournaments(self, tournament : Tournament):
         tournament_file = self._dl_wrapper.read_tournament_file()
         list_of_tournaments = []
         for line in tournament_file:
-            list_of_tournaments.append(line["tournament_name"])
+            list_of_tournaments.append(tournament.name)
         return list_of_tournaments
 
-    def view_events_in_tournament(self, tournament_name):
+    def view_events_in_tournament(self, tournament_name, tournament : Tournament):
         tournament_file = self._dl_wrapper.read_tournament_file()
         for line in tournament_file:
-            if line["tournament_name"] == tournament_name:
-                return line["event_list"]
+            if tournament.name == tournament_name:
+                return tournament.event_list
         return "No tournament with this name"
     
-    def get_next_tournament_id(self):
+    def get_next_tournament_id(self, tournament : Tournament):
         """checks the last player and returns the id of said player"""
         tournament_data = self._dl_wrapper.read_tournament_file()
         if not tournament_data:
             next_useable_id = 1
         else:
-            next_useable_id = int(tournament_data[-1]["id"])
+            next_useable_id = int(tournament.tournament_id[-1])
             next_useable_id += 1
         return next_useable_id
