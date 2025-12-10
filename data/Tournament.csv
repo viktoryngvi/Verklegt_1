@@ -3,3 +3,4 @@ id,tournament_name,event_list,tournament_location, start_date, end_date<IO.data_
 2,CAPA TOURNY,CAPA TOURNY,2025.12.20,2025.12.24,event_list
 3,CAPA TOURNY,CAPA TOURNY,2025.12.20,2025.12.24,event_list
 4,CAPA TOURNY,CAPA TOURNY,2025.12.20,2025.12.24,event_list
+5,KRistos tourny,Hr 28,2030-1-1,2030-1-5,event_list

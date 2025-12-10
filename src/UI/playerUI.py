@@ -3,6 +3,7 @@ from UI.shared_ui_helpers import view_schedule
 from UI.input_helper import (
     get_non_empty_input,
     clear_screen,
+    choose_from_list
 )
 
 
@@ -158,7 +159,7 @@ class PlayerUI:
         self.menu_ui.print_header("VIEW TEAMS")
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select a team to view: ")
-        teams = self.ll.get_team_list()
+        teams = self.ll.view_all_teams()
 
         team_name = choose_from_list("Select Team by number: ", teams)
 

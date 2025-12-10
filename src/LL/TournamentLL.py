@@ -149,8 +149,8 @@ class TournamentLL:
         return self._dl_wrapper.view_tournaments()
 
 
-    def get_events_in_tournament(self):
-        return self._dl_wrapper.view_events_in_tournaments()
+    def get_events_in_tournament(self, tournament_name):
+        return self._dl_wrapper.view_events_in_tournaments(tournament_name)
 
 
 

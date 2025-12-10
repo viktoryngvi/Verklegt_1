@@ -85,6 +85,8 @@ class LLWrapper:
    def get_players_in_team(self, team_name):
       return self.team_ll.view_all_players_in_team(team_name)
    
+
+   
    #MATCH METHODS
 
    def enter_match_result(self):
@@ -106,8 +108,8 @@ class LLWrapper:
    def get_tournament_list(self):
       return self.tournament_ll.get_tournament_list()
    
-   def get_events_in_tournament(self):
-      return self.tournament_ll.get_events_in_tournament(self)
+   def get_events_in_tournament(self, tournamnt_name) :
+      return self.tournament_ll.get_events_in_tournament(tournamnt_name)
    
 
    def generate_schedule(tournament: Tournament, event: Event):
