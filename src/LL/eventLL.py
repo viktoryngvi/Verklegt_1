@@ -20,9 +20,8 @@ class EventLL:
 
         if validate_errors:
             return validate_errors
-        else:
-            #return "Successfully created tournament."
-            return self._dl_wrapper.create_event(event)
+        
+        return self._dl_wrapper.create_event(event)
 
 
 
