@@ -1,6 +1,4 @@
 from typing import Any, Optional, Dict, Tuple
-from UI.shared_ui_helpers import create_team
-from UI.shared_ui_helpers import view_schedule
 from UI.input_helper import (
     get_non_empty_input,
     get_integer_input,
@@ -39,6 +37,9 @@ class OrganizerUI:
         self.menu_ui.print_box_line("  [6] View statistics ")
         self.menu_ui.print_box_line("  [7] View schedule ")
         self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line("  Club Management: ")
+        self.menu_ui.print_box_line("  [8] Create club ")
+        self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  [B] Back to main menu ")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_bottom()
@@ -46,8 +47,8 @@ class OrganizerUI:
         
 
         
-        if choice not in ["1", "2", "3", "4", "5", "6", "7", "b"]:
-            print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, 6, B")
+        if choice not in ["1", "2", "3", "4", "5", "6", "7", "8", "b"]:
+            print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, 6, 7, 8, B")
             input("Press Enter to continue...")
             return self.show_menu()
 
@@ -72,6 +73,9 @@ class OrganizerUI:
             return "ORGANIZER_MENU"
         if choice == "7":
             self.view_schedule()
+            return "ORGANIZER_MENU"
+        if choice == "8":
+            self.register_club()
             return "ORGANIZER_MENU"
         if choice == "b":
             return "MAIN_MENU"
@@ -103,7 +107,7 @@ class OrganizerUI:
         self.menu_ui.print_box_bottom()
 
         # Forward everything directly to LL 
-        result = Tournament(
+        result = self.ll.create_tournament(
             name,
             location,
             start_date,
@@ -113,7 +117,6 @@ class OrganizerUI:
             contact_phone
         )
 
-        result = self.ll.create_tournament(result)
         # Print whatever LL returns
         print("\n" + str(result))
         input("Press Enter to continue...")
@@ -308,7 +311,6 @@ class OrganizerUI:
 
 
     def change_team_captain(self):
-        """ UI for changing a team's captain. """
         self.menu_ui.print_header("CHANGE TEAM CAPTAIN")
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select a team to change its captain: ")
@@ -346,17 +348,120 @@ class OrganizerUI:
 
 
     def view_schedule(self):
-        view_schedule(self.ll, self.menu_ui)
-        return "ORGANIZER_MENU"
+        self.menu_ui.print_header("VIEW TOURNAMENT SCHEDULE")
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(" Select a tournament to view its schedule: ")
+        self.menu_ui.print_box_line()
+
+        # Get list of tournaments from LL
+        tournaments = self.ll.get_tournament_list()  
+
+        # choose tournament basic validation with input helper
+        tournament_name = choose_from_list("Select Tournament by number: ", tournaments)  
+
+        self.menu_ui.print_box_line() 
+        self.menu_ui.print_box_line(f" You selected Tournament: {tournament_name} ")    
+        self.menu_ui.print_box_bottom()
+
+        # print the list of events in that tournament
+        self.menu_ui.print_box_top()
+        events_in_tournament = choose_from_list("Select Event by number: ", self.ll.get_events_in_tournament(tournament_name))
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line(f" You selected Event: {events_in_tournament}")
+        self.menu_ui.print_box_bottom()
+
+        # get schedule from ll for that tournament and event
+        self.menu_ui.print_header("TOURNAMENT SCHEDULE")
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line()
+
+        schedule = self.ll.get_tournament_schedule(tournament_name, events_in_tournament)
+        if not schedule:
+            print("No schedule found for this tournament/event.")
+        else:
+            print(f"Schedule for {tournament_name} - {events_in_tournament}:")
+            for match in schedule:
+                print(f" - {match}")
+        input("Press Enter to continue...")
+        return
+
         
 
     
     def create_team(self):
-        print("TODO: Team creation will be implemented later.")
+        self.menu_ui.print_header("CREATE TEAM")
+
+        # captain handle
+        self.menu_ui.print_box_top()
+        captain_handle = input("\tCaptain Handle: ").strip().lower()
+        self.menu_ui.print_box_bottom()
+
+        # team name
+        self.menu_ui.print_box_top()
+        team_name = input("\tTeam Name: ").strip()
+        self.menu_ui.print_box_bottom()
+
+        # select players
+        self.menu_ui.print_box_top()
+        all_players = self.ll.load_player_short_info()    
+        selected_players = choose_from_list(
+            "Select players (comma separated): ",
+            all_players,
+            allow_multiple=True
+        )
+        self.menu_ui.print_box_bottom()
+
+        # send to ll to create team
+        result = self.ll.create_team(team_name, captain_handle, selected_players)
+
+        print(result)
+        input("Press Enter to continue...")
 
     def register_club(self):
-        self.menu_ui.print_header("CLUB MANAGEMENT")
-    # add team to club
-    # view clubs
-    # view club information
+        self.menu_ui.print_header("REGISTER NEW CLUB")
+
+        # Club name
+        self.menu_ui.print_box_top()
+        club_name = input("\tClub Name: ").strip()
+        self.menu_ui.print_box_bottom()
+
+        # Club home town
+        self.menu_ui.print_box_top()
+        club_home_town = input("\tHome Town: ").strip()
+        self.menu_ui.print_box_bottom()
+
+        # Club country
+        self.menu_ui.print_box_top()
+        club_country = input("\tCountry: ").strip()
+        self.menu_ui.print_box_bottom()
+
+        # Club colors
+        self.menu_ui.print_box_top()
+        club_colors = input("\tClub Colors (comma separated): ").strip()
+        self.menu_ui.print_box_bottom()
+
+        # Select teams to add to this club
+        self.menu_ui.print_box_top()
+        all_teams = self.ll.get_team_list()   
+        selected_teams = choose_from_list(
+            "Select teams to add (comma separated for multiple): ",
+            all_teams,
+            allow_multiple=True
+        )
+        self.menu_ui.print_box_bottom()
+
+        # Send to ll
+        result = self.ll.register_club(
+            club_name,
+            club_home_town,
+            club_country,
+            club_colors,
+            selected_teams
+        )
+
+        print(result)
+        input("Press Enter to continue...")
+
+
+    
 

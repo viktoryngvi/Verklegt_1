@@ -1,5 +1,4 @@
 from models.player import Player
-from UI.shared_ui_helpers import view_teams, create_team, view_schedule
 from UI.input_helper import (
     get_non_empty_input,
     get_integer_input,
@@ -99,7 +98,6 @@ class CaptainUI:
             for err in result:
                 print(f" - {err}")
         elif isinstance(result, str):
-            # Should be "Success" when all validations pass
             print(result)
 
         input("Press Enter to continue...")
@@ -198,9 +196,21 @@ class CaptainUI:
         return "CAPTAIN_MENU"
 
     def view_team(self): 
-        view_teams(self.ll, self.menu_ui)
-        return "CAPTAIN_MENU"
-    
+        self.menu_ui.print_header("VIEW TEAMS")
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(" Select a team to view: ")
+        teams = self.ll.get_team_list()
+
+        team_name = choose_from_list("Select Team by number: ", teams)
+
+        print(f"\nYou selected: {team_name}\n")
+
+        players_in_team = self.ll.get_players_in_team(team_name)
+        print(f"Players in {team_name}:")
+        for player in players_in_team:
+            print(f" - {player}")
+        input("Press Enter to continue...")
+        return
 
     
     def change_team_captain(self):
@@ -255,8 +265,68 @@ class CaptainUI:
         return "CAPTAIN_MENU"
     
     def view_schedule(self): 
-        view_schedule(self.ll, self.menu_ui)
-        return "CAPTAIN_MENU"
+        self.menu_ui.print_header("VIEW TOURNAMENT SCHEDULE")
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(" Select a tournament to view its schedule: ")
+        self.menu_ui.print_box_line()
+
+        # Get list of tournaments from LL
+        tournaments = self.ll.get_tournament_list()  
+
+        # choose tournament basic validation with input helper
+        tournament_name = choose_from_list("Select Tournament by number: ", tournaments)  
+
+        self.menu_ui.print_box_line() 
+        self.menu_ui.print_box_line(f" You selected Tournament: {tournament_name} ")    
+        self.menu_ui.print_box_bottom()
+
+        # print the list of events in that tournament
+        self.menu_ui.print_box_top()
+        events_in_tournament = choose_from_list("Select Event by number: ", self.ll.get_events_in_tournament(tournament_name))
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line(f" You selected Event: ", {events_in_tournament})
     
-    def create_team(self): 
-        print("TODO")
+        self.menu_ui.print_box_bottom()
+        # get schedule from ll for that tournament and event
+        self.menu_ui.print_header("TOURNAMENT SCHEDULE")
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line()
+        
+        schedule = self.ll.get_tournament_schedule(tournament_name, events_in_tournament)
+        if not schedule:
+            print("No schedule found for this tournament/event.")
+        else:
+            print(f"Schedule for {tournament_name} - {events_in_tournament}:")
+            for match in schedule:
+                print(f" - {match}")
+        input("Press Enter to continue...")
+        return
+    
+    def create_team(self):
+        self.menu_ui.print_header("CREATE TEAM")
+
+        # captain handle
+        self.menu_ui.print_box_top()
+        captain_handle = input("\tCaptain Handle: ").strip().lower()
+        self.menu_ui.print_box_bottom()
+
+        # team name
+        self.menu_ui.print_box_top()
+        team_name = input("\tTeam Name: ").strip()
+        self.menu_ui.print_box_bottom()
+
+        # select players
+        self.menu_ui.print_box_top()
+        all_players = self.ll.load_player_short_info()    
+        selected_players = choose_from_list(
+            "Select players (comma separated): ",
+            all_players,
+            allow_multiple=True
+        )
+        self.menu_ui.print_box_bottom()
+
+        # send to ll to create team
+        result = self.ll.create_team(team_name, captain_handle, selected_players)
+
+        print(result)
+        input("Press Enter to continue...")
