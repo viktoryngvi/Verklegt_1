@@ -37,8 +37,8 @@ class CaptainUI:
         
 
       
-        if choice not in ["1", "2", "3", "4", "5", "b"]:
-            print("Invalid choice. Valid options: 1, 2, 3, 4, 5, B")
+        if choice not in ["1", "2", "3", "4", "5", "6", "b"]:
+            print("Invalid choice. Valid options: 1, 2, 3, 4, 5, 6, B")
             input("Press Enter to continue...")
             return self.show_menu()
 
