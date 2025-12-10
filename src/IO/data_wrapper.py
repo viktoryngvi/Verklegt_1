@@ -28,6 +28,24 @@ class DLWrapper:
         """returns a list of dictionarys of all players"""
         return self.playerio.load_all_player_info()
 
+    def load_all_player_short_info(self):
+        """loads all the players and gives a list of dictionarys of each players id, name, handle and team name"""
+        return self.playerio.load_all_player_info()
+
+    def check_if_handle_exists_with_handle(self, handle):
+        """takes handle and checks player_list if that handle is in use"""
+        return self.playerio.check_if_handle_in_use(handle)
+
+    def check_if_handle_exists_with_player(self, player: Player_IO):
+        """takes player object and gets the handle and checks if that handle is in use"""
+        return self.playerio.check_if_handle_exists_with_player(player)
+
+    def check_last_id(self):
+        """checks the last players id (used to check how many players have been created)"""
+        return self.playerio.check_last_id()
+
+    def check_if_player_id_in_team(self, player_id):
+        return self.playerio.check_if_player_id_in_team(player_id)
     # team methods
 
 
