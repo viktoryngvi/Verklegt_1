@@ -4,9 +4,6 @@ from LL.validate import Validate
 
 
 
-###TODO LISTI
-# 
-
 class PlayerLL:
     """
     The Player Logical Layer (LL) class.

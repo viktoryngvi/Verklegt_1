@@ -68,15 +68,15 @@ class TournamentLL:
 # ----------------------------------------------------------------------
 
 
-    def check_tournament_type(self, tournament_type: str):
-        tournament_type_stripped = tournament_type.strip()
+    # def check_tournament_type(self, tournament_type: str):
+    #     tournament_type_stripped = tournament_type.strip()
 
-        allowed_names = ["Knockout", "Double Elimination"]
+    #     allowed_names = ["Knockout", "Double Elimination"]
 
-        if self.tournament_type not in allowed_names:
-            return "Tournament type must be 'Knockout' or 'Double Elimination'."
+    #     if self.tournament_type not in allowed_names:
+    #         return "Tournament type must be 'Knockout' or 'Double Elimination'."
 
-        return True
+    #     return True
 
 
     # ----------------------------------------------------------------------
@@ -85,10 +85,10 @@ class TournamentLL:
 
     def check_dates(self, tournament: Tournament):
         try:
-            self.start = datetime.strptime(tournament.start_date, "%Y.%m.%d")
-            self.end = datetime.strptime(tournament.end_date, "%Y.%m.%d")
+            self.start = datetime.strptime(tournament.start_date, "%Y-%m-%d")
+            self.end = datetime.strptime(tournament.end_date, "%Y-%m-%d")
         except ValueError:
-            return "Invalid date format. Use yyyy.mm.dd"
+            return "Invalid date format. Use yyyy-mm-dd"
 
         if self.start >= self.end:
             return "Start date must be before end date."
@@ -149,7 +149,8 @@ class TournamentLL:
         return self._dl_wrapper.view_tournaments()
 
 
-
+    def get_events_in_tournament(self):
+        return self._dl_wrapper.view_events_in_tournaments()
 
 
 

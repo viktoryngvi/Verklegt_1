@@ -1,2 +1,5 @@
 id,tournament_name,event_list,tournament_location, start_date, end_date<IO.data_wrapper.DLWrapper object at 0x0000028902B1CC10>,event_list<IO.data_wrapper.DLWrapper object at 0x0000028902B1CC10>,event_list<IO.data_wrapper.DLWrapper object at 0x000001B9B93ECA10>,event_list<IO.data_wrapper.DLWrapper object at 0x000001B9B93ECA10>,event_list<IO.data_wrapper.DLWrapper object at 0x0000024E9A40CA10>,event_list<IO.data_wrapper.DLWrapper object at 0x0000024E9A40CA10>,event_list<IO.data_wrapper.DLWrapper object at 0x0000022329E7CF10>,event_list
-1,CAPA TOURNY,CAPA TOURNY,2025.12.20,2025.12.24,event_list2,CAPA TOURNY,CAPA TOURNY,2025.12.20,2025.12.24,event_list2,eifjej,fjefjief,2025.12.25,2025.12.30,event_list
+1,CAPA TOURNY,CAPA TOURNY,2025.12.20,2025.12.24,event_list2,CAPA TOURNY,CAPA TOURNY,2025.12.20,2025.12.24,event_list2,eifjej,fjefjief,2025.12.25,2025.12.30,event_list2,CAPA TOURNY,CAPA TOURNY,2025.12.20,2025.12.24,event_list
+2,CAPA TOURNY,CAPA TOURNY,2025.12.20,2025.12.24,event_list
+3,CAPA TOURNY,CAPA TOURNY,2025.12.20,2025.12.24,event_list
+4,CAPA TOURNY,CAPA TOURNY,2025.12.20,2025.12.24,event_list

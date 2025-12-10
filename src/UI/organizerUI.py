@@ -9,6 +9,7 @@ from UI.input_helper import (
     clear_screen,
 )
 from models.tournament import Tournament
+from models.event import Event
 
 class OrganizerUI:
     def __init__(self, ll: Any, menu_ui: Any):
@@ -105,13 +106,13 @@ class OrganizerUI:
 
         # Forward everything directly to LL 
         result = Tournament(
-            name=name,
-            location=location,
-            start_date=start_date,
-            end_date=end_date,          
-            contact_name=contact_name,
-            contact_email=contact_email,
-            contact_phone=contact_phone,
+            name,
+            location,
+            start_date,
+            end_date,
+            contact_name,
+            contact_email,
+            contact_phone
         )
 
         result = self.ll.create_tournament(result)
@@ -183,7 +184,8 @@ class OrganizerUI:
                 registered_teams.append(team_name)
             
             print(f"\n{len(registered_teams)}/{max_teams} teams registered.")
-            print("Registered Teams: " + ", ".join(registered_teams))
+            print(registered_teams)
+            #print("Registered Teams: " + ", ".join(registered_teams))
 
             if len(registered_teams) >= max_teams:
                 print("Maximum number of teams registered.")
@@ -192,15 +194,16 @@ class OrganizerUI:
             if more == "n":
                 break
 
-        results = self.ll.create_event(
+        results = Event(
             tournament_name,
             event_name,
             event_type,
             start_date,
             end_date,
             registered_teams,
+            matches=True,
         )
-
+        results = self.ll.create_event(results)
         print("\n" + str(results))
         input("Press Enter to continue...")
 
