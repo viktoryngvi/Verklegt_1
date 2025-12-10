@@ -20,14 +20,10 @@ class LLWrapper:
       self.captain_ll = CaptainLL(self.dl_wrapper, self.validate)
       self.player_ll = PlayerLL(self.dl_wrapper, self.validate)
       self.tournament_ll = TournamentLL(self.dl_wrapper)
-<<<<<<< HEAD
       self.create_event_ll = EventLL(self.dl_wrapper)
       self.get_event_types_ll = EventLL(self)
       self.get_team_captain_ll = CaptainLL(self.dl_wrapper, self.validate)
       self.load_all_player_ll = PlayerLL(self.dl_wrapper, self.validate)
-=======
-      self.event_ll = EventLL(self.dl_wrapper)
->>>>>>> a26bdc2066bc8a2227a3b94a9e27bc3fe6bb4bb4
 
    #PLAYER METHODS   
       

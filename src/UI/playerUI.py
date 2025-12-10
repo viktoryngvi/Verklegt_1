@@ -155,9 +155,22 @@ class PlayerUI:
 
 
     def view_team(self): 
-        view_teams(self.ll, self.menu_ui)
-        return "PLAYER_MENU"
-    
+        self.menu_ui.print_header("VIEW TEAMS")
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(" Select a team to view: ")
+        teams = self.ll.get_team_list()
+
+        team_name = choose_from_list("Select Team by number: ", teams)
+
+        print(f"\nYou selected: {team_name}\n")
+
+        players_in_team = self.ll.get_players_in_team(team_name)
+        print(f"Players in {team_name}:")
+        for player in players_in_team:
+            print(f" - {player}")
+        input("Press Enter to continue...")
+        return
+        
     def view_schedule(self): 
         view_schedule(self.ll, self.menu_ui)
         return "PLAYER_MENU"
