@@ -11,7 +11,7 @@ class TournamentLL:
         self.validator = Validate(dl_wrapper)
 
     def create_tournament(self, tournament: Tournament):
-        validate_errors = self.validate_tournament(tournament)
+        validate_errors = self.validator.validate_tournament(tournament)
 
 
         if validate_errors:
@@ -25,8 +25,8 @@ class TournamentLL:
         """tournaments should have a list of tournaments that have event names"""
         id = self.get_next_tournament_id()
         tournament_file = self._dl_wrapper.read_tournament_file()
-        if self.validate_tournament(tournament):
-            return self.validate_tournament(tournament)
+        if self.validator.validate_tournament(tournament):
+            return self.validator.validate_tournament(tournament)
         Tournament.tournament_id = id
         tournament_file.append(tournament)
 
@@ -34,126 +34,126 @@ class TournamentLL:
          
 
 
-    # ----------------------------------------------------------------------
-    # VALIDATE TOURNAMENT 
-    # ----------------------------------------------------------------------
+#     # ----------------------------------------------------------------------
+#     # VALIDATE TOURNAMENT 
+#     # ----------------------------------------------------------------------
 
-    def validate_tournament(self, tournament: Tournament):
-        errors = []
+#     def validate_tournament(self, tournament: Tournament):
+#         errors = []
 
-        check_name = self.check_tournament_name(tournament)
-        #check_type = self.check_tournament_type(tournament.type)
-        check_dates = self.check_dates(tournament)
-        check_contact_name = self.check_contact_name(tournament)
-        check_contact_email = self.check_contact_email(tournament)
-        check_contact_phone = self.check_contact_phone(tournament)
+#         check_name = self.check_tournament_name(tournament)
+#         #check_type = self.check_tournament_type(tournament.type)
+#         check_dates = self.check_dates(tournament)
+#         check_contact_name = self.check_contact_name(tournament)
+#         check_contact_email = self.check_contact_email(tournament)
+#         check_contact_phone = self.check_contact_phone(tournament)
 
-        if check_name is not True:
-            errors.append(f"Name: {check_name}")
+#         if check_name is not True:
+#             errors.append(f"Name: {check_name}")
 
-        # if check_type is not True:
-        #     errors.append(f"Type: {check_type}")
+#         # if check_type is not True:
+#         #     errors.append(f"Type: {check_type}")
 
-        if check_dates is not True:
-            errors.append(f"Dates: {check_dates}")
+#         if check_dates is not True:
+#             errors.append(f"Dates: {check_dates}")
 
-        return errors if errors else None
+#         return errors if errors else None
 
 
-    # ----------------------------------------------------------------------    
-     # tournament name validation
-    # ----------------------------------------------------------------------
+#     # ----------------------------------------------------------------------    
+#      # tournament name validation
+#     # ----------------------------------------------------------------------
     
-    def check_tournament_name(self, tournament: Tournament):
-        tournament_name = tournament.name.strip()
+#     def check_tournament_name(self, tournament: Tournament):
+#         tournament_name = tournament.name.strip()
 
-        if len(tournament_name) == 0:
-            return "Tournament name cannot be empty."
+#         if len(tournament_name) == 0:
+#             return "Tournament name cannot be empty."
 
-        if len(tournament_name) < 3 or len(tournament_name) > 60:
-            return "Tournament name must be between 3–60 characters."
+#         if len(tournament_name) < 3 or len(tournament_name) > 60:
+#             return "Tournament name must be between 3–60 characters."
 
-        return True
-
-
-# ----------------------------------------------------------------------
- # tournament type validation
-# ----------------------------------------------------------------------
+#         return True
 
 
-    # def check_tournament_type(self, tournament_type: str):
-    #     tournament_type_stripped = tournament_type.strip()
-
-    #     allowed_names = ["Knockout", "Double Elimination"]
-
-    #     if self.tournament_type not in allowed_names:
-    #         return "Tournament type must be 'Knockout' or 'Double Elimination'."
-
-    #     return True
+# # ----------------------------------------------------------------------
+#  # tournament type validation
+# # ----------------------------------------------------------------------
 
 
-    # ----------------------------------------------------------------------
-     # date validation
-    # ----------------------------------------------------------------------
+#     # def check_tournament_type(self, tournament_type: str):
+#     #     tournament_type_stripped = tournament_type.strip()
 
-    def check_dates(self, tournament: Tournament):
-        try:
-            self.start = datetime.strptime(tournament.start_date, "%Y-%m-%d")
-            self.end = datetime.strptime(tournament.end_date, "%Y-%m-%d")
-        except ValueError:
-            return "Invalid date format. Use yyyy-mm-dd"
+#     #     allowed_names = ["Knockout", "Double Elimination"]
 
-        if self.start >= self.end:
-            return "Start date must be before end date."
+#     #     if self.tournament_type not in allowed_names:
+#     #         return "Tournament type must be 'Knockout' or 'Double Elimination'."
 
-        if (self.end - self.start).days < 4:
-            return "Tournament must span more then 4 days."
+#     #     return True
 
-        return True
+
+#     # ----------------------------------------------------------------------
+#      # date validation
+#     # ----------------------------------------------------------------------
+
+#     def check_dates(self, tournament: Tournament):
+#         try:
+#             self.start = datetime.strptime(tournament.start_date, "%Y-%m-%d")
+#             self.end = datetime.strptime(tournament.end_date, "%Y-%m-%d")
+#         except ValueError:
+#             return "Invalid date format. Use yyyy-mm-dd"
+
+#         if self.start >= self.end:
+#             return "Start date must be before end date."
+
+#         if (self.end - self.start).days < 4:
+#             return "Tournament must span more then 4 days."
+
+#         return True
 
 
     
-# --------------------------------------------------------------------------
-# VALIDATE CONTACT NAME
-# --------------------------------------------------------------------------   
+# # --------------------------------------------------------------------------
+# # VALIDATE CONTACT NAME
+# # --------------------------------------------------------------------------   
 
-    def check_contact_name(self, tournament: Tournament):
-        check_contact_name = tournament.contact_name.strip()
+#     def check_contact_name(self, tournament: Tournament):
+#         check_contact_name = tournament.contact_name.strip()
 
-        if len(check_contact_name) == 0:
-            return "Contact name cannot be empty."
+#         if len(check_contact_name) == 0:
+#             return "Contact name cannot be empty."
 
-        if len(check_contact_name) < 3:
-            return "Contact name must be at least 3 characters."
+#         if len(check_contact_name) < 3:
+#             return "Contact name must be at least 3 characters."
 
-        return True
+#         return True
 
-# --------------------------------------------------------------------------
-# VALIDATE CONTACT EMAIL
-# --------------------------------------------------------------------------  
-    def check_contact_email(self, tournament: Tournament):
-        check_contact_email = tournament.contact_email.strip()
+# # --------------------------------------------------------------------------
+# # VALIDATE CONTACT EMAIL
+# # --------------------------------------------------------------------------  
+#     def check_contact_email(self, tournament: Tournament):
+#         check_contact_email = tournament.contact_email.strip()
 
-        result = self.validator.validate_email(check_contact_email)
+#         result = self.validator.validate_email(check_contact_email)
 
-        if result is not None:
-            return f"Invalid email: {result}"
+#         if result is not None:
+#             return f"Invalid email: {result}"
 
-        return True
+#         return True
     
 
-# --------------------------------------------------------------------------
-# VALIDATE CONTACT PHONE
-# --------------------------------------------------------------------------  
-    def check_contact_phone(self, tournament: Tournament):
-        check_contact_phone = tournament.contact_email.strip()
+# # --------------------------------------------------------------------------
+# # VALIDATE CONTACT PHONE
+# # --------------------------------------------------------------------------  
+#     def check_contact_phone(self, tournament: Tournament):
+#         check_contact_phone = tournament.contact_email.strip()
 
-        result = self.validator.validate_phone(check_contact_phone)
+#         result = self.validator.validate_phone(check_contact_phone)
 
-        if result is not None:
-            return f"Invalid phone: {result}"
+#         if result is not None:
+#             return f"Invalid phone: {result}"
 
-        return True
+#         return True
     
 # --------------------------------------------------------------------------
 # GET_TOURNAMENT_LIST 
