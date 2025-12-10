@@ -15,9 +15,9 @@ class DLWrapper:
         self.clubio = Club_IO()
 
     # Player methods
-    def create_player(self, player : Player_IO):
+    def create_player(self, player : Player_IO, id):
         """takes all player info and appends that into the player file"""
-        return self.playerio.create_player(player)
+        return self.playerio.create_player(player, id)
 
     def edit_player_info(self, handle, str_to_change, new_change):
         """takes new value and changes the old value to the new desired input"""

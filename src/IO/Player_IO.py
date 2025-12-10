@@ -10,30 +10,22 @@ class Player_IO(Player):
             player_data = list(DictReader(player_data))
             return player_data
 
-    def create_player(self, player: Player):
+    def create_player(self, player: Player, id):
         """takes all inputted info and created a player, and checks the last players id and taked the next number"""
-        if not self.check_if_handle_in_use(player.handle):
-            #TODO er logic layer að gera þetta?
-            with open(self.file_path, "a", encoding="utf-8") as player_file:
-                id = self.check_last_id() + 1
-                player_file.write(f"{id},{player.name},{player.phone},{player.address},{player.dob},{player.email},{player.handle},{player.team},\n")
-                return "Player successfully created!"
-        else:
-            return "Player already exists"
 
-    def edit_player_info(self, find_player_handle, what_to_edit, new_information):
+        #TODO er logic layer að gera þetta?
+        with open(self.file_path, "a", encoding="utf-8") as player_file:
+            player_file.write(f"{id},{player.name},{player.phone},{player.address},{player.dob},{player.email},{player.handle},{player.team},\n")
+            return "Player successfully created!"
+
+        return "Player already exists"
+
+    def edit_player_info(self, player_file):
         """takes new information from the user and updates the correct player in the file and writes everything back
         into the file"""
-        player_file = self.read_player_file_as_list_of_dict()
-        for player in player_file:
-            handle = str(player["handle"])
-            if find_player_handle == handle:
-                player_to_edit = player
-                break
-        player_to_edit[what_to_edit] = new_information
 
-        with open (self.file_path, "w", encoding="utf-8") as player_file:
-            player_file.write("id,name,phone,address,dob,email,handle,team,captain\n")
+        with open ("data/player_new_try_file.csv", "w", encoding="utf-8") as player_file_new:
+            player_file_new.write("id,name,phone,address,dob,email,handle,team,captain\n")
             for players in player_file:
                 values = players.values()
                 values = [str(v) for v in values]
@@ -45,69 +37,8 @@ class Player_IO(Player):
         """loads all player info in a list of dictionaries"""
         player_data = self.read_player_file_as_list_of_dict()
         return player_data
-#####################################TODO
-    def load_all_player_short_info(self):
-        """loads a list of dictionarys containing only the id, name, handle and team of the player(public information)"""
-        player_data = self.read_player_file_as_list_of_dict()
-        short_list = []
-        for line in player_data:
-            filtered_player = {"id": line["id"], "name": line["name"], "handle": line["handle"], "team": line["team"]}
-            short_list.append(filtered_player)
-        return short_list
-    #býr til lista af dicts af id, name og handle hjá öllum players
 
-    def check_last_id(self):
-        """checks the last player and returns the id of said player"""
-        player_data = self.read_player_file_as_list_of_dict()
-        if not player_data:
-            next_useable_id = 1
-        else:
-            next_useable_id = int(player_data[-1]["id"])
-            next_useable_id += 1
-        return next_useable_id
+
+
+
     
-    def check_if_handle_in_use(self, handle):
-        """checks ef the inputted handle is in use in the player list"""
-        player_list = self.load_all_player_info()
-        for players in player_list:
-            if handle == str(players["handle"]):
-                return True
-        return False
-    
-    def check_if_handle_exists_with_player(self, player: Player):
-        """checks ef the inputted handle is in use in the player list"""
-        player_handle = self.check_if_handle_in_use(player.handle)
-        return player_handle
-
-    def check_if_player_id_in_team(self, id):
-        """takes id and check if that player is in a team"""
-        player_list = self.load_all_player_info()
-        for players in player_list:
-            if id == int(players["id"]):
-                if players["team"] is None:
-                    return False
-        return True
-    # notað til að checka hvort id passar við player sem er ekki í liði
-    
-    def turn_handle_into_id(self, handle: str):
-        """takes handle and returns the players id"""
-        player_list = self.load_all_player_info() 
-        for players in player_list:
-            if handle == str(players["handle"]):
-                return int(players["id"])
-        return False
-
-    def take_id_return_handle(self, id: int):
-        """takes an id and returns the players handle"""
-        player_list = self.load_all_player_info() 
-        for players in player_list:
-            if id == int(players["id"]):
-                return str(players["handle"])
-        return False
-
-    def load_single_player_info(self, handle):
-        player_data = self.read_player_file_as_list_of_dict()
-        for player in player_data:
-            if player["handle"] == handle:
-                return player
-        return "Player does not exist"

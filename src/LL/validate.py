@@ -74,7 +74,7 @@ class Validate:
         Checks if the player's unique handle already exists in the system.
         NOTE: This assumes DLWrapper.check_if_handle_exists is implemented.
         """
-        if self._dl_wrapper.check_if_handle_exists_with_player(player):
+        if self.check_if_handle_exists_with_player(player):
             return "Handle does exists"
         
         return True
@@ -252,6 +252,28 @@ class Validate:
             return "Adress cannot contain consecutive spaces"
         
         return None
+    
+    def check_if_handle_in_use(self, handle):
+        """checks ef the inputted handle is in use in the player list"""
+        player_list = self._dl_wrapper.load_all_player_info()
+        for players in player_list:
+            if handle == str(players["handle"]):
+                return True
+        return False
+    
+    def check_if_handle_exists_with_player(self, player: Player):
+        """checks ef the inputted handle is in use in the player list"""
+        player_handle = self.check_if_handle_in_use(player.handle)
+        return player_handle
+
+    # def check_if_player_id_in_team(self, id):
+    #     """takes id and check if that player is in a team"""
+    #     player_list = self._dl_wrapper.load_all_player_info()
+    #     for players in player_list:
+    #         if id == int(players["id"]):
+    #             if players["team"] is None:
+    #                 return False
+    #     return True
     
     # CHECKS AND VALIDATION METHODS FOR CLUB
     
