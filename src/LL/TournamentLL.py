@@ -18,7 +18,7 @@ class TournamentLL:
             return validate_errors
         else:
             #return "Successfully created tournament."
-            return self._dl_wrapper.create_tournament(tournament)
+            return "Tournament successfully created."
 
 
     # ----------------------------------------------------------------------
@@ -163,8 +163,8 @@ class TournamentLL:
 
         return self._dl_wrapper.write_into_file(tournament_file)
          
-        #     tournament_file.write(f"{id},{tournament.name},{tournament.location},{tournament.start_date},{tournament.end_date},event_list\n")
-        # return "Tournament created!"
+            tournament_file.write(f"{id},{tournament.name},{tournament.location},{tournament.start_date},{tournament.end_date},event_list\n")
+        return "Tournament created!"
 
 
     def put_event_into_tournament(self, tournament_name, event_name):

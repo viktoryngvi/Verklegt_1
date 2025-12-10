@@ -113,7 +113,7 @@ class OrganizerUI:
         self.menu_ui.print_box_bottom()
 
         # Forward everything directly to LL 
-        result = self.ll.create_tournament(
+        result = Tournament(
             name,
             location,
             start_date,
@@ -122,7 +122,7 @@ class OrganizerUI:
             contact_email,
             contact_phone
         )
-
+        result = self.ll.create_tournament(result)
         # Print whatever LL returns
         print("\n" + str(result))
         input("Press Enter to continue...")
