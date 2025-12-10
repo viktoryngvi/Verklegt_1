@@ -4,7 +4,8 @@ from LL.validate import Validate
 from LL.teamLL import TeamLL
 from LL.clubLL import ClubLL
 from LL.captainLL import CaptainLL
-from LL.TournamentLL import TournamentLL   # ← FIXED IMPORT
+from LL.TournamentLL import TournamentLL 
+from LL.eventLL import EventLL  
 from models.club import Club
 from models.player import Player
 from models.tournament import Tournament
@@ -19,6 +20,9 @@ class LLWrapper:
       self.captain_ll = CaptainLL(self.dl_wrapper, self.validate)
       self.player_ll = PlayerLL(self.dl_wrapper, self.validate)
       self.tournament_ll = TournamentLL(self.dl_wrapper)
+      self.create_event_ll = EventLL(self.dl_wrapper)
+      self.get_event_types_ll = EventLL(self)
+      self.get_team_captain_ll = CaptainLL(self.dl_wrapper, self.validate)
 
    #PLAYER METHODS   
       
@@ -114,11 +118,26 @@ class LLWrapper:
    
 
 # ----------------------------------------------------------------------
-# date validation
+# CREATE EVENT
+# ----------------------------------------------------------------------   
+   def create_event(self, create_event : Event):
+      return self.create_event_ll.create_event(create_event)
+
+
+# ----------------------------------------------------------------------
+# EVENT TYPES
 # ----------------------------------------------------------------------   
 
    def get_event_types(self):
-        return [
-            "Single Elimination",
-            "Double Elimination",
-            "Last Team Standing"]
+        return self.get_event_types_ll.event_types()
+   
+# ----------------------------------------------------------------------
+# TEAM CAPTAIN
+# ----------------------------------------------------------------------   
+   #update captain
+   def get_team_captain(self, team_name, handle):
+      return self.get_team_captain_ll.update_team_captain(team_name, handle)
+   
+   #editplayer info 
+   def view_captain_team(self, captain_handle : str):
+      return "Unfinished, please route to right place kv kristo"

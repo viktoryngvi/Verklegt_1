@@ -111,6 +111,15 @@ class CaptainLL:
         
         return self._dl_wrapper.view_all_players_in_team(team_name)
     
+
+   # return current captain handle
+    def get_team_captain(self, team_name: str):
+        pass
+        #jerry or me route to get current team captain of team name
+    
+    
+
+    
     def update_team_captain(self, team_name, handle):
         existing_team = self._dl_wrapper.check_if_team_name_exists(team_name)
         if not existing_team:
