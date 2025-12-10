@@ -86,7 +86,7 @@ class CaptainUI:
             address=address,
             dob=dob,
             email=email,
-            id=None,
+            player_id= None,
             handle=handle,
             team=None,
         )

@@ -23,7 +23,7 @@ class TournamentLL:
     
     def create_tournament_to_data(self, tournament: Tournament):
         """tournaments should have a list of tournaments that have event names"""
-        id = self.get_next_tournament_id()
+        id = self.get_next_tournament_id(tournament)
         tournament_file = self._dl_wrapper.read_tournament_file()
         if self.validator.validate_tournament(tournament):
             return self.validator.validate_tournament(tournament)
