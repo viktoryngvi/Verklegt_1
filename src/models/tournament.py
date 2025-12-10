@@ -13,7 +13,8 @@ class Tournament(contact_person):
         self.name = name
         self.location = location
         self.start_date = start_date   
-        self.end_date = end_date       
+        self.end_date = end_date      
+        self.event_list = event_list 
         # self.type = type_choice        
 
 
