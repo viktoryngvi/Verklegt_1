@@ -165,3 +165,8 @@ class DLWrapper:
     
     def check_if_club_name_in_use(self, club_name):
         return self.clubio.check_if_club_name_in_use(club_name)
+    
+    # Event methods:
+
+    def create_event(self, event: Event_IO):
+        pass

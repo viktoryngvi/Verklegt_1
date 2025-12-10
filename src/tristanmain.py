@@ -26,3 +26,9 @@ Kristófer Kristjan Erlendsson
 email@gmail.com
 787-2550
 """
+"""
+EVnet 
+1
+2025-12-21
+2025-12-22
+"""
