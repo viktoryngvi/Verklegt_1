@@ -10,11 +10,9 @@ class Validate:
     def __init__(self, dl_wrapper: DLWrapper):
           self._dl_wrapper = dl_wrapper
 
-        # ----------------------------------------------------------------------
-    # VALIDATE PLAYER
-    # ----------------------------------------------------------------------
+    # CHECKS AND VALIDATION METHODS FOR PLAYER
 
-    def validate_player(self, player: Player) -> None:
+    def validate_player(self, player: Player):
         """
         Aggregates all individual validation checks.
         Returns a LIST of error strings if any check fails, or None if the player is valid.
@@ -57,9 +55,6 @@ class Validate:
         # Otherwise, all checks passed
         return None
     
-    # ----------------------------------------------------------------------
-    # CHECK PLAYER TEAM
-    # ----------------------------------------------------------------------
    
     def check_player_team(self, player: Player):
 
@@ -73,9 +68,6 @@ class Validate:
         
         return True
 
-    # ----------------------------------------------------------------------
-    # CHECK PLAYER HANDLE
-    # ----------------------------------------------------------------------
 
     def check_player_handle(self, player: Player):
         """
@@ -86,10 +78,6 @@ class Validate:
             return "Handle does exists"
         
         return True
-
-        # ----------------------------------------------------------------------
-    # CHECK PLAYER ADDRESS
-    # ----------------------------------------------------------------------
 
 
     def check_player_address(self, player: Player):
@@ -106,9 +94,6 @@ class Validate:
         
         return True
 
-    # ----------------------------------------------------------------------
-    # CHECK PLAYER PHONE
-    # ----------------------------------------------------------------------
 
     def check_player_phone(self, player: Player):
         """
@@ -121,9 +106,6 @@ class Validate:
 
         return True
 
-    # ----------------------------------------------------------------------
-    # CHECK PLAYER EMAIL
-    # ----------------------------------------------------------------------
 
     def check_player_email(self, player: Player):
         """
@@ -135,10 +117,7 @@ class Validate:
             return self.validate_address(self.email)
         
         return True
-
-    # ----------------------------------------------------------------------
-    # CHECK PLAYER DOB
-    # ----------------------------------------------------------------------
+    
 
     def check_player_dob(self, player: Player):
         """
@@ -166,9 +145,6 @@ class Validate:
 
         return True
     
-        # ----------------------------------------------------------------------
-    # CHECK PLAYER NAME
-    # ----------------------------------------------------------------------
 
     def check_player_name(self, player: Player):
         """
@@ -201,10 +177,6 @@ class Validate:
         return True
     
 
-        # ----------------------------------------------------------------------
-    # VALIDATE PHONE 
-    # ----------------------------------------------------------------------
-
     def validate_phone(self, phone: str) -> None:
         """
         Validates the new updated phone number format (8 digits with a dash).
@@ -225,9 +197,6 @@ class Validate:
         
         return None
     
-        # ----------------------------------------------------------------------
-    # VALIDATE EMAIL
-    # ----------------------------------------------------------------------
 
     def validate_email(self, email: str) -> None:
         """
@@ -268,9 +237,6 @@ class Validate:
         
         return None
     
-        # ----------------------------------------------------------------------
-    # VALIDATE ADDRESS
-    # ----------------------------------------------------------------------
 
     def validate_address(self, address: str) -> None:
         """
@@ -287,9 +253,7 @@ class Validate:
         
         return None
     
-        # ----------------------------------------------------------------------
-    # VALIDATE CLUB 
-    # ----------------------------------------------------------------------
+    # CHECKS AND VALIDATION METHODS FOR CLUB
     
     def validate_club(self, club: Club):
         errors_list = []
@@ -310,102 +274,92 @@ class Validate:
 
         if club_teams is not True:
             errors_list.append(f"Error: {club_teams}")
-    # ----------------------------------------------------------------------
-    # VALIDATE CLUB COUNTRY
-    # ----------------------------------------------------------------------
+
+
     def validate_club_country(self, club_country: str):
         pass
-        # ----------------------------------------------------------------------
-    # VALIDATE CLUB HOME TOWN
-    # ----------------------------------------------------------------------
+
+
     def validate_club_home_town(self, club_home_town: str):
         pass
-        # ----------------------------------------------------------------------
-    # VALIDATE CLUB COLOR
-    # ----------------------------------------------------------------------
+
+
     def validate_club_color(self, club_color: str):
         pass
-        # ----------------------------------------------------------------------
-    # VALIDATE CLUB TEAMS
-    # ----------------------------------------------------------------------
+
+
     def validate_club_teams(self, club_teams: list):
         pass
-    
 
-        # ----------------------------------------------------------------------
-    # VALIDATE EVENT
-    # ----------------------------------------------------------------------
 
-    def validate_event(self, event : Event ):
+    # CHECKS AND VALIDATION METHODS FOR EVENT
+
+
+    def validate_event(self, event: Event):
         errors_list = []
 
-        check_tournament_name = self.check_tournament_name(event)
-        check_event_name = self.check_event_name(event)
-        check_start_date = self.check_start_date(event)
-        check_end_date = self.check_end_date(event)
-        check_registered_teams = self.check_registered_teams(event)
-        check_matches = True
+        event_name = self.check_event_name(event.name)
+        event_start = self.check_start_date_event(event.start_date, event.tournament_name)
+        event_end = self.check_end_date_event(event.end_date, event.tournament_name)
+
+        if event_name is not True:
+            errors_list.append(f"Name: {event_name}")
+
+        if event_start is not True:
+            errors_list.append(f"Start date: {event_start}")
+
+        if event_end is not True:
+            errors_list.append(f"End date: {event_end}")
+
+        if errors_list:
+            return errors_list
+
+        return None
 
 
-        if check_tournament_name is not True:
-            errors_list.append(f"Tournament Name: {check_tournament_name}")
+    def check_event_name(self, event_name: str):
+        if not event_name or not event_name.strip():
+            return "Event name cannot be empty."
 
-        if check_event_name is not True:
-            errors_list.append(f"Event Name: {check_event_name}")
+        if not event_name[0].isupper():
+            return "Event name must start with an uppercase letter."        
 
-        if check_start_date is not True:
-            errors_list.append(f"Start Date: {check_start_date}")
-
-        if check_end_date is not True:
-            errors_list.append(f"End Date: {check_end_date}")
-
-        if check_registered_teams is not True:
-            errors_list.append(f"Registered Teams: {check_registered_teams}")
-
-        if check_matches is not True:
-            errors_list.append(f"Matches: {check_matches}")
-
-        return errors_list if errors_list else None
-
-
-    def check_tournament_name(self, event : Event):
-        event_name = event.tournament_name.strip()
-
-        if "  " in event_name:
-            return "Name cannot contain consecutive spaces."
+        if not event_name.isalpha():
+            return "Event name must contain only letters"
         
-        if len(event.tournament_name) < 2 or len(event.tournament_name) > 60:
-            return "Name must be between 2 and 60 characters."
-
-        return True            
-
-
-    def check_event_name(self, event : Event):
-        event_name = event.event_name.strip()
-
-        if "  " in event_name:
-            return "Name cannot contain consecutive spaces."
+        if len(event_name) > 20:
+            return "Event name is too long (max 20 characters)."
         
-        if len(event_name) < 2 or len(event_name) > 60:
-            return "Name must be between 2 and 60 characters."
+        return True 
 
-        return True    
-    
-    def check_start_date(self, event : Event):
+
+    def check_start_date_event(self, start_date: str, tournament_name: str):
         try:
-            self.start = datetime.strptime(event.start_date, "%Y-%m-%d")
+            start_date_event: datetime = datetime.strptime(start_date, "%Y-%m-%d")
         except ValueError:
-            return "Invalid date format. Use yyyy-mm-dd"
-        
+            return "Event must be in YYYY-MM-DD format."
+                
+        start_tournament = self._dl_wrapper.start_date_tournament(tournament_name)
+
+        if start_date_event.date() < start_tournament.date():
+            return f"Event cannot start before the tournament start date ({self.start_tournament})."
+
         return True
 
-    def check_end_date(self, event : Event):
+
+    def check_end_date_event(self, end_date: str, tournament_name):
         try:
-            self.end = datetime.strptime(event.end_date, "%Y-%m-%d")
+            end_date_event: datetime = datetime.strptime(end_date, "%Y-%m-%d")
         except ValueError:
-            return "Invalid date format. Use yyyy-mm-dd"
-        
+            return "Event must be in YYYY-MM-DD format."
+
+        end_tournament: datetime = self._dl_wrapper.end_date_tournament(tournament_name)
+
+        if end_date_event.date() > end_tournament.date():
+            return f"Event cannot end after the tournament end date ({end_tournament})."
+
         return True
+
         
     def check_registered_teams(self, event : Event):
         return True

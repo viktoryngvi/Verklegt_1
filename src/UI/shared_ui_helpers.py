@@ -1,31 +1,38 @@
 from UI.input_helper import choose_from_list
 
 
-def view_teams(ll, menu_ui):
-    menu_ui.print_header("VIEW TEAM")
-    print("Select the team to view: ")
+def __init__(self, ll, menu_ui):
+    self.ll = ll
+    self.menu_ui = menu_ui
 
-    teams = ll.view_all_teams()
-    if not teams:
-        print("No teams found.")
-        input("Press Enter to continue...")
-        return
-    select_team = choose_from_list("Enter the number of the team: ", teams)
 
-    print(f"You selected to view team: {select_team}")
-    players = ll.get_players_in_team(select_team)
-    if not players:
-        print("No players found in this team.")
-    else:
-        print(f"Players in team {select_team}:")
-        for player in players:
-            print(f" - {player}")
+
+def view_teams(self):
+    self.menu_ui.print_header("VIEW TEAMS")
+    self.menu_ui.print_box_top()
+    self.menu_ui.print_box_line(" Select a team to view: ")
+    teams = self.ll.get_team_list()
+
+    team_name = choose_from_list("Select Team by number: ", teams)
+
+    print(f"\nYou selected: {team_name}\n")
+
+    players_in_team = self.ll.get_players_in_team(team_name)
+    print(f"Players in {team_name}:")
+    for player in players_in_team:
+        print(f" - {player}")
     input("Press Enter to continue...")
+    return
+   
+
 
 def create_team(ll, menu_ui):
     menu_ui.print_header("CREATE TEAM")
     pass
 """
+name of team
+captain id
+list of players
 
 """
 def view_schedule(ll, menu_ui):

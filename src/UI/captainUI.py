@@ -151,7 +151,7 @@ class CaptainUI:
         self.menu_ui.print_box_bottom()
         print("")
         self.menu_ui.print_box_top()
-        self.menu_ui.print_line(" You selected to edit player: {selected_player}")
+        self.menu_ui.print_box_line(f" You selected to edit player: {selected_player}")
         self.menu_ui.print_box_line()
 
         # phone, email, address, handle
@@ -165,24 +165,24 @@ class CaptainUI:
         self.menu_ui.print_box_line("\t-  [B] Back to Captain Menu")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_bottom()
-        choice = input(" ➤ Select an option: ").strip.lower()
+        choice = input(" ➤ Select an option: ").strip().lower()
         print("")
 
-    
+        # Ask for actual new value using input(), not print_box_line
         if choice == "1":
-            new_phone = self.menu_ui.print_box_line("\t-  Enter new phone number: ").strip()
+            new_phone = input("\t-  Enter new phone number: ").strip()
             results = self.ll.edit_player_phone_captain(captain_handle, selected_player, new_phone)
 
         elif choice == "2":
-            new_email = self.menu_ui.print_box_line("\t-  Enter new email: ").strip()
+            new_email = input("\t-  Enter new email: ").strip()
             results = self.ll.edit_player_email_captain(captain_handle, selected_player, new_email)
         
         elif choice == "3":
-            new_address = self.menu_ui.print_box_line("\t-  Enter new address: ").strip()
+            new_address = input("\t-  Enter new address: ").strip()
             results = self.ll.edit_player_address_captain(captain_handle, selected_player, new_address)
 
         elif choice == "4":
-            new_handle = self.menu_ui.print_box_line("\t-  Enter new handle: ").strip().lower()
+            new_handle = input("\t-  Enter new handle: ").strip().lower()
             results = self.ll.edit_player_handle_captain(captain_handle, selected_player, new_handle)
         
         elif choice == "b":
@@ -194,7 +194,8 @@ class CaptainUI:
             return
         
         print("\n" + str(results))
-        
+        input("Press Enter to continue...")
+        return "CAPTAIN_MENU"
 
     def view_team(self): 
         view_teams(self.ll, self.menu_ui)
