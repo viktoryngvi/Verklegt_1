@@ -18,7 +18,20 @@ class TournamentLL:
             return validate_errors
         else:
             #return "Successfully created tournament."
-            return "Tournament successfully created."
+            return self.create_tournament_to_data(tournament)
+        
+    
+    def create_tournament_to_data(self, tournament: Tournament):
+        """tournaments should have a list of tournaments that have event names"""
+        id = self.get_next_tournament_id()
+        tournament_file = self._dl_wrapper.read_tournament_file()
+        if self.validate_tournament(tournament):
+            return self.validate_tournament(tournament)
+        Tournament.tournament_id = id
+        tournament_file.append(tournament)
+
+        return self._dl_wrapper.write_into_file(tournament_file)
+         
 
 
     # ----------------------------------------------------------------------
@@ -152,19 +165,8 @@ class TournamentLL:
     def get_events_in_tournament(self, tournament_name):
         return self.view_events_in_tournament(tournament_name)
 
-    def create_tournament(self, tournament: Tournament):
-        """tournaments should have a list of tournaments that have event names"""
-        id = self.get_next_tournament_id()
-        tournament_file = self._dl_wrapper.read_tournament_file()
-        if self.validate_tournament(tournament):
-            return self.validate_tournament(tournament)
-        Tournament.tournament_id = id
-        tournament_file.append(tournament)
-
-        return self._dl_wrapper.write_into_file(tournament_file)
-         
-            tournament_file.write(f"{id},{tournament.name},{tournament.location},{tournament.start_date},{tournament.end_date},event_list\n")
-        return "Tournament created!"
+        #     tournament_file.write(f"{id},{tournament.name},{tournament.location},{tournament.start_date},{tournament.end_date},event_list\n")
+        # return "Tournament created!"
 
 
     def put_event_into_tournament(self, tournament_name, event_name):
