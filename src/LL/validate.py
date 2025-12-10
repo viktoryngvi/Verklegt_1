@@ -1,9 +1,8 @@
-from datetime import datetime
+from datetime import datetime,date
 from models.player import Player
 from models.club import Club
 from models.event import Event
 from IO.data_wrapper import DLWrapper
-from datetime import datetime
 from models.club import Club
 from models.event import Event
 from models.tournament import Tournament
@@ -127,19 +126,17 @@ class Validate:
         """
         Validates the player's Date of Birth (DOB) format and age constraints.
         """
-        self.dob_str = player.dob
 
-        try:
-            self.dob: datetime = datetime.strptime(self.dob_str, "%Y-%m-%d")
-        except ValueError:
+
+        if not isinstance(player.dob,date):
             return "DOB must be in YYYY-MM-DD format."
 
-        self.today = datetime.today()
+        self.today = date.today()
 
-        if self.dob >= self.today:
+        if player.dob >= self.today:
             return "DOB cannot be in the future."
 
-        self.age = (self.today - self.dob).days // 365
+        self.age = (self.today - player.dob).days // 365
 
         if self.age < 5:
             return "Player must be at least 5 years old."
@@ -430,7 +427,7 @@ class Validate:
     # ----------------------------------------------------------------------
     
     def check_tournament_name(self, tournament: Tournament):
-        tournament_name = tournament.name.strip()
+        tournament_name = tournament.tournament_name.strip()
 
         if len(tournament_name) == 0:
             return "Tournament name cannot be empty."

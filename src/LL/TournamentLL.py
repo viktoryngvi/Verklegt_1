@@ -27,7 +27,7 @@ class TournamentLL:
         tournament_file = self._dl_wrapper.read_tournament_file()
         if self.validator.validate_tournament(tournament):
             return self.validator.validate_tournament(tournament)
-        Tournament.tournament_id = id
+        tournament.tournament_id = id
         tournament_file.append(tournament)
 
         return self._dl_wrapper.write_into_file(tournament_file)
@@ -77,12 +77,12 @@ class TournamentLL:
                 return tournament.event_list
         return "No tournament with this name"
     
-    def get_next_tournament_id(self, tournament : Tournament):
+    def get_next_tournament_id(self):
         """checks the last player and returns the id of said player"""
         tournament_data = self._dl_wrapper.read_tournament_file()
         if not tournament_data:
             next_useable_id = 1
         else:
-            next_useable_id = int(tournament.tournament_id[-1])
+            next_useable_id = int(tournament_data[-1].tournament.id)
             next_useable_id += 1
         return next_useable_id

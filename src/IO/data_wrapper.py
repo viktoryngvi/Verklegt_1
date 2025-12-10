@@ -14,9 +14,9 @@ class DLWrapper:
 
     # Player methods
 
-    def write_into_player_file(self, player_data :Player_IO):
+    def create_player(self, player_data :Player_IO):
         """takes all player info and appends that into the player file"""
-        return self.playerio.write_into_player_file(player_data)
+        return self.playerio.create_player(player_data)
     
     def load_all_player_info(self):
         return self.playerio.load_all_player_info()

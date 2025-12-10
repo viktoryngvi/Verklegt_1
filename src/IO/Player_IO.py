@@ -1,4 +1,5 @@
 from models.player import Player
+from datetime import date
 
 class Player_IO(Player):
     def __init__(self):
@@ -11,18 +12,34 @@ class Player_IO(Player):
             for row in player_data:
                 attributes = row.split(",")
                 player = Player()
-                for i in range(len(headers)):
-                    setattr(player, headers[i], attributes[i])
+                player.id = int(attributes[0])
+                player.name = str(attributes[1])
+                player.phone = str(attributes[2])
+                player.address = str(attributes[3])
+                player.dob = date.fromisoformat(attributes[4])
+                player.email = str(attributes[5])
+                player.handle = str(attributes[6])
+                player.team = str(attributes[7])
 
                 player_list.append(player)
 
             return player_list
 
-    def write_into_player_file(self, player: Player):
+    def create_player(self, player: Player):
         player_data:list[Player] = self.load_all_player_info()
         player_data.append(player)
 
-        with open(self.file_path, "w", encoding="utf-8") as new_player_file:
-            new_player_file.write(player_data)
+        with open(self.file_path, "a", encoding="utf-8") as new_player_file:
+                new_player_file.write(
+                    f'{player.id},'
+                    f'{player.name},'
+                    f'{player.phone},'
+                    f'{player.address},'
+                    f'{date.isoformat(player.dob)},'
+                    f'{player.email},'
+                    f'{player.handle},'
+                    f'{player.team}\n'
+                )
+                
 
         return True
