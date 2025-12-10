@@ -115,6 +115,12 @@ class LLWrapper:
    
    def get_statistics(self, ptc: str): #PTC = Player Team Club
       pass
+
+   #EVENT METHODS
+
+   def create_event(self, tournament_name: str, event: Event):
+      return self.event_ll.create_event(tournament_name, event)
+   
    
 
 # ----------------------------------------------------------------------

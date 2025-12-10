@@ -1,5 +1,6 @@
 from models.player import Player
 from models.club import Club
+from models.event import Event
 from IO.data_wrapper import DLWrapper
 from datetime import datetime
 from models.club import Club
@@ -294,18 +295,19 @@ class Validate:
         errors_list = []
 
         club_country = self.validate_club_country(club.country)
+        club_home_town = self.validate_club_home_town(club_home_town)
+        club_color = self.validate_club_color(club_color)
+        club_teams = self.validate_club_teams(club.teams)
+
         if club_country is not True:
             errors_list.append(f"Error: {club_country}") 
         
-        club_home_town = self.validate_club_home_town(club_home_town)
         if club_home_town is not True:
             errors_list.append(f"Error: {club_home_town}")
 
-        club_color = self.validate_club_color(club_color)
         if club_color is not True:
             errors_list.append(f"Error: {club_color}")
 
-        club_teams = self.validate_club_teams(club.teams)
         if club_teams is not True:
             errors_list.append(f"Error: {club_teams}")
     # ----------------------------------------------------------------------
