@@ -7,6 +7,18 @@ class Player_IO(Player):
 
     def load_all_player_info(self):
         with open(self.file_path, "r", encoding="utf-8") as player_data:
+            headers = player_data.readline().split(",")
+            for row in player_data:
+                attributes = row.split(",")
+                player = Player()
+                for i in range(len(headers)):
+                    setattr(player, headers[i], attributes[i])
+
+
+
+
+
+
             player_data = list(DictReader(player_data))
             return player_data
 

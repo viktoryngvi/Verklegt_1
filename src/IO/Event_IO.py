@@ -1,6 +1,5 @@
 from csv import DictReader
 
-
 class Event_IO:
     def __init__(self):
         self.file_path = "data/event_blueprint.csv"
@@ -52,19 +51,4 @@ class Event_IO:
         with open(self.results_file, "w", encoding="utf-8") as results_file:
             results_file.write("game_name,game_type,server_id,time_of_match,winner,match_result,teams_list")
             results_file.write(new_results_file)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

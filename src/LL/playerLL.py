@@ -168,12 +168,12 @@ class PlayerLL:
     
     # notað til að checka hvort id passar við player sem er ekki í liði
     
-    def check_if_player_id_in_team(self, id):
+    def check_if_player_id_in_team(self, player: Player, id):
         """takes id and check if that player is in a team"""
         player_list = self._dl_wrapper.load_all_player_info()
-        for players in player_list:
-            if id == int(players["id"]):
-                if players["team"] is None:
+        for row in player_list:
+            if id == int(player.id):
+                if player.team is None:
                     return False
         return True
 
