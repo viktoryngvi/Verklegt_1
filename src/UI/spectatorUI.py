@@ -36,10 +36,10 @@ class SpectatorUI:
             self.view_schedule(); 
             return "SPECTATOR_MENU"
         if choice == "2": 
-            self.view_teams(); 
+            self.view_teams_and_players(); 
             return "SPECTATOR_MENU"
         if choice == "3": 
-            self.view_players(); 
+            self.view_teams_and_players(); 
             return "SPECTATOR_MENU"
         if choice == "4": 
             self.view_clubs(); 
@@ -87,7 +87,7 @@ class SpectatorUI:
             if not players:
                 self.menu_ui.print_box_line("No players found.")
             else:
-                for player in self.ll.all_players_short_info:
+                for player in players:
                     self.menu_ui.print_box_line(f" - {player}")
             self.menu_ui.print_box_bottom()
 

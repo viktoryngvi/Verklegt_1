@@ -126,7 +126,7 @@ class PlayerLL:
         if not existing_player:
             return "Error: Player handle does not exists"
         
-        return self._dl_wrapper.load_all_player_short_info(handle)
+        return self._dl_wrapper.load_all_player_short_info()
 
     def edit_player_try(self, find_player_handle, what_to_edit, new_information):
         player_file = self._dl_wrapper.load_all_player_info()
