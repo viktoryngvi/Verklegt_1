@@ -159,8 +159,35 @@ class OrganizerUI:
         end_date = get_non_empty_input("\tEnd Date (YYYY-MM-DD): ").strip()
         self.menu_ui.print_box_bottom()
 
+        results = self.ll.create_event(
+            tournament_name,
+            event_name,
+            event_type,
+            start_date,
+            end_date
+        )
+        
+        print("\n" + str(results))
+        input("Press Enter to continue...")
 
+    def Register_team_into_event(self):
         self.menu_ui.print_header("Register Teams for Event")
+
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(" Select a tournament: ")
+        # get a list of the tournaments created
+        tournament = self.ll.get_tournament_list()  
+        tournament_name = choose_from_list(" Select Tournament by number: ", tournament)
+        self.menu_ui.print_box_bottom()
+
+        # select event
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(" Select an event to register teams for: ")
+        events = self.ll.get_events_in_tournament(tournament)
+        event_name = choose_from_list("Select event:", events)
+        self.menu_ui.print_box_bottom()
+
+        # register teams
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select teams to register for this event: ")
         # Register teams  for the event, get the list of teams and pick what teams to register by number
@@ -197,21 +224,6 @@ class OrganizerUI:
             more = get_choice_input(" Register another team? (y/n): ", ["y", "n"])
             if more == "n":
                 break
-
-        results = self.ll.create_event(
-            tournament_name,
-            event_name,
-            event_type,
-            start_date,
-            end_date,
-            registered_teams
-        )
-        
-        print("\n" + str(results))
-        input("Press Enter to continue...")
-
-    def Register_team_into_event(self):
-        pass
     """
     list of events
     write team into event
