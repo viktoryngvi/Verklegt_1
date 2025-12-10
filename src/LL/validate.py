@@ -8,6 +8,8 @@ class Validate:
     def __init__(self, dl_wrapper: DLWrapper):
           self._dl_wrapper = dl_wrapper
 
+    #CHECK PLAYER AND VALIDATE METHODS
+
     def check_player_team(self, player: Player):
         """
         Checks if the provided team name already exists in the system.
@@ -337,7 +339,7 @@ class Validate:
         start_tournament = self._dl_wrapper.start_date_tournament(tournament_name)
 
         if start_date_event.date() < start_tournament.date():
-            return f"Event cannot start before the tournament start date ({self.start_tournament})."
+            return f"Event cannot start before the tournament start date ({start_tournament})."
         
         return True
 
