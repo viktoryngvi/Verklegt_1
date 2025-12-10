@@ -1,5 +1,4 @@
 from models.player import Player
-from csv import DictReader
 
 class Player_IO(Player):
     def __init__(self):
@@ -13,14 +12,7 @@ class Player_IO(Player):
                 player = Player()
                 for i in range(len(headers)):
                     setattr(player, headers[i], attributes[i])
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> bea3bbc58c79d66034a3f8dd1d77b0697144ac8e
-=======
-
->>>>>>> 724daf486b823ff3cea7809deb310ff194bf3d27
         return player_data
 
     def write_into_player_file(self, player_data):
