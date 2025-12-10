@@ -15,6 +15,7 @@ class DLWrapper:
         self.clubio = Club_IO()
 
     # Player methods
+
     def create_player(self, player : Player_IO, id):
         """takes all player info and appends that into the player file"""
         return self.playerio.create_player(player, id)
@@ -105,17 +106,23 @@ class DLWrapper:
 
     # tournament methods
 
-    def create_tournament(self, tournament: Tournament_IO):
-        return self.tournamentio.create_tournament(tournament)
+    def read_tournament_file(self):
+        return self.tournamentio.read_tournament_file()
     
-    def put_event_into_tournament(self, torunament_name, event_name):
-        return self.tournamentio.put_event_into_tournament(torunament_name, event_name)
+    def write_into_file(self, tournament_data):
+        return self.tournamentio.write_into_file(tournament_data)
+
+    # def create_tournament(self, tournament: Tournament_IO):
+    #     return self.tournamentio.create_tournament(tournament)
     
-    def view_tournaments(self):
-        return self.tournamentio.view_tournaments()
+    # def put_event_into_tournament(self, torunament_name, event_name):
+    #     return self.tournamentio.put_event_into_tournament(torunament_name, event_name)
     
-    def view_events_in_tournaments(self, tournament_name):
-        return self.tournamentio.view_events_in_tournament(tournament_name)
+    # def view_tournaments(self):
+    #     return self.tournamentio.view_tournaments()
+    
+    # def view_events_in_tournaments(self, tournament_name):
+    #     return self.tournamentio.view_events_in_tournament(tournament_name)
     
     # club methods:
 

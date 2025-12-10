@@ -263,7 +263,7 @@ class Validate:
     
     def check_if_handle_exists_with_player(self, player: Player):
         """checks ef the inputted handle is in use in the player list"""
-        player_handle = self.check_if_handle_in_use(player.handle)
+        player_handle = self.check_if_handle_in_use(player)
         return player_handle
 
     # def check_if_player_id_in_team(self, id):

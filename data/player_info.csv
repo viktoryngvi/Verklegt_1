@@ -1,7 +1,4 @@
 id,name,phone,address,dob,email,handle,team,captain
-<<<<<<< HEAD
-2,keiejfe iefjief fjief,878-2344,efmefi 23,2000-1-1,kriss@gmail.com,keiro,None,
-=======
 1,Tristan Danielsson,111-1111,sfggs,2005-12-27,tds@gmail.com,tristan17,None,False
 2,Trisan Danielsson,333-3333,dsfasdg,2005-12-27,tds@gmail.com,tristan78,None,False
 3,Viktor Yngvi Ísaksson,849-0903,blöndós 5,2004-12-12,viktor@gamil.is,vikk,None,False
@@ -19,4 +16,4 @@ id,name,phone,address,dob,email,handle,team,captain
 15,Jeremias Borjas Tablante,659-2893,Hafnarbrau 14,2006-03-14,jermeias@gmail.com,Jeremias23445,None,
 16,Kristofer Kristjan Erlendsson,787-2550,fif 21,2005-12-30,kef@gmail.com,kristo113,None,
 17,Jeremias Borjas,659-2893,Hafnarabra 14,2000-03-13,jeremias@gmail.com,hrafn21,None,
->>>>>>> db9fc83231ec78e3ef281bfabd145247c6aec119
+18,Viktor Yngvi Ísaksson,849-0000,blönduhlíð 20,2004-09-26,viktor@gmail.com,hehehe23,None,
