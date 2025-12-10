@@ -25,9 +25,10 @@ class CaptainUI:
         self.menu_ui.print_box_line("  Team Management: ")
         self.menu_ui.print_box_line("  [3] View team")
         self.menu_ui.print_box_line("  [4] Change team captain")
+        self.menu_ui.print_box_line("  [5] Create new team")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  Schedule: ")
-        self.menu_ui.print_box_line("  [5] View schedule")
+        self.menu_ui.print_box_line("  [6] View schedule")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  [B] Back to main menu")
         self.menu_ui.print_box_line()
@@ -53,7 +54,10 @@ class CaptainUI:
         if choice == "4": 
             self.change_team_captain(); 
             return "CAPTAIN_MENU"
-        if choice == "5": 
+        if choice == "5":
+            self.create_team(); 
+            return "CAPTAIN_MENU"
+        if choice == "6": 
             self.view_schedule(); 
             return "CAPTAIN_MENU"
         if choice == "b": 
@@ -250,7 +254,7 @@ class CaptainUI:
         # let user select a player to be the new captain
         select_player = choose_from_list(" Enter the number of the player: ", players)
 
-        self.menu_ui.print_box_line(" You selected player: {select_player} as the new captain. ")
+        self.menu_ui.print_box_line(f" You selected player: {select_player} as the new captain. ")
         self.menu_ui.print_box_bottom()
         
         # send to LL to update
@@ -284,7 +288,7 @@ class CaptainUI:
         self.menu_ui.print_box_top()
         events_in_tournament = choose_from_list("Select Event by number: ", self.ll.get_events_in_tournament(tournament_name))
         self.menu_ui.print_box_line()
-        self.menu_ui.print_box_line(f" You selected Event: ", {events_in_tournament})
+        self.menu_ui.print_box_line(f" You selected Event: {events_in_tournament}")
     
         self.menu_ui.print_box_bottom()
         # get schedule from ll for that tournament and event
