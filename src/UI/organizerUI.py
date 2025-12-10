@@ -17,9 +17,7 @@ class OrganizerUI:
         self.ll = ll
         self.menu_ui = menu_ui
 
-    # ================================
-    # ORGANIZER MENU
-    # ================================
+   
     def show_menu(self) -> str:
         """Show the organizer menu and return the next menu state."""
         # Clear previous screen / main menu
@@ -184,8 +182,7 @@ class OrganizerUI:
                 registered_teams.append(team_name)
             
             print(f"\n{len(registered_teams)}/{max_teams} teams registered.")
-            print(registered_teams)
-            #print("Registered Teams: " + ", ".join(registered_teams))
+            print("Registered Teams: " + ", ".join(registered_teams))
 
             if len(registered_teams) >= max_teams:
                 print("Maximum number of teams registered.")
@@ -194,18 +191,24 @@ class OrganizerUI:
             if more == "n":
                 break
 
-        results = Event(
+        results = self.ll.create_event(
             tournament_name,
             event_name,
             event_type,
             start_date,
             end_date,
-            registered_teams,
-            matches=True,
+            registered_teams
         )
-        results = self.ll.create_event(results)
+        
         print("\n" + str(results))
         input("Press Enter to continue...")
+
+    def Register_team_into_event(self):
+        pass
+    """
+    list of events
+    write team into event
+    """
 
 
  
