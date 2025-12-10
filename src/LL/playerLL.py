@@ -36,8 +36,10 @@ class PlayerLL:
             # If a list of errors is returned, stop and return the errors.
             return validate_errors
         
+        id = self.check_last_id()
+        
         # If valid, pass the player object to the Data Layer for creation.
-        return self._dl_wrapper.create_player(player)
+        return self._dl_wrapper.create_player(player, id)
 
 
     def edit_player_phone(self, handle: str, phone: str) -> str:
@@ -113,7 +115,7 @@ class PlayerLL:
         if existing_new_handle:
             return "Error: New handle already exists"
         
-        updated = self._dl_wrapper.edit_player_info(handle, "handle", handle_str)
+        updated = self.edit_player_try(handle, "handle", handle_str)
         if updated:
             return "Success: Player information updated"
         
@@ -126,12 +128,58 @@ class PlayerLL:
         
         return self._dl_wrapper.load_all_player_short_info()
 
+    def edit_player_try(self, find_player_handle, what_to_edit, new_information):
+        player_file = self._dl_wrapper.load_all_player_info()
+        for player in player_file:
+            handle = player(["handle"])
+            if find_player_handle == handle:
+                player[what_to_edit] = new_information
+                return self._dl_wrapper.edit_player_info(player_file)
+
     def load_all_player_short_info(self):
-       return self._dl_wrapper.load_all_player_short_info()
-        
+        """loads a list of dictionarys containing only the id, name, handle and team of the player(public information)"""
+        player_file = self._dl_wrapper.load_all_player_info()
+        short_list = []
+        for line in player_file:
+            filtered_player = {"id": line["id"], "name": line["name"], "handle": line["handle"], "team": line["team"]}
+            short_list.append(filtered_player)
+        return short_list
+    #býr til lista af dicts af id, name og
 
+    def check_last_id(self):
+        """checks the last player and returns the id of said player"""
+        player_data = self._dl_wrapper.load_all_player_info()
+        if not player_data:
+            next_useable_id = 1
+        else:
+            next_useable_id = int(player_data[-1]["id"])
+            next_useable_id += 1
+        return next_useable_id
+    
+    # notað til að checka hvort id passar við player sem er ekki í liði
+    
+    def turn_handle_into_id(self, handle: str):
+        """takes handle and returns the players id"""
+        player_list = self._dl_wrapper.load_all_player_info() 
+        for players in player_list:
+            if handle == str(players["handle"]):
+                return int(players["id"])
+        return False
 
+    def take_id_return_handle(self, id: int):
+        """takes an id and returns the players handle"""
+        player_list = self._dl_wrapper.load_all_player_info() 
+        for players in player_list:
+            if id == int(players["id"]):
+                return str(players["handle"])
+        return False
 
+    def load_single_player_info(self, handle):
+        player_data = self._dl_wrapper.load_all_player_info
+        for player in player_data:
+            if player["handle"] == handle:
+                return player
+        return "Player does not exist"
 
 
 

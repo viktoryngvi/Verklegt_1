@@ -1,5 +1,3 @@
-from UI.shared_ui_helpers import view_teams
-from UI.shared_ui_helpers import view_schedule
 from UI.input_helper import (
     get_non_empty_input,
     clear_screen,
@@ -173,6 +171,41 @@ class PlayerUI:
         return
         
     def view_schedule(self): 
-        view_schedule(self.ll, self.menu_ui)
-        return "PLAYER_MENU"
+        self.menu_ui.print_header("VIEW TOURNAMENT SCHEDULE")
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(" Select a tournament to view its schedule: ")
+        self.menu_ui.print_box_line()
+
+        # Get list of tournaments from LL
+        tournaments = self.ll.get_tournament_list()  
+
+        # choose tournament basic validation with input helper
+        tournament_name = choose_from_list("Select Tournament by number: ", tournaments)  
+
+        self.menu_ui.print_box_line() 
+        self.menu_ui.print_box_line(f" You selected Tournament: {tournament_name} ")    
+        self.menu_ui.print_box_bottom()
+
+        # print the list of events in that tournament
+        self.menu_ui.print_box_top()
+        events_in_tournament = choose_from_list("Select Event by number: ", self.ll.get_events_in_tournament(tournament_name))
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line(f" You selected Event: ", {events_in_tournament})
+    
+        self.menu_ui.print_box_bottom()
+        # get schedule from ll for that tournament and event
+        self.menu_ui.print_header("TOURNAMENT SCHEDULE")
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line()
+        
+        schedule = self.ll.get_tournament_schedule(tournament_name, events_in_tournament)
+        if not schedule:
+            print("No schedule found for this tournament/event.")
+        else:
+            print(f"Schedule for {tournament_name} - {events_in_tournament}:")
+            for match in schedule:
+                print(f" - {match}")
+        input("Press Enter to continue...")
+        return
+
     
