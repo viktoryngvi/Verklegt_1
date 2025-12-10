@@ -57,53 +57,30 @@ class DLWrapper:
         return self.teamio._write_team_into_file
 
     # event blueprint methods:
+    def read_public_file_as_list_of_dict(self):
+        return self.event_blueprintio.read_public_file_as_list_of_dict()
+    
+    def read_knockout_as_list_of_dict(self):
+        return self.event_blueprintio.read_knockout_as_list_of_dict
+    
+    def read_last_team_standing_as_list_of_dict(self):
+        return self.event_blueprintio.read_knockout_as_list_of_dict
+    
+    def write_into_event_blueprint(self, event_data):
+        return self.event_blueprintio.write_into_event_blueprint(event_data)
 
-    def create_empty_event(self):
-        """creates an empty event for organizer to fill out before making public"""
-        return self.event_blueprintio.create_empty_event()
-    
-    def write_team_into_empty_event(self, team):
-        """takes team name and puts into the event"""
-        return self.event_blueprintio.write_team_into_empty_event(team)
-    
-    def check_if_team_in_event(self, team):
-        """checks if the team is already in the event_blueprint"""
-        return self.event_blueprintio.check_if_team_in_event(team)
-    
-    def how_many_teams_in_event(self):
-        """checks how many teams have been registered intp the event_blueprint returns int"""
-        return self.event_blueprintio.how_many_teams_in_event()
-    
-    def move_blueprint_to_knockout(self):
-        return self.event_blueprintio.move_blueprint_to_knockout()
-    
-    def move_blueprint_to_last_team_standing(self):
-        return self.event_blueprintio.move_blueprint_to_last_team_standing()
+    def move_to_knockout(self, public_data):
+        return self.event_blueprintio.move_to_knockout(public_data)
+        
+    def move_to_last_team_standing(self, public_data):
+        return self.event_blueprintio.move_to_last_team_standing(public_data)
 
-    # knockout style mothods:
+    def read_results_file(self):
+        return self.event_blueprintio.read_results_file
 
-    def input_match_result(self, match_id, team_a_score, team_b_score):
-        return self.knockoutio.input_match_results(match_id, team_a_score, team_b_score)
-
-    def create_first_round(self):
-        return self.knockoutio.create_first_round()
-
-    def create_second_round(self):
-        return self.knockoutio.create_second_round()
+    def write_into_results(self, results_file):
+        return self.event_blueprintio.write_into_results(results_file)
     
-    def create_third_round(self):
-        return self.knockoutio.create_second_round()
-
-    def create_fourth_round(self):
-        return self.knockoutio.create_fourth_round()
-    
-    def declare_winner(self):
-        return self.knockoutio.declare_winner()
-    
-    def how_many_matches_have_winners(self):
-        return self.knockoutio.how_many_matches_have_winners()
-    
-
     # tournament methods
 
     def read_tournament_file(self):

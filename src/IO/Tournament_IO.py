@@ -4,7 +4,7 @@ from csv import DictReader
 
 class Tournament_IO(Tournament):
     def __init__(self):
-        self.file_path = "data/tournament.csv"
+        self.file_path = "data/Tournament.csv"
 
     def read_tournament_file(self):
         with open(self.file_path, "r", encoding="utf-8") as Tournament_file:
