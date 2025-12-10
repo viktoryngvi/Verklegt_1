@@ -47,7 +47,21 @@ class Club_IO(Club):
             club_list.append(line["club_name"])
         return club_list
 
-    
+    import random
+from csv import DictReader
+from models.match import Match
+
+class Knockout(Match):
+    def __init__(self):
+        self.get_event_file = "data/event_blueprint.csv"
+        self.file_path = "data/knockout.csv"
+        self.public_file_path = "data/public_event.csv"
+
+    def read_schedule_file_as_list_of_dict(self):
+        with open(self.file_path, "r", encoding="utf-8") as schedule_file:
+            schedule_file = list(DictReader(schedule_file))
+            return schedule_file
+
     def view_club_information(self, club_name):
         club_file = self.read_club_file_as_list_of_dict()
         for line in club_file:
