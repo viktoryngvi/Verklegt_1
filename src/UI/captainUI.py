@@ -309,19 +309,20 @@ class CaptainUI:
     def create_team(self):
         self.menu_ui.print_header("CREATE TEAM")
 
-        # captain handle
-        self.menu_ui.print_box_top()
-        captain_handle = input("\tCaptain Handle: ").strip().lower()
-        self.menu_ui.print_box_bottom()
-
         # team name
         self.menu_ui.print_box_top()
         team_name = input("\tTeam Name: ").strip()
         self.menu_ui.print_box_bottom()
 
+        # captain handle
+        self.menu_ui.print_box_top()
+        captain_handle = input("\tCaptain Handle: ").strip().lower()
+        self.menu_ui.print_box_bottom()
+
         # select players
         self.menu_ui.print_box_top()
-        all_players = self.ll.load_player_short_info()    
+        # need list of all players without a team
+        all_players = self.ll.load_all_players_team_none()    
         selected_players = choose_from_list(
             "Select players (comma separated): ",
             all_players,
