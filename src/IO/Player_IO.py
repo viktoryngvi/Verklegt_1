@@ -14,13 +14,7 @@ class Player_IO(Player):
                 for i in range(len(headers)):
                     setattr(player, headers[i], attributes[i])
 
-
-
-
-
-
-            player_data = list(DictReader(player_data))
-            return player_data
+        return player_data
 
     def write_into_player_file(self, player_data):
         with open(self.file_path, "w", encoding="utf-8") as new_player_file:
