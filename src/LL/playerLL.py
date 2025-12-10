@@ -37,16 +37,26 @@ class PlayerLL:
             return validate_errors
         
         id = self.check_last_id()
+        Player.id = id
+        create_player = self.create_player_to_data(player)
+        return create_player
+    
+    def create_player_to_data(self, player: Player):
+        """takes all inputted info and created a player, and checks the last players id and taked the next number"""
+        player_data = self._dl_wrapper.load_all_player_info()
+        player_data.append(player)
+
+        if self._dl_wrapper.write_into_file(player_data):
+            return "PLayer successfully created"
         
-        # If valid, pass the player object to the Data Layer for creation.
-        return self._dl_wrapper.create_player(player, id)
+        return "Player was not created" 
 
 
     def edit_player_phone(self, handle: str, phone: str) -> str:
         """
         Handles the business logic for updating an existing player's information.
         """
-        existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        existing_player = self._validate.check_if_handle_in_use(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
         
@@ -66,7 +76,7 @@ class PlayerLL:
         """
         Handles the business logic for updating an existing player's information.
         """
-        existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        existing_player = self._validate.check_if_handle_in_use(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
         
@@ -86,7 +96,7 @@ class PlayerLL:
         """
         Handles the business logic for updating an existing player's information.
         """
-        existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        existing_player = self._validate.check_if_handle_in_use(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
         
@@ -107,11 +117,11 @@ class PlayerLL:
         Handles the business logic for updating an existing player's information.
         """
         # Check if player exists
-        existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        existing_player = self._validate.check_if_handle_in_use(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
         
-        existing_new_handle = self._dl_wrapper.check_if_handle_exists_with_handle(handle_str)
+        existing_new_handle = self._validate.check_if_handle_in_use(handle_str)
         if existing_new_handle:
             return "Error: New handle already exists"
         
@@ -122,11 +132,11 @@ class PlayerLL:
         return "Error: Failed to update player"
         
     def load_player_info(self, handle: str):
-        existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        existing_player = self._validate.check_if_handle_in_use(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
         
-        return self._dl_wrapper.load_all_player_short_info()
+        return self.load_all_player_short_info()
 
     def edit_player_try(self, find_player_handle, what_to_edit, new_information):
         player_file = self._dl_wrapper.load_all_player_info()
@@ -190,8 +200,7 @@ class PlayerLL:
             if player["handle"] == handle:
                 return player
         return "Player does not exist"
-
-
+    
 
 
 

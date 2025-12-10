@@ -30,17 +30,18 @@ class OrganizerUI:
         self.menu_ui.print_box_line("  [1] Create tournament ")
         self.menu_ui.print_box_line("  [2] Generate schedule ")
         self.menu_ui.print_box_line("  [3] Create Event ")
-        self.menu_ui.print_box_line("  [4] Enter match result ")
+        self.menu_ui.print_box_line("  [4] Register team into event ")
+        self.menu_ui.print_box_line("  [5] Enter match result ")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  Team Management: ")
-        self.menu_ui.print_box_line("  [5] Change team captain ")
+        self.menu_ui.print_box_line("  [6] Change team captain ")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  Reports: ")
-        self.menu_ui.print_box_line("  [6] View statistics ")
-        self.menu_ui.print_box_line("  [7] View schedule ")
+        self.menu_ui.print_box_line("  [7] View statistics ")
+        self.menu_ui.print_box_line("  [8] View schedule ")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  Club Management: ")
-        self.menu_ui.print_box_line("  [8] Create club ")
+        self.menu_ui.print_box_line("  [9] Create club ")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  [B] Back to main menu ")
         self.menu_ui.print_box_line()
@@ -49,8 +50,8 @@ class OrganizerUI:
         
 
         
-        if choice not in ["1", "2", "3", "4", "5", "6", "7", "8", "b"]:
-            print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, 6, 7, 8, B")
+        if choice not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "b"]:
+            print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, 6, 7, 8, 9, B")
             input("Press Enter to continue...")
             return self.show_menu()
 
@@ -65,18 +66,21 @@ class OrganizerUI:
             self.create_event()
             return "ORGANIZER_MENU"
         if choice == "4":
-            self.enter_match_result()
+            self.Register_team_into_event()
             return "ORGANIZER_MENU"
         if choice == "5":
-            self.change_team_captain()
+            self.enter_match_result()
             return "ORGANIZER_MENU"
         if choice == "6":
-            self.view_statistics()
+            self.change_team_captain()
             return "ORGANIZER_MENU"
         if choice == "7":
-            self.view_schedule()
+            self.view_statistics()
             return "ORGANIZER_MENU"
         if choice == "8":
+            self.view_schedule()
+            return "ORGANIZER_MENU"
+        if choice == "9":
             self.register_club()
             return "ORGANIZER_MENU"
         if choice == "b":
@@ -157,8 +161,35 @@ class OrganizerUI:
         end_date = get_non_empty_input("\tEnd Date (YYYY-MM-DD): ").strip()
         self.menu_ui.print_box_bottom()
 
+        results = self.ll.create_event(
+            tournament_name,
+            event_name,
+            event_type,
+            start_date,
+            end_date
+        )
+        
+        print("\n" + str(results))
+        input("Press Enter to continue...")
 
+    def Register_team_into_event(self):
         self.menu_ui.print_header("Register Teams for Event")
+
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(" Select a tournament: ")
+        # get a list of the tournaments created
+        tournament = self.ll.get_tournament_list()  
+        tournament_name = choose_from_list(" Select Tournament by number: ", tournament)
+        self.menu_ui.print_box_bottom()
+
+        # select event
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(" Select an event to register teams for: ")
+        events = self.ll.get_events_in_tournament(tournament)
+        event_name = choose_from_list("Select event:", events)
+        self.menu_ui.print_box_bottom()
+
+        # register teams
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select teams to register for this event: ")
         # Register teams  for the event, get the list of teams and pick what teams to register by number
@@ -196,20 +227,14 @@ class OrganizerUI:
             if more == "n":
                 break
 
-        results = self.ll.create_event(
-            tournament_name,
-            event_name,
-            event_type,
-            start_date,
-            end_date,
-            registered_teams
+        results = self.ll.register_teams_into_event(
+            tournament_name=tournament_name,
+            event_name=event_name,
+            team_names=registered_teams
         )
-        
         print("\n" + str(results))
         input("Press Enter to continue...")
-
-    def Register_team_into_event(self):
-        pass
+        
     """
     list of events
     write team into event
