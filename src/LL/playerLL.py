@@ -124,8 +124,11 @@ class PlayerLL:
         if not existing_player:
             return "Error: Player handle does not exists"
         
-        return self._dl_wrapper.load_all_player_short_info(handle)
+        return self._dl_wrapper.load_all_player_short_info()
 
+    def load_all_player_short_info(self):
+       return self._dl_wrapper.load_all_player_short_info()
+        
 
 
 

@@ -39,7 +39,7 @@ class SpectatorUI:
             self.view_teams_and_players(); 
             return "SPECTATOR_MENU"
         if choice == "3": 
-            self.view_players(); 
+            self.view_teams_and_players(); 
             return "SPECTATOR_MENU"
         if choice == "4": 
             self.view_clubs(); 
