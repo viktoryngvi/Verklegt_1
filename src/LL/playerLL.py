@@ -44,7 +44,7 @@ class PlayerLL:
     def create_player_to_data(self, player: Player):
         """takes all inputted info and created a player, and checks the last players id and taked the next number"""
 
-        if self._dl_wrapper.write_into_file(player):
+        if self._dl_wrapper.create_player(player):
             return "PLayer successfully created"
         
         return "Player was not created" 
@@ -160,8 +160,8 @@ class PlayerLL:
         if not player_data:
             return 1
         
-        next_useable_id: Player = player_data[-1]
-        next_useable_id.id += 1
+        last_player: Player = player_data[-1]
+        next_useable_id = last_player.id+1
         return next_useable_id
     
     # notað til að checka hvort id passar við player sem er ekki í liði

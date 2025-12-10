@@ -1,3 +1,4 @@
+from datetime import date
 from models.player import Player
 from UI.input_helper import (
     get_non_empty_input,
@@ -84,7 +85,7 @@ class CaptainUI:
             name=name,
             phone=phone,
             address=address,
-            dob=dob,
+            dob=date.fromisoformat(dob),
             email=email,
             id=None,
             handle=handle,

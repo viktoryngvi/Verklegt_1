@@ -1,3 +1,4 @@
+from datetime import date
 from models.tournament import Tournament
 from csv import DictReader
 
@@ -7,15 +8,38 @@ class Tournament_IO(Tournament):
         self.file_path = "data/Tournament.csv"
 
     def read_tournament_file(self):
+        tournament_list = []
         with open(self.file_path, "r", encoding="utf-8") as Tournament_file:
-            csv_reader = DictReader(Tournament_file)
-            tournament_data = list(csv_reader)
-        return tournament_data
-    
-    def write_into_file(self, tournament_data):
-        with open(self.file_path, "w", encoding="utf-8") as new_tournament_data:
-            new_tournament_data.write("id,tournament_name,event_list,tournament_location,start_date,end_date,event_list")
-            new_tournament_data.write(tournament_data)
+            headers = Tournament_file.readline().split(",")
+            for row in Tournament_file:
+                attributes = row.split(",")
+                tournament = Tournament()
+                tournament.tournament_id = int(attributes[0])
+                tournament.tournament_name = str(attributes[1])
+                tournament.event_list = str(attributes[2])
+                tournament.tournament_location = str(attributes[3])
+                tournament.start_date = str(attributes[4])
+                tournament.end_date = str(attributes[5])
+                tournament.event_list = str(attributes[6])
+
+                tournament_list.append(tournament)
+            return tournament_list
+
+    def write_into_file(self, tournament: Tournament):
+        tournament_data:list[Tournament] = self.read_tournament_file()
+        tournament_data.append(tournament)
+
+        with open(self.file_path, "a", encoding="utf-8") as new_tournament_data:
+
+            new_tournament_data.write(
+                f'{tournament.tournament_id},'
+                f'{tournament.tournament_name},'
+                f'{tournament.event_list},'
+                f'{tournament.tournament_location},'
+                f'{tournament.start_date},'
+                f'{tournament.end_date},'
+                f'{tournament.event_list}\n'
+            )
         return True
 
 
