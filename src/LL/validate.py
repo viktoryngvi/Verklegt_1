@@ -10,11 +10,9 @@ class Validate:
     def __init__(self, dl_wrapper: DLWrapper):
           self._dl_wrapper = dl_wrapper
 
-        # ----------------------------------------------------------------------
-    # VALIDATE PLAYER
-    # ----------------------------------------------------------------------
+    #CHECK PLAYER AND VALIDATE METHODS
 
-    def validate_player(self, player: Player) -> None:
+    def check_player_team(self, player: Player):
         """
         Aggregates all individual validation checks.
         Returns a LIST of error strings if any check fails, or None if the player is valid.
@@ -395,7 +393,12 @@ class Validate:
         try:
             self.start = datetime.strptime(event.start_date, "%Y-%m-%d")
         except ValueError:
-            return "Invalid date format. Use yyyy-mm-dd"
+            return "Event must be in YYYY-MM-DD format."
+                
+        start_tournament = self._dl_wrapper.start_date_tournament(tournament_name)
+
+        if start_date_event.date() < start_tournament.date():
+            return f"Event cannot start before the tournament start date ({start_tournament})."
         
         return True
 
