@@ -29,7 +29,7 @@ class DLWrapper:
 
     def load_all_player_short_info(self):
         """loads all the players and gives a list of dictionarys of each players id, name, handle and team name"""
-        return self.playerio.load_all_player_short_info()
+        return self.playerio.load_all_player_info()
 
     def check_if_handle_exists_with_handle(self, handle):
         """takes handle and checks player_list if that handle is in use"""
