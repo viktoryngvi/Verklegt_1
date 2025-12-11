@@ -54,11 +54,14 @@ class DLWrapper:
 
    # Event methods:
 
+    def create_empty_event(self, event_blueprint: Event_blueprint):
+        return self.event_blueprintio.create_empty_event(event_blueprint)
+
     def load_event_blueprint(self):
         return self.event_blueprintio.load_event_blueprint()
     
-    def append_team_into_blueprint(self, event_blueprint: Event_blueprint):
-        return self.event_blueprintio.append_team_into_blueprint(event_blueprint)
+    def append_team_into_blueprint(self, team_data: Event_blueprint):
+        return self.event_blueprintio.append_team_into_blueprint(team_data)
     
     def load_match_file(self):
         return self.event_blueprintio.load_match_file()
