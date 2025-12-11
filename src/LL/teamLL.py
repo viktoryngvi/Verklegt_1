@@ -29,6 +29,7 @@ class TeamLL:
         the teams.csv file"""
         teams_file = self._dl_wrapper.view_all_teams()
         captain_handle = self.player_ll.take_id_return_handle(captain_id)
+        player_handle = self.player_ll.take_id_return_handle(captain_id)
         id = self.get_last_team_id()
         list_of_player_handles = []
         for player_id in list_of_player_ids:
