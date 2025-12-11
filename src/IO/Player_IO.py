@@ -35,7 +35,7 @@ class Player_IO(Player):
                     f'{date.isoformat(player.dob)},'
                     f'{player.email},'
                     f'{player.handle},'
-                    f'{player.team},'
+                    f'{player.team}'
                     f'\n'
                 )
         return True
