@@ -392,7 +392,20 @@ class OrganizerUI:
 
         # print the list of events in that tournament
         self.menu_ui.print_box_top()
-        events_in_tournament = choose_from_list("Select Event by number: ", self.ll.get_events_in_tournament(tournament_name))
+        # Load events
+        events = self.ll.get_events_in_tournament(tournament_name)
+
+       
+        if not events or events == "None" or events == ["None"]:
+            self.menu_ui.print_box_line()
+            self.menu_ui.print_box_line(" This tournament has no events.")
+            self.menu_ui.print_box_bottom()
+            input("Press Enter to continue...")
+            return
+
+       
+        events_in_tournament = choose_from_list("Select Event by number: ", events)
+
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line(f" You selected Event: {events_in_tournament}")
         self.menu_ui.print_box_bottom()
