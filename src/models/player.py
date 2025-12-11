@@ -8,8 +8,6 @@ class Player(Person):
         self.handle = handle
         self.id = id
         self.team = team
-    def __str__(self):
-        return 
     
-    #Team hjá player byrjar sem None, sem þýðir að hann er ekki í neinu liði til að byrja með
+
     

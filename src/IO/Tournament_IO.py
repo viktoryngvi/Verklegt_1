@@ -14,21 +14,21 @@ class Tournament_IO(Tournament):
             for row in Tournament_file:
                 attributes = row.split(",")
                 tournament = Tournament()
-                tournament.tournament_id = int(attributes[0])
+                tournament.tournament_id = (attributes[0])
                 tournament.tournament_name = str(attributes[1])
                 tournament.event_list = str(attributes[2])
                 tournament.tournament_location = str(attributes[3])
                 tournament.start_date = str(attributes[4])
                 tournament.end_date = str(attributes[5])
                 tournament.event_list = str(attributes[6])
+                tournament.contact_name = str(attributes[7])
+                tournament.contact_email = str(attributes[8])
+                tournament.contact_phone = str(attributes[9])
 
                 tournament_list.append(tournament)
             return tournament_list
 
     def write_into_file(self, tournament: Tournament):
-        tournament_data:list[Tournament] = self.read_tournament_file()
-        tournament_data.append(tournament)
-
         with open(self.file_path, "a", encoding="utf-8") as new_tournament_data:
 
             new_tournament_data.write(
@@ -38,13 +38,17 @@ class Tournament_IO(Tournament):
                 f'{tournament.tournament_location},'
                 f'{tournament.start_date},'
                 f'{tournament.end_date},'
-                f'{tournament.event_list}\n'
+                f'{tournament.event_list},'
+                f'{tournament.contact_name},'
+                f'{tournament.contact_email},'
+                f'{tournament.contact_phone},'
+                f'\n'
             )
         return True
 
     def edit_tournament_file(self, tournaments: list[Tournament]):
         with open(self.file_path, "w", encoding="utf-8") as tournament_file:
-            tournament_file.write("id,tournament_name,tournament_location,start_date,end_date,event_list\n")
+            tournament_file.write("id,tournament_name,tournament_location,start_date,end_date,event_list,contact_name,contact_email,contact_phone\n")
             for tournament in tournaments:
                 tournament_file.write(
                     f'{tournament.tournament_id},'
@@ -53,6 +57,9 @@ class Tournament_IO(Tournament):
                     f'{tournament.start_date},'
                     f'{tournament.end_date},'
                     f'{tournament.event_list},'
+                    f'{tournament.contact_name},'
+                    f'{tournament.contact_email},'
+                    f'{tournament.contact_phone},'
                     f'\n'
                 )
         return "tournament has been edited"
