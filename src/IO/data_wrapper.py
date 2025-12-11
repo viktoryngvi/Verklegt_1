@@ -82,47 +82,21 @@ class DLWrapper:
 
 """    # club methods:
 
-    def register_club(self, club: Club):
-        with open(self.file_path, "a", encoding="utf-8") as club_file:
-            club_file.write(
-                f"{self.add_club_id()},"
-                f"{club.name},"
-                f"{club.home_town},"
-                f"{club.country},"
-                f"{','.join(club.colors) if club.color else ''},"
-                f"{','.join(club.teams) if club.teams else ''}\n"
-            )
+    def register_club(self, club):
+        return self.clubio.register_club(club)
     
     def add_team_to_club(self, club_name, team_name):
         return self.clubio.add_team_to_club(club_name, team_name)
     
+    def load_clubs(self):
+        return self.clubio.view_clubs()
+
     def view_clubs(self):
-        club_file = self.read_club_file_as_list_of_dict()
-        club_list = []
-        for line in club_file:
-            club = Club(
-                name=line["club_name"],
-                home_town=line["Club_home_town"],
-                country=line["club_country"],
-                colors=line["club_colors"].split(","),    
-                teams=line["teams"].split(",") if line["teams"] else []
-            )
-            club_list.append(club)
-        return club_list
+        return self.clubio.view_clubs()
     
     def view_club_information(self, club_name):
-        club_file = self.read_club_file_as_list_of_dict()
-        for line in club_file:
-            if line["club_name"] == club_name:
-                 club = Club(
-                     name=line["club_name"],
-                     home_town=line["Club_home_town"],
-                     country=line["club_country"],
-                     colors=line["club_colors"].split(","),    
-                     teams=line["teams"].split(",") if line["teams"] else []
-                 )
-                 return club
-            return None
+        return self.clubio.view_club_information(club_name)
+    
     def check_if_club_name_in_use(self, club_name):
         return self.clubio.check_if_club_name_in_use(club_name)
     
