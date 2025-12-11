@@ -68,12 +68,18 @@ class TournamentLL:
             list_of_tournaments.append(tournament.tournament_name)
         return list_of_tournaments
 
-    def view_events_in_tournament(self, tournament_name, tournament : Tournament):
-        tournament_file = self._dl_wrapper.read_tournament_file()
+    def view_events_in_tournament(self, tournament : Tournament, tournament_name_to_check: str):
+        event_list = []
+        tournament_file: list(Tournament) = self._dl_wrapper.read_tournament_file()
         for tournament in tournament_file:
-            if tournament.tournament_name == tournament_name:
-                return tournament.event_list
-        return "No tournament with this name"
+            if tournament.tournament_name == tournament_name_to_check:
+                for events in tournament.event_list:
+                    event_list.append(events)
+                    # print(f"[DEBUG] Found tournament: '{event_list}'")
+                return event_list
+            return "No tournament with this name"
+    
+
     
     def get_next_tournament_id(self):
         """checks the last player and returns the id of said player"""

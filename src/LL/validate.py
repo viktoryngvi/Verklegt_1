@@ -5,6 +5,7 @@ from models.event import Event
 from models.team import Team
 from IO.data_wrapper import DLWrapper
 from models.tournament import Tournament
+from models.match import Match
 
 
 class Validate:  
@@ -522,6 +523,11 @@ class Validate:
     # ----------------------------------------------------------------------
     def check_matches(self, event : Event):
         return True
+    
+    def check_first_win(self, match : Match):
+        match_file: list[Match] = self._dl_wrapper.load_match_file()
+        match_file[-1] 
+        pass
 
 
 
