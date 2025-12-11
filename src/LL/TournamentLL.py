@@ -24,13 +24,11 @@ class TournamentLL:
     def create_tournament_to_data(self, tournament: Tournament):
         """tournaments should have a list of tournaments that have event names"""
         id = self.get_next_tournament_id()
-        tournament_file = self._dl_wrapper.read_tournament_file()
         if self.validator.validate_tournament(tournament):
             return self.validator.validate_tournament(tournament)
         tournament.tournament_id = id
-        tournament_file.append(tournament)
 
-        return self._dl_wrapper.write_into_file(tournament_file)
+        return self._dl_wrapper.write_into_file(tournament)
          
 # --------------------------------------------------------------------------
 # GET_TOURNAMENT_LIST 
@@ -79,10 +77,10 @@ class TournamentLL:
     
     def get_next_tournament_id(self):
         """checks the last player and returns the id of said player"""
-        tournament_data = self._dl_wrapper.read_tournament_file()
+        tournament_data: list[Tournament] = self._dl_wrapper.read_tournament_file()
         if not tournament_data:
             next_useable_id = 1
         else:
-            next_useable_id = int(tournament_data[-1].tournament.id)
+            next_useable_id = int(tournament_data[-1].tournament_id)
             next_useable_id += 1
         return next_useable_id
