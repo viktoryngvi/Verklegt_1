@@ -34,7 +34,7 @@ class TournamentLL:
 # GET_TOURNAMENT_LIST 
 # --------------------------------------------------------------------------
     def get_tournament_list(self):
-        return self.view_tournaments()
+        return self.view_tournaments(self)
 
 
     def get_events_in_tournament(self, tournament_name):
@@ -46,8 +46,8 @@ class TournamentLL:
 
     def put_event_into_tournament(self, tournament_name, event_name, tournament : Tournament):
         tournament_file = self._dl_wrapper.read_tournament_file()
-        for line in tournament_file:
-            if tournament.name == tournament_name:
+        for tournament in tournament_file:
+            if tournament.tournament_name == tournament_name:
                 if tournament.event_list == "event_list":
                     tournament.event_list = []
                     tournament.event_list.append(event_name)
@@ -70,7 +70,7 @@ class TournamentLL:
 
     def view_events_in_tournament(self, tournament_name, tournament : Tournament):
         tournament_file = self._dl_wrapper.read_tournament_file()
-        for line in tournament_file:
+        for tournament in tournament_file:
             if tournament.tournament_name == tournament_name:
                 return tournament.event_list
         return "No tournament with this name"

@@ -1,5 +1,5 @@
-id,team_name,event_name,event_type,tournment_name,start_date,end_date
-1,faze
+id,event_name,event_type,tournment_name,start_date,end_date,team_name
+1
 2
 3
 4

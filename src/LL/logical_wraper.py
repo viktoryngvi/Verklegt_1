@@ -144,8 +144,8 @@ class LLWrapper:
 
    #EVENT METHODS
 
-   def create_event(self, tournament_name: str, event: Event):
-      return self.event_ll.create_event(tournament_name, event)
+   def create_event(self, event: Event):
+      return self.create_event_ll.create_event(event)
 
    def get_team_captain(self, team_name, handle):
       return self.captain_ll.get_team_captain(team_name, handle)

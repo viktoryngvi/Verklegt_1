@@ -1,1 +1,9 @@
 tournament_id,tournament_name,tournament_location,start_date,end_date,event_list,contact_name,contact_email,contact_phone
+<<<<<<< HEAD
+1,CAPA TOURNY,None,CAPA TOURNY,2025-12-20,2025-12-24,None,Kristófer Kristjan Erlendsson,email@gmail.com,787-2550,
+2,CAPA TOURNY,None,CAPA TOURNY,2025-12-20,2025-12-24,None,Kristófer Kristjan Erlendsson,email@gmail.com,787-2550,
+3,CAPA TOURNY,None,CAPA TOURNY,2025-12-20,2025-12-24,None,Kristófer Kristjan Erlendsson,email@gmail.com,787-2550,
+4,CAPA TOURNY,None,CAPA TOURNY,2025-12-20,2025-12-24,None,Kristófer Kristjan Erlendsson,email@gmail.com,787-2550,
+5,CAPA TOURNY,None,CAPA TOURNY,2025-12-20,2025-12-24,None,Kristófer Kristjan Erlendsson,email@gmail.com,787-2550,
+=======
+>>>>>>> d6fc148625f420ba341fcedc80b19118a31a76b9
