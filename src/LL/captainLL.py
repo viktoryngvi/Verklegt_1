@@ -26,7 +26,7 @@ class CaptainLL:
         if validate_error:
             return validate_error
         
-        updated = self._dl_wrapper.(handle, "phone", phone)
+        updated = self._dl_wrapper(handle, "phone", phone)
         if updated:
             return "Success: Player information updated"
         else:
