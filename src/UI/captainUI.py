@@ -109,7 +109,7 @@ class CaptainUI:
         return "CAPTAIN_MENU"
 
     def edit_player_info(self):
-        # ask for captain id
+        # ask for captain handle
         self.menu_ui.print_header("EDIT PLAYER INFO")
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" To edit a player's information, please provide your captain handle: ")
@@ -147,7 +147,7 @@ class CaptainUI:
             print("No players found in your team.")
             input("Press Enter to continue...")
             return
-        
+        #################################################3
         
         # let the captain choose a player to edit from his team
         selected_player = choose_from_list(" Enter the number of the player: ", team_players)

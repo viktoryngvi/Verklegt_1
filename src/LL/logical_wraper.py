@@ -78,7 +78,7 @@ class LLWrapper:
       return self.captain_ll.view_all_players_in_team(team_name)
    
    def view_captain_team(self, captain_handle : str):
-      return self.captain_ll.view_captains_teams(captain_handle)
+      return self.captain_ll.view_captain_teams(captain_handle)
    
    def update_team_captain(self, team_name, handle):
       return self.captain_ll.update_team_captain(team_name, handle)

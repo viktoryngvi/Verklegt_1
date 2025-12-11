@@ -1,6 +1,8 @@
 from IO.data_wrapper import DLWrapper
 from LL.validate import Validate
 from LL.teamLL import TeamLL
+from models.team import Team
+# viktor setti Team til að prófa
 
 class CaptainLL:
     def __init__(self, dl_wrapper: DLWrapper, validate: Validate, team: TeamLL):
@@ -113,13 +115,14 @@ class CaptainLL:
         
         return self._team.view_all_players_in_team(team_name)
     
-
-    def view_captains_teams(self, handle):
-        existing_handle = self._validate.check_player_handle(handle)
+    def view_captain_teams(self, handle):
+        existing_handle = self._validate.check_if_handle_in_use(handle)
         if not existing_handle:
-            return "Error: Handle does not exists"
-
-        return existing_handle    
+            return "Error: Captain does not exists"
+        team_file: list[Team] = self._dl_wrapper.view_all_teams()
+        for teams in team_file:
+            if teams.captain == handle:
+                return teams.name
     
     def update_team_captain(self, team_name, handle):
         existing_team = self._dl_wrapper.check_if_team_name_exists(team_name)

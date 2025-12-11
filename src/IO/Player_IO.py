@@ -44,6 +44,7 @@ class Player_IO(Player):
 
 
     # def edit_player_file(self, player_data):
+
     #     with open("data/test_player_info", "w", encoding="utf-8"):
             
     #         for player in player_data
