@@ -39,6 +39,11 @@ class TeamLL:
             
         team_model = Team(id, name, captain_handle, list_of_player_handles)
 
+        list_player: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in list_player:
+            if player.handle == player_handle:
+                player.team = name
+
         if self._dl_wrapper.append_team_into_file(team_model):
             return "Successfully created Team"
         
