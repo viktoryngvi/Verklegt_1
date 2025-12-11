@@ -189,8 +189,8 @@ class PlayerLL:
         """takes handle and returns the players id"""
         player_list: list[Player] = self._dl_wrapper.load_all_player_info() 
         for player in player_list:
-            if handle == str(player.handle):
-                return int(player.id)
+            if player.handle == handle:
+                return player.id
         return False
 
     def take_id_return_handle(self, id: int):

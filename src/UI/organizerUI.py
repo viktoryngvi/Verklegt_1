@@ -8,16 +8,15 @@ from UI.input_helper import (
 )
 from models.tournament import Tournament
 from models.event import Event
-from LL.eventLL import EventLL
+from LL.logical_wraper import LLWrapper
 from models.team import Team
 from models.club import Club
 
 class OrganizerUI:
-    def __init__(self, ll: Any, menu_ui: Any):
+    def __init__(self, ll: LLWrapper, menu_ui: Any):
         # Store references to logic layer and menu helper class
         self.ll = ll
         self.menu_ui = menu_ui
-        self.event_ll = EventLL
 
    
     def show_menu(self) -> str:
@@ -160,7 +159,7 @@ class OrganizerUI:
         self.menu_ui.print_box_bottom()
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select the event type: ")
-        event_types = self.event_ll.event_types(self)
+        event_types = self.ll.event_types(self)
         event_type = choose_from_list(" ➤ Select one type: ", event_types) 
         self.menu_ui.print_box_line(f" You selected event type: {event_type}")
         self.menu_ui.print_box_bottom()
