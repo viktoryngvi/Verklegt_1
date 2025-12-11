@@ -315,7 +315,7 @@ class Validate:
         pass
 
 
-    # CHECKS AND VALIDATION METHODS FOR EVENT
+    # CHECKS AND VALIpper)DATION METHODS FOR EVENT
 
 
     def validate_event(self, event: Event):
@@ -338,6 +338,56 @@ class Validate:
             return errors_list
 
         return None
+    
+
+    def check_start_date_event(self, start_date: str, tournament_name: str):
+        try:
+            start_date_event: datetime = datetime.strptime(start_date, "%Y-%m-%d")
+        except ValueError:
+            return "Event must be in YYYY-MM-DD format."
+                
+        start_tournament = self.view_start_date_of_tournament(tournament_name)
+
+        if isinstance(start_tournament, str):
+            return start_tournament
+
+        if start_date_event.date() < start_tournament:
+            return f"Event cannot start before the tournament start date ({start_tournament})."
+
+        return True
+
+
+    def check_end_date_event(self, end_date: str, tournament_name):
+        try:
+            end_date_event: datetime = datetime.strptime(end_date, "%Y-%m-%d")
+        except ValueError:
+            return "Event must be in YYYY-MM-DD format."
+
+        end_tournament = self.view_end_date_of_tournament(tournament_name)
+
+        if isinstance(end_tournament, str):
+            return end_tournament
+
+        if end_date_event.date() > end_tournament:
+            return f"Event cannot end after the tournament end date ({end_tournament})."
+
+        return True
+    
+    def view_start_date_of_tournament(self, tournament_name):
+        tournament_list: list[Tournament] = self._dl_wrapper.read_tournament_file()
+        for tournament in tournament_list:
+            if tournament.tournament_name == tournament_name:
+                return tournament.start_date
+            
+        return "Tournament not found"
+    
+    def view_end_date_of_tournament(self, tournament_name):
+        tournament_list: list[Tournament] = self._dl_wrapper.read_tournament_file()
+        for tournament in tournament_list:
+            if tournament.tournament_name == tournament_name:
+                return tournament.end_date
+            
+        return "Tournament not found"
 
 
     def check_event_name(self, event_name: str):
@@ -355,35 +405,7 @@ class Validate:
         
         return True 
 
-
-    def check_start_date_event(self, start_date: str, tournament_name: str):
-        try:
-            start_date_event: datetime = datetime.strptime(start_date, "%Y-%m-%d")
-        except ValueError:
-            return "Event must be in YYYY-MM-DD format."
-                
-        start_tournament = self._dl_wrapper.start_date_tournament(tournament_name)
-
-        if start_date_event.date() < start_tournament.date():
-            return f"Event cannot start before the tournament start date ({self.start_tournament})."
-
-        return True
-
-
-    def check_end_date_event(self, end_date: str, tournament_name):
-        try:
-            end_date_event: datetime = datetime.strptime(end_date, "%Y-%m-%d")
-        except ValueError:
-            return "Event must be in YYYY-MM-DD format."
-
-        end_tournament: datetime = self._dl_wrapper.end_date_tournament(tournament_name)
-
-        if end_date_event.date() > end_tournament.date():
-            return f"Event cannot end after the tournament end date ({end_tournament})."
-
-        return True
-
-        
+ 
     def check_registered_teams(self, event : Event):
         return True
     def check_matches(self, event : Event):

@@ -1,9 +1,9 @@
 import uuid
 from IO.data_wrapper import DLWrapper
 from LL.validate import Validate
-from LL.validate import Validate
 from models.event import Event
 from models.team import Team
+from datetime import datetime
 import random
 
 
@@ -19,13 +19,13 @@ class EventLL:
 
 
 
-    def create_event(self, event : Event):
+    def create_empty_event(self, event : Event):
         validate_errors = self.validate.validate_event(event)
 
         if validate_errors:
             return validate_errors
         
-        return self._dl_wrapper.create_event(event)
+        return self._dl_wrapper.create_empty_event(event)
 
 
 
@@ -54,12 +54,12 @@ class EventLL:
 
 
 # laga þetta
-    def create_empty_event(self, event: Event):
-        self._dl_wrapper.write_into_event_blueprint('id,team_name,event_name,event_type,tournment_name,start_date,end_date')
+    # def create_empty_event(self, event: Event):
+    #     self._dl_wrapper.write_into_event_blueprint('id,team_name,event_name,event_type,tournment_name,start_date,end_date')
 
-        for id in range(1,17):
-            self._dl_wrapper.write_into_event_blueprint(f'{id},"team",{event.name},{event.game_type},{event.tournament_name},{event.start_date},{event.end_date}\n')
-        return "Event created!"
+    #     for id in range(1,17):
+    #         self._dl_wrapper.write_into_event_blueprint(f'{id},"team",{event.name},{event.game_type},{event.tournament_name},{event.start_date},{event.end_date}\n')
+    #     return "Event created!"
     
 # #############################################
     def write_team_into_empty_event(self, event: Event, team):
