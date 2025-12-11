@@ -36,8 +36,8 @@ class EventLL:
     def event_types(self):
         return [
             "Single Elimination",
-            "Double Elimination",
-            "Last Team Standing"] 
+            "Last Team Standing"
+            ] 
     
 
 

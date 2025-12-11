@@ -2,7 +2,7 @@ from csv import DictReader
 from IO.Teams_IO import Team_IO
 from models.club import Club
 
-class Club_IO(Club):
+class Club_IO:
     """Reads, adds, registers, views clubs from/to a csv file and checks if a club name is already in use."""
     
     def __init__(self):
@@ -16,27 +16,41 @@ class Club_IO(Club):
 
         
     def add_club_id(self):
-        club_file = self.read_club_file_as_list_of_dict()
-        last_id = int(club_file[-1]["match_id"])
+        club_file= self.read_club_file_as_list_of_dict()
+        if not club_file:
+            return 1
+        last_id = int(club_file[-1]["club_id"])
         return last_id + 1
 
                 
     def register_club(self, club: Club):
         with open(self.file_path, "a", encoding="utf-8") as club_file:
-            club_file.write(f"{self.add_club_id()},{self.name},{self.home_town},{self.country},{self.colors}")
+            club_file.write(
+                f"{self.add_club_id()},"
+                f"{club.name},"
+                f"{club.home_town},"
+                f"{club.country},"
+                f"{','.join(club.color) if club.color else ''},"
+                f"{','.join(club.teams) if club.teams else ''}\n"
+            )
+        return True
 
 
     def add_team_to_club(self, club_name, team_name):
-        with open(self.file_path, "r", encoding="utf-8") as club_file:
-            csv_reader = DictReader(club_file)
-            club_list = list(csv_reader)
-        for line in club_list:
+        club_file = self.read_club_file_as_list_of_dict()
+        for line in club_file:
             if line["club_name"] == club_name:
-                club_to_edit = club_name
-                if line["teams"] == "teams":
-                    line["teams"] = []
-                line["teams"].append(team_name)
-                break
+                teams = line["teams"].split(",") if line["teams"] else []
+            # Add new team if not already there
+            if team_name not in teams:
+                teams.append(team_name)
+                line["teams"] = ",".join(teams)
+            break
+
+        with open(self.file_path, "w", encoding="utf-8") as club_file:
+            club_file.write("club_id,club_name,club_home_town,club_country,club_colors,teams\n")
+            for club in club_file:
+                club_file.write(f"{club['club_id']},{club['club_name']},{club['club_home_town']},{club['club_country']},{club['club_colors']},{club['teams']}\n")
         return "Team added to club"
 
     
@@ -44,14 +58,29 @@ class Club_IO(Club):
         club_file = self.read_club_file_as_list_of_dict()
         club_list = []
         for line in club_file:
-            club_list.append(line["club_name"])
+            club = Club(
+                name=line["club_name"],
+                home_town=line["club_home_town"],
+                country=line["club_country"],
+                color=line["club_colors"].split(","),
+                teams=line["teams"].split(",") if line["teams"] else []
+            )
+            club_list.append(club)
         return club_list
 
     def view_club_information(self, club_name):
         club_file = self.read_club_file_as_list_of_dict()
         for line in club_file:
             if line["club_name"] == club_name:
-                return line
+                club = Club(
+                    name=line["club_name"],
+                    home_town=line["club_home_town"],
+                    country=line["club_country"],
+                    color=line["club_colors"].split(","),
+                    teams=line["teams"].split(",") if line["teams"] else []
+                )
+                return club
+        return None
 
             
     def check_if_club_name_in_use(self, club_name):

@@ -12,8 +12,9 @@ class Validate:
     def __init__(self, dl_wrapper: DLWrapper):
           self._dl_wrapper = dl_wrapper
           
-
+        # ----------------------------------------------------------------------
     # CHECKS AND VALIDATION METHODS FOR PLAYER
+    # ----------------------------------------------------------------------
 
     def validate_player(self, player: Player):
         """
@@ -58,6 +59,9 @@ class Validate:
         # Otherwise, all checks passed
         return None
     
+        # ----------------------------------------------------------------------
+    # VALIDATE PLAYER TEAM
+    # ----------------------------------------------------------------------
    
     def check_player_team(self, player: Player):
 
@@ -70,6 +74,10 @@ class Validate:
             return "Team does not exists"
         
         return True
+    
+        # ----------------------------------------------------------------------
+    # VALIDATE PLAYER HANDLE
+    # ----------------------------------------------------------------------
 
 
     def check_player_handle(self, player: Player):
@@ -81,6 +89,10 @@ class Validate:
             return "Handle does exists"
         
         return True
+    
+        # ----------------------------------------------------------------------
+    # VALIDATE PLAYER ADDRESS
+    # ----------------------------------------------------------------------
 
 
     def check_player_address(self, player: Player):
@@ -97,6 +109,9 @@ class Validate:
         
         return True
 
+    # ----------------------------------------------------------------------
+    # VALIDATE PLAYER PHONE
+    # ----------------------------------------------------------------------
 
     def check_player_phone(self, player: Player):
         """
@@ -109,6 +124,9 @@ class Validate:
 
         return True
 
+    # ----------------------------------------------------------------------
+    # VALIDATE PLAYER EMAIL
+    # ----------------------------------------------------------------------
 
     def check_player_email(self, player: Player):
         """
@@ -121,6 +139,9 @@ class Validate:
         
         return True
     
+        # ----------------------------------------------------------------------
+    # VALIDATE DOB
+    # ----------------------------------------------------------------------
 
     def check_player_dob(self, player: Player):
         """
@@ -146,6 +167,9 @@ class Validate:
 
         return True
     
+        # ----------------------------------------------------------------------
+    # VALIDATE PLAYER NAME
+    # ----------------------------------------------------------------------
 
     def check_player_name(self, player: Player):
         """
@@ -165,9 +189,14 @@ class Validate:
             corrected = ' '.join(part.capitalize() for part in parts)
             if self.name != corrected:
                 self.name = corrected
+
+        name_no_spaces = self.name.replace(" ", "")
         
-        if self.name != self.name.isalpha() and " " not in self.name:
-            return "Name can only contain alphabetic characters and spaces."
+        if not name_no_spaces.isalpha():
+            return "Name can only contain alphabetic characters."
+        
+        if " " not in self.name:
+            return "Please input your full name."
         
         if len(parts) < 2:
             return "Full name must have at least 2 words."
@@ -177,16 +206,22 @@ class Validate:
 
         return True
     
+        # ----------------------------------------------------------------------
+    # VALIDATE PHONE
+    # ----------------------------------------------------------------------
 
     def validate_phone(self, phone: str) -> None:
         """
         Validates the new updated phone number format (8 digits with a dash).
         """
-        if len(phone) != 8:
+        if not len(phone) != 8:
             return "Phone number must be in format 123-4567."
 
         if "-" not in phone:
-            return "Invalid format. Example: 123-4567"
+            left = phone[:3]
+            right= phone[3:]
+            phone = left + "-" + right
+
         
         left, right = phone.split("-")
     
@@ -198,6 +233,10 @@ class Validate:
         
         return None
     
+    # ----------------------------------------------------------------------
+    # VALIDATE EMAIL
+    # ----------------------------------------------------------------------
+
 
     def validate_email(self, email: str) -> None:
         """
@@ -238,6 +277,10 @@ class Validate:
         
         return None
     
+        # ----------------------------------------------------------------------
+    # VALIDATE ADDRESS
+    # ----------------------------------------------------------------------
+
 
     def validate_address(self, address: str) -> None:
         """
@@ -254,6 +297,11 @@ class Validate:
         
         return None
     
+    # ----------------------------------------------------------------------
+    # VALIDATE HANDLE IN USE
+    # ----------------------------------------------------------------------
+
+
     def check_if_handle_in_use(self, handle):
         """checks ef the inputted handle is in use in the player list"""
         player_list: list[Player] = self._dl_wrapper.load_all_player_info()
@@ -261,6 +309,11 @@ class Validate:
             if handle == player.handle:
                 return True
         return False
+    
+        # ----------------------------------------------------------------------
+    # VALIDATE HANDLE EXISTS WITH PLAYER
+    # ----------------------------------------------------------------------
+
     
     def check_if_handle_exists_with_player(self, player: Player):
         """checks ef the inputted handle is in use in the player list"""
@@ -278,6 +331,11 @@ class Validate:
     
     # CHECKS AND VALIDATION METHODS FOR CLUB
     
+        # ----------------------------------------------------------------------
+    # VALIDATE CLUB
+    # ----------------------------------------------------------------------
+
+
     def validate_club(self, club: Club):
         errors_list = []
 
@@ -316,6 +374,10 @@ class Validate:
 
 
     # CHECKS AND VALIpper)DATION METHODS FOR EVENT
+    # ----------------------------------------------------------------------
+    # CHECKS AND VALIDATION METHODS FOR EVENT
+    # ----------------------------------------------------------------------
+
 
 
     def validate_event(self, event: Event):
@@ -339,6 +401,29 @@ class Validate:
 
         return None
     
+    # ----------------------------------------------------------------------
+    # VALIDATE EVENT NAME
+    # ----------------------------------------------------------------------
+
+
+    def check_event_name(self, event_name: str):
+        if not event_name or not event_name.strip():
+            return "Event name cannot be empty."
+
+        if not event_name[0].isupper():
+            return "Event name must start with an uppercase letter."        
+
+        if not event_name.isalpha():
+            return "Event name must contain only letters"
+        
+        if len(event_name) > 20:
+            return "Event name is too long (max 20 characters)."
+        
+        return True 
+    
+        # ----------------------------------------------------------------------
+    # VALIDATE START DATE
+    # ----------------------------------------------------------------------
 
     def check_start_date_event(self, start_date: str, tournament_name: str):
         try:
@@ -356,6 +441,9 @@ class Validate:
 
         return True
 
+        # ----------------------------------------------------------------------
+    # VALIDATE END DATE
+    # ----------------------------------------------------------------------
 
     def check_end_date_event(self, end_date: str, tournament_name):
         try:
@@ -399,6 +487,9 @@ class Validate:
 
         if not event_name.isalpha():
             return "Event name must contain only letters"
+        # ----------------------------------------------------------------------
+    # VALIDATE REGISTERED TEAMS
+    # ----------------------------------------------------------------------
         
         if len(event_name) > 20:
             return "Event name is too long (max 20 characters)."
@@ -408,8 +499,12 @@ class Validate:
  
     def check_registered_teams(self, event : Event):
         return True
+            # ----------------------------------------------------------------------
+    # VALIDATE MATCHES
+    # ----------------------------------------------------------------------
     def check_matches(self, event : Event):
         return True
+
 
 
     # ----------------------------------------------------------------------
