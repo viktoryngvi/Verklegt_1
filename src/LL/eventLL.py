@@ -76,16 +76,6 @@ class EventLL:
         return True
 
 
-    def write_team_into_empty_event(self, event: Event, team):
-        """takes a team name and writes it into the blueprint"""
-        event_data = self._dl_wrapper.read_public_file_as_list_of_dict()        
-        next_id = self.find_next_useable_id()
-        for line in event_data:
-            if line["id"] == next_id:
-                line["team_name"] = f"{team},"
-
-        self._dl_wrapper.write_into_event_blueprint(event_data)
-        return f"{team} is now a part of this event!"
 
     def check_if_team_in_event(self, team):
         """takes team name and checks if the team is in the event"""
