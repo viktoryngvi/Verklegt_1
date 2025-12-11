@@ -202,7 +202,7 @@ class PlayerLL:
         return False
 
     def load_single_player_info(self, handle, player: Player):
-        player_data: list[Player] = self._dl_wrapper.load_all_player_info
+        player_data: list[Player] = self._dl_wrapper.load_all_player_info()
         for player in player_data:
             if player.handle == handle:
                 return player
