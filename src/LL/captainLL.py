@@ -27,16 +27,12 @@ class CaptainLL:
         if validate_error:
             return validate_error
         
-<<<<<<< HEAD
-        updated = self._dl_wrapper(handle, "phone", phone)
-=======
         list_player: list[Player] = self._dl_wrapper.load_all_player_info()
         for player in list_player:
             if player.handle == handle:
                 player.phone == phone
         
         updated = self._dl_wrapper.edit_player_file(list_player)
->>>>>>> 9e75e15d5625492e714795c7dc58fc395a9b55ff
         if updated:
             return "Success: Player information updated"
         else:

@@ -496,7 +496,8 @@ class Validate:
             return "Event name cannot be empty."
 
         if not event_name[0].isupper():
-            return "Event name must start with an uppercase letter."        
+            event_name = event_name.capitalize()
+                  
 
         if not event_name.isalpha():
             return "Event name must contain only letters"
