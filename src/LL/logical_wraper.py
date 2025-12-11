@@ -32,6 +32,9 @@ class LLWrapper:
    def create_player(self, player: Player): 
       return self.player_ll.create_player(player)
    
+   def captain_handle(self, handle):
+      return self.validate.check_if_handle_in_use(handle)
+   
    def edit_player_email(self, handle: str, email: str) -> str: 
       return self.player_ll.edit_player_email(handle, email)
 
