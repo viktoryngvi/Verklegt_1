@@ -41,7 +41,8 @@ class OrganizerUI:
         self.menu_ui.print_box_line("  [8] View schedule ")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  Club Management: ")
-        self.menu_ui.print_box_line("  [9] Create club ")
+        self.menu_ui.print_box_line("  [9] Create team ")
+        self.menu_ui.print_box_line("  [10] Create club ")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  [B] Back to main menu ")
         self.menu_ui.print_box_line()
@@ -50,8 +51,8 @@ class OrganizerUI:
         
 
         
-        if choice not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "b"]:
-            print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, 6, 7, 8, 9, B")
+        if choice not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "b"]:
+            print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, B")
             input("Press Enter to continue...")
             return self.show_menu()
 
@@ -81,6 +82,9 @@ class OrganizerUI:
             self.view_schedule()
             return "ORGANIZER_MENU"
         if choice == "9":
+            self.create_team()
+            return "ORGANIZER_MENU"
+        if choice == "10":
             self.register_club()
             return "ORGANIZER_MENU"
         if choice == "b":
