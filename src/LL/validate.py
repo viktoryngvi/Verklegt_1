@@ -214,7 +214,7 @@ class Validate:
         """
         Validates the new updated phone number format (8 digits with a dash).
         """
-        if not len(phone) != 8:
+        if len(phone) != 8:
             return "Phone number must be in format 123-4567."
 
         if "-" not in phone:
@@ -306,7 +306,7 @@ class Validate:
         """checks ef the inputted handle is in use in the player list"""
         player_list: list[Player] = self._dl_wrapper.load_all_player_info()
         for player in player_list:
-            if handle == player.handle:
+            if player.handle == handle:
                 return True
         return False
     
@@ -354,6 +354,10 @@ class Validate:
 
         if club_teams is not True:
             errors_list.append(f"Error: {club_teams}")
+        
+        if errors_list:
+            return "\n".join(errors_list)
+        return None
 
 
     def validate_club_country(self, club_country: str):

@@ -84,8 +84,8 @@ class DLWrapper:
     def register_club(self, club):
         return self.clubio.register_club(club)
     
-    def add_team_to_club(self, club_name, team_name):
-        return self.clubio.add_team_to_club(club_name, team_name)
+    def add_team_to_club(self, clubs):
+        return self.clubio.add_team_to_club(clubs)
     
     def load_clubs(self):
         return self.clubio.view_clubs()

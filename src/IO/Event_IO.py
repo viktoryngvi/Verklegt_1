@@ -33,12 +33,13 @@ class Event_IO(Match, Event):
             for row in blueprint_file:
                 attributes = row.split(",")
                 event = Event()
-                event.event_id = str(attributes[0])
+                event.event_name = str(attributes[0])
                 event.event_type = str(attributes[1])
                 event.tournament_name = str(attributes[2])
                 event.start_date = str(attributes[3])
-                event.end_date = int(attributes[4])
-                event.team_name = int(attributes[5])
+                event.end_date = str(attributes[4])
+                event.team_name = str(attributes[5])
+                event.event_id = int(attributes[6])
                 event_list.append(event)
         return event_list
 

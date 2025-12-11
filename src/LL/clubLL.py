@@ -22,11 +22,19 @@ class ClubLL:
 
         return self.dl_wrapper.register_club(club)
     
+    
+    def add_team_to_club(self, club_name: str, team_name: str):
+        clubs = self.dl_wrapper.load_clubs()  # list[Club]
+        target = next((c for c in clubs if c.name == club_name), None)
+        if not target:
+            return "Club not found"
+
+        if team_name not in target.teams:
+            target.teams.append(team_name)
+
+        return self.dl_wrapper.add_team_to_club(clubs)  # writes full list
+    
     def view_club_information(self, club_name: str):
         return self.dl_wrapper.view_club_information(club_name)
-
-
-
-
 
 
