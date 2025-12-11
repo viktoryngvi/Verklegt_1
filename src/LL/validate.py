@@ -2,9 +2,8 @@ from datetime import datetime,date
 from models.player import Player
 from models.club import Club
 from models.event import Event
+from models.team import Team
 from IO.data_wrapper import DLWrapper
-from models.club import Club
-from models.event import Event
 from models.tournament import Tournament
 
 
@@ -334,7 +333,6 @@ class Validate:
         # ----------------------------------------------------------------------
     # VALIDATE CLUB
     # ----------------------------------------------------------------------
-
 
     def validate_club(self, club: Club):
         errors_list = []
