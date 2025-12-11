@@ -109,7 +109,7 @@ class CaptainUI:
         return "CAPTAIN_MENU"
 
     def edit_player_info(self):
-        # ask for captain id
+        # ask for captain handle
         self.menu_ui.print_header("EDIT PLAYER INFO")
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" To edit a player's information, please provide your captain handle: ")
@@ -147,7 +147,7 @@ class CaptainUI:
             print("No players found in your team.")
             input("Press Enter to continue...")
             return
-        
+        #################################################3
         
         # let the captain choose a player to edit from his team
         selected_player = choose_from_list(" Enter the number of the player: ", team_players)
@@ -323,16 +323,18 @@ class CaptainUI:
         # select players
         self.menu_ui.print_box_top()
         # need list of all players without a team
-        all_players = self.ll.load_all_players_team_none()    
+        all_players = self.ll.players_team_none()    
         selected_players = choose_from_list(
             "Select players (comma separated): ",
             all_players,
             allow_multiple=True
         )
+        ######hvað gerir allow_multiple???????????
         self.menu_ui.print_box_bottom()
-
+        cap_id = self.ll.take_handle_return_id(captain_handle)
         # send to ll to create team
-        result = self.ll.create_team(team_name, captain_handle, selected_players)
+        player_ids = self.ll.take_list_of_players_return_list_of_ids(selected_players)
+        result = self.ll.create_team(team_name, cap_id, player_ids)
 
         print(result)
         input("Press Enter to continue...")

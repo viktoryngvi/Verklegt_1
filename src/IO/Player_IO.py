@@ -23,12 +23,9 @@ class Player_IO(Player):
 
                 player_list.append(player)
 
-            return player_list
+        return player_list
 
     def create_player(self, player: Player):
-        player_data:list[Player] = self.load_all_player_info()
-        player_data.append(player)
-
         with open(self.file_path, "a", encoding="utf-8") as new_player_file:
                 new_player_file.write(
                     f'{player.id},'
@@ -38,8 +35,25 @@ class Player_IO(Player):
                     f'{date.isoformat(player.dob)},'
                     f'{player.email},'
                     f'{player.handle},'
-                    f'{player.team}\n'
+                    f'{player.team},'
+                    f'\n'
                 )
-                
-
         return True
+
+
+    def edit_player_file(self, players: list[Player]):
+        with open(self.file_path, "w", encoding="utf-8") as player_file:
+            player_file.write("id,name,phone,address,dob,email,handle,team\n")
+            for player in players:
+                player_file.write(
+                    f'{player.id},'
+                    f'{player.name},'
+                    f'{player.phone},'
+                    f'{player.address},'
+                    f'{date.isoformat(player.dob)},'
+                    f'{player.email},'
+                    f'{player.handle},'
+                    f'{player.team},'
+                    f'\n'
+                )
+        return "Player has been edited"

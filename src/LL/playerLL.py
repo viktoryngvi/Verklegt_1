@@ -63,7 +63,7 @@ class PlayerLL:
         if validate_error:
             return validate_error
         
-        updated = self._dl_wrapper.edit_player_info(handle, "phone", phone)
+        updated = self.edit_player_try(handle, "phone", phone)
         if updated:
             return "Success: Player information updated"
         
@@ -83,7 +83,7 @@ class PlayerLL:
         if validate_error:
             return validate_error
         
-        updated = self._dl_wrapper.edit_player_info(handle, "email", email)
+        updated = self.edit_player_try(handle, "email", email)
         if updated:
             return "Success: Player information updated"
 
@@ -103,7 +103,7 @@ class PlayerLL:
         if validate_error:
             return validate_error
         
-        updated = self._dl_wrapper.edit_player_info(handle, "address", address)
+        updated = self.edit_player_try(handle, "address", address)
         if updated:
             return "Success: Player information updated"
         
@@ -137,19 +137,20 @@ class PlayerLL:
         return self.load_all_player_short_info()
 
     def edit_player_try(self, find_player_handle, what_to_edit, new_information):
-        player_file = self._dl_wrapper.load_all_player_info()
+        player_file: list[Player] = self._dl_wrapper.load_all_player_info()
         for player in player_file:
-            handle = player(["handle"])
+            handle = player.handle
             if find_player_handle == handle:
-                player[what_to_edit] = new_information
-                return self._dl_wrapper.edit_player_info(player_file)
+                str_what_to_edit = str(what_to_edit)
+                setattr(player, what_to_edit, new_information)
+                return self._dl_wrapper.edit_player_file(player_file)
 
     def load_all_player_short_info(self):
         """loads a list of dictionarys containing only the id, name, handle and team of the player(public information)"""
-        player_file = self._dl_wrapper.load_all_player_info()
+        player_file: list[Player] = self._dl_wrapper.load_all_player_info()
         short_list = []
-        for line in player_file:
-            filtered_player = {"id": line["id"], "name": line["name"], "handle": line["handle"], "team": line["team"]}
+        for players in player_file:
+            filtered_player = {players.id, players.name, players.handle, players.team}
             short_list.append(filtered_player)
         return short_list
     #býr til lista af dicts af id, name og
@@ -161,44 +162,50 @@ class PlayerLL:
             return 1
         
         last_player: Player = player_data[-1]
-        next_useable_id = last_player.id+1
+        next_useable_id = int(last_player.id+1)
         return next_useable_id
     
     # notað til að checka hvort id passar við player sem er ekki í liði
     
-    def check_if_player_id_in_team(self, player: Player, id):
+    def check_if_player_id_in_team(self, id):
         """takes id and check if that player is in a team"""
-        player_list = self._dl_wrapper.load_all_player_info()
-        for row  in player_list:
+        player_list: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in player_list:
             if id == int(player.id):
                 if player.team is None:
                     return False
         return True
 
 
-    def turn_handle_into_id(self, handle: str, player: Player):
+    def take_handle_retrun_id(self, handle: str,):
         """takes handle and returns the players id"""
-        player_list = self._dl_wrapper.load_all_player_info() 
-        for players in player_list:
+        player_list: list[Player] = self._dl_wrapper.load_all_player_info() 
+        for player in player_list:
             if handle == str(player.handle):
                 return int(player.id)
         return False
 
-    def take_id_return_handle(self, id: int, player: Player):
+    def take_id_return_handle(self, id: int):
         """takes an id and returns the players handle"""
-        player_list = self._dl_wrapper.load_all_player_info() 
-        for players in player_list:
+        player_list: list[Player] = self._dl_wrapper.load_all_player_info() 
+        for player in player_list:
             if id == int(player.id):
                 return str(player.handle)
         return False
 
     def load_single_player_info(self, handle, player: Player):
-        player_data = self._dl_wrapper.load_all_player_info
+        player_data: list[Player] = self._dl_wrapper.load_all_player_info
         for player in player_data:
             if player.handle == handle:
                 return player
         return "Player does not exist"
     
+    def take_list_of_players_return_list_of_ids(self, list_of_players):
+        player_id_list = []
+        players_in_list: list[Player] = list_of_players
+        for player in players_in_list:
+            player_id_list.append(int(player.id))
+        return player_id_list
 
 
 
@@ -207,18 +214,3 @@ class PlayerLL:
 
 
 
-
-
-
-
-
-
-        
-
-        
-
-    
-    
-    
-    
-    

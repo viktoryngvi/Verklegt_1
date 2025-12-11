@@ -8,9 +8,9 @@ class TeamLL:
         self._dl_wrapper = dl_wrapper
         self.player_ll = player_ll
 
-    def create_team(self, cap_id: int, team_name: str, players_id: list):
-        last_id = self.player_ll.check_last_id
-        if cap_id > last_id:
+    def create_team(self, team_name: str, cap_id: int, players_id: list):
+        last_id = self.player_ll.get_new_player_id()
+        if cap_id >= last_id:
             return "Captain id does not exist "
         
         check_team_name = self.check_if_team_name_exists(team_name)
@@ -21,7 +21,7 @@ class TeamLL:
             if not self.player_ll.check_if_player_id_in_team(player_id): # check if the id of the player is not in the list of valid id 
                 return "Player's id does not exist" 
             
-        create_team = self.create_team_to_data(cap_id, team_name, players_id)
+        create_team = self.create_team_to_data(team_name, cap_id, players_id)
         return create_team
 
     def create_team_to_data(self, name, captain_id, list_of_player_ids):
@@ -29,14 +29,15 @@ class TeamLL:
         the teams.csv file"""
         teams_file = self._dl_wrapper.view_all_teams()
         captain_handle = self.player_ll.take_id_return_handle(captain_id)
+        id = self.get_last_team_id()
         list_of_player_handles = []
         for player_id in list_of_player_ids:
             player_handle = self.player_ll.take_id_return_handle(player_id)
             list_of_player_handles.append(player_handle)
-        team_model = Team(name, captain_handle, list_of_player_handles)
+        team_model = Team(id, name, captain_handle, list_of_player_handles)
         teams_file.append(team_model)
 
-        if self._dl_wrapper.write_team_into_file(teams_file):
+        if self._dl_wrapper.append_team_into_file(teams_file):
             return "Successfully created Team"
         
         return "Team was not created"
@@ -67,17 +68,17 @@ class TeamLL:
             list_of_team_name_and_captain_name.append({"team_name": team["team_name"], "captain": team["captain"]})
         return list_of_team_name_and_captain_name
 
-    def players_team_none(self, player: Player):
+    def players_team_none(self):
         """opens a file and returns a list of players short info
             that have not yet been assigned to a team"""
         list_of_non_team_players_short_info = []
         all_players = self._dl_wrapper.load_all_player_info()
 
-        for row in all_players:
-            if player.team == None:
-                filtered_player = {player.id, player.name,player.handle}
+        for player in all_players:
+            if player.team == "None":
+                filtered_player = {player.id, player.name, player.handle}
                 list_of_non_team_players_short_info.append(filtered_player)
-
+# VILLLLLLAAAAAAA gefur vitlaust gildi í hvern dálk í hvert skipti
         return list_of_non_team_players_short_info
 
     def view_all_players_in_team(self, team_name, team: Team):
@@ -98,9 +99,9 @@ class TeamLL:
             if team.captain == find_captain_handle:
                 return team
 
-    def check_if_team_name_exists(self, team_name, team: Team):
+    def check_if_team_name_exists(self, team_name):
         """takes a team name and checks if that team name is already in use"""
-        all_teams = self.view_all_teams()
+        all_teams: list[Team] = self.view_all_teams()
         for team in all_teams:
             if team.name == team_name:
                 return True
@@ -125,4 +126,11 @@ class TeamLL:
             
         return "Team does not exist"
     
-
+    def get_last_team_id(self):
+        team_file: list[Team] = self._dl_wrapper.view_all_teams()
+        if not team_file:
+            return 1
+        
+        last_team: Team = team_file[-1]
+        next_useable_id = int(last_team.id+1)
+        return next_useable_id

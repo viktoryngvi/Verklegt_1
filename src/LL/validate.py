@@ -256,7 +256,7 @@ class Validate:
     
     def check_if_handle_in_use(self, handle):
         """checks ef the inputted handle is in use in the player list"""
-        player_list = self._dl_wrapper.load_all_player_info()
+        player_list: list[Player] = self._dl_wrapper.load_all_player_info()
         for player in player_list:
             if handle == player.handle:
                 return True

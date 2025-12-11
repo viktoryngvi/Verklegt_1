@@ -14,24 +14,43 @@ class DLWrapper:
 
     # Player methods
 
+    def load_all_player_info(self):
+        return self.playerio.load_all_player_info()
+
     def create_player(self, player_data :Player_IO):
         """takes all player info and appends that into the player file"""
         return self.playerio.create_player(player_data)
     
-    def load_all_player_info(self):
-        return self.playerio.load_all_player_info()
-
+    def edit_player_file(self, player_data):
+        return self.playerio.edit_player_file(player_data)
     # team methods
-
 
     def view_all_teams(self):
         """returns a list of dictionarys of all teams"""
         return self.teamio.view_all_teams()
     
+    def append_team_into_file(self, team):
+        return self.teamio.append_team_into_file(team)
+    
     def write_team_into_file(self, teams_file):
-        return self.teamio._write_team_into_file
+        return self.teamio.write_team_into_file(teams_file)
+    # er ekki tengt!!!!!!!!!!!!!!!!
+
+
+    
+
+    # tournament methods
+
+    def read_tournament_file(self):
+        return self.tournamentio.read_tournament_file()
+    
+    def write_into_file(self, tournament_data):
+        return self.tournamentio.write_into_file(tournament_data)
+
+
 
     # event blueprint methods:
+
     def read_public_file_as_list_of_dict(self):
         return self.event_blueprintio.read_public_file_as_list_of_dict()
     
@@ -56,26 +75,15 @@ class DLWrapper:
     def write_into_results(self, results_file):
         return self.event_blueprintio.write_into_results(results_file)
     
-    # tournament methods
 
-    def read_tournament_file(self):
-        return self.tournamentio.read_tournament_file()
     
-    def write_into_file(self, tournament_data):
-        return self.tournamentio.write_into_file(tournament_data)
+    # Event methods:
 
-    # def create_tournament(self, tournament: Tournament_IO):
-    #     return self.tournamentio.create_tournament(tournament)
+    def create_event(self, event: Event_IO):
+        pass
     
-    # def put_event_into_tournament(self, torunament_name, event_name):
-    #     return self.tournamentio.put_event_into_tournament(torunament_name, event_name)
-    
-    # def view_tournaments(self):
-    #     return self.tournamentio.view_tournaments()
-    
-    # def view_events_in_tournaments(self, tournament_name):
-    #     return self.tournamentio.view_events_in_tournament(tournament_name)
-    
+
+
     # club methods:
 
     def register_club(self, club: Club_IO):
@@ -93,7 +101,3 @@ class DLWrapper:
     def check_if_club_name_in_use(self, club_name):
         return self.clubio.check_if_club_name_in_use(club_name)
     
-    # Event methods:
-
-    def create_event(self, event: Event_IO):
-        pass
