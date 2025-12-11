@@ -200,6 +200,22 @@ class PlayerLL:
                 return player
         return "Player does not exist"
     
+    def take_list_of_players_return_list_of_ids(self, list_of_handles_players):
+        player_id_list = []
+
+        players_in_list: list[Player] = list_of_handles_players
+        for player in players_in_list:
+            
+            player_id_list.append(int(player.id))
+        return player_id_list
+
+    def place_player_into_team(self, team_name, player_id):
+        player_data: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in player_data:
+            if player.id == player_id:
+                player.team = team_name
+                self._dl_wrapper.edit_player_file(player_data)
+        return True
     def take_str_of_players_return_list_of_ids(self, str_of_players: str):
         player_id_list = []
         for player in str_of_players.split(","):
