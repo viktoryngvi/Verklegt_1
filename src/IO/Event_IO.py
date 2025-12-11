@@ -2,7 +2,7 @@ from csv import DictReader
 from models.match import Match
 from models.event_blueprint import Event_blueprint
 
-class Event_(Match, Event_blueprint):
+class Event_IO(Match, Event_blueprint):
     def __init__(self):
         self.blueprint_file = "data/event_blueprint.csv"
         self.match_file = "data/match.csv"
@@ -28,7 +28,7 @@ class Event_(Match, Event_blueprint):
         return event_list
 
 
-    def append_into_blueprint_file(self, event_blueprint: Event_blueprint):
+    def append_team_into_blueprint(self, event_blueprint: Event_blueprint):
         with open(self.blueprint_file, "a", encoding="utf-8") as blueprint_file:
             blueprint_file.write(
                 f'{event_blueprint.id},'
@@ -42,8 +42,7 @@ class Event_(Match, Event_blueprint):
         return "Match has been added to file"
 
 
-
-    def load_knockout_file(self):
+    def load_match_file(self):
         knockout_list = []
         with open(self.match_file, "r", encoding="utf-8") as match_file:
             headers = match_file.readline().split(",")

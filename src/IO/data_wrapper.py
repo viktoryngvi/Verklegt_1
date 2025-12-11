@@ -3,6 +3,8 @@ from IO.Teams_IO import Team_IO
 from IO.Event_IO import Event_IO
 from IO.Tournament_IO import Tournament_IO
 from IO.Club_IO import Club_IO
+from models.event_blueprint import Event_blueprint
+from models.match import Match
 
 class DLWrapper:
     def __init__(self):
@@ -11,6 +13,8 @@ class DLWrapper:
         self.event_blueprintio = Event_IO()
         self.tournamentio = Tournament_IO()
         self.clubio = Club_IO()
+        self.match = Match()
+        self.event_blueprint = Event_blueprint()
 
     # Player methods
 
@@ -36,9 +40,8 @@ class DLWrapper:
         return self.teamio.write_team_into_file(teams_file)
     # er ekki tengt!!!!!!!!!!!!!!!!
 
-
     
-
+    
     # tournament methods
 
     def read_tournament_file(self):
@@ -49,41 +52,31 @@ class DLWrapper:
 
 
 
-    # event blueprint methods:
+   # Event methods:
 
-    def read_public_file_as_list_of_dict(self):
-        return self.event_blueprintio.read_public_file_as_list_of_dict()
+    def load_event_blueprint(self):
+        return self.event_blueprintio.load_event_blueprint()
     
-    def read_knockout_as_list_of_dict(self):
-        return self.event_blueprintio.read_knockout_as_list_of_dict
+    def append_team_into_blueprint(self, event_blueprint: Event_blueprint):
+        return self.event_blueprintio.append_team_into_blueprint(event_blueprint)
     
-    def read_last_team_standing_as_list_of_dict(self):
-        return self.event_blueprintio.read_knockout_as_list_of_dict
+    def load_match_file(self):
+        return self.event_blueprintio.load_match_file()
     
-    def write_into_event_blueprint(self, event_data):
-        return self.event_blueprintio.write_into_event_blueprint(event_data)
-
-    def move_to_knockout(self, public_data):
-        return self.event_blueprintio.move_to_knockout(public_data)
-        
-    def move_to_last_team_standing(self, public_data):
-        return self.event_blueprintio.move_to_last_team_standing(public_data)
-
+    def append_to_match_file(self, match: Match):
+        return self.event_blueprintio.append_to_match_file(match)
+    
+    def edit_match_file(self, matches: list[Match]):
+        return self.event_blueprintio.edit_match_file(matches)
+    
     def read_results_file(self):
-        return self.event_blueprintio.read_results_file
-
-    def write_into_results(self, results_file):
-        return self.event_blueprintio.write_into_results(results_file)
+        return self.event_blueprintio.read_results_file()
     
+    def append_into_results(self, matches_to_append: list[Match]):
+        return self.event_blueprintio.append_into_results(matches_to_append)
 
     
-    # Event methods:
-
-    def create_event(self, event: Event_IO):
-        pass
-    
-
-
+ 
     # club methods:
 
     def register_club(self, club: Club_IO):
