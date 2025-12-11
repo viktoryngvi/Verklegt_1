@@ -214,13 +214,14 @@ class Validate:
         """
         Validates the new updated phone number format (8 digits with a dash).
         """
-        if len(phone) != 8:
-            return "Phone number must be in format 123-4567."
-
         if "-" not in phone:
             left = phone[:3]
             right= phone[3:]
             phone = left + "-" + right
+
+        if len(phone) != 8:
+            return "Phone number must be in format 123-4567."
+
 
         
         left, right = phone.split("-")
