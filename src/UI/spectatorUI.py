@@ -1,6 +1,7 @@
 from UI.input_helper import (
     clear_screen,
     choose_from_list,
+    get_non_empty_input
 )
 
 class SpectatorUI:
@@ -15,9 +16,8 @@ class SpectatorUI:
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  Browse Tournament Information: ")
         self.menu_ui.print_box_line("  [1] View schedule")
-        self.menu_ui.print_box_line("  [2] View teams")
-        self.menu_ui.print_box_line("  [3] View players")
-        self.menu_ui.print_box_line("  [4] View clubs")
+        self.menu_ui.print_box_line("  [2] View teams and players")
+        self.menu_ui.print_box_line("  [3] View clubs")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  [B] Back to main menu")
         self.menu_ui.print_box_line()
@@ -38,9 +38,6 @@ class SpectatorUI:
             self.view_teams_and_players(); 
             return "SPECTATOR_MENU"
         if choice == "3": 
-            self.view_teams_and_players(); 
-            return "SPECTATOR_MENU"
-        if choice == "4": 
             self.view_clubs(); 
             return "SPECTATOR_MENU"
         if choice == "b": 
@@ -83,72 +80,75 @@ class SpectatorUI:
                 print(f" - {match}")
         input("Press Enter to continue...")
         return
-        
+
+
+    # Id, Name, Handle, Team PUBLIC INFO    
     def view_teams_and_players(self): 
         self.menu_ui.print_header("VIEW TEAMS AND PLAYERS")
-
-    
         self.menu_ui.print_box_top()
-        self.menu_ui.print_box_line(" Select what you want to view: ")
-        self.menu_ui.print_box_line()
-        self.menu_ui.print_box_line("\t-  [1] View all teams")
-        self.menu_ui.print_box_line("\t-  [2] View all players")
-        self.menu_ui.print_box_line()
-        self.menu_ui.print_box_line("\t-  [B] Back to Spectator Menu")
+        self.menu_ui.print_box_line(" Select a team to view: ")
+        teams = self.ll.view_all_teams()
+        for team in teams:
+            self.menu_ui.print_box_line(f" - {team.name} (Captain: {team.captain}) ")
         self.menu_ui.print_box_bottom()
 
-        choice = input(" ➤ Select an option: ").lower()
+        self.menu_ui.print_box_top()
+        team_name = get_non_empty_input(" Enter team name: ").strip()
+        self.menu_ui.print_box_bottom()
+        team_players = self.ll.get_players_in_team(team_name)
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(f" Players in team {team_name}: ")
+        if team_players:
+            for player in team_players:
+                self.menu_ui.print_box_line(f" - Id: {player.id}")
+                self.menu_ui.print_box_line(f"   Name: {player.name}")
+                self.menu_ui.print_box_line(f"   Handle: {player.handle}")
+                self.menu_ui.print_box_line(f"   Team: {player.team}")
 
-        if choice not in ["1", "2", "b"]:
-            print("Invalid choice. Valid options: 1, 2, B")
-            input("Press Enter to continue...")
-            return 
-
-        # view all teams
-        if choice == "1":
-            self.menu_ui.print_header("ALL TEAMS")
-            teams = self.ll.view_all_teams()
-            self.menu_ui.print_box_top()
-            if not teams:
-                self.menu_ui.print_box_line("No teams found.")
-            else:
-                for team in teams:
-                    self.menu_ui.print_box_line(f" - {team}")
-            self.menu_ui.print_box_bottom()
-            input("Press Enter to continue...")
-            return
-
-        # view all players
-        if choice == "2":
-            self.menu_ui.print_header("ALL PLAYERS")
-            players = self.ll.load_all_player_short_info()
-
-            self.menu_ui.print_box_top()
-            if not players:
-                self.menu_ui.print_box_line("No players found.")
-            else:
-                for player in players:
-                    self.menu_ui.print_box_line(f" - {player}")
-            self.menu_ui.print_box_bottom()
-
-            input("Press Enter to continue...")
-            return
-
-        if choice == "b":
-            return
-
+        else:
+            self.menu_ui.print_box_line(" No players found or team does not exist. ")
+        self.menu_ui.print_box_bottom()
+        input("Press Enter to continue...")
+        return
         
 
-        
+    # name, home_town, country, color, teams
     def view_clubs(self): 
         self.menu_ui.print_header("VIEW CLUBS")
-        clubs = self.ll.load_clubs()
         self.menu_ui.print_box_top()
-        if not clubs:
-            self.menu_ui.print_box_line("No clubs found.")
-        else:
-            for club in clubs:
-                self.menu_ui.print_box_line(f" - {club}")
+        self.menu_ui.print_box_line(" List of Clubs: ")
+        clubs = self.ll.load_clubs()
+        for club in clubs:
+            self.menu_ui.print_box_line(f" - {club.name} ")
+        self.menu_ui.print_box_bottom()
+        self.menu_ui.print_box_top()    
+
+        user_input = get_non_empty_input(" Enter club name to view details: ").strip().lower()
+        
+        selected_club = None
+        for club in clubs:
+            if club.name.lower() == user_input:
+                selected_club = club
+                break
+        
+        if not selected_club:
+            print("Club not found.")
+            input("Press Enter to continue...")
+            return
+        
+
+        self.menu_ui.print_box_bottom()
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(f" Club Details for: {selected_club.name} ")
+
+        
+        self.menu_ui.print_box_line(f" - Club Name: {selected_club.name}")
+        self.menu_ui.print_box_line(f"   Home Town: {selected_club.home_town}")
+        self.menu_ui.print_box_line(f"   Country: {selected_club.country}")
+        self.menu_ui.print_box_line(f"   Colors: {', '.join(selected_club.color)}")            
+        team_names = [team.name for team in selected_club.teams]
+        self.menu_ui.print_box_line(f"   Teams: {', '.join(team_names)}")
+        self.menu_ui.print_box_line()
         self.menu_ui.print_box_bottom()
         input("Press Enter to continue...")
         return
