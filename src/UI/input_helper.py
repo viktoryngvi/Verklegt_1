@@ -24,7 +24,7 @@ def get_integer_input(prompt: str) -> int:
     while True:
         value = input(prompt).strip()
         try:
-            return int(value)
+            return value
         except ValueError:
             print("Error: Please enter a number.")
 
