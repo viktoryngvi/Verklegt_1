@@ -130,10 +130,8 @@ class OrganizerUI:
         )
         result = self.ll.create_tournament(result)
 
-        if result:
-            print(("\n" + "Tournament Created!"))
-        else:
-            print(("\n" + "Tournament Could Not Be Created!"))
+
+        print(f"\n {result}")
         # Print whatever LL returns
         # print("\n" + str(result))
         input("Press Enter to continue...")

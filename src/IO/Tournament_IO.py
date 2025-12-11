@@ -42,7 +42,7 @@ class Tournament_IO(Tournament):
                 f'{tournament.contact_phone},'
                 f'\n'
             )
-        return True
+        return "Succefully created tournament"
 
     def edit_tournament_file(self, tournaments: list[Tournament]):
         with open(self.file_path, "w", encoding="utf-8") as tournament_file:
