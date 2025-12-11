@@ -48,8 +48,8 @@ class TeamLL:
     def view_all_teams(self):
         return self._dl_wrapper.view_all_teams()
    
-    def view_all_players_in_team(self, team_name):
-        return self.view_all_players_in_team(team_name)
+    # def view_all_players_in_team(self, team_name):
+    #     return self.view_all_players_in_team(team_name) vonandi this does not affect anything
     
     def change_team_captain(self, find_team, new_captain, team: Team):
         teams_list = self._dl_wrapper.view_all_teams()
