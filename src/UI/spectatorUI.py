@@ -88,6 +88,12 @@ class SpectatorUI:
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select a team to view: ")
         teams = self.ll.view_all_teams()
+        if not teams:
+            self.menu_ui.print_box_line(" No teams found. ")
+            self.menu_ui.print_box_bottom()
+            input("Press Enter to continue...")
+            return
+        
         for team in teams:
             self.menu_ui.print_box_line(f" - {team.name} (Captain: {team.captain}) ")
         self.menu_ui.print_box_bottom()

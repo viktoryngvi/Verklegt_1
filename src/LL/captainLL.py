@@ -2,6 +2,7 @@ from IO.data_wrapper import DLWrapper
 from LL.validate import Validate
 from LL.teamLL import TeamLL
 from models.team import Team
+from models.player import Player
 # viktor setti Team til að prófa
 
 class CaptainLL:
@@ -26,7 +27,16 @@ class CaptainLL:
         if validate_error:
             return validate_error
         
+<<<<<<< HEAD
         updated = self._dl_wrapper(handle, "phone", phone)
+=======
+        list_player: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in list_player:
+            if player.handle == handle:
+                player.phone == phone
+        
+        updated = self._dl_wrapper.edit_player_file(list_player)
+>>>>>>> 9e75e15d5625492e714795c7dc58fc395a9b55ff
         if updated:
             return "Success: Player information updated"
         else:
@@ -40,11 +50,11 @@ class CaptainLL:
             return "Error: Player handle does not exists in this team"
         Handles the business logic for updating an existing player's information.
         """
-        existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        existing_player = self._validate.check_if_handle_in_use(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
         
-        existing_player_team = self._dl_wrapper.check_if_player_handle_in_team(team, handle)
+        existing_player_team = self._team.check_if_player_handle_in_team(team, handle)
         if not existing_player_team:
             return "Error: Player handle does not exists in this team"
         
@@ -53,7 +63,12 @@ class CaptainLL:
         if validate_error:
             return validate_error
         
-        updated = self._dl_wrapper.edit_player_info(handle, "email", email)
+        list_player: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in list_player:
+            if player.handle == handle:
+                player.email == email
+        
+        updated = self._dl_wrapper.edit_player_file(list_player)
         if updated:
             return "Success: Player information updated"
 
@@ -64,11 +79,11 @@ class CaptainLL:
         """
         Handles the business logic for updating an existing player's information.
         """
-        existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        existing_player = self._validate.check_if_handle_in_use(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
         
-        existing_player_team = self._dl_wrapper.check_if_player_handle_in_team(team, handle)
+        existing_player_team = self._team.check_if_player_handle_in_team(team, handle)
         if not existing_player_team:
             return "Error: Player handle does not exists in this team"
         
@@ -77,7 +92,12 @@ class CaptainLL:
         if validate_error:
             return validate_error
         
-        updated = self._dl_wrapper.edit_player_info(handle, "address", address)
+        list_player: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in list_player:
+            if player.handle == handle:
+                player.address == address
+        
+        updated = self._dl_wrapper.edit_player_file(list_player)
         if updated:
             return "Success: Player information updated"
         else:
@@ -89,20 +109,25 @@ class CaptainLL:
         Handles the business logic for updating an existing player's information.
         """
         # Check if player exists
-        existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        existing_player = self._validate.check_if_handle_in_use(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
         
 
-        existing_player_team = self._dl_wrapper.check_if_player_handle_in_team(team, handle)
+        existing_player_team = self._team.check_if_player_handle_in_team(team, handle)
         if not existing_player_team:
             return "Error: Player handle does not exists in this team"
         
-        existing_new_handle = self._dl_wrapper.check_if_handle_exists_with_handle(handle_str)
+        existing_new_handle = self._validate.check_if_handle_in_use(handle_str)
         if existing_new_handle:
             return "Error: New handle already exists"
         
-        updated = self._dl_wrapper.edit_player_info(handle, "handle", handle_str)
+        list_player: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in list_player:
+            if player.handle == handle:
+                player.phone == handle_str
+        
+        updated = self._dl_wrapper.edit_player_file(list_player)
         if updated:
             return "Success: Player information updated"
         else:
