@@ -152,11 +152,16 @@ class OrganizerUI:
 
 
         # get a list of the tournaments created
-        tournaments = self.ll.get_tournament_list()  
-        for tournament in tournaments:
-            self.menu_ui.print_box_line(f"\t - {tournament} ")
-        pick_tournament = input(" Enter tournament name: ").strip().lower()
-        tournament_name = pick_tournament
+        tournaments = self.ll.get_tournament_list()
+        list_of_tournament_names = [tournament for tournament in tournaments]
+        for i, tournament in enumerate(list_of_tournament_names, start=1):
+            self.menu_ui.print_box_line(f"  [{i}] {tournament}")
+        self.menu_ui.print_box_line()
+        select_tournament = input(" ➤ Select Tournament by number: ")
+        tournament_name = select_tournament
+
+
+        
 
         self.menu_ui.print_box_bottom()
         
