@@ -48,7 +48,7 @@ class Team_IO:
                     f'{team.players_str},'
                     f'\n'
                 )
-        return "team has been edited"   #TODO -------- notum við þetta fall eitthvað???
+        return "team has been edited"
 
 
 
