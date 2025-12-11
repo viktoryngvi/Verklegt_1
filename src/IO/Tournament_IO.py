@@ -19,7 +19,7 @@ class Tournament_IO(Tournament):
                 tournament.tournament_location = str(attributes[2])
                 tournament.start_date = date.fromisoformat(attributes[3])
                 tournament.end_date = date.fromisoformat(attributes[4])
-                tournament.event_list = str(attributes[5])
+                tournament.event_list = list(attributes[5].split(";"))
                 tournament.contact_name = str(attributes[6])
                 tournament.contact_email = str(attributes[7])
                 tournament.contact_phone = str(attributes[8])

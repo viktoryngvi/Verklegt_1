@@ -45,7 +45,7 @@ def get_optional_input(prompt: str) -> str:
     return input(prompt).strip()
 
 # prompt takes the user prompt, and the items is set to a variable list that is called from the LL wrapper
-def choose_from_list(prompt: str, items):
+def choose_from_list(prompt: str, items, allow_multiple=False):
     """Display numbered list and let user choose one item."""
 
     # FIX: If LL returned a string instead of a list
@@ -69,8 +69,23 @@ def choose_from_list(prompt: str, items):
         print(f"  [{i}] {item}")
 
     print("")
-    idx = get_integer_input(prompt) - 1
-    return items[idx]
+    if allow_multiple:
+        raw = input(prompt).strip()
+
+        if raw == "":
+            return None
+
+        selections = []
+        parts = raw.split(",")
+
+        for p in parts:
+            p = p.strip()
+            if p.isdigit():
+                idx = int(p) - 1
+                if 0 <= idx < len(items):
+                    selections.append(items[idx])
+
+        return selections if selections else None
 
 
 def clear_screen():

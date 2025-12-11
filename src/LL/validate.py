@@ -5,6 +5,7 @@ from models.event import Event
 from models.team import Team
 from IO.data_wrapper import DLWrapper
 from models.tournament import Tournament
+from models.match import Match
 
 
 class Validate:  
@@ -338,8 +339,8 @@ class Validate:
         errors_list = []
 
         club_country = self.validate_club_country(club.country)
-        club_home_town = self.validate_club_home_town(club_home_town)
-        club_color = self.validate_club_color(club_color)
+        club_home_town = self.validate_club_home_town(club.home_town)
+        club_color = self.validate_club_color(club.color)
         club_teams = self.validate_club_teams(club.teams)
 
         if club_country is not True:
@@ -648,3 +649,6 @@ class Validate:
 
         return True
     
+    def check_first_win(self, match : Match):
+        match_file: list[Match] = self._dl_wrapper.load_match_file()
+        match_file[-1]

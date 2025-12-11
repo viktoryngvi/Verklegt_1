@@ -10,6 +10,7 @@ from models.tournament import Tournament
 from models.event import Event
 from LL.eventLL import EventLL
 from models.team import Team
+from models.club import Club
 
 class OrganizerUI:
     def __init__(self, ll: Any, menu_ui: Any):
@@ -198,7 +199,7 @@ class OrganizerUI:
         # select event
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select an event to register teams for: ")
-        events = self.ll.get_events_in_tournament(tournament)
+        events = self.ll.get_events_in_tournament(tournament_name)
         event_name = choose_from_list("Select event:", events)
         self.menu_ui.print_box_bottom()
 
@@ -495,22 +496,28 @@ class OrganizerUI:
 
         # Select teams to add to this club
         self.menu_ui.print_box_top()
-        all_teams = self.ll.get_team_list()   
+        all_teams = self.ll.view_all_teams()   
+        listi = []
+        all: Team
+        for all in all_teams:
+            listi.append(all.name)
         selected_teams = choose_from_list(
             "Select teams to add (comma separated for multiple): ",
-            all_teams,
+            listi,
             allow_multiple=True
         )
         self.menu_ui.print_box_bottom()
 
         # Send to ll
-        result = self.ll.register_club(
+        result = Club(
             club_name,
             club_home_town,
             club_country,
             club_colors,
             selected_teams
         )
+
+        result = self.ll.create_club(result)
 
         print(result)
         input("Press Enter to continue...")
