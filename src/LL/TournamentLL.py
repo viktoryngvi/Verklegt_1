@@ -38,7 +38,7 @@ class TournamentLL:
 
 
     def get_events_in_tournament(self, tournament_name):
-        return self.view_events_in_tournament(tournament_name)
+        return self.view_events_in_tournament(self, tournament_name)
 
         #     tournament_file.write(f"{id},{tournament.name},{tournament.location},{tournament.start_date},{tournament.end_date},event_list\n")
         # return "Tournament created!"
@@ -84,3 +84,6 @@ class TournamentLL:
             next_useable_id = int(tournament_data[-1].tournament_id)
             next_useable_id += 1
         return next_useable_id
+    
+
+ 

@@ -56,4 +56,4 @@ class Player_IO(Player):
                     f'{player.team},'
                     f'\n'
                 )
-        return "Player has been edited"
+        return True

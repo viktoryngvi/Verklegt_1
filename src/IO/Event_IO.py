@@ -1,8 +1,8 @@
 from csv import DictReader
 from models.match import Match
-from models.event_blueprint import Event_blueprint
+from models.event import Event
 
-class Event_IO(Match, Event_blueprint):
+class Event_IO(Match, Event):
     def __init__(self):
         self.blueprint_file = "data/event_blueprint.csv"
         self.match_file = "data/match.csv"
@@ -11,17 +11,17 @@ class Event_IO(Match, Event_blueprint):
 
 
 
-    def create_empty_event(self, event_blueprint: Event_blueprint):
+    def create_empty_event(self, event: Event):
         with open(self.blueprint_file, "w", encoding="utf-8") as blueprint_file:
-            blueprint_file.write("id,team_name,event_name,event_type,tournment_name,start_date,end_date")
-            for id in range(16):
-                blueprint_file.write(
-                f'{event_blueprint.id},'
-                f'{event_blueprint.event_type},'
-                f'{event_blueprint.tournament_name},'
-                f'{event_blueprint.start_date},'
-                f'{event_blueprint.end_date},'
-                f'{event_blueprint.team_name},'
+            blueprint_file.write("event_name,event_type,tournment_name,start_date,end_date,team_name,id\n")
+            blueprint_file.write(
+                f'{event.event_name},'
+                f'{event.event_type},'
+                f'{event.tournament_name},'
+                f'{event.start_date},'
+                f'{event.end_date},'
+                f'{event.team_name},'
+                f'{event.event_id},'
                 f'\n'
                 )
         return "Empty event created"
@@ -32,22 +32,23 @@ class Event_IO(Match, Event_blueprint):
             headers = blueprint_file.readline().split(",")
             for row in blueprint_file:
                 attributes = row.split(",")
-                blueprint = Event_blueprint()
-                blueprint.id = str(attributes[0])
-                blueprint.event_type = str(attributes[1])
-                blueprint.tournament_name = str(attributes[2])
-                blueprint.start_date = str(attributes[3])
-                blueprint.end_date = int(attributes[4])
-                blueprint.team_name = int(attributes[5])
-                event_list.append(blueprint)
+                event = Event()
+                event.event_name = str(attributes[0])
+                event.event_type = str(attributes[1])
+                event.tournament_name = str(attributes[2])
+                event.start_date = str(attributes[3])
+                event.end_date = str(attributes[4])
+                event.team_name = str(attributes[5])
+                event.event_id = int(attributes[6])
+                event_list.append(event)
         return event_list
 
-    def append_team_into_blueprint(self, team_data: list[Event_blueprint]):
+    def append_team_into_blueprint(self, team_data: list[Event]):
         with open(self.blueprint_file, "w", encoding="utf-8") as blueprint_file:
             blueprint_file.write("id,team_name,event_name,event_type,tournment_name,start_date,end_date")
             for teams in team_data:
                 blueprint_file.write(
-                f'{teams.id},'
+                f'{teams.event_id},'
                 f'{teams.event_type},'
                 f'{teams.tournament_name},'
                 f'{teams.start_date},'

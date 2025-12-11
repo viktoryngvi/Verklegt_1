@@ -2,9 +2,8 @@ from datetime import datetime,date
 from models.player import Player
 from models.club import Club
 from models.event import Event
+from models.team import Team
 from IO.data_wrapper import DLWrapper
-from models.club import Club
-from models.event import Event
 from models.tournament import Tournament
 
 
@@ -306,7 +305,7 @@ class Validate:
         """checks ef the inputted handle is in use in the player list"""
         player_list: list[Player] = self._dl_wrapper.load_all_player_info()
         for player in player_list:
-            if handle == player.handle:
+            if player.handle == handle:
                 return True
         return False
     
@@ -334,7 +333,6 @@ class Validate:
         # ----------------------------------------------------------------------
     # VALIDATE CLUB
     # ----------------------------------------------------------------------
-
 
     def validate_club(self, club: Club):
         errors_list = []
@@ -377,6 +375,7 @@ class Validate:
         pass
 
 
+    # CHECKS AND VALIpper)DATION METHODS FOR EVENT
     # ----------------------------------------------------------------------
     # CHECKS AND VALIDATION METHODS FOR EVENT
     # ----------------------------------------------------------------------
@@ -389,6 +388,7 @@ class Validate:
         event_name = self.check_event_name(event.event_name)
         event_start = self.check_start_date_event(event.start_date, event.tournament_name)
         event_end = self.check_end_date_event(event.end_date, event.tournament_name)
+        event_id = self.get_next_event_id()
 
         if event_name is not True:
             errors_list.append(f"Name: {event_name}")
@@ -403,6 +403,20 @@ class Validate:
             return errors_list
 
         return None
+    
+
+    # ----------------------------------------------------------------------
+    # get next match id
+    # ----------------------------------------------------------------------
+
+    def get_next_event_id(self):
+        """checks the last match and returns the next usable id"""
+        event_data: list[Event] = self._dl_wrapper.load_event_blueprint()
+        if not event_data:
+            return 1
+        last_match: Event = event_data[-1]
+        next_useable_id = int(last_match.event_id + 1)
+        return next_useable_id
     
     # ----------------------------------------------------------------------
     # VALIDATE EVENT NAME
@@ -434,10 +448,13 @@ class Validate:
         except ValueError:
             return "Event must be in YYYY-MM-DD format."
                 
-        start_tournament = self._dl_wrapper.start_date_tournament(tournament_name)
+        start_tournament = self.view_start_date_of_tournament(tournament_name)
 
-        if start_date_event.date() < start_tournament.date():
-            return f"Event cannot start before the tournament start date ({self.start_tournament})."
+        if isinstance(start_tournament, str):
+            return start_tournament
+
+        if start_date_event.date() < start_tournament:
+            return f"Event cannot start before the tournament start date ({start_tournament})."
 
         return True
 
@@ -451,17 +468,53 @@ class Validate:
         except ValueError:
             return "Event must be in YYYY-MM-DD format."
 
-        end_tournament: datetime = self._dl_wrapper.end_date_tournament(tournament_name)
+        end_tournament = self.view_end_date_of_tournament(tournament_name)
 
-        if end_date_event.date() > end_tournament.date():
+        if isinstance(end_tournament, str):
+            return end_tournament
+
+        if end_date_event.date() > end_tournament:
             return f"Event cannot end after the tournament end date ({end_tournament})."
 
         return True
+    
+    def view_start_date_of_tournament(self, tournament_name):
+        tournament_list: list[Tournament] = self._dl_wrapper.read_tournament_file()
+        for tournament in tournament_list:
+            if tournament.tournament_name == tournament_name:
+                return tournament.start_date
+            
+        return "Tournament not found"
+    
+    def view_end_date_of_tournament(self, tournament_name):
+        tournament_list: list[Tournament] = self._dl_wrapper.read_tournament_file()
+        for tournament in tournament_list:
+            if tournament.tournament_name == tournament_name:
+                return tournament.end_date
+            
+        return "Tournament not found"
 
+
+    def check_event_name(self, event_name: str):
+        if not event_name or not event_name.strip():
+            return "Event name cannot be empty."
+
+        if not event_name[0].isupper():
+            event_name = event_name.capitalize()
+                  
+
+        if not event_name.isalpha():
+            return "Event name must contain only letters"
         # ----------------------------------------------------------------------
     # VALIDATE REGISTERED TEAMS
     # ----------------------------------------------------------------------
         
+        if len(event_name) > 20:
+            return "Event name is too long (max 20 characters)."
+        
+        return True 
+
+ 
     def check_registered_teams(self, event : Event):
         return True
             # ----------------------------------------------------------------------

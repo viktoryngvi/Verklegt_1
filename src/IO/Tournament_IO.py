@@ -17,15 +17,15 @@ class Tournament_IO(Tournament):
                 tournament.tournament_id = (attributes[0])
                 tournament.tournament_name = str(attributes[1])
                 tournament.tournament_location = str(attributes[2])
-                tournament.start_date = str(attributes[3])
-                tournament.end_date = str(attributes[4])
+                tournament.start_date = date.fromisoformat(attributes[3])
+                tournament.end_date = date.fromisoformat(attributes[4])
                 tournament.event_list = str(attributes[5])
                 tournament.contact_name = str(attributes[6])
                 tournament.contact_email = str(attributes[7])
                 tournament.contact_phone = str(attributes[8])
 
                 tournament_list.append(tournament)
-            return tournament_list
+        return tournament_list
 
     def write_into_file(self, tournament: Tournament):
         with open(self.file_path, "a", encoding="utf-8") as new_tournament_data:
@@ -34,8 +34,8 @@ class Tournament_IO(Tournament):
                 f'{tournament.tournament_id},'
                 f'{tournament.tournament_name},'
                 f'{tournament.tournament_location},'
-                f'{tournament.start_date},'
-                f'{tournament.end_date},'
+                f'{(tournament.start_date)},'
+                f'{(tournament.end_date)},'
                 f'{tournament.event_list},'
                 f'{tournament.contact_name},'
                 f'{tournament.contact_email},'
@@ -52,8 +52,8 @@ class Tournament_IO(Tournament):
                     f'{tournament.tournament_id},'
                     f'{tournament.tournament_name},'
                     f'{tournament.tournament_location},'
-                    f'{tournament.start_date},'
-                    f'{tournament.end_date},'
+                    f'{date.isoformat(tournament.start_date)},'
+                    f'{date.isoformat(tournament.end_date)},'
                     f'{tournament.event_list},'
                     f'{tournament.contact_name},'
                     f'{tournament.contact_email},'

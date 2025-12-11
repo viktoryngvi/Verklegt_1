@@ -9,6 +9,7 @@ from UI.input_helper import (
 from models.tournament import Tournament
 from models.event import Event
 from LL.eventLL import EventLL
+from models.team import Team
 
 class OrganizerUI:
     def __init__(self, ll: Any, menu_ui: Any):
@@ -41,7 +42,8 @@ class OrganizerUI:
         self.menu_ui.print_box_line("  [8] View schedule ")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  Club Management: ")
-        self.menu_ui.print_box_line("  [9] Create club ")
+        self.menu_ui.print_box_line("  [9] Create team ")
+        self.menu_ui.print_box_line("  [10] Create club ")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  [B] Back to main menu ")
         self.menu_ui.print_box_line()
@@ -50,8 +52,8 @@ class OrganizerUI:
         
 
         
-        if choice not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "b"]:
-            print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, 6, 7, 8, 9, B")
+        if choice not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "b"]:
+            print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, B")
             input("Press Enter to continue...")
             return self.show_menu()
 
@@ -81,6 +83,9 @@ class OrganizerUI:
             self.view_schedule()
             return "ORGANIZER_MENU"
         if choice == "9":
+            self.create_team()
+            return "ORGANIZER_MENU"
+        if choice == "10":
             self.register_club()
             return "ORGANIZER_MENU"
         if choice == "b":
@@ -172,9 +177,10 @@ class OrganizerUI:
             tournament_name,
             start_date,
             end_date,
-            team_name = None
+            team_name = None,
+            event_id = None
         )
-        results = self.ll.create_event(results)
+        results = self.ll.create_empty_event(results)
         
         print("\n" + str(results))
         input("Press Enter to continue...")
@@ -207,7 +213,7 @@ class OrganizerUI:
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line(" Available Teams: ")
         for i, team in enumerate(teams, start=1):
-            print(f"  [{i}] {team}")
+            print(f"  [{i}] {team.name}")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_bottom()
         
