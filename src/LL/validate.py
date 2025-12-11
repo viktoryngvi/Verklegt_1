@@ -305,7 +305,7 @@ class Validate:
         """checks ef the inputted handle is in use in the player list"""
         player_list: list[Player] = self._dl_wrapper.load_all_player_info()
         for player in player_list:
-            if handle == player.handle:
+            if player.handle == handle:
                 return True
         return False
     
