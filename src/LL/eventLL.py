@@ -3,8 +3,10 @@ from IO.data_wrapper import DLWrapper
 from LL.validate import Validate
 from models.event import Event
 from models.team import Team
+from models.tournament import Tournament
 from datetime import datetime
 import random
+
 
 
 class EventLL:
@@ -25,7 +27,9 @@ class EventLL:
         if validate_errors:
             return validate_errors
         
-        return self._dl_wrapper.create_empty_event(event)
+        if self.write_event_into_tournament(event):
+
+            return self._dl_wrapper.create_empty_event(event)
 
 
 
@@ -41,16 +45,17 @@ class EventLL:
     
 
 
-    def find_next_useable_id(self):
-        """checks the next id that has no team associated with it"""
-        event_file = self._dl_wrapper.read_public_file_as_list_of_dict()
-        for line in event_file:
-            useable_id = int(line["id"])
-            if line["team_name"] == "team":
-                return useable_id
+    # def find_next_useable_id(self):
+    #     """checks the next id that has no team associated with it"""
+    #     event_file = self._dl_wrapper.load_event_blueprint()
+    #     for line in event_file:
+    #         line:  = 
+    #         useable_id = int(line.id
+    #         if line. == "team":
+    #             return useable_id
     
-    def get_server_id(self):
-        return str(uuid.uuid4())
+    # def get_server_id(self):
+    #     return str(uuid.uuid4())
 
 
 # laga þetta
@@ -62,6 +67,15 @@ class EventLL:
     #     return "Event created!"
     
 # #############################################
+
+    def write_event_into_tournament(self, event: Event):
+        tournament_file: list[Tournament] = self._dl_wrapper.read_tournament_file()
+        for tournament in tournament_file:
+            if tournament.tournament_name == event.tournament_name:
+                tournament.event_list.append(event.event_name)
+        return True
+
+
     def write_team_into_empty_event(self, event: Event, team):
         """takes a team name and writes it into the blueprint"""
         event_data = self._dl_wrapper.read_public_file_as_list_of_dict()        
