@@ -176,7 +176,8 @@ class OrganizerUI:
             tournament_name,
             start_date,
             end_date,
-            team_name = None
+            team_name = None,
+            event_id = None
         )
         results = self.ll.create_empty_event(results)
         

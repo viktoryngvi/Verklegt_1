@@ -29,6 +29,7 @@ class TeamLL:
         the teams.csv file"""
         teams_file = self._dl_wrapper.view_all_teams()
         captain_handle = self.player_ll.take_id_return_handle(captain_id)
+        player_handle = self.player_ll.take_id_return_handle(captain_id)
         id = self.get_last_team_id()
         list_of_player_handles = []
         for player_id in list_of_player_ids:
@@ -107,15 +108,17 @@ class TeamLL:
                 return True
         return False
 
-    def check_if_player_handle_in_team(self, find_team, handle, team: Team):
+    def check_if_player_handle_in_team(self, find_team, handle):
         """takes a player handle and checks if that player handle is in the team"""
-        players_in_team = self.view_all_players_in_team(find_team)
+        players_in_team: list[Player] = self.view_all_players_in_team(find_team)
+
         if not players_in_team:
             return "No players in this team"
-        for row in players_in_team:
-            for player in team.players:
-                if handle == player.handle:
-                    return True
+        
+        for player in players_in_team:
+            if player.handle == handle:
+                return True
+            
         return False
     
     def view_captain_team_by_team_name(self, team_name, team: Team):

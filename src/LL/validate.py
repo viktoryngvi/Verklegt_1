@@ -2,9 +2,8 @@ from datetime import datetime,date
 from models.player import Player
 from models.club import Club
 from models.event import Event
+from models.team import Team
 from IO.data_wrapper import DLWrapper
-from models.club import Club
-from models.event import Event
 from models.tournament import Tournament
 
 
@@ -335,7 +334,6 @@ class Validate:
     # VALIDATE CLUB
     # ----------------------------------------------------------------------
 
-
     def validate_club(self, club: Club):
         errors_list = []
 
@@ -386,6 +384,7 @@ class Validate:
         event_name = self.check_event_name(event.event_name)
         event_start = self.check_start_date_event(event.start_date, event.tournament_name)
         event_end = self.check_end_date_event(event.end_date, event.tournament_name)
+        event_id = self.get_next_event_id()
 
         if event_name is not True:
             errors_list.append(f"Name: {event_name}")
@@ -400,6 +399,20 @@ class Validate:
             return errors_list
 
         return None
+    
+
+    # ----------------------------------------------------------------------
+    # get next match id
+    # ----------------------------------------------------------------------
+
+    def get_next_event_id(self):
+        """checks the last match and returns the next usable id"""
+        event_data: list[Event] = self._dl_wrapper.load_event_blueprint()
+        if not event_data:
+            return 1
+        last_match: Event = event_data[-1]
+        next_useable_id = int(last_match.event_id + 1)
+        return next_useable_id
     
     # ----------------------------------------------------------------------
     # VALIDATE EVENT NAME
