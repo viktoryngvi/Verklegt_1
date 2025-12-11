@@ -16,14 +16,13 @@ class Tournament_IO(Tournament):
                 tournament = Tournament()
                 tournament.tournament_id = (attributes[0])
                 tournament.tournament_name = str(attributes[1])
-                tournament.event_list = str(attributes[2])
-                tournament.tournament_location = str(attributes[3])
-                tournament.start_date = str(attributes[4])
-                tournament.end_date = str(attributes[5])
-                tournament.event_list = str(attributes[6])
-                tournament.contact_name = str(attributes[7])
-                tournament.contact_email = str(attributes[8])
-                tournament.contact_phone = str(attributes[9])
+                tournament.tournament_location = str(attributes[2])
+                tournament.start_date = str(attributes[3])
+                tournament.end_date = str(attributes[4])
+                tournament.event_list = str(attributes[5])
+                tournament.contact_name = str(attributes[6])
+                tournament.contact_email = str(attributes[7])
+                tournament.contact_phone = str(attributes[8])
 
                 tournament_list.append(tournament)
             return tournament_list
@@ -34,7 +33,6 @@ class Tournament_IO(Tournament):
             new_tournament_data.write(
                 f'{tournament.tournament_id},'
                 f'{tournament.tournament_name},'
-                f'{tournament.event_list},'
                 f'{tournament.tournament_location},'
                 f'{tournament.start_date},'
                 f'{tournament.end_date},'

@@ -3,10 +3,11 @@ from UI.input_helper import (
     clear_screen,
     choose_from_list
 )
+from LL.logical_wraper import LLWrapper
 
 
 class PlayerUI:
-    def __init__(self, ll, menu_ui):
+    def __init__(self, ll: LLWrapper, menu_ui):
         self.ll = ll
         self.menu_ui = menu_ui
 
@@ -63,17 +64,17 @@ class PlayerUI:
         self.menu_ui.print_box_line(f" Loading profile for handle: {handle} ")
         self.menu_ui.print_box_bottom()
 
-        profile = self.ll.load_player_short_info(handle)
+        profile = self.ll.load_player_by_handle(handle)
         if profile:  
             self.menu_ui.print_box_top()
             self.menu_ui.print_box_line(f" Profile Information for {handle} ")
             self.menu_ui.print_box_line(f" Name   : {profile.name} ")
-            self.menu_ui.print_box_line(f" Phone  : ")
-            self.menu_ui.print_box_line(f" Address: ")
-            self.menu_ui.print_box_line(f" DOB    : ")
-            self.menu_ui.print_box_line(f" Email  : ")
-            self.menu_ui.print_box_line(f" Handle : ")
-            self.menu_ui.print_box_line(f" Team   : ")
+            self.menu_ui.print_box_line(f" Phone  : {profile.phone} ")
+            self.menu_ui.print_box_line(f" Address: {profile.address} ")
+            self.menu_ui.print_box_line(f" DOB    : {profile.dob} ")
+            self.menu_ui.print_box_line(f" Email  : {profile.email} ")
+            self.menu_ui.print_box_line(f" Handle : {profile.handle} ")
+            self.menu_ui.print_box_line(f" Team   : {profile.team if profile.team else 'No team assigned'} ")
             self.menu_ui.print_box_bottom()
         else:
             self.menu_ui.print_box_top()
@@ -157,16 +158,25 @@ class PlayerUI:
         self.menu_ui.print_box_line(" Select a team to view: ")
         teams = self.ll.view_all_teams()
 
-        team_name = choose_from_list("Select Team by number: ", teams)
+        for team in teams:
+            self.menu_ui.print_box_line(f" - {team.name} (Captain: {team.captain}) ")
+        self.menu_ui.print_box_bottom()
 
-        print(f"\nYou selected: {team_name}")
-
-        players_in_team = self.ll.get_players_in_team(team_name)
-        print(f"Players in {team_name}:")
-        for player in players_in_team:
-            print(f" - {player}")
+        team_name = get_non_empty_input(" Enter team name: ").strip()
+        team_players = self.ll.get_players_in_team(team_name)
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(f" Players in team {team_name}: ")
+        if team_players:
+            for player in team_players:
+                self.menu_ui.print_box_line(f" - {player.name} ")
+        else:
+            self.menu_ui.print_box_line(" No players found or team does not exist. ")
+        self.menu_ui.print_box_bottom()
         input("Press Enter to continue...")
-        return
+
+        
+
+        
         
     def view_schedule(self): 
         self.menu_ui.print_header("VIEW TOURNAMENT SCHEDULE")

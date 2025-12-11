@@ -11,6 +11,11 @@ class Event_IO(Match, Event_blueprint):
 
 
 
+    def create_empty_event(self):
+        with open(self.blueprint_file, "w", encoding="utf-8") as blueprint_file:
+            blueprint_file.write("id,team_name,event_name,event_type,tournment_name,start_date,end_date")
+        return "Empty event created"
+
     def load_event_blueprint(self):
         event_list = []
         with open(self.blueprint_file, "r", encoding="utf-8") as blueprint_file:
@@ -126,7 +131,7 @@ class Event_IO(Match, Event_blueprint):
                 match.bracket_nr = int(attributes[5])
                 match.date_of_match = str(attributes[6])
                 match.time_of_match = str(attributes[7])
-                match.teams = list(attributes[8])
+                match.teams = list(attributes[8].split(";"))
                 match.team_a = str(attributes[9])
                 match.team_b = int(attributes[10])
                 match.team_a_score = str(attributes[11])
@@ -138,7 +143,9 @@ class Event_IO(Match, Event_blueprint):
     def append_into_results(self, matches_to_append: list[Match]):
         with open(self.match_file, "a", encoding="utf-8") as results_file:
             for line in matches_to_append:
+                match  = Match()
                 teams_str = ";".join(str(t) for t in match.teams)
+                match = Match()
                 results_file.write(
                         f'{match.tournament_name},'
                         f'{match.event_name},'
@@ -148,7 +155,7 @@ class Event_IO(Match, Event_blueprint):
                         f'{match.bracket_nr},'
                         f'{match.date_of_match},'
                         f'{match.time_of_match},'
-                        f'{match.teams_str},'
+                        f'{teams_str},'
                         f'{match.team_a},'
                         f'{match.team_b},'
                         f'{match.team_a_score},'
