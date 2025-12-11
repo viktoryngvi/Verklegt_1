@@ -21,6 +21,9 @@ class ClubLL:
             return validate_errors
 
         return self.dl_wrapper.register_club(club)
+    
+    def view_club_information(self, club_name: str):
+        return self.dl_wrapper.view_club_information(club_name)
 
 
 

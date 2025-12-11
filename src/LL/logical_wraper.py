@@ -118,6 +118,9 @@ class LLWrapper:
    def create_club(self, club: Club):
       return self.club_ll.create_club(club)
    
+   def view_club_information(self, club_name: str):
+      return self.club_ll.view_club_information(club_name)
+   
    #TOURNAMENT METHODS
 
    def create_tournament(self, tournament: Tournament):
