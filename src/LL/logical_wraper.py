@@ -60,6 +60,9 @@ class LLWrapper:
    def take_list_of_players_return_list_of_ids(self, list_of_players: str):
       return self.player_ll.take_str_of_players_return_list_of_ids(list_of_players)
    
+   def load_player_by_handle(self, handle):
+      return self.player_ll.load_player_by_handle(handle)
+
    #CAPTAIN METHODS
    
    def edit_player_email_captain(self, team: str, handle: str, email: str) -> str: 

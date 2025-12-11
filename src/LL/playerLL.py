@@ -155,6 +155,14 @@ class PlayerLL:
         return short_list
     #býr til lista af dicts af id, name og
 
+    def load_player_by_handle(self, handle):
+        player_list: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in player_list:
+            if player.handle == handle:
+                return player
+            
+        return "Player not found"
+    
     def get_new_player_id(self):
         """checks the last player and returns the id of said player"""
         player_data: list[Player] = self._dl_wrapper.load_all_player_info()
