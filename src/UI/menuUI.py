@@ -17,13 +17,6 @@ class MenuUI:
         print("║ " + text.ljust(self.box_width - 4) + " ║")
 
 
-        
-    
-    
-
-    
-    
-
     
     def print_header(self, title: str):
         clear_screen()
