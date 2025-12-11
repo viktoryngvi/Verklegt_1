@@ -103,7 +103,8 @@ class LLWrapper:
    def get_players_in_team(self, team_name):
       return self.team_ll.view_all_players_in_team(team_name)
    
-
+   def get_team_list(self):
+      return self.team_ll.view_all_teams()
    
    #MATCH METHODS
 
@@ -116,6 +117,9 @@ class LLWrapper:
       return self.club_ll.load_clubs()
    
    def create_club(self, club: Club):
+      return self.club_ll.create_club(club)
+   
+   def register_club(self, club: Club):
       return self.club_ll.create_club(club)
    
    def view_club_information(self, club_name: str):

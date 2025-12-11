@@ -340,8 +340,8 @@ class Validate:
         errors_list = []
 
         club_country = self.validate_club_country(club.country)
-        club_home_town = self.validate_club_home_town(club_home_town)
-        club_color = self.validate_club_color(club_color)
+        club_home_town = self.validate_club_home_town(club.home_town)
+        club_color = self.validate_club_color(club.color)
         club_teams = self.validate_club_teams(club.teams)
 
         if club_country is not True:
@@ -355,6 +355,10 @@ class Validate:
 
         if club_teams is not True:
             errors_list.append(f"Error: {club_teams}")
+        
+        if errors_list:
+            return "\n".join(errors_list)
+        return None
 
 
     def validate_club_country(self, club_country: str):

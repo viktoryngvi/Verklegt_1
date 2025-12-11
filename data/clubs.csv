@@ -1,1 +1,2 @@
-id,club_name,club_home_town,club_country,club_colors,teams
+club_id,club_name,club_home_town,club_country,club_colors,teams
+1,klubbur 8,reykjavik,isl,blue,vikk tor
