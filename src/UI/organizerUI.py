@@ -174,7 +174,7 @@ class OrganizerUI:
             end_date,
             team_name = None
         )
-        results = self.ll.create_event(results)
+        results = self.ll.create_empty_event(results)
         
         print("\n" + str(results))
         input("Press Enter to continue...")

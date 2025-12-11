@@ -5,6 +5,7 @@ from datetime import date
 class Event:
     def __init__(
             self,  
+            id: int = None,
             event_name :str = None, 
             event_type: str = None, 
             tournament_name: str = None,    
@@ -13,6 +14,7 @@ class Event:
             team_name: str = None
         ):
         
+        self.id = id
         self.event_name = event_name
         self.event_type = event_type
         self.tournament_name = tournament_name 
