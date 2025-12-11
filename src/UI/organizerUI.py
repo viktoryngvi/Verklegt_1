@@ -11,6 +11,7 @@ from models.event import Event
 from LL.logical_wraper import LLWrapper
 from models.team import Team
 from models.club import Club
+from models.player import Player
 
 class OrganizerUI:
     def __init__(self, ll: LLWrapper, menu_ui: Any):
@@ -353,33 +354,63 @@ class OrganizerUI:
     def change_team_captain(self):
         self.menu_ui.print_header("CHANGE TEAM CAPTAIN")
         self.menu_ui.print_box_top()
-        self.menu_ui.print_box_line(" Select a team to change its captain: ")
-        self.menu_ui.print_box_line()
-        
-
-        teams = self.ll.view_all_teams()   # get the list of teams from LL
-        team_name = choose_from_list(" Select Team by number: ", teams)      # choose team
+        self.menu_ui.print_box_line(" To change the team captain, please follow the steps below: ")
         self.menu_ui.print_box_bottom()
-
-        # new captain selection
         self.menu_ui.print_box_top()
-        self.menu_ui.print_box_line(f" You selected Team: {team_name} ")
-        current_captain = self.ll.get_team_captain(team_name)       # get current captain from LL
-        self.menu_ui.print_box_line(f" Current captain is {current_captain} ")
+        self.menu_ui.print_box_line(" Select the team you want to change the captain for: ")
         self.menu_ui.print_box_line()
-        self.menu_ui.print_box_line(" Select a new captain: ")
+        # get the list of teams from LL 
+        teams = self.ll.view_all_teams()
+
+        # check if there are any teams
+        if not teams:
+            print("No teams found.")
+            input("Press Enter to continue...")
+            return "CAPTAIN_MENU"
         
-        players = self.ll.view_all_players_in_team(team_name)   # get players in the selected team from LL
-        new_captain_handle = choose_from_list(" Select New Captain by number: ", players)  # choose new captain
+        # let user select a team
+        for team in teams:
+            self.menu_ui.print_box_line(f" - {team.name}")
+        
+        self.menu_ui.print_box_line()
+        select_team = input(" Enter the team name: ").strip()
+        self.menu_ui.print_box_line()
         self.menu_ui.print_box_bottom()
 
-        result = self.ll.change_team_captain(
-            team_name=team_name,
-            new_captain_handle=new_captain_handle,
-        )
-        print("\n" + str(result))   # print LL response
-        input("Press Enter to continue...")
 
+
+        # get players in that team
+        players:list[Player] = self.ll.view_all_players_in_team(select_team)
+        # check if there are any players
+        if not players:
+            print("No players found in this team.")
+            input("Press Enter to continue...")
+            return "CAPTAIN_MENU"
+        
+        
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(f" You selected team: {select_team} ")
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line(" Select the new captain from the team players: ")
+
+
+        # let user select a player to be the new captain
+        for player in players:
+            self.menu_ui.print_box_line(f" - {player.handle}")
+        new_captain_handle = input(" Enter the player handle: ").strip().lower()
+
+        self.menu_ui.print_box_line(f" You selected player: {new_captain_handle} as the new captain. ")
+        self.menu_ui.print_box_bottom()
+        
+        # send to LL to update
+        result = self.ll.update_team_captain(
+            select_team,
+            new_captain_handle
+            )
+        
+        print("")
+        print(result)
+        input("Press Enter to continue...")
 
 
     def view_statistics(self):
