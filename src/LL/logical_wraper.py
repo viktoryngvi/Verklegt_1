@@ -18,14 +18,12 @@ class LLWrapper:
       self.dl_wrapper = DLWrapper()
       self.validate = Validate(self.dl_wrapper)
       self.club_ll = ClubLL(self.dl_wrapper, self.validate)
-      # keep a single canonical TeamLL instance using PlayerLL
       self.player_ll = PlayerLL(self.dl_wrapper, self.validate)
       self.team_ll = TeamLL(self.dl_wrapper, self.player_ll)
       self.captain_ll = CaptainLL(self.dl_wrapper, self.validate, self.team_ll)
       self.tournament_ll = TournamentLL(self.dl_wrapper)
       self.event_ll = EventLL(self.dl_wrapper)
       self.match_ll = MatchLL(self.dl_wrapper)
-      # helpers
       self.get_team_captain_ll = self.captain_ll
       self.load_all_player_ll = self.player_ll
 
