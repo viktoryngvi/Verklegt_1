@@ -321,7 +321,7 @@ class Validate:
     def validate_event(self, event: Event):
         errors_list = []
 
-        event_name = self.check_event_name(event.name)
+        event_name = self.check_event_name(event.event_name)
         event_start = self.check_start_date_event(event.start_date, event.tournament_name)
         event_end = self.check_end_date_event(event.end_date, event.tournament_name)
 

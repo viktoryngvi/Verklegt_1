@@ -123,8 +123,13 @@ class OrganizerUI:
             contact_phone
         )
         result = self.ll.create_tournament(result)
+
+        if result:
+            print(("\n" + "Tournament Created!"))
+        else:
+            print(("\n" + "Tournament Could Not Be Created!"))
         # Print whatever LL returns
-        print("\n" + str(result))
+        # print("\n" + str(result))
         input("Press Enter to continue...")
 
 # event name, game type, start date, end date, teams registered
@@ -161,13 +166,15 @@ class OrganizerUI:
         end_date = get_non_empty_input("\tEnd Date (YYYY-MM-DD): ").strip()
         self.menu_ui.print_box_bottom()
 
-        results = self.ll.create_event(
-            tournament_name,
+        results = Event(
             event_name,
             event_type,
+            tournament_name,
             start_date,
-            end_date
+            end_date,
+            team_name = None
         )
+        results = self.ll.create_event(results)
         
         print("\n" + str(results))
         input("Press Enter to continue...")
