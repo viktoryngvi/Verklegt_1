@@ -157,8 +157,12 @@ class CaptainLL:
         team_list: list[Team] = self._dl_wrapper.view_all_teams()
         for team in team_list:
             if team.name == team_name:
+                team.players.append(team.captain)
                 team.captain = handle
-                    
+                for player_handle in team.players:
+                    if player_handle == handle:
+                        team.players.remove(handle)
+                            
         return self._dl_wrapper.edit_teams_file(team_list)
     
 
