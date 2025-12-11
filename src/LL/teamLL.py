@@ -32,6 +32,7 @@ class TeamLL:
         id = self.get_last_team_id()
         list_of_player_handles = []
         for player_id in list_of_player_ids:
+            self.player_ll.place_player_into_team(name, player_id)
             player_handle = self.player_ll.take_id_return_handle(player_id)
             list_of_player_handles.append(player_handle)
         team_model = Team(id, name, captain_handle, list_of_player_handles)
@@ -134,3 +135,5 @@ class TeamLL:
         last_team: Team = team_file[-1]
         next_useable_id = int(last_team.id+1)
         return next_useable_id
+
+
