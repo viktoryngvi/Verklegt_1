@@ -39,6 +39,11 @@ class TeamLL:
             
         team_model = Team(id, name, captain_handle, list_of_player_handles)
 
+        list_player: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in list_player:
+            if player.handle == player_handle:
+                player.team = name
+
         if self._dl_wrapper.append_team_into_file(team_model):
             return "Successfully created Team"
         
@@ -48,8 +53,8 @@ class TeamLL:
     def view_all_teams(self):
         return self._dl_wrapper.view_all_teams()
    
-    def view_all_players_in_team(self, team_name):
-        return self.view_all_players_in_team(team_name)
+    # def view_all_players_in_team(self, team_name):
+    #     return self.view_all_players_in_team(team_name) vonandi this does not affect anything
     
     def change_team_captain(self, find_team, new_captain, team: Team):
         teams_list = self._dl_wrapper.view_all_teams()
