@@ -42,5 +42,17 @@ class Tournament_IO(Tournament):
             )
         return True
 
-
-   
+    def edit_tournament_file(self, tournaments: list[Tournament]):
+        with open(self.file_path, "w", encoding="utf-8") as tournament_file:
+            tournament_file.write("id,tournament_name,tournament_location,start_date,end_date,event_list\n")
+            for tournament in tournaments:
+                tournament_file.write(
+                    f'{tournament.tournament_id},'
+                    f'{tournament.tournament_name},'
+                    f'{tournament.tournament_location},'
+                    f'{tournament.start_date},'
+                    f'{tournament.end_date},'
+                    f'{tournament.event_list},'
+                    f'\n'
+                )
+        return "tournament has been edited"

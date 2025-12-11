@@ -11,4 +11,4 @@ class Match(Event):
         self.winner = winner
         self.schedule_time = schedule_time
         self.server_id = server_id
-        self.tournament_name = tournament_name  
+        self.tournament_name = tournament_name

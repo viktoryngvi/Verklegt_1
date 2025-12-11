@@ -5,17 +5,6 @@ class Team_IO:
     def __init__(self):
         self.file_path = "data/teams.csv"
 
-    # def view_all_teams(self):
-    #     """checks all teams and their captain and returns a list of dicts of teams""" #TODO
-    #     with open (self.file_path, "r", encoding="utf-8") as teams_file:
-    #         header = teams_file.readline().split(",")
-    #         for row in teams_file:
-    #             attributes = row.split(",")
-    #             team = Team()
-    #             for i in range(len(header)):
-    #                 setattr(Team, header[i], attributes[i])
-
-    #     return teams_file
 
     def view_all_teams(self):
         team_list = []
@@ -43,16 +32,22 @@ class Team_IO:
                     f'{team.captain},'
                     f'{players_str},'
                 )
-        return True
+        return True   
 
 
-    def write_team_into_file(self, teams_file):
-        with open(self.file_path, "w", encoding="utf-8") as teams_file:
-            teams_file.write("team,captain_handle,player_list")
-            for each_dict in teams_file:
-                teams_file.write(",".join(each_dict.values()))
-                teams_file.write("\n")
-        # skrifar það aftur í skránna
-        return True
-    
+    # def edit_teams_file(self, teams: list[Team]):
+    #     with open(self.file_path, "w", encoding="utf-8") as teams_file:
+    #         teams_file.write("id,team,captain_handle,player_list\n")
+    #         for team in teams:
+    #             players_str = ";".join(str(t) for t in team.players)
+    #             teams_file.write(
+    #                 f'{team.id},'
+    #                 f'{team.name},'
+    #                 f'{team.captain},'
+    #                 f'{team.players_str},'
+    #                 f'\n'
+    #             )
+    #     return "team has been edited"   #TODO -------- notum við þetta fall eitthvað???
+
+
 
