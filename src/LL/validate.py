@@ -147,26 +147,36 @@ class Validate:
         """
         Validates the player's Date of Birth (DOB) format and age constraints.
         """
+        # Convert DOB to a date object if it's a string
+        dob = player.dob
 
+        if isinstance(dob, str):
+            dob = dob.strip()  # remove spaces
+            try:
+                dob = datetime.strptime(dob, "%Y-%m-%d").date()
+            except ValueError:
+                return "DOB must be in YYYY-MM-DD format."
 
-        if not isinstance(player.dob,date):
+        elif not isinstance(dob, date):
             return "DOB must be in YYYY-MM-DD format."
 
-        self.today = date.today()
+        today = date.today()
 
-        if player.dob >= self.today:
+        if dob >= today:
             return "DOB cannot be in the future."
 
-        self.age = (self.today - player.dob).days // 365
+        age = (today - dob).days // 365
 
-        if self.age < 5:
+        if age < 5:
             return "Player must be at least 5 years old."
 
-        if self.age > 100:
+        if age > 100:
             return "Player age cannot exceed 100."
 
+        # Save back normalized date
+        player.dob = dob
+
         return True
-    
         # ----------------------------------------------------------------------
     # VALIDATE PLAYER NAME
     # ----------------------------------------------------------------------
@@ -214,13 +224,14 @@ class Validate:
         """
         Validates the new updated phone number format (8 digits with a dash).
         """
-        if len(phone) != 8:
-            return "Phone number must be in format 123-4567."
-
         if "-" not in phone:
             left = phone[:3]
             right= phone[3:]
             phone = left + "-" + right
+
+        if len(phone) != 8:
+            return "Phone number must be in format 123-4567."
+
 
         
         left, right = phone.split("-")

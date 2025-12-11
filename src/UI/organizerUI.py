@@ -1,7 +1,7 @@
 from typing import Any, Optional, Dict, Tuple
 from UI.input_helper import (
     get_non_empty_input,
-    get_integer_input,
+    #get_integer_input,
     get_choice_input,
     choose_from_list,
     clear_screen,
