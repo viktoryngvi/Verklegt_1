@@ -439,34 +439,40 @@ class OrganizerUI:
         input("Press Enter to continue...")
         return
 
-        
-
     
     def create_team(self):
         self.menu_ui.print_header("CREATE TEAM")
-
-        # captain handle
-        self.menu_ui.print_box_top()
-        captain_handle = input("\tCaptain Handle: ").strip().lower()
-        self.menu_ui.print_box_bottom()
 
         # team name
         self.menu_ui.print_box_top()
         team_name = input("\tTeam Name: ").strip()
         self.menu_ui.print_box_bottom()
 
-        # select players
+        # captain handle
         self.menu_ui.print_box_top()
-        all_players = self.ll.load_player_short_info()    
-        selected_players = choose_from_list(
-            "Select players (comma separated): ",
-            all_players,
-            allow_multiple=True
-        )
+        captain_handle = input("\tCaptain Handle: ").strip().lower()
         self.menu_ui.print_box_bottom()
 
+        # select players
+        self.menu_ui.print_box_top()
+        # need list of all players without a team
+        all_players = self.ll.players_team_none()  
+
+        # select players for the team  
+        print(" Select players: ")
+        
+        for player in all_players:
+            player_id, name, handle = player
+            print(f" - [{player_id}] {name} ({handle})")
+        selected_players = input("\tEnter player id's separated by commas: ").strip().lower()
+
+    
+        self.menu_ui.print_box_bottom()
+        
+        cap_id = self.ll.take_handle_return_id(captain_handle)
         # send to ll to create team
-        result = self.ll.create_team(team_name, captain_handle, selected_players)
+        player_ids = self.ll.take_list_of_players_return_list_of_ids(selected_players)
+        result = self.ll.create_team(team_name, cap_id, player_ids)
 
         print(result)
         input("Press Enter to continue...")
