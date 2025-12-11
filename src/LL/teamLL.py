@@ -35,10 +35,10 @@ class TeamLL:
             self.player_ll.place_player_into_team(name, player_id)
             player_handle = self.player_ll.take_id_return_handle(player_id)
             list_of_player_handles.append(player_handle)
+            
         team_model = Team(id, name, captain_handle, list_of_player_handles)
-        teams_file.append(team_model)
 
-        if self._dl_wrapper.append_team_into_file(teams_file):
+        if self._dl_wrapper.append_team_into_file(team_model):
             return "Successfully created Team"
         
         return "Team was not created"
