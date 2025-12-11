@@ -5,6 +5,7 @@ from UI.input_helper import (
     get_choice_input,
     choose_from_list,
     clear_screen,
+    get_integer_input
 )
 from models.tournament import Tournament
 from models.event import Event
@@ -152,7 +153,11 @@ class OrganizerUI:
 
         # get a list of the tournaments created
         tournaments = self.ll.get_tournament_list()  
-        tournament_name = choose_from_list(" Select Tournament by number: ", tournaments)
+        for tournament in tournaments:
+            self.menu_ui.print_box_line(f"\t - {tournament} ")
+        pick_tournament = input(" Enter tournament name: ").strip().lower()
+        tournament_name = pick_tournament
+
         self.menu_ui.print_box_bottom()
         
         self.menu_ui.print_box_top()
