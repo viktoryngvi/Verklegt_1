@@ -74,7 +74,7 @@ class TeamLL:
         """opens a file and returns a list of players short info
             that have not yet been assigned to a team"""
         list_of_non_team_players_short_info = []
-        all_players = self._dl_wrapper.load_all_player_info()
+        all_players: list[Player] = self._dl_wrapper.load_all_player_info()
 
         for player in all_players:
             if player.team == "None":
