@@ -1,5 +1,6 @@
 from datetime import date
 from models.player import Player
+from LL.logical_wraper import LLWrapper
 from UI.input_helper import (
     get_non_empty_input,
     get_integer_input,
@@ -10,7 +11,7 @@ from UI.input_helper import (
 )
 
 class CaptainUI:
-    def __init__(self, ll_wrapper, menu_ui):
+    def __init__(self, ll_wrapper: LLWrapper, menu_ui):
         self.ll = ll_wrapper
         self.menu_ui = menu_ui
 
@@ -327,7 +328,7 @@ class CaptainUI:
         selected_players = choose_from_list(
             "Select players (comma separated): ",
             all_players,
-            allow_multiple=True
+            # allow_multiple=True
         )
         ######hvað gerir allow_multiple???????????
         self.menu_ui.print_box_bottom()

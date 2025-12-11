@@ -76,7 +76,7 @@ class TeamLL:
 
         for player in all_players:
             if player.team == "None":
-                filtered_player = {player.id, player.name, player.handle}
+                filtered_player = [player.id, player.name, player.handle]
                 list_of_non_team_players_short_info.append(filtered_player)
 # VILLLLLLAAAAAAA gefur vitlaust gildi í hvern dálk í hvert skipti
         return list_of_non_team_players_short_info

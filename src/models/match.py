@@ -1,20 +1,36 @@
 from models.team import Team
-from models.event import Event
 
-class Match(Event):
-    def __init__(self, id: int = None, teams: list[Team] = None, result_score: str = None, winner: Team = None,
-                 schedule_time: str = "" , server_id: str = "",tournament_name: str = None, event_name: str = None ):
-        self.id = id
-        self.teams = teams
-        self.result_score = result_score
-        self.winner = winner
-        self.schedule_time = schedule_time
-        self.server_id = server_id
+class Match():
+    def __init__(
+            self,
+            tournament_name: str = None, 
+            event_name: str = None ,
+            game_type: str = None,
+            server_id: str = None,
+            match_id: str = None,
+            bracket_nr: int = None,
+            date_of_match: str = None,
+            time_of_match: str = None,
+            teams: list[Team] = None,
+            team_a: Team = None,
+            team_b: Team = None,
+            team_a_score: int = None,
+            team_b_score: int = None,
+            winner: Team = None
+
+        ):
+
         self.tournament_name = tournament_name
         self.event_name = event_name
-
-
-        # TODO skrifa þetta inn í event modelið
-        # tournament,event_name,game_type,server_id,
-        # match_id,date_of_match,time_of_match,team_a,team_b,
-        # team_a_score,team_b_score,winner,match_result
+        self.game_type = game_type
+        self.server_id = server_id
+        self.match_id = match_id
+        self.bracket_nr = bracket_nr
+        self.date_of_match = date_of_match
+        self.time_of_match = time_of_match
+        self.team_a = team_a
+        self.team_b = team_b
+        self.team_a_score = team_a_score
+        self.team_b_score = team_b_score
+        self.teams = teams
+        self.winner = winner
