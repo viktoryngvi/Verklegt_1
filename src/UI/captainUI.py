@@ -332,7 +332,7 @@ class CaptainUI:
         for player in all_players:
             player_id, name, handle = player
             print(f" - [{player_id}] {name} ({handle})")
-        selected_players = input("\tEnter player handles separated by commas: ").strip().lower()
+        selected_players = input("\tEnter player id's separated by commas: ").strip().lower()
 
     
         self.menu_ui.print_box_bottom()

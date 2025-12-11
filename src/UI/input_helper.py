@@ -45,10 +45,29 @@ def get_optional_input(prompt: str) -> str:
     return input(prompt).strip()
 
 # prompt takes the user prompt, and the items is set to a variable list that is called from the LL wrapper
-def choose_from_list(prompt: str, items: list):
+def choose_from_list(prompt: str, items):
     """Display numbered list and let user choose one item."""
+
+    # FIX: If LL returned a string instead of a list
+    if isinstance(items, str):
+        # If the string literally means " none / empty "
+        if items.strip().lower() in ["none", "null", ""]:
+            print("No items available.")
+            input("Press Enter to continue...")
+            return None
+
+        # If it's some other string, wrap in a list so selection works
+        items = [items]
+
+    if not items:  # empty list
+        print("No items available.")
+        input("Press Enter to continue...")
+        return None
+
+    # Now safe to display list
     for i, item in enumerate(items, start=1):
         print(f"  [{i}] {item}")
+
     print("")
     idx = get_integer_input(prompt) - 1
     return items[idx]
