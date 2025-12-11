@@ -10,15 +10,15 @@ class CaptainLL:
         self._validate = validate
         self._team = team
 
-    def edit_player_phone_cap(self, team: str, handle: str, phone: str) -> str:
+    def edit_player_phone_cap(self, team_name: str, handle: str, phone: str) -> str:
         """
         Handles the business logic for updating an existing player's information.
         """
-        existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        existing_player = self._validate.check_if_handle_in_use(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
         
-        existing_player_team = self._dl_wrapper.check_if_player_handle_in_team(team, handle)
+        existing_player_team = self._team.check_if_player_handle_in_team(team_name, handle)
         if not existing_player_team:
             return "Error: Player handle does not exists in this team"
         # Validate the updated data
@@ -26,7 +26,7 @@ class CaptainLL:
         if validate_error:
             return validate_error
         
-        updated = self._dl_wrapper.edit_player_info(handle, "phone", phone)
+        updated = self._dl_wrapper.(handle, "phone", phone)
         if updated:
             return "Success: Player information updated"
         else:

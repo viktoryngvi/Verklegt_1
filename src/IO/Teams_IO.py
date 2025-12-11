@@ -36,19 +36,19 @@ class Team_IO:
         return True   
 
 
-    # def edit_teams_file(self, teams: list[Team]):
-    #     with open(self.file_path, "w", encoding="utf-8") as teams_file:
-    #         teams_file.write("id,team,captain_handle,player_list\n")
-    #         for team in teams:
-    #             players_str = ";".join(str(t) for t in team.players)
-    #             teams_file.write(
-    #                 f'{team.id},'
-    #                 f'{team.name},'
-    #                 f'{team.captain},'
-    #                 f'{team.players_str},'
-    #                 f'\n'
-    #             )
-    #     return "team has been edited"   #TODO -------- notum við þetta fall eitthvað???
+    def edit_teams_file(self, teams: list[Team]):
+        with open(self.file_path, "w", encoding="utf-8") as teams_file:
+            teams_file.write("id,team,captain_handle,player_list\n")
+            for team in teams:
+                players_str = ";".join(str(t) for t in team.players)
+                teams_file.write(
+                    f'{team.id},'
+                    f'{team.name},'
+                    f'{team.captain},'
+                    f'{team.players_str},'
+                    f'\n'
+                )
+        return "team has been edited"   #TODO -------- notum við þetta fall eitthvað???
 
 
 
