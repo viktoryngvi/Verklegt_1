@@ -15,7 +15,7 @@ id,name,phone,address,dob,email,handle,team
 14,Eva Eggertsdóttir,558-5678,Eggvegur 12 Mosfellsbær,2002-08-30,eva.eggerts@example.com,eggdancer,vikk tor,
 15,Davíð Daníelsson,559-6789,Dánarstaðir 7 Hveragerði,2005-02-11,viktoriuei@gmail.com,daviddream,None,
 16,Ragnhildur Race,663-7833,Fizzgata 3 Reykjavik,2005-03-29,ulfar.ub@example.com,UBUnitedUlfar,lið núúúúúmer 3,
-17,Kristján Kris,664-8844,Kristjansgata 4 Hafnarfjörður,2001-10-16,kristjan.kris@example.com,KristalKing,None,
+17,Kristján Kris,664-8844,Kristjansgata 4 Hafnarfjörður,2001-10-16,kristjan.kris@example.com,KristalKing,kristos team,
 18,Sonja Sorter,665-9955,Sortgata 5 Kópavogur,2002-11-09,sonja.sorter@example.com,SortaSonja,None,
 19,Pétur Pointer,666-1122,Pointergata 6 Mosfellsbær,2004-05-13,petur.pointer@example.com,PeterPointer,None,
 20,Úlfur Upload,667-2233,Uploadsvegur 7 Gardabær,2003-09-21,ulfur.upload@example.com,UlfurUp,None,
@@ -23,3 +23,5 @@ id,name,phone,address,dob,email,handle,team
 22,Xenon Xor,669-4455,Xorgata 9 Reykjavik,2002-12-17,xenon.xor@example.com,XenonX,lið núúúúúmer 3,
 23,Yrsa Ylur,670-5566,Ylurgata 10 Akranes,2001-04-25,yrsa.ylur@example.com,YrsaY,vikk tor,
 24,Zhao Zero,671-6677,Zerogata 11 Selfoss,2003-08-19,zhao.zero@example.com,ZhaoZ,None,
+25,Kristofer Kristjan Erlendsson,7872550,fifi 18,2004-12-30,kristo@gmail.com,kristo,None
+,
