@@ -26,6 +26,7 @@ class Player_IO(Player):
 
         return player_list
 
+
     def create_player(self, player: Player):
         with open(self.file_path, "a", encoding="utf-8") as new_player_file:
                 new_player_file.write(
