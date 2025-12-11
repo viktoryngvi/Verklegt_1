@@ -324,15 +324,19 @@ class CaptainUI:
         # select players
         self.menu_ui.print_box_top()
         # need list of all players without a team
-        all_players = self.ll.players_team_none()    
-        selected_players = choose_from_list(
-            "Select players (comma separated): ",
-            all_players,
-            # allow_multiple=True
-        )
-        ######hvað gerir allow_multiple???????????
+        all_players = self.ll.players_team_none()  
+
+        # select players for the team  
+        print(" Select players: ")
+        
+        for player in all_players:
+            player_id, name, handle = player
+            print(f" - [{player_id}] {name} ({handle})")
+        selected_players = input("\tEnter player handles separated by commas: ").strip().lower()
+
+    
         self.menu_ui.print_box_bottom()
-        selected_players2 = selected_players.split(",")
+        
         cap_id = self.ll.take_handle_return_id(captain_handle)
         # send to ll to create team
         player_ids = self.ll.take_list_of_players_return_list_of_ids(selected_players)

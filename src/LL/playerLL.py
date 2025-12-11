@@ -203,8 +203,8 @@ class PlayerLL:
     def take_list_of_players_return_list_of_ids(self, list_of_players):
         player_id_list = []
         players_in_list: list[Player] = list_of_players
-        for player in players_in_list:
-            player_id_list.append(int(player.id))
+        for player in players_in_list.split(","):
+            player_id_list.append(player)
         return player_id_list
 
 
