@@ -216,3 +216,8 @@ class PlayerLL:
                 player.team = team_name
                 self._dl_wrapper.edit_player_file(player_data)
         return True
+    def take_str_of_players_return_list_of_ids(self, str_of_players: str):
+        player_id_list = []
+        for player in str_of_players.split(","):
+            player_id_list.append(int(player))
+        return player_id_list

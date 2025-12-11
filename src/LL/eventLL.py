@@ -3,8 +3,9 @@ from IO.data_wrapper import DLWrapper
 from LL.validate import Validate
 from LL.validate import Validate
 from models.event import Event
+from models.team import Team
 import random
-from csv import DictReader
+
 
 class EventLL:
     def __init__(self, dl_wrapper: DLWrapper):
@@ -152,11 +153,11 @@ class EventLL:
     
 
     def create_first_round(self, event: Event):
-        public_file = self._dl_wrapper.read_public_file_as_list_of_dict()
-    
+        public_file: list[Team] = self._dl_wrapper.view_all_teams()
+
         all_team_list = []
         for team in public_file:
-            all_team_list.append(team["team_name"])
+            all_team_list.append(team.name)
     
         for teamsvs in all_team_list:
             team_a = random.choice(teamsvs)

@@ -145,6 +145,7 @@ class Event_IO(Match, Event_blueprint):
             for line in matches_to_append:
                 match  = Match()
                 teams_str = ";".join(str(t) for t in match.teams)
+                match = Match()
                 results_file.write(
                         f'{match.tournament_name},'
                         f'{match.event_name},'
