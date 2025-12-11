@@ -38,13 +38,22 @@ class Player_IO(Player):
                     f'{player.team},'
                     f'\n'
                 )
-                
-
         return True
 
 
-    # def edit_player_file(self, player_data):
-
-    #     with open("data/test_player_info", "w", encoding="utf-8"):
-            
-    #         for player in player_data
+    def edit_player_file(self, players: list[Player]):
+        with open(self.file_path, "w", encoding="utf-8") as player_file:
+            player_file.write("id,name,phone,address,dob,email,handle,team\n")
+            for player in players:
+                player_file.write(
+                    f'{player.id},'
+                    f'{player.name},'
+                    f'{player.phone},'
+                    f'{player.address},'
+                    f'{date.isoformat(player.dob)},'
+                    f'{player.email},'
+                    f'{player.handle},'
+                    f'{player.team},'
+                    f'\n'
+                )
+        return "Player has been edited"
