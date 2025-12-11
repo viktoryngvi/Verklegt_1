@@ -205,7 +205,6 @@ class PlayerLL:
 
         players_in_list: list[Player] = list_of_handles_players
         for player in players_in_list:
-            
             player_id_list.append(int(player.id))
         return player_id_list
 
