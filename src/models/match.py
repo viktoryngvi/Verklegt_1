@@ -12,3 +12,9 @@ class Match(Event):
         self.schedule_time = schedule_time
         self.server_id = server_id
         self.tournament_name = tournament_name
+
+
+        # TODO skrifa þetta inn í event modelið
+        # tournament,event_name,game_type,server_id,
+        # match_id,date_of_match,time_of_match,team_a,team_b,
+        # team_a_score,team_b_score,winner,match_result
