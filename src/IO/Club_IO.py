@@ -2,7 +2,7 @@ from csv import DictReader
 from IO.Teams_IO import Team_IO
 from models.club import Club
 
-class Club_IO(Club):
+class Club_IO:
     """Reads, adds, registers, views clubs from/to a csv file and checks if a club name is already in use."""
     
     def __init__(self):
@@ -16,14 +16,21 @@ class Club_IO(Club):
 
         
     def add_club_id(self):
-        club_file = self.read_club_file_as_list_of_dict()
-        last_id = int(club_file[-1]["match_id"])
+        club_file= self.read_club_file_as_list_of_dict()
+        if not club_file:
+            return 1
+        last_id = int(club_file[-1]["club_id"])
         return last_id + 1
 
                 
-    def register_club(self, club: Club):
-        with open(self.file_path, "a", encoding="utf-8") as club_file:
-            club_file.write(f"{self.add_club_id()},{self.name},{self.home_town},{self.country},{self.colors}")
+    def register_club(self, club_name: str, club_home_town: str, club_country: str, club_colors: list[str] = None, teams: list[str] = None):
+        club = Club(
+            name=club_name,
+            home_town=club_home_town,
+            country=club_country,
+            colors=club_colors.split(","),
+            teams=teams
+        )
 
 
     def add_team_to_club(self, club_name, team_name):
