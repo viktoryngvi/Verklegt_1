@@ -13,15 +13,15 @@ class Event_IO(Match, Event):
 
     def create_empty_event(self, event: Event):
         with open(self.blueprint_file, "w", encoding="utf-8") as blueprint_file:
-            blueprint_file.write("id,team_name,event_name,event_type,tournment_name,start_date,end_date")
+            blueprint_file.write("event_name,event_type,tournment_name,start_date,end_date,team_name,id\n")
             blueprint_file.write(
-                f'{event.event_id},'
-                f'{event.event_name}'
+                f'{event.event_name},'
                 f'{event.event_type},'
                 f'{event.tournament_name},'
                 f'{event.start_date},'
                 f'{event.end_date},'
                 f'{event.team_name},'
+                f'{event.event_id},'
                 f'\n'
                 )
         return "Empty event created"

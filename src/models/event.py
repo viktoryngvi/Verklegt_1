@@ -5,13 +5,13 @@ from datetime import date
 class Event:
     def __init__(
             self, 
-            event_id: int = None,
             event_name :str = None, 
             event_type: str = None, 
             tournament_name: str = None,    
             start_date: date = None,
             end_date: date = None,
-            team_name: str = None
+            team_name: str = None,
+            event_id: int = None,
         ):
         
         self.event_id = event_id
