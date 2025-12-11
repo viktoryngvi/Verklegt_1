@@ -161,44 +161,50 @@ class PlayerLL:
             return 1
         
         last_player: Player = player_data[-1]
-        next_useable_id = last_player.id+1
+        next_useable_id = int(last_player.id+1)
         return next_useable_id
     
     # notað til að checka hvort id passar við player sem er ekki í liði
     
-    def check_if_player_id_in_team(self, player: Player, id):
+    def check_if_player_id_in_team(self, id):
         """takes id and check if that player is in a team"""
-        player_list = self._dl_wrapper.load_all_player_info()
-        for row  in player_list:
+        player_list: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in player_list:
             if id == int(player.id):
                 if player.team is None:
                     return False
         return True
 
 
-    def turn_handle_into_id(self, handle: str, player: Player):
+    def take_handle_retrun_id(self, handle: str,):
         """takes handle and returns the players id"""
-        player_list = self._dl_wrapper.load_all_player_info() 
-        for players in player_list:
+        player_list: list[Player] = self._dl_wrapper.load_all_player_info() 
+        for player in player_list:
             if handle == str(player.handle):
                 return int(player.id)
         return False
 
-    def take_id_return_handle(self, id: int, player: Player):
+    def take_id_return_handle(self, id: int):
         """takes an id and returns the players handle"""
-        player_list = self._dl_wrapper.load_all_player_info() 
-        for players in player_list:
+        player_list: list[Player] = self._dl_wrapper.load_all_player_info() 
+        for player in player_list:
             if id == int(player.id):
                 return str(player.handle)
         return False
 
     def load_single_player_info(self, handle, player: Player):
-        player_data = self._dl_wrapper.load_all_player_info
+        player_data: list[Player] = self._dl_wrapper.load_all_player_info
         for player in player_data:
             if player.handle == handle:
                 return player
         return "Player does not exist"
     
+    def take_list_of_players_return_list_of_ids(self, list_of_players):
+        player_id_list = []
+        players_in_list: list[Player] = list_of_players
+        for player in players_in_list:
+            player_id_list.append(int(player.id))
+        return player_id_list
 
 
 
@@ -207,18 +213,3 @@ class PlayerLL:
 
 
 
-
-
-
-
-
-
-        
-
-        
-
-    
-    
-    
-    
-    

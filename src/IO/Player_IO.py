@@ -23,12 +23,9 @@ class Player_IO(Player):
 
                 player_list.append(player)
 
-            return player_list
+        return player_list
 
     def create_player(self, player: Player):
-        player_data:list[Player] = self.load_all_player_info()
-        player_data.append(player)
-
         with open(self.file_path, "a", encoding="utf-8") as new_player_file:
                 new_player_file.write(
                     f'{player.id},'
@@ -38,8 +35,15 @@ class Player_IO(Player):
                     f'{date.isoformat(player.dob)},'
                     f'{player.email},'
                     f'{player.handle},'
-                    f'{player.team}\n'
+                    f'{player.team},'
+                    f'\n'
                 )
                 
 
         return True
+
+
+    # def edit_player_file(self, player_data):
+    #     with open("data/test_player_info", "w", encoding="utf-8"):
+            
+    #         for player in player_data

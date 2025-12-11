@@ -48,6 +48,18 @@ class LLWrapper:
    def load_player_info(self, handle):
       return self.player_ll.load_player_info(handle)
    
+   def players_team_none(self):
+      return self.team_ll.players_team_none()
+   
+   def take_id_return_handle(self, id):
+      return self.player_ll.take_id_return_handle(id)
+   
+   def take_handle_return_id(self, handle):
+      return self.player_ll.take_handle_retrun_id(handle)
+   
+   def take_list_of_players_return_list_of_ids(self, list_of_players: list):
+      return self.player_ll.take_list_of_players_return_list_of_ids(list_of_players)
+   
    #CAPTAIN METHODS
    
    def edit_player_email_captain(self, team: str, handle: str, email: str) -> str: 
@@ -73,8 +85,8 @@ class LLWrapper:
    
    #TEAM METHODS
 
-   def create_team(self, cap_id: int, team_name: str, players_id: list): 
-      return self.team_ll.create_team(cap_id, team_name, players_id)
+   def create_team(self, team_name: str, cap_id: int, players_id: list): 
+      return self.team_ll.create_team(team_name, cap_id,  players_id)
    
    def load_player_short_info(self): # Id, Name, Handle, Team PUBLIC INFO
       return self.team_ll.load_player_short_info()
