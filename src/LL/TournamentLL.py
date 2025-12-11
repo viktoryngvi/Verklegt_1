@@ -64,14 +64,14 @@ class TournamentLL:
     def view_tournaments(self, tournament : Tournament):
         tournament_file = self._dl_wrapper.read_tournament_file()
         list_of_tournaments = []
-        for line in tournament_file:
-            list_of_tournaments.append(tournament.name)
+        for tournament in tournament_file:
+            list_of_tournaments.append(tournament.tournament_name)
         return list_of_tournaments
 
     def view_events_in_tournament(self, tournament_name, tournament : Tournament):
         tournament_file = self._dl_wrapper.read_tournament_file()
         for line in tournament_file:
-            if tournament.name == tournament_name:
+            if tournament.tournament_name == tournament_name:
                 return tournament.event_list
         return "No tournament with this name"
     
