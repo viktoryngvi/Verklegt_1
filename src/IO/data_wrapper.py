@@ -79,8 +79,8 @@ class DLWrapper:
         return self.event_blueprintio.append_into_results(matches_to_append)
 
     
- 
-    # club methods:
+
+"""    # club methods:
 
     def register_club(self, club):
         return self.clubio.register_club(club)
@@ -100,3 +100,4 @@ class DLWrapper:
     def check_if_club_name_in_use(self, club_name):
         return self.clubio.check_if_club_name_in_use(club_name)
     
+"""

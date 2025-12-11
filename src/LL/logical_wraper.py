@@ -23,8 +23,7 @@ class LLWrapper:
       self.player_ll = PlayerLL(self.dl_wrapper, self.validate)
       self.team_ll = TeamLL(self.dl_wrapper, self.player_ll)
       self.tournament_ll = TournamentLL(self.dl_wrapper)
-      self.create_event_ll = EventLL(self.dl_wrapper)
-      self.get_event_types_ll = EventLL(self)
+      self.event_ll = EventLL(self.dl_wrapper)
       self.get_team_captain_ll = CaptainLL(self.dl_wrapper, self.validate, self.team)
       self.load_all_player_ll = PlayerLL(self.dl_wrapper, self.validate)
 
@@ -32,6 +31,9 @@ class LLWrapper:
       
    def create_player(self, player: Player): 
       return self.player_ll.create_player(player)
+   
+   def captain_handle(self, handle):
+      return self.validate.check_if_handle_in_use(handle)
    
    def edit_player_email(self, handle: str, email: str) -> str: 
       return self.player_ll.edit_player_email(handle, email)
@@ -147,9 +149,10 @@ class LLWrapper:
 
    #EVENT METHODS
 
-   def create_event(self, event: Event):
-      return self.create_event_ll.create_event(event)
+   def create_empty_event(self, event: Event):
+      return self.event_ll.create_empty_event(event)
 
    def get_team_captain(self, team_name, handle):
       return self.captain_ll.get_team_captain(team_name, handle)
+   
    
