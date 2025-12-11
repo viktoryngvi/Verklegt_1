@@ -45,7 +45,7 @@ class PlayerLL:
         """takes all inputted info and created a player, and checks the last players id and taked the next number"""
 
         if self._dl_wrapper.create_player(player):
-            return "PLayer successfully created"
+            return "Player successfully created"
         
         return "Player was not created" 
 

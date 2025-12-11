@@ -1,7 +1,7 @@
 from typing import Any, Optional, Dict, Tuple
 from UI.input_helper import (
     get_non_empty_input,
-    get_integer_input,
+    #get_integer_input,
     get_choice_input,
     choose_from_list,
     clear_screen,
@@ -130,8 +130,10 @@ class OrganizerUI:
         )
         result = self.ll.create_tournament(result)
 
-
-        print(f"\n {result}")
+        if result:
+            print(("\n" + "Tournament Created!"))
+        else:
+            print(("\n" + "Tournament Could Not Be Created!"))
         # Print whatever LL returns
         # print("\n" + str(result))
         input("Press Enter to continue...")
