@@ -64,13 +64,21 @@ class TournamentLL:
     def view_tournaments(self, tournament : Tournament):
         tournament_file = self._dl_wrapper.read_tournament_file()
         list_of_tournaments = []
+<<<<<<< Updated upstream
+<<<<<<< HEAD
         for line in tournament_file:
+=======
+        for tournament in tournament_file:
+>>>>>>> d6fc148625f420ba341fcedc80b19118a31a76b9
+=======
+        for tournament in tournament_file:
+>>>>>>> Stashed changes
             list_of_tournaments.append(tournament.tournament_name)
         return list_of_tournaments
 
     def view_events_in_tournament(self, tournament_name, tournament : Tournament):
         tournament_file = self._dl_wrapper.read_tournament_file()
-        for line in tournament_file:
+        for tournament in tournament_file:
             if tournament.tournament_name == tournament_name:
                 return tournament.event_list
         return "No tournament with this name"

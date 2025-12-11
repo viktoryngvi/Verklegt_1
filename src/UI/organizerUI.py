@@ -124,7 +124,6 @@ class OrganizerUI:
         )
         result = self.ll.create_tournament(result)
 
-        
         if result:
             print(("\n" + "Tournament Created!"))
         else:
@@ -167,13 +166,15 @@ class OrganizerUI:
         end_date = get_non_empty_input("\tEnd Date (YYYY-MM-DD): ").strip()
         self.menu_ui.print_box_bottom()
 
-        results = self.ll.create_event(
-            tournament_name,
+        results = Event(
             event_name,
             event_type,
+            tournament_name,
             start_date,
-            end_date
+            end_date,
+            team_name = None
         )
+        results = self.ll.create_event(results)
         
         print("\n" + str(results))
         input("Press Enter to continue...")
@@ -398,7 +399,20 @@ class OrganizerUI:
 
         # print the list of events in that tournament
         self.menu_ui.print_box_top()
-        events_in_tournament = choose_from_list("Select Event by number: ", self.ll.get_events_in_tournament(tournament_name))
+        # Load events
+        events = self.ll.get_events_in_tournament(tournament_name)
+
+       
+        if not events or events == "None" or events == ["None"]:
+            self.menu_ui.print_box_line()
+            self.menu_ui.print_box_line(" This tournament has no events.")
+            self.menu_ui.print_box_bottom()
+            input("Press Enter to continue...")
+            return
+
+       
+        events_in_tournament = choose_from_list("Select Event by number: ", events)
+
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line(f" You selected Event: {events_in_tournament}")
         self.menu_ui.print_box_bottom()

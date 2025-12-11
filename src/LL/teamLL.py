@@ -32,6 +32,7 @@ class TeamLL:
         id = self.get_last_team_id()
         list_of_player_handles = []
         for player_id in list_of_player_ids:
+            self.player_ll.place_player_into_team(name, player_id)
             player_handle = self.player_ll.take_id_return_handle(player_id)
             list_of_player_handles.append(player_handle)
             
@@ -81,16 +82,15 @@ class TeamLL:
 # VILLLLLLAAAAAAA gefur vitlaust gildi í hvern dálk í hvert skipti
         return list_of_non_team_players_short_info
 
-    def view_all_players_in_team(self, team_name, team: Team):
+    def view_all_players_in_team(self, team_name):
         """views_all_teams() and select a team and returns all players in  said team"""
-        all_teams = self.view_all_teams()
-        players_in_team = []
-        for team in all_teams:
-            if team.name == team_name:
-                for players in team.players:
-                    players_in_team.append(players.handle)
+        list_players:list[Player] = self._dl_wrapper.load_all_player_info()
+        players = []
+        for player in list_players:
+            if player.team == team_name:
+                players.append(player)
 
-                return players_in_team
+        return players
 
     def view_captains_team(self, find_captain_handle, team: Team):
         """views_all_teams() and select a team and returns all players in  said team"""
@@ -134,3 +134,5 @@ class TeamLL:
         last_team: Team = team_file[-1]
         next_useable_id = int(last_team.id+1)
         return next_useable_id
+
+
