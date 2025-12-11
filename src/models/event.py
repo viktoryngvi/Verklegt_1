@@ -4,17 +4,17 @@ from datetime import date
 
 class Event:
     def __init__(
-            self,  
-            id: int = None,
+            self, 
             event_name :str = None, 
             event_type: str = None, 
             tournament_name: str = None,    
             start_date: date = None,
             end_date: date = None,
-            team_name: str = None
+            team_name: str = None,
+            event_id: int = None,
         ):
         
-        self.id = id
+        self.event_id = event_id
         self.event_name = event_name
         self.event_type = event_type
         self.tournament_name = tournament_name 
