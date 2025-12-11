@@ -31,6 +31,7 @@ class Team_IO:
                     f'{team.name},'
                     f'{team.captain},'
                     f'{players_str},'
+                    f'\n'
                 )
         return True   
 
