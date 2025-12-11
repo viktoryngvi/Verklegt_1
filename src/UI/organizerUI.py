@@ -9,6 +9,7 @@ from UI.input_helper import (
 from models.tournament import Tournament
 from models.event import Event
 from LL.eventLL import EventLL
+from models.team import Team
 
 class OrganizerUI:
     def __init__(self, ll: Any, menu_ui: Any):
@@ -212,7 +213,7 @@ class OrganizerUI:
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line(" Available Teams: ")
         for i, team in enumerate(teams, start=1):
-            print(f"  [{i}] {team}")
+            print(f"  [{i}] {team.name}")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_bottom()
         

@@ -105,6 +105,9 @@ class LLWrapper:
    def get_players_in_team(self, team_name):
       return self.team_ll.view_all_players_in_team(team_name)
    
+   def check_if_team_exists(self, captains_team):
+      return self.team_ll.check_if_team_name_exists(captains_team)
+   
 
    
    #MATCH METHODS
