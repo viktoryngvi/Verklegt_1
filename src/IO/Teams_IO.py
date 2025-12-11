@@ -45,7 +45,7 @@ class Team_IO:
                     f'{team.id},'
                     f'{team.name},'
                     f'{team.captain},'
-                    f'{team.players_str},'
+                    f'{players_str},'
                     f'\n'
                 )
         return "team has been edited"

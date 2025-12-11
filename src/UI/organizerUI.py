@@ -159,7 +159,7 @@ class OrganizerUI:
         self.menu_ui.print_box_bottom()
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select the event type: ")
-        event_types = self.ll.event_types(self)
+        event_types = self.ll.event_types()
         event_type = choose_from_list(" ➤ Select one type: ", event_types) 
         self.menu_ui.print_box_line(f" You selected event type: {event_type}")
         self.menu_ui.print_box_bottom()
