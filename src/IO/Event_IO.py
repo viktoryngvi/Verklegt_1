@@ -139,6 +139,7 @@ class Event_IO(Match, Event_blueprint):
         with open(self.match_file, "a", encoding="utf-8") as results_file:
             for line in matches_to_append:
                 teams_str = ";".join(str(t) for t in match.teams)
+                match = Match()
                 results_file.write(
                         f'{match.tournament_name},'
                         f'{match.event_name},'
@@ -148,7 +149,7 @@ class Event_IO(Match, Event_blueprint):
                         f'{match.bracket_nr},'
                         f'{match.date_of_match},'
                         f'{match.time_of_match},'
-                        f'{match.teams_str},'
+                        f'{teams_str},'
                         f'{match.team_a},'
                         f'{match.team_b},'
                         f'{match.team_a_score},'

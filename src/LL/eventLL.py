@@ -4,7 +4,7 @@ from LL.validate import Validate
 from LL.validate import Validate
 from models.event import Event
 import random
-from csv import DictReader
+
 
 class EventLL:
     def __init__(self, dl_wrapper: DLWrapper):
