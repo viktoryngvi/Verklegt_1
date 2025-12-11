@@ -316,8 +316,8 @@ class CaptainUI:
         
         # send to LL to update
         result = self.ll.update_team_captain(
-            team_name=select_team,
-            new_captain_handle=new_captain_handle,
+            select_team,
+            new_captain_handle
             )
         
         print("")

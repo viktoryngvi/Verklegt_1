@@ -36,8 +36,8 @@ class DLWrapper:
     def append_team_into_file(self, team):
         return self.teamio.append_team_into_file(team)
     
-    def write_team_into_file(self, teams_file):
-        return self.teamio.write_team_into_file(teams_file)
+    def edit_teams_file(self, teams_file):
+        return self.teamio.edit_teams_file(teams_file)
     # er ekki tengt!!!!!!!!!!!!!!!!
 
     

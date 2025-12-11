@@ -146,15 +146,20 @@ class CaptainLL:
                 return teams.name
     
     def update_team_captain(self, team_name, handle):
-        existing_team = self._dl_wrapper.check_if_team_name_exists(team_name)
+        existing_team = self._team.check_if_team_name_exists(team_name)
         if not existing_team:
             return "Error: Team does not exists"
         
-        existing_handle_in_team = self._dl_wrapper.check_if_player_handle_in_team(handle)
+        existing_handle_in_team = self._team.check_if_player_handle_in_team(team_name, handle)
         if not existing_handle_in_team:
             return "Error: Player's handle is not in team"
         
-        return self._dl_wrapper.change_team_captain(team_name, handle)
+        team_list: list[Team] = self._dl_wrapper.view_all_teams()
+        for team in team_list:
+            if team.name == team_name:
+                team.captain = handle
+                    
+        return self._dl_wrapper.edit_teams_file(team_list)
     
 
 
