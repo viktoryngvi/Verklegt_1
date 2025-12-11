@@ -79,8 +79,8 @@ class DLWrapper:
         return self.event_blueprintio.append_into_results(matches_to_append)
 
     
- 
-    # club methods:
+
+"""    # club methods:
 
     def register_club(self, club: Club):
         with open(self.file_path, "a", encoding="utf-8") as club_file:
@@ -118,11 +118,12 @@ class DLWrapper:
                      name=line["club_name"],
                      home_town=line["Club_home_town"],
                      country=line["club_country"],
-                     colors=line["club_colors"].split(",")    
+                     colors=line["club_colors"].split(","),    
                      teams=line["teams"].split(",") if line["teams"] else []
                  )
                  return club
-             return None
+            return None
     def check_if_club_name_in_use(self, club_name):
         return self.clubio.check_if_club_name_in_use(club_name)
     
+"""
