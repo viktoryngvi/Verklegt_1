@@ -206,7 +206,8 @@ class EventLL:
     # 
 
     def view_finnished_games(self):
-        pass
+        return self._dl_wrapper.read_results_file()
 
-    def get_results_from_one_game():
-        pass
+    def get_results_from_one_game(self):
+        result_from_one_game = self._dl_wrapper.read_results_file()
+        

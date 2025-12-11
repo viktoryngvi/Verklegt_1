@@ -6,3 +6,5 @@ class Team:
         self.name = name
         self.captain = captain
         self.players = players
+    def __repr__(self):
+        return f"Team({self.name})"

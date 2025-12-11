@@ -131,6 +131,7 @@ class LLWrapper:
    def view_club_information(self, club_name: str):
       return self.club_ll.view_club_information(club_name)
    
+
    #TOURNAMENT METHODS
 
    def create_tournament(self, tournament: Tournament):
@@ -139,8 +140,8 @@ class LLWrapper:
    def get_tournament_list(self):
       return self.tournament_ll.get_tournament_list()
    
-   def get_events_in_tournament(self, tournamnt_name) :
-      return self.tournament_ll.get_events_in_tournament(tournamnt_name)
+   def get_events_in_tournament(self, tournament_name) :
+      return self.tournament_ll.get_events_in_tournament(tournament_name)
    
 
    def generate_schedule(tournament: Tournament, event: Event):
