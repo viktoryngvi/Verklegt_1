@@ -6,7 +6,7 @@ from LL.clubLL import ClubLL
 from LL.captainLL import CaptainLL
 from LL.TournamentLL import TournamentLL 
 from LL.eventLL import EventLL  
-from LL.teamLL import TeamLL
+from LL.matchLL import MatchLL
 from models.club import Club
 from models.player import Player
 from models.tournament import Tournament
@@ -18,14 +18,14 @@ class LLWrapper:
       self.dl_wrapper = DLWrapper()
       self.validate = Validate(self.dl_wrapper)
       self.club_ll = ClubLL(self.dl_wrapper, self.validate)
-      self.team = TeamLL(self.dl_wrapper, self.validate)
-      self.captain_ll = CaptainLL(self.dl_wrapper, self.validate, self.team)
       self.player_ll = PlayerLL(self.dl_wrapper, self.validate)
       self.team_ll = TeamLL(self.dl_wrapper, self.player_ll)
+      self.captain_ll = CaptainLL(self.dl_wrapper, self.validate, self.team_ll)
       self.tournament_ll = TournamentLL(self.dl_wrapper)
       self.event_ll = EventLL(self.dl_wrapper)
-      self.get_team_captain_ll = CaptainLL(self.dl_wrapper, self.validate, self.team)
-      self.load_all_player_ll = PlayerLL(self.dl_wrapper, self.validate)
+      self.match_ll = MatchLL(self.dl_wrapper)
+      self.get_team_captain_ll = self.captain_ll
+      self.load_all_player_ll = self.player_ll
 
    #PLAYER METHODS   
       
@@ -73,7 +73,7 @@ class LLWrapper:
    def edit_player_phone_captain(self, team: str, handle: str, phone: str) -> str:
       return self.captain_ll.edit_player_phone_cap(team, handle, phone)
 
-   def edit_player_address_captain(self, team: str, handle: str, address: str) -> str:
+   def edit_player_address_captain(self, team: str, handle: str, address: str):
       return self.captain_ll.edit_player_address_cap(team, handle, address)
 
    def edit_player_handle_captain(self, team: str, handle: str, handle_str: str) -> str:
@@ -108,13 +108,12 @@ class LLWrapper:
    def get_team_list(self):
       return self.team_ll.view_all_teams()
     
-   def check_if_team_exists(self, captains_team):
+   def check_if_team_exists(self, captains_team: str) -> bool:
       return self.team_ll.check_if_team_name_exists(captains_team)
    
 
    #MATCH METHODS
-
-   def enter_match_result(self):
+   def enter_match_results(self):
       pass
 
    #CLUBS METHODS
@@ -166,5 +165,5 @@ class LLWrapper:
    
    def event_types(self):
       return self.event_ll.event_types()
-   
-   
+
+

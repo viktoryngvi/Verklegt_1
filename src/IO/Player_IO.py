@@ -5,6 +5,7 @@ class Player_IO(Player):
     def __init__(self):
         self.file_path = "data/player_info.csv"
 
+    
     def load_all_player_info(self):
         player_list = []
         with open(self.file_path, "r", encoding="utf-8") as player_data:
