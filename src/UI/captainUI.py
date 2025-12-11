@@ -332,6 +332,7 @@ class CaptainUI:
         )
         ######hvað gerir allow_multiple???????????
         self.menu_ui.print_box_bottom()
+        selected_players2 = selected_players.split(",")
         cap_id = self.ll.take_handle_return_id(captain_handle)
         # send to ll to create team
         player_ids = self.ll.take_list_of_players_return_list_of_ids(selected_players)
