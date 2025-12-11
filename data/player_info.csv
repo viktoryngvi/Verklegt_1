@@ -23,10 +23,6 @@ id,name,phone,address,dob,email,handle,team
 22,Xenon Xor,669-4455,Xorgata 9 Reykjavik,2002-12-17,xenon.xor@example.com,XenonX,lið núúúúúmer 3,
 23,Yrsa Ylur,670-5566,Ylurgata 10 Akranes,2001-04-25,yrsa.ylur@example.com,YrsaY,vikk tor,
 24,Zhao Zero,671-6677,Zerogata 11 Selfoss,2003-08-19,zhao.zero@example.com,ZhaoZ,None,
-<<<<<<< HEAD
-25,Kristofer Kristjan Erlendsson,7872550,fifi 18,2004-12-30,kristo@gmail.com,kristo,None
-,
-=======
 25,Ásmundur Árnasson,672-7788,Árnaslandi 12 Reykjavik,2004-06-10,asmundur.arnasson@example.com,AsmundurA,None,
 26,Bjarki Bjorn,673-8899,Bjornakot 13 Akranes,2005-02-28,bjarki.bjorn@example.com,BjarkiBear,None,
 27,Carla Castro,674-9900,Castrogata 14 Selfoss,2002-07-14,carla.castro@example.com,CarlaC,None,
@@ -47,4 +43,3 @@ id,name,phone,address,dob,email,handle,team
 42,Rósa Róbertsdóttir,689-4455,Robertsgata 29 Reykjavik,2003-07-08,rosa.roberts@example.com,RosaR,None,
 43,Siggi Sigurdsson,690-5566,Sigurdsgata 30 Kópavogur,2005-01-19,siggi.sigurdsson@example.com,SiggiS,None,
 44,Tobbi Tomásson,691-6677,Tomasgata 31 Hafnarfjörður,2002-03-26,tobbi.tomasson@example.com,TobbiT,None,
->>>>>>> 3470ce2ad6e7e92a372162a5fd740d2ae3cc58d5
