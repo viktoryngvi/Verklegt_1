@@ -523,6 +523,11 @@ class Validate:
     # ----------------------------------------------------------------------
     def check_matches(self, event : Event):
         return True
+    
+    def check_first_win(self, match : Match):
+        match_file: list[Match] = self._dl_wrapper.load_match_file()
+        match_file[-1] 
+        pass
 
 
 
@@ -653,6 +658,3 @@ class Validate:
 
         return True
     
-    def check_first_win(self, match : Match):
-        match_file: list[Match] = self._dl_wrapper.load_match_file()
-        match_file[-1]

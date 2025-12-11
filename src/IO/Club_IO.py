@@ -14,13 +14,8 @@ class Club_IO:
             return list(DictReader(club_file))
 
         
-<<<<<<< HEAD
     def add_club_id(self, club : Club):
         club_file= self.read_club_file_as_list_of_dict()
-=======
-    def add_club_id(self):
-        club_file = self.read_club_file_as_list_of_dict()
->>>>>>> 2adc3a8849c21999dc04297062d1a99e47ee7c61
         if not club_file:
             return 1
         last_id = int(club_file[-1].id)
@@ -35,11 +30,7 @@ class Club_IO:
                 f"{club.home_town},"
                 f"{club.country},"
                 f"{';'.join(club.color) if club.color else ''},"
-<<<<<<< HEAD
                 f"{club.teams}\n"
-=======
-                f"{';'.join(club.teams) if club.teams else ''}\n"
->>>>>>> 2adc3a8849c21999dc04297062d1a99e47ee7c61
             )
         return True
 

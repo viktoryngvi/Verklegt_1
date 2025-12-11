@@ -1,7 +1,2 @@
-<<<<<<< HEAD
-id,club_name,club_home_town,club_country,club_colors,teams1,
-nafni,2,71,r;e;d; ;a;n;d; ;b;l;u;e,vikk tor
-=======
 club_id,club_name,club_home_town,club_country,club_colors,teams
 1,klubbur 8,reykjavik,isl,blue,vikk tor
->>>>>>> 2adc3a8849c21999dc04297062d1a99e47ee7c61
