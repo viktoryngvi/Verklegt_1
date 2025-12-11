@@ -14,7 +14,7 @@ class CaptainLL:
         """
         Handles the business logic for updating an existing player's information.
         """
-        existing_player = self._dl_wrapper.check_if_handle_exists_with_handle(handle)
+        existing_player = self._validate.check_if_handle_in_use(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
         

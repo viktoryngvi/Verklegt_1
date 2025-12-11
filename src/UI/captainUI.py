@@ -120,6 +120,13 @@ class CaptainUI:
         print("\t-  Enter your captain handle: ", end="")                                   
         captain_handle = input().strip().lower() 
         self.menu_ui.print_box_bottom()
+
+        check_captain = self.ll.captain_handle(captain_handle)
+        if not check_captain:
+            print("\tNo captain found with that handle.")
+            input("Press Enter to continue...")
+            return
+        
     
         
 
@@ -153,7 +160,10 @@ class CaptainUI:
         #################################################3
         
         # let the captain choose a player to edit from his team
-        selected_player = choose_from_list(" Enter the number of the player: ", team_players)
+        for player in team_players:
+            self.menu_ui.print_box_line(f" - {player.handle}")
+        self.menu_ui.print_box_line()
+        selected_player = input("\t-  Enter the player handle: ").strip().lower()
         self.menu_ui.print_box_bottom()
         print("")
         self.menu_ui.print_box_top()
@@ -204,21 +214,53 @@ class CaptainUI:
         return "CAPTAIN_MENU"
 
     def view_team(self): 
-        self.menu_ui.print_header("VIEW TEAMS")
+        self.menu_ui.print_header("VIEW YOUR TEAM")
         self.menu_ui.print_box_top()
-        self.menu_ui.print_box_line(" Select a team to view: ")
-        teams = self.ll.get_team_list()
+        self.menu_ui.print_box_line(" To view your team, please provide your team name: ")
+        self.menu_ui.print_box_line()
 
-        team_name = choose_from_list("Select Team by number: ", teams)
+        
+        captains_team = input("\t-  Enter your team name: ").strip()
+        # check if captain's team exists
+        if not self.ll.check_if_team_exists(captains_team):
+            print("\tNo team found with that name.")
+            input("Press Enter to continue...")
+            return
+        
+        self.menu_ui.print_box_line()
+        
+        self.menu_ui.print_box_bottom()
 
-        print(f"\nYou selected: {team_name}\n")
+        if not captains_team:
+            print("\tTeam name cannot be empty.")
+            input("Press Enter to continue...")
+            return
 
-        players_in_team = self.ll.get_players_in_team(team_name)
-        print(f"Players in {team_name}:")
-        for player in players_in_team:
-            print(f" - {player}")
+        team_players = self.ll.view_all_players_in_team(captains_team)
+        if not team_players:
+            print("No players found in your team.")
+            input("Press Enter to continue...")
+            return
+        print("")
+
+        self.menu_ui.print_box_top()
+        self.menu_ui.print_box_line(f" Players in team: {captains_team} ")
+        self.menu_ui.print_box_line()
+        for player in team_players:
+            self.menu_ui.print_box_line(f" Player ID: {player.id} ")
+            self.menu_ui.print_box_line(f"-----------------------")
+            self.menu_ui.print_box_line(f"\t Name: {player.name}")
+            self.menu_ui.print_box_line(f"\t Handle: {player.handle}")
+            self.menu_ui.print_box_line(f"\t Email: {player.email}")
+            self.menu_ui.print_box_line(f"\t Phone: {player.phone}")
+            self.menu_ui.print_box_line()
+        self.menu_ui.print_box_bottom()
         input("Press Enter to continue...")
         return
+    
+        
+
+        
 
     
     def change_team_captain(self):
@@ -229,7 +271,7 @@ class CaptainUI:
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select the team you want to change the captain for: ")
         self.menu_ui.print_box_line()
-        # get the list of teams from LL
+        # get the list of teams from LL 
         teams = self.ll.view_all_teams()
 
         # check if there are any teams
