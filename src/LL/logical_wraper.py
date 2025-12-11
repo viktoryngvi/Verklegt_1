@@ -164,4 +164,7 @@ class LLWrapper:
    def get_team_captain(self, team_name, handle):
       return self.captain_ll.get_team_captain(team_name, handle)
    
+   def event_types(self):
+      return self.event_ll.event_types()
+   
    

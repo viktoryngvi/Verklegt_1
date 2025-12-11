@@ -27,7 +27,7 @@ class TeamLL:
     def create_team_to_data(self, name, captain_id, list_of_player_ids):
         """Takes three variables team_name, team_captain-in id, list af player_ids and writes it into 
         the teams.csv file"""
-        teams_file = self._dl_wrapper.view_all_teams()
+        teams_file: list[Team] = self._dl_wrapper.view_all_teams()
         captain_handle = self.player_ll.take_id_return_handle(captain_id)
         player_handle = self.player_ll.take_id_return_handle(captain_id)
         id = self.get_last_team_id()
