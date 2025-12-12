@@ -30,8 +30,7 @@ class EventLL:
             return validate_errors
         
         if self.write_event_into_tournament(event):
-
-            return self._dl_wrapper.create_empty_event_blueprint()
+            return self._dl_wrapper.create_empty_event_blueprint(event)
 
     # ----------------------------------------------------------------------
     # EVENT TYPES 
