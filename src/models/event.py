@@ -13,10 +13,8 @@ class Event:
             start_date: date = None,
             end_date: date = None,
             team_name: str = None,
-            event_id: int = None,
         ):
         
-        self.event_id = event_id
         self.event_name = event_name
         self.event_type = event_type
         self.tournament_name = tournament_name 
