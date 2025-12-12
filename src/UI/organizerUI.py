@@ -615,7 +615,7 @@ class OrganizerUI:
 
         # Select teams to add to this club
         self.menu_ui.print_box_top()
-        all_teams = self.ll.view_all_teams()   
+        all_teams = self.ll.view_teams_with_no_club()   
         listi = []
         all: Team
         for all in all_teams:
