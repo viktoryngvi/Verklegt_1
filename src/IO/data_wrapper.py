@@ -121,5 +121,5 @@ class DLWrapper:
     def register_club(self, club: Club):
         return self.clubio.register_club(club)
 
-    def edit_teamss_file(self, clubs: list[Club]):
-        return self.clubio.edit_teams_file(clubs)
+    def edit_club_file(self, clubs: list[Club]):
+        return self.clubio.edit_club_file(clubs)

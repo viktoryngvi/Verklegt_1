@@ -1,4 +1,6 @@
 from models.team import Team
+from models.event import Event
+
 
 class Match():
     """MATCH CLASS REPRESENTS TOURNAMENT, EVENT, GAME TYPE, SERVER, TEAMS, SCORES, WINNER, AND MATCH DETAILS."""
@@ -13,12 +15,12 @@ class Match():
             bracket_nr: int = None,
             date_of_match: str = None,
             time_of_match: str = None,
-            teams: list[Team] = None,
-            team_a: Team = None,
-            team_b: Team = None,
+            teams: list[str] = None,
+            team_a: str = None,
+            team_b: str = None,
             team_a_score: int = None,
             team_b_score: int = None,
-            winner: Team = None
+            winner: str = None
 
         ):
 
@@ -36,3 +38,5 @@ class Match():
         self.team_b_score = team_b_score
         self.teams = teams
         self.winner = winner
+
+    def poppulate_from_event(event):

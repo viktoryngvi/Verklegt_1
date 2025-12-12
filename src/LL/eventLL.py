@@ -88,9 +88,9 @@ class EventLL:
         return False
 
     
-    # ----------------------------------------------------------------------
-    # MAKE EVENT PUBLIC
-    # ----------------------------------------------------------------------
+    # # ----------------------------------------------------------------------
+    # # MAKE EVENT PUBLIC
+    # # ----------------------------------------------------------------------
 
     # def make_event_public(self):
     #     """MOVES EVENT DATA TO PUBLIC FILE OR KNOCKOUT"""
@@ -133,6 +133,20 @@ class EventLL:
         schedule_file: list[Match] = self._dl_wrapper.load_match_file()
         last_id = int(schedule_file[-1].match_id)
         return last_id + 1
+    
+    def get_bracket_id(self):
+        """DETERMINES NEXT BRACKET NUMBER"""
+    
+        match_file: list[Match] = self._dl_wrapper.load_match_file()
+    
+        if not match_file[-1].bracket_nr:
+            return 1
+        else:
+            new_bracket_nr = match_file[-1].bracket_nr + 1
+            return new_bracket_nr
+        
+    def get_date_of_match(self):
+        pass
 
     # ----------------------------------------------------------------------
     # INPUT MATCH RESULTS
@@ -167,38 +181,50 @@ class EventLL:
   
     def create_first_rounds(self):
         """CREATES FIRST ROUND MATCHUPS FOR TEAMS"""
-        public_file: list[Event] = self._dl_wrapper.view_all_teams()
+        public_file: list[Event] = self._dl_wrapper.load_event_blueprint()
+
+        # the_event = public_file[0]
         all_team_list = []
-        for team in public_file:
-            all_team_list.append(team.name)
+        for line in public_file:
+            all_team_list.append(line.team_name)
+        random.shuffle(all_team_list)
 
         bracket_id = 1
+        #for lööp sem býr til lista af tuples (team_a, team_b)
+        for i in range(0, 16, 2):
+            teams = (i, i+1)
 
-        for teamsvs in all_team_list:
-            team_a = random.choice(teamsvs)
-            all_team_list.remove(team_a)
-            team_b = random.choice(teamsvs)
-            all_team_list.remove(team_b)
+        for teamsvs in all_team_list: # iterates tuple teams list
+            the_event = public_file[0]
+            team_a =
+            team_b = 
             server_id = self.get_server_id()
-            ###############################Hvar eigum við að geyma server id??????? ég geri bara í match örsnöggt
+            match_id = self.get_match_id()
+            date_of_match = self.get_date_of_match()
+            match: Match = Match(
+                tournament_name=the_event.tournament_name,
+                event_name=the_event.event_name,
+                game_type=the_event.event_type,
+                team_a=team_a,
+                team_b=team_b,
+                server_id=server_id,
+                match_id=match_id,
+                bracket_nr=bracket_id,
+                date_of_match=date_of_match,
+                time_of_match=time_of_match
+                teams=
+                team_a_score=None
+                team_b_score=None
+                winner=None
+                )
             self._dl_wrapper.append_to_match_file(match)
-            self._dl_wrapper.append_to_match_file(f'{match.tournament_name},{match.event_name},{match.game_type},{match.match_id}{server_id},{bracket_id},{match.date_of_match}{match.time_of_match},{team_a},{team_b},team_a_score,team_b_score,winner,')
+            # self._dl_wrapper.append_to_match_file(f'{match.tournament_name},{match.event_name},{match.game_type},{match.match_id}{server_id},{bracket_id},{match.date_of_match}{match.time_of_match},{team_a},{team_b},team_a_score,team_b_score,winner,')
             
 
     # ----------------------------------------------------------------------
     # GET BRACKET ID
     # ----------------------------------------------------------------------
  
-    def get_bracket_id(self):
-        """DETERMINES NEXT BRACKET NUMBER"""
-    
-        match_file: list[Match] = self._dl_wrapper.load_match_file()
-    
-        if not match_file[-1].bracket_nr:
-            return 1
-        else:
-            new_bracket_nr = match_file[-1].bracket_nr + 1
-            return new_bracket_nr
 
 
 
