@@ -63,7 +63,12 @@ class PlayerLL:
         if validate_error:
             return validate_error
         
-        updated = self.edit_player_try(handle, "phone", phone)
+        list_players: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in list_players:
+            if player.handle == handle:
+                player.phone = phone
+        
+        updated = self._dl_wrapper.edit_player_file(list_players)
         if updated:
             return "Success: Player information updated"
         
@@ -78,12 +83,17 @@ class PlayerLL:
         if not existing_player:
             return "Error: Player handle does not exists"
         
+        validate_email = self._validate.validate_email(email)
+        if validate_email:
+            return validate_email
+
         # Validate the updated data
-        validate_error = self._validate.validate_email(email)
-        if validate_error:
-            return validate_error
+        list_players: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in list_players:
+            if player.handle == handle:
+                player.email = email
         
-        updated = self.edit_player_try(handle, "email", email)
+        updated = self._dl_wrapper.edit_player_file(list_players)
         if updated:
             return "Success: Player information updated"
 
@@ -98,12 +108,17 @@ class PlayerLL:
         if not existing_player:
             return "Error: Player handle does not exists"
         
+        validate_address = self._validate.validate_address(address)
+        if validate_address:
+            return validate_address
+
         # Validate the updated data
-        validate_error = self._validate.validate_address(address)
-        if validate_error:
-            return validate_error
+        list_players: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in list_players:
+            if player.handle == handle:
+                player.address = address
         
-        updated = self.edit_player_try(handle, "address", address)
+        updated = self._dl_wrapper.edit_player_file(list_players)
         if updated:
             return "Success: Player information updated"
         
@@ -119,11 +134,16 @@ class PlayerLL:
         if not existing_player:
             return "Error: Player handle does not exists"
         
-        existing_new_handle = self._validate.check_if_handle_in_use(handle_str)
-        if existing_new_handle:
-            return "Error: New handle already exists"
+        existing_handle = self._validate.check_if_handle_in_use(handle)
+        if existing_handle:
+            return "Error: This handle already exists"
         
-        updated = self.edit_player_try(handle, "handle", handle_str)
+        list_players: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in list_players:
+            if player.handle == handle:
+                player.handle = handle_str
+        
+        updated = self._dl_wrapper.edit_player_file(list_players)
         if updated:
             return "Success: Player information updated"
         
@@ -135,15 +155,7 @@ class PlayerLL:
             return "Error: Player handle does not exists"
         
         return self.load_all_player_short_info()
-
-    def edit_player_try(self, find_player_handle, what_to_edit, new_information):
-        player_file: list[Player] = self._dl_wrapper.load_all_player_info()
-        for player in player_file:
-            handle = player.handle
-            if find_player_handle == handle:
-                str_what_to_edit = str(what_to_edit)
-                setattr(player, what_to_edit, new_information)
-                return self._dl_wrapper.edit_player_file(player_file)
+    
 
     def load_all_player_short_info(self):
         """loads a list of dictionarys containing only the id, name, handle and team of the player(public information)"""
