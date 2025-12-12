@@ -131,12 +131,9 @@ class OrganizerUI:
         )
         result = self.ll.create_tournament(result)
 
-        if result:
-            print(("\n" + "Tournament Created!"))
-        else:
-            print(("\n" + "Tournament Could Not Be Created!"))
+    
         # Print whatever LL returns
-        # print("\n" + str(result))
+        print("\n" + str(result))
         input("Press Enter to continue...")
 
 # event name, game type, start date, end date, teams registered
@@ -383,14 +380,30 @@ class OrganizerUI:
             self.menu_ui.print_box_line(f" - {team.name}")
         
         self.menu_ui.print_box_line()
-        select_team = input(" Enter the team name: ").strip()
+
+        while True:
+            user_team_input = input(" Enter the team name: ").strip()
+
+            # find the actual team object
+            select_team = None
+            for team in teams:
+                if team.name == user_team_input:
+                    select_team = team
+                    break
+
+
+            if not select_team:
+                print("Team not found. Please try again.")
+                continue
+            break
+
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_bottom()
 
 
 
         # get players in that team
-        players:list[Player] = self.ll.view_all_players_in_team(select_team)
+        players = self.ll.view_all_players_in_team(select_team.name)
         # check if there are any players
         if not players:
             print("No players found in this team.")
@@ -407,14 +420,18 @@ class OrganizerUI:
         # let user select a player to be the new captain
         for player in players:
             self.menu_ui.print_box_line(f" - {player.handle}")
-        new_captain_handle = input(" Enter the player handle: ").strip().lower()
+        while True:
+            new_captain_handle = input(" Enter the player handle: ").strip().lower()
+            if any(p.handle == new_captain_handle for p in players):
+                break
+            print(" Handle not found in this team. Try again.")
 
         self.menu_ui.print_box_line(f" You selected player: {new_captain_handle} as the new captain. ")
         self.menu_ui.print_box_bottom()
         
         # send to LL to update
         result = self.ll.update_team_captain(
-            select_team,
+            select_team.name,
             new_captain_handle
             )
         
