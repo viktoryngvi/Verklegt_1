@@ -1,14 +1,17 @@
 ### Verklegt_1
 
-This project is .......
+This project is a system for e-sports tournament hosts to safekeep data around the tournaments.
 
 
 License / authors:
+Viktor Yngvi Ísaksson
+Jeremias Borjas Tablante
+Tristan  Snær Danielsson
+Krisófer Kristján Erlendsson
+Arnór  Eyþórsson
 
 Educational project for Reykjavík University, 2025.
 RU e‑Sport Cup (Python)
-
-Blablabalalb
 
 ## Overview:
 
