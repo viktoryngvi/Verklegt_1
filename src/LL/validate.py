@@ -1,4 +1,4 @@
-from datetime import datetime,date
+from datetime import datetime, date
 from models.player import Player
 from models.club import Club
 from models.event import Event
@@ -7,198 +7,150 @@ from IO.data_wrapper import DLWrapper
 from models.tournament import Tournament
 from models.match import Match
 
+class Validate:
+    """ LOGICAL LAYER FOR DATA VALIDATION """
 
-class Validate:  
     def __init__(self, dl_wrapper: DLWrapper):
-          self._dl_wrapper = dl_wrapper
-          
-        # ----------------------------------------------------------------------
-    # CHECKS AND VALIDATION METHODS FOR PLAYER
-    # ----------------------------------------------------------------------
+        """INITIALIZES Validate WITH DLWrapper INSTANCE"""
+        self._dl_wrapper = dl_wrapper
 
+    # ----------------------------------------------------------------------
+    # PLAYER VALIDATION
+    # ----------------------------------------------------------------------
     def validate_player(self, player: Player):
-        """
-        Aggregates all individual validation checks.
-        Returns a LIST of error strings if any check fails, or None if the player is valid.
-        """
-        errors_list = [] # A list to hold all error messages
+        """Returns a list of error strings if invalid, or None if valid."""
+       
+        errors_list = []
+
 
         check_name = self.check_player_name(player)
         check_email = self.check_player_email(player)
         check_phone = self.check_player_phone(player)
         check_dob = self.check_player_dob(player)
-        check_address = self.check_player_address(player) 
-        check_handle = self.check_player_handle(player) 
+        check_address = self.check_player_address(player)
+        check_handle = self.check_player_handle(player)
         check_team = self.check_player_team(player)
 
         if check_name is not True:
             errors_list.append(f"Name: {check_name}")
-
+        
         if check_email is not True:
             errors_list.append(f"Email : {check_email}")
         
         if check_phone is not True:
             errors_list.append(f"Phone : {check_phone}")
-                
+        
         if check_dob is not True:
-             errors_list.append(f"DOB : {check_dob}")
-
+            errors_list.append(f"DOB : {check_dob}")
+        
         if check_address is not True:
-            errors_list.append(f"Address: {check_address} ")
-
+            errors_list.append(f"Address: {check_address}")
+        
         if check_handle is not True:
             errors_list.append(f"Handle : {check_handle}")
-
+        
         if check_team is not True:
             errors_list.append(f"Team : {check_team}")
 
-        # If the errors_list is not empty, return it
-        if errors_list:
-            return errors_list
-        
-        # Otherwise, all checks passed
-        return None
-    
-        # ----------------------------------------------------------------------
-    # VALIDATE PLAYER TEAM
-    # ----------------------------------------------------------------------
-   
+        return errors_list if errors_list else None
+
     def check_player_team(self, player: Player):
-
+        """VALIDATES THAT PLAYER'S TEAM EXISTS OR IS NONE"""
+        
         self.team_str = player.team
-
         if self.team_str is None:
             return True
-
+        
         if not self._dl_wrapper.check_if_team_name_exists(self.team_str):
             return "Team does not exists"
         
         return True
-    
-        # ----------------------------------------------------------------------
-    # VALIDATE PLAYER HANDLE
-    # ----------------------------------------------------------------------
-
 
     def check_player_handle(self, player: Player):
-        """
-        Checks if the player's unique handle already exists in the system.
-        NOTE: This assumes DLWrapper.check_if_handle_exists is implemented.
-        """
+        """VALIDATES THAT PLAYER HANDLE IS UNIQUE"""
+        
         if self.check_if_handle_exists_with_player(player):
             return "Handle does exists"
         
         return True
-    
-        # ----------------------------------------------------------------------
-    # VALIDATE PLAYER ADDRESS
-    # ----------------------------------------------------------------------
-
 
     def check_player_address(self, player: Player):
-        """
-        Validates the player's address format.
-        - Must not be empty.
-        - Must contain at least one digit (for house/street number).
-        - Must not contain consecutive spaces.
-        """
+        """VALIDATES PLAYER ADDRESS FORMAT"""
+        
         self.address_str = player.address.strip()
-
+        
         if self.validate_address(self.address_str):
             return self.validate_address
         
         return True
 
-    # ----------------------------------------------------------------------
-    # VALIDATE PLAYER PHONE
-    # ----------------------------------------------------------------------
-
     def check_player_phone(self, player: Player):
-        """
-        Validates the player's phone number format (8 digits with a dash).
-        """
+        """VALIDATES PLAYER PHONE FORMAT"""
+        
         self.phone = player.phone
-
+        
         if self.validate_phone(self.phone):
             return self.validate_phone(self.phone)
-
+        
         return True
 
-    # ----------------------------------------------------------------------
-    # VALIDATE PLAYER EMAIL
-    # ----------------------------------------------------------------------
-
     def check_player_email(self, player: Player):
-        """
-        Validates the player's email format against common structural rules (e.g., @ symbol, dots).
-        """
+        """VALIDATES PLAYER EMAIL FORMAT"""
+        
         self.email = player.email
-
+        
         if self.validate_email(self.email):
             return self.validate_address(self.email)
         
         return True
-    
-        # ----------------------------------------------------------------------
-    # VALIDATE DOB
-    # ----------------------------------------------------------------------
 
     def check_player_dob(self, player: Player):
-        """
-        Validates the player's Date of Birth (DOB) format and age constraints.
-        """
-        # Convert DOB to a date object if it's a string
+        """VALIDATES PLAYER DATE OF BIRTH AND AGE CONSTRAINTS"""
+        
         dob = player.dob
-
+        
         if isinstance(dob, str):
-            dob = dob.strip()  # remove spaces
+            dob = dob.strip()
+        
             try:
                 dob = datetime.strptime(dob, "%Y-%m-%d").date()
             except ValueError:
                 return "DOB must be in YYYY-MM-DD format."
-
+        
         elif not isinstance(dob, date):
             return "DOB must be in YYYY-MM-DD format."
 
         today = date.today()
-
+        
         if dob >= today:
             return "DOB cannot be in the future."
 
         age = (today - dob).days // 365
-
+        
         if age < 5:
             return "Player must be at least 5 years old."
-
         if age > 100:
             return "Player age cannot exceed 100."
 
-        # Save back normalized date
         player.dob = dob
-
+        
         return True
-        # ----------------------------------------------------------------------
-    # VALIDATE PLAYER NAME
-    # ----------------------------------------------------------------------
 
     def check_player_name(self, player: Player):
-        """
-        Validates the player's full name against length, formatting, and content rules.
-        """
+        """VALIDATES PLAYER FULL NAME FORMAT"""
+        
         self.name = player.name.strip()
         parts = self.name.split()
 
         if len(self.name) < 2 or len(self.name) > 60:
             return "Name must be between 2 and 60 characters."
-
+        
         if "  " in self.name:
             return "Name cannot contain consecutive spaces."
-
+        
         if self.name != self.name.title():
-        # Auto-capitalize each word in the full name and update the player object.
             corrected = ' '.join(part.capitalize() for part in parts)
-            if self.name != corrected:
-                self.name = corrected
+            self.name = corrected
 
         name_no_spaces = self.name.replace(" ", "")
         
@@ -210,51 +162,38 @@ class Validate:
         
         if len(parts) < 2:
             return "Full name must have at least 2 words."
-
+        
         if len(parts) > 5:
             return "Full name cannot have more than 5 words."
 
         return True
-    
-        # ----------------------------------------------------------------------
-    # VALIDATE PHONE
+
     # ----------------------------------------------------------------------
-
+    # PHONE / EMAIL / ADDRESS VALIDATION
+    # ----------------------------------------------------------------------
+    
     def validate_phone(self, phone: str) -> None:
-        """
-        Validates the new updated phone number format (8 digits with a dash).
-        """
+        """VALIDATES PHONE NUMBER FORMAT 123-4567"""
+    
         if "-" not in phone:
-            left = phone[:3]
-            right= phone[3:]
-            phone = left + "-" + right
-
+            phone = phone[:3] + "-" + phone[3:]
+    
         if len(phone) != 8:
             return "Phone number must be in format 123-4567."
-
-
-        
         left, right = phone.split("-")
     
         if not (left.isdigit() and right.isdigit()):
             return "Phone can only contain digits and one dash."
-        
+    
         if len(left) != 3 or len(right) != 4:
             return "Phone number must be in format 123-4567."
-        
-        return None
     
-    # ----------------------------------------------------------------------
-    # VALIDATE EMAIL
-    # ----------------------------------------------------------------------
-
+        return None
 
     def validate_email(self, email: str) -> None:
-        """
-        Validates the new updated email format against common structural rules (e.g., @ symbol, dots).
-        """
+        """VALIDATES EMAIL FORMAT"""
+    
         len_email = len(email)
-
         att_symbol = email.find("@")
         email_split = email.split("@")
         two_dots = email.find("..")
@@ -263,87 +202,65 @@ class Validate:
 
         if "@" not in email:
             return "@ symbol is missing."
-
+    
         if size > 1:
-            second_at = email.find("@", att_symbol+1)
-            return f"{email}\n{' '*second_at}^--there is an extra @ symbol here."
-        
+            second_at = email.find("@", att_symbol + 1)
+            return f"{email}\n{' ' * second_at}^--there is an extra @ symbol here."
+    
         if email[0] == "@" and att_symbol == 0:
             return "There is nothing before the @ symbol."
-        
+    
         if att_symbol == len_email - 1:
-            return f'{email}\n{" "*att_symbol}^--there is nothing after the @ symbol.'
-        
+            return f'{email}\n{" " * att_symbol}^--there is nothing after the @ symbol.'
+    
         if email[0] == ".":
             return "Email address starts with a dot."
-        
+    
         if ".." in email:
-            return f"{email}\n{' '*two_dots}^--there are consecutive dots here."
-        
+            return f"{email}\n{' ' * two_dots}^--there are consecutive dots here."
+    
         if ".@" in email:
-            return f"{email}\n{' '*pat}^--there is an extra dot here."
-        
+            return f"{email}\n{' ' * pat}^--there is an extra dot here."
+    
         if "." not in email_split[1]:
             return "Top-level domain is missing."
-        
-        return None
     
-        # ----------------------------------------------------------------------
-    # VALIDATE ADDRESS
-    # ----------------------------------------------------------------------
-
+        return None
 
     def validate_address(self, address: str) -> None:
-        """
-        Validates the new address format.
-        """
+        """VALIDATES ADDRESS FORMAT"""
+    
         if not address:
             return "Address cannot be empty"
-        
+    
         if not any(char.isdigit() for char in address):
             return "Address must contain a number"
-        
+    
         if "  " in address:
             return "Adress cannot contain consecutive spaces"
-        
-        return None
     
-    # ----------------------------------------------------------------------
-    # VALIDATE HANDLE IN USE
-    # ----------------------------------------------------------------------
+        return None
 
-
+    # ----------------------------------------------------------------------
+    # HANDLE VALIDATION
+    # ----------------------------------------------------------------------
+    
     def check_if_handle_in_use(self, handle):
-        """checks ef the inputted handle is in use in the player list"""
+        """CHECKS IF A HANDLE IS ALREADY IN USE"""
+    
         player_list: list[Player] = self._dl_wrapper.load_all_player_info()
+    
         for player in player_list:
             if player.handle == handle:
                 return True
+    
         return False
-    
-        # ----------------------------------------------------------------------
-    # VALIDATE HANDLE EXISTS WITH PLAYER
-    # ----------------------------------------------------------------------
 
-    
     def check_if_handle_exists_with_player(self, player: Player):
-        """checks ef the inputted handle is in use in the player list"""
-        player_handle = self.check_if_handle_in_use(player.handle)
-        return player_handle
+        """CHECKS IF HANDLE EXISTS FOR A GIVEN PLAYER"""
+    
+        return self.check_if_handle_in_use(player.handle)
 
-    # def check_if_player_id_in_team(self, id):
-    #     """takes id and check if that player is in a team"""
-    #     player_list = self._dl_wrapper.load_all_player_info()
-    #     for players in player_list:
-    #         if id == int(players["id"]):
-    #             if players["team"] is None:
-    #                 return False
-    #     return True
-    
-    # CHECKS AND VALIDATION METHODS FOR CLUB
-    
-        # ----------------------------------------------------------------------
-    # VALIDATE CLUB
     # ----------------------------------------------------------------------
 
     def validate_club(self, club: Club):
@@ -392,12 +309,10 @@ class Validate:
     # ----------------------------------------------------------------------
     # CHECKS AND VALIDATION METHODS FOR EVENT
     # ----------------------------------------------------------------------
-
-
-
     def validate_event(self, event: Event):
+        """VALIDATES EVENT NAME AND DATES"""
+    
         errors_list = []
-
         event_name = self.check_event_name(event.event_name)
         event_start = self.check_start_date_event(event.start_date, event.tournament_name)
         event_end = self.check_end_date_event(event.end_date, event.tournament_name)
@@ -405,268 +320,193 @@ class Validate:
 
         if event_name is not True:
             errors_list.append(f"Name: {event_name}")
-
+    
         if event_start is not True:
             errors_list.append(f"Start date: {event_start}")
-
+    
         if event_end is not True:
             errors_list.append(f"End date: {event_end}")
 
-        if errors_list:
-            return errors_list
-
-        return None
-    
-
-    # ----------------------------------------------------------------------
-    # get next match id
-    # ----------------------------------------------------------------------
+        return errors_list if errors_list else None
 
     def get_next_event_id(self):
-        """checks the last match and returns the next usable id"""
+        """RETURNS NEXT EVENT ID BASED ON DATA LAYER"""
+    
         event_data: list[Event] = self._dl_wrapper.load_event_blueprint()
+    
         if not event_data:
             return 1
-        last_match: Event = event_data[-1]
-        next_useable_id = int(last_match.event_id + 1)
-        return next_useable_id
     
-    # ----------------------------------------------------------------------
-    # VALIDATE EVENT NAME
-    # ----------------------------------------------------------------------
-
+        last_event: Event = event_data[-1]
+    
+        return int(last_event.event_id + 1)
 
     def check_event_name(self, event_name: str):
+        """VALIDATES EVENT NAME"""
+    
         if not event_name or not event_name.strip():
             return "Event name cannot be empty."
-
+    
         if not event_name[0].isupper():
-            return "Event name must start with an uppercase letter."        
-
+            event_name = event_name.capitalize()
+    
         if not event_name.isalpha():
             return "Event name must contain only letters"
-        
+    
         if len(event_name) > 20:
             return "Event name is too long (max 20 characters)."
-        
-        return True 
     
-        # ----------------------------------------------------------------------
-    # VALIDATE START DATE
-    # ----------------------------------------------------------------------
+        return True
 
     def check_start_date_event(self, start_date: str, tournament_name: str):
+        """VALIDATES EVENT START DATE AGAINST TOURNAMENT"""
+    
         try:
             start_date_event: datetime = datetime.strptime(start_date, "%Y-%m-%d")
         except ValueError:
             return "Event must be in YYYY-MM-DD format."
-                
+    
         start_tournament = self.view_start_date_of_tournament(tournament_name)
-
+    
         if isinstance(start_tournament, str):
             return start_tournament
-
+    
         if start_date_event.date() < start_tournament:
             return f"Event cannot start before the tournament start date ({start_tournament})."
-
+    
         return True
 
-        # ----------------------------------------------------------------------
-    # VALIDATE END DATE
-    # ----------------------------------------------------------------------
-
     def check_end_date_event(self, end_date: str, tournament_name):
+        """VALIDATES EVENT END DATE AGAINST TOURNAMENT"""
+    
         try:
             end_date_event: datetime = datetime.strptime(end_date, "%Y-%m-%d")
         except ValueError:
             return "Event must be in YYYY-MM-DD format."
-
+    
         end_tournament = self.view_end_date_of_tournament(tournament_name)
-
+    
         if isinstance(end_tournament, str):
             return end_tournament
-
+    
         if end_date_event.date() > end_tournament:
             return f"Event cannot end after the tournament end date ({end_tournament})."
-
-        return True
     
+        return True
+
     def view_start_date_of_tournament(self, tournament_name):
+        """RETURNS START DATE OF TOURNAMENT"""
+    
         tournament_list: list[Tournament] = self._dl_wrapper.read_tournament_file()
+    
         for tournament in tournament_list:
             if tournament.tournament_name == tournament_name:
                 return tournament.start_date
-            
-        return "Tournament not found"
     
+        return "Tournament not found"
+
     def view_end_date_of_tournament(self, tournament_name):
+        """RETURNS END DATE OF TOURNAMENT"""
+    
         tournament_list: list[Tournament] = self._dl_wrapper.read_tournament_file()
+    
         for tournament in tournament_list:
             if tournament.tournament_name == tournament_name:
                 return tournament.end_date
-            
+    
         return "Tournament not found"
 
-
-    def check_event_name(self, event_name: str):
-        if not event_name or not event_name.strip():
-            return "Event name cannot be empty."
-
-        if not event_name[0].isupper():
-            event_name = event_name.capitalize()
-                  
-
-        if not event_name.isalpha():
-            return "Event name must contain only letters"
-        # ----------------------------------------------------------------------
-    # VALIDATE REGISTERED TEAMS
     # ----------------------------------------------------------------------
-        
-        if len(event_name) > 20:
-            return "Event name is too long (max 20 characters)."
-        
-        return True 
-
- 
-    def check_registered_teams(self, event : Event):
-        return True
-            # ----------------------------------------------------------------------
-    # VALIDATE MATCHES
+    # TOURNAMENT VALIDATION
     # ----------------------------------------------------------------------
-    def check_matches(self, event : Event):
-        return True
     
-    def check_first_win(self, match : Match):
-        match_file: list[Match] = self._dl_wrapper.load_match_file()
-        match_file[-1] 
-        pass
-
-
-
-    # ----------------------------------------------------------------------
-    # VALIDATE TOURNAMENT 
-    # ----------------------------------------------------------------------
     def validate_tournament(self, tournament: Tournament):
-            errors = []
-
-            check_name = self.check_tournament_name(tournament)
-            #check_type = self.check_tournament_type(tournament.type)
-            check_dates = self.check_dates(tournament)
-            check_contact_name = self.check_contact_name(tournament)
-            check_contact_email = self.check_contact_email(tournament)
-            check_contact_phone = self.check_contact_phone(tournament)
-
-            if check_name is not True:
-                errors.append(f"Name: {check_name}")
-
-            # if check_type is not True:
-            #     errors.append(f"Type: {check_type}")
-
-            if check_dates is not True:
-                errors.append(f"Dates: {check_dates}")
-
-            if check_contact_name is not True:
-                errors.append(f"Dates: {check_contact_name}")
-
-            if check_contact_email is not True:
-                errors.append(f"Dates: {check_contact_email}")
-
-            if check_contact_phone is not True:
-                errors.append(f"Dates: {check_contact_phone}")
-
-            return errors if errors else None
-    # ----------------------------------------------------------------------    
-     # tournament name validation
-    # ----------------------------------------------------------------------
+        """VALIDATES TOURNAMENT NAME, DATES, AND CONTACT INFO"""
     
-    def check_tournament_name(self, tournament: Tournament):
-        tournament_name = tournament.tournament_name.strip()
+        errors = []
+        check_name = self.check_tournament_name(tournament)
+        check_dates = self.check_dates(tournament)
+        check_contact_name = self.check_contact_name(tournament)
+        check_contact_email = self.check_contact_email(tournament)
+        check_contact_phone = self.check_contact_phone(tournament)
 
+        if check_name is not True:
+            errors.append(f"Name: {check_name}")
+    
+        if check_dates is not True:
+            errors.append(f"Dates: {check_dates}")
+    
+        if check_contact_name is not True:
+            errors.append(f"Contact Name: {check_contact_name}")
+    
+        if check_contact_email is not True:
+            errors.append(f"Contact Email: {check_contact_email}")
+    
+        if check_contact_phone is not True:
+            errors.append(f"Contact Phone: {check_contact_phone}")
+
+        return errors if errors else None
+
+    def check_tournament_name(self, tournament: Tournament):
+        """VALIDATES TOURNAMENT NAME"""
+    
+        tournament_name = tournament.tournament_name.strip()
+    
         if len(tournament_name) == 0:
             return "Tournament name cannot be empty."
-
+    
         if len(tournament_name) < 3 or len(tournament_name) > 60:
             return "Tournament name must be between 3–60 characters."
-
+    
         return True
 
-
-# ----------------------------------------------------------------------
- # tournament type validation
-# ----------------------------------------------------------------------
-
-
-    # def check_tournament_type(self, tournament_type: str):
-    #     tournament_type_stripped = tournament_type.strip()
-
-    #     allowed_names = ["Knockout", "Double Elimination"]
-
-    #     if self.tournament_type not in allowed_names:
-    #         return "Tournament type must be 'Knockout' or 'Double Elimination'."
-
-    #     return True
-
-
-    # ----------------------------------------------------------------------
-     # date validation
-    # ----------------------------------------------------------------------
-
     def check_dates(self, tournament: Tournament):
+        """VALIDATES TOURNAMENT START AND END DATES"""
+    
         try:
             self.start = datetime.strptime(tournament.start_date, "%Y-%m-%d")
             self.end = datetime.strptime(tournament.end_date, "%Y-%m-%d")
         except ValueError:
             return "Invalid date format. Use yyyy-mm-dd"
-
+    
         if self.start >= self.end:
             return "Start date must be before end date."
-
+    
         if (self.end - self.start).days < 4:
             return "Tournament must span more then 4 days."
-
-        return True
-
-
     
-# --------------------------------------------------------------------------
-# VALIDATE CONTACT NAME
-# --------------------------------------------------------------------------   
+        return True
 
     def check_contact_name(self, tournament: Tournament):
+        """VALIDATES TOURNAMENT CONTACT NAME"""
+    
         check_contact_name = tournament.contact_name.strip()
-
         if len(check_contact_name) == 0:
             return "Contact name cannot be empty."
-
+    
         if len(check_contact_name) < 3:
             return "Contact name must be at least 3 characters."
-
+    
         return True
 
-# --------------------------------------------------------------------------
-# VALIDATE CONTACT EMAIL
-# --------------------------------------------------------------------------  
     def check_contact_email(self, tournament: Tournament):
+        """VALIDATES TOURNAMENT CONTACT EMAIL"""
+    
         check_contact_email = tournament.contact_email.strip()
-
         result = self.validate_email(check_contact_email)
-
+    
         if result is not None:
             return f"Invalid email: {result}"
-
-        return True
     
+        return True
 
-# --------------------------------------------------------------------------
-# VALIDATE CONTACT PHONE
-# --------------------------------------------------------------------------  
     def check_contact_phone(self, tournament: Tournament):
+        """VALIDATES TOURNAMENT CONTACT PHONE"""
+    
         check_contact_phone = tournament.contact_phone.strip()
-
         result = self.validate_phone(check_contact_phone)
-
+    
         if result is not None:
             return f"Invalid phone: {result}"
-
-        return True
     
+        return True

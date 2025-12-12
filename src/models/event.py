@@ -3,6 +3,8 @@ from datetime import date
 # from models.match import Match
 
 class Event:
+    """EVENT CLASS REPRESENTS EVENT NAME, TYPE, TOURNAMENT, START/END DATE, TEAM NAME, AND EVENT ID."""
+    
     def __init__(
             self, 
             event_name :str = None, 

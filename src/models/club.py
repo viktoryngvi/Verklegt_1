@@ -6,4 +6,3 @@ class Club:
         self.country = country
         self.colors = colors
         self.teams = teams
-

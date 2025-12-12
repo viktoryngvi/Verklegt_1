@@ -8,6 +8,11 @@ from models.match import Match
 from models.club import Club
 
 class DLWrapper:
+    """Central wrapper for all IO operations: 
+    loads, creates, updates, and stores players, teams, events, matches, tournaments, and clubs."""
+
+
+
     def __init__(self):
         self.playerio = Player_IO()
         self.teamio = Team_IO()
@@ -17,70 +22,97 @@ class DLWrapper:
         self.match = Match()
         self.event_blueprint = Event_blueprint()
 
-    # Player methods
+    # ----------------------------------------------------------------------
+    # PLAYER METHODS
+    # ----------------------------------------------------------------------
 
     def load_all_player_info(self):
+        """lOADS ALL PLAYER INFO FROM INPUT"""
         return self.playerio.load_all_player_info()
 
     def create_player(self, player_data :Player_IO):
-        """takes all player info and appends that into the player file"""
+        """TAKES ALL PLAYER INFO AND APPENDS THAT INTO THE PLAER FILE"""
         return self.playerio.create_player(player_data)
     
     def edit_player_file(self, player_data):
+        """EDITS PLAYER INFORAMTION THAT WAS INPUTTED, AND UPATES IT"""
         return self.playerio.edit_player_file(player_data)
-    # team methods
+    
+    # ----------------------------------------------------------------------
+    # TEAM METHODS
+    # ----------------------------------------------------------------------
 
     def view_all_teams(self):
         """returns a list of dictionarys of all teams"""
         return self.teamio.view_all_teams()
     
     def append_team_into_file(self, team):
+        """APPENDING NEWLY CREATED TEAM"""
         return self.teamio.append_team_into_file(team)
     
     def edit_teams_file(self, teams_file):
+        """UPDATES TEAM CAPTAIN"""
         return self.teamio.edit_teams_file(teams_file)
     # er ekki tengt!!!!!!!!!!!!!!!!
 
-    
-    
-    # tournament methods
+    # ----------------------------------------------------------------------
+    # TOURNAMENT METHODS
+    # ----------------------------------------------------------------------
 
     def read_tournament_file(self):
+        """READ TOURNAMENT FILES AND RETURNS THE INFORMATION """
         return self.tournamentio.read_tournament_file()
     
     def write_into_file(self, tournament_data):
+        """WRITE / APPEND INTO TOURNAMENT DATA FILE """
         return self.tournamentio.write_into_file(tournament_data)
 
-
-
-   # Event methods:
+    # ----------------------------------------------------------------------
+    # EVENT METHODS
+    # ----------------------------------------------------------------------
 
     def create_empty_event(self, event_blueprint: Event_blueprint):
+        """CREATES EMPTY EVENT AND SAVES INFO INTO CSV"""
         return self.event_blueprintio.create_empty_event(event_blueprint)
 
     def load_event_blueprint(self):
+        """LOADS ALL EVENT BLUEPRINT INFORMATION FROM FILE"""
         return self.event_blueprintio.load_event_blueprint()
+
     
     def append_team_into_blueprint(self, team_data: Event_blueprint):
+        """APPENDS A TEAM INTO AN EXISTING EVENT BLUEPRINT"""
         return self.event_blueprintio.append_team_into_blueprint(team_data)
+
     
     def load_match_file(self):
+        """LOADS ALL MATCHES FROM MATCH FILE"""
         return self.event_blueprintio.load_match_file()
+
     
     def append_to_match_file(self, match: Match):
+        """APPENDS A NEW MATCH INTO THE MATCH FILE"""
         return self.event_blueprintio.append_to_match_file(match)
+
     
     def edit_match_file(self, matches: list[Match]):
+        """UPDATES EXISTING MATCH INFORMATION IN THE MATCH FILE"""
         return self.event_blueprintio.edit_match_file(matches)
+
     
     def read_results_file(self):
+        """READS ALL RESULTS FROM RESULTS FILE"""
         return self.event_blueprintio.read_results_file()
+
     
     def append_into_results(self, matches_to_append: list[Match]):
+        """APPENDS NEW MATCH RESULTS INTO THE RESULTS FILE"""
         return self.event_blueprintio.append_into_results(matches_to_append)
 
     
-    # club methods:
+    # ----------------------------------------------------------------------
+    # CLUB METHODS
+    # ----------------------------------------------------------------------
 
     def load_all_clubs(self):
         return self.clubio.load_all_clubs()

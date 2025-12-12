@@ -3,12 +3,16 @@ from LL.validate import Validate
 from models.club import Club
 
 class ClubLL:
+    """HANDLES CLUB OPERATIONS: CREATE CLUBS, ADD TEAMS, VIEW CLUBS"""
+
     def __init__(self, dl_wrapper: DLWrapper, validate: Validate):
         self.dl_wrapper = dl_wrapper
         self.validate = validate
     
     
     def create_club(self, club: Club):
+        """CREATES A NEW CLUB IF NAME IS UNIQUE AND VALID"""
+    
         club_name = club.name
         if self.check_if_club_name_in_user(club_name):
             return "Error: Club name already exists"

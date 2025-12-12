@@ -4,6 +4,7 @@ from models.club import Club
 class Club_IO:
     """Reads, adds, registers, views clubs from/to a csv file and checks if a club name is already in use."""
     
+    
     def __init__(self):
         self.file_path = "data/clubs.csv"
 
@@ -25,7 +26,10 @@ class Club_IO:
         return clubs_list
                 
     def register_club(self, club: Club):
+        """ REGISTER CLUB APPEND IN CSV, RETURNS TRUE WHEN DONE """
+
         with open(self.file_path, "a", encoding="utf-8") as club_file:
+
             club_file.write(
                 f'{club.name},'
                 f'{club.home_town},'
@@ -34,6 +38,7 @@ class Club_IO:
                 f'{";".join(club.teams)},'
                 f'\n'
             )
+            
         return True
     
     def edit_teams_file(self, clubs: list[Club]):
