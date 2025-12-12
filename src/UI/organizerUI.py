@@ -241,9 +241,21 @@ class OrganizerUI:
             input("Press Enter to continue...")
             return
 
-        event_name = choose_from_list("Select event:", events)
+        for i, event in enumerate(events, start=1):
+            self.menu_ui.print_box_line(f"  [{i}] {event}")
+        self.menu_ui.print_box_line()
+        select_event = get_non_empty_input(" ➤ Select Event by number: ").strip()
+        try:
+            e_idx = int(select_event) - 1
+            event_name = events[e_idx]
+        except (ValueError, IndexError):
+            print("Invalid event selection.")
+            input("Press Enter to continue...")
+            return
+        
         self.menu_ui.print_box_bottom()
 
+        registered_count = 0
         # select teams to register
         while True:
             self.menu_ui.print_box_top()
@@ -271,12 +283,14 @@ class OrganizerUI:
                 input("Press Enter to continue...")
                 return
 
+
             selected_team_name = teams[team_index].name  
 
-            result = self.ll.register_teams_into_event(selected_team_name)
+            result = self.ll.register_team_into_event(selected_team_name)
             
             print("\n" + str(result))
 
+            registered_count += 1
             more = get_choice_input(" Register another team? (y/n): ", ["y", "n"])
             if more.lower() == "n":
                 break
