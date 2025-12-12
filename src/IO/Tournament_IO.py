@@ -49,6 +49,7 @@ class Tournament_IO(Tournament):
         """APPENDS A NEW TOURNAMENT AND SAVES IT INTO THE TOURNAMENT FILE"""
 
         with open(self.file_path, "a", encoding="utf-8") as new_tournament_data:
+            event_list_str = ";".join(str(t) for t in tournament.event_list)
 
             new_tournament_data.write(
                 f'{tournament.tournament_id},'
@@ -56,7 +57,7 @@ class Tournament_IO(Tournament):
                 f'{tournament.tournament_location},'
                 f'{(tournament.start_date)},'
                 f'{(tournament.end_date)},'
-                f'{tournament.event_list},'
+                f'{event_list_str},'
                 f'{tournament.contact_name},'
                 f'{tournament.contact_email},'
                 f'{tournament.contact_phone},'
@@ -74,18 +75,17 @@ class Tournament_IO(Tournament):
 
 
         with open(self.file_path, "w", encoding="utf-8") as tournament_file:
-
             tournament_file.write("id,tournament_name,tournament_location,start_date,end_date,event_list,contact_name,contact_email,contact_phone\n")
 
             for tournament in tournaments:
-
+                event_list_str = ";".join(str(t) for t in tournament.event_list)
                 tournament_file.write(
                     f'{tournament.tournament_id},'
                     f'{tournament.tournament_name},'
                     f'{tournament.tournament_location},'
                     f'{date.isoformat(tournament.start_date)},'
                     f'{date.isoformat(tournament.end_date)},'
-                    f'{tournament.event_list},'
+                    f'{event_list_str},'
                     f'{tournament.contact_name},'
                     f'{tournament.contact_email},'
                     f'{tournament.contact_phone},'

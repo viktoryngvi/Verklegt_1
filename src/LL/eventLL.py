@@ -92,20 +92,20 @@ class EventLL:
     # # MAKE EVENT PUBLIC
     # # ----------------------------------------------------------------------
 
-    # def make_event_public(self):
-    #     """MOVES EVENT DATA TO PUBLIC FILE OR KNOCKOUT"""
+    def move_from_blueprint_to_match(self):
+        """MOVES EVENT DATA TO PUBLIC FILE OR KNOCKOUT"""
     
-    #     blueprint_file: list[Match] = self._dl_wrapper.load_event_blueprint()
+        blueprint_file: list[Match] = self._dl_wrapper.load_event_blueprint()
     
-    #     for line in blueprint_file:
-    #         if line.event_id == 1:
-    #             type_of_event = line.game_type
+        for line in blueprint_file:
+            if line.event_id == 1:
+                type_of_event = line.game_type
     
-    #     if type_of_event == "knockout":
-    #         return self.move_blueprint_to_match_file()
+        if type_of_event == "knockout":
+            return self.move_blueprint_to_match_file()
     
-    #     if type_of_event == "last_team_standing":
-    #         return self._dl_wrapper.edit_match_file()
+        if type_of_event == "last_team_standing":
+            return self._dl_wrapper.edit_match_file()
  
     # ----------------------------------------------------------------------
     # MOVE BLUEPRINT TO Match
@@ -146,6 +146,10 @@ class EventLL:
             return new_bracket_nr
         
     def get_date_of_match(self):
+        # first day, 
+        pass
+
+    def get_time_of_match(self):
         pass
 
     # ----------------------------------------------------------------------
@@ -155,7 +159,7 @@ class EventLL:
     def input_match_results(self, match_id, team_a_score, team_b_score, match: Match):
         """UPDATES MATCH SCORES AND DETERMINES WINNER"""
     
-        schedule_file: list(Match) = self._dl_wrapper.load_match_file()
+        schedule_file: list[Match] = self._dl_wrapper.load_match_file()
     
         for match in schedule_file:
     
@@ -192,41 +196,31 @@ class EventLL:
         bracket_id = 1
         #for lööp sem býr til lista af tuples (team_a, team_b)
         for i in range(0, 16, 2):
-            teams = (i, i+1)
-
-        for teamsvs in all_team_list: # iterates tuple teams list
-            the_event = public_file[0]
-            team_a =
-            team_b = 
-            server_id = self.get_server_id()
-            match_id = self.get_match_id()
-            date_of_match = self.get_date_of_match()
-            match: Match = Match(
-                tournament_name=the_event.tournament_name,
-                event_name=the_event.event_name,
-                game_type=the_event.event_type,
-                team_a=team_a,
-                team_b=team_b,
-                server_id=server_id,
-                match_id=match_id,
-                bracket_nr=bracket_id,
-                date_of_match=date_of_match,
-                time_of_match=time_of_match
-                teams=
-                team_a_score=None
-                team_b_score=None
-                winner=None
-                )
-            self._dl_wrapper.append_to_match_file(match)
-            # self._dl_wrapper.append_to_match_file(f'{match.tournament_name},{match.event_name},{match.game_type},{match.match_id}{server_id},{bracket_id},{match.date_of_match}{match.time_of_match},{team_a},{team_b},team_a_score,team_b_score,winner,')
-            
-
-    # ----------------------------------------------------------------------
-    # GET BRACKET ID
-    # ----------------------------------------------------------------------
- 
-
-
+            team_a = all_team_list[i]
+            team_b = all_team_list[i+1]
+            for teamsvs in all_team_list: # iterates tuple teams list
+                the_event = public_file[1]
+                server_id = self.get_server_id()
+                match_id = self.get_match_id()
+                date_of_match = self.get_date_of_match()
+                time_of_match = self.get_time_of_match()
+                match: Match = Match(
+                    tournament_name=the_event.tournament_name,
+                    event_name=the_event.event_name,
+                    game_type=the_event.event_type,
+                    team_a=team_a,
+                    team_b=team_b,
+                    server_id=server_id,
+                    match_id=match_id,
+                    bracket_nr=bracket_id,
+                    date_of_match=date_of_match,
+                    time_of_match=time_of_match,
+                    teams= all_team_list,
+                    team_a_score=None,
+                    team_b_score=None,
+                    winner=None,
+                    )
+                self._dl_wrapper.append_to_match_file(match)                
 
     # ----------------------------------------------------------------------
     # CREATE ROUND 2, 3, AND 4
@@ -241,16 +235,18 @@ class EventLL:
         for match in schedule_file[round_nr:]:
             list_of_winners_from_bracket.append(match.winner)
 
-        bracket_id = self.get_bracket_id()
-        
-        for team in list_of_winners_from_bracket:
-            team_a = list_of_winners_from_bracket[0]
-            list_of_winners_from_bracket.pop(0)
-            team_b = list_of_winners_from_bracket[0]
-            list_of_winners_from_bracket.pop(0)
+        match.bracket_nr = self.get_bracket_id()
 
-            server_id = self.get_server_id
-            self._dl_wrapper.append_to_match_file(f'{match.tournament_name},{match.event_name},{match.game_type},{server_id},{bracket_id},{match.date_of_match}{match.time_of_match},{team_a},{team_b},team_a_score,team_b_score,winner,')
+        for i in range(0, len(list_of_winners_from_bracket), 2):
+            team_a_new = list_of_winners_from_bracket[i]
+            team_b_new = list_of_winners_from_bracket[i+1]
+
+            match.date_of_match = self.get_date_of_match()
+            match.time_of_match = self.get_time_of_match()
+            match.team_a = team_a_new
+            match.team_b = team_b_new
+            match.server_id = self.get_server_id()
+            self._dl_wrapper.append_to_match_file(match)
         
         return "Round created"
             
@@ -291,6 +287,43 @@ class EventLL:
         self.create_round_2_3_and_4(round_nr)
         
         return "Round created"
+
+    #######################################################################
+
+
+    def move_blueprint_to_last_team_standing(self, event: Event):
+        blueprint: list[Event] = self._dl_wrapper.load_event_blueprint()
+        
+        list_of_teams = []
+        server_id = self.get_server_id()
+        for teams in blueprint:
+            list_of_teams.append(teams.team_name)
+        the_event = blueprint[1]
+
+        server_id = self.get_server_id()
+        match_id = self.get_match_id()
+        date_of_match = self.get_date_of_match()
+        time_of_match = self.get_time_of_match()            
+        match: Match = Match(
+            tournament_name=the_event.tournament_name,
+            event_name=the_event.event_name,
+            game_type=the_event.event_type,
+            team_a=None,
+            team_b=None,
+            server_id=server_id,
+            match_id=match_id,
+            bracket_nr=None,
+            date_of_match=date_of_match,
+            time_of_match=time_of_match,
+            teams= list_of_teams,
+            team_a_score=None,
+            team_b_score=None,
+            winner=None,
+            )
+
+        self._dl_wrapper.append_to_match_file()
+
+        return "Event is now public"
 
     # ----------------------------------------------------------------------
     # DECLARE WINNER

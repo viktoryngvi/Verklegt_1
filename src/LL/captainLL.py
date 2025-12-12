@@ -192,7 +192,8 @@ class CaptainLL:
     # ----------------------------------------------------------------------
     # UPDATE TEAM CAPTAIN
     # ----------------------------------------------------------------------
-    
+
+
     def update_team_captain(self, team_name, handle):
         """UPDATES THE TEAM CAPTAIN AND MOVES OLD CAPTAIN TO PLAYER LIST"""
 
@@ -200,25 +201,18 @@ class CaptainLL:
 
         if not existing_team:
             return "Error: Team does not exists"
-        
+
         existing_handle_in_team = self._team.check_if_player_handle_in_team(team_name, handle)
 
         if not existing_handle_in_team:
             return "Error: Player's handle is not in team"
-        
+
         team_list: list[Team] = self._dl_wrapper.view_all_teams()
 
         for team in team_list:
-
             if team.name == team_name:
-                team.players.append(team.captain)
                 team.captain = handle
 
-                for player_handle in team.players:
-
-                    if player_handle == handle:
-                        team.players.remove(handle)
-                            
         return self._dl_wrapper.edit_teams_file(team_list)
     
 

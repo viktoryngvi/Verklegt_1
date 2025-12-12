@@ -129,9 +129,9 @@ class LLWrapper:
         """LOADS ALL PLAYER SHORT INFO"""
         return self.load_all_player_ll.load_all_player_short_info()
    
-    def view_all_teams(self):
+    def view_teams_with_no_club(self):
         """RETURNS ALL TEAMS"""
-        return self.team_ll.view_all_teams()
+        return self.team_ll.view_teams_with_no_club()
    
     def get_players_in_team(self, team_name):
         """RETURNS PLAYERS IN SPECIFIC TEAM"""
