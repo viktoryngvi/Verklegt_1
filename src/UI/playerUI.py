@@ -91,13 +91,29 @@ class PlayerUI:
         # spurja um handle, senda new info til LL
         self.menu_ui.print_header("EDIT MY INFO")
         self.menu_ui.print_box_top()
-        handle = input("\tEnter your player handle: ").strip().lower()
         self.menu_ui.print_box_bottom() 
+        T_F = True
+        while T_F:
+            self.menu_ui.print_header("EDIT MY INFO")
+            self.menu_ui.print_box_top()
+            handle = input("\tEnter your player handle: ").strip().lower()
+            self.menu_ui.print_box_bottom() 
 
-        if not handle:
-            print("Handle cannot be empty.")
-            input("Press Enter to continue...")
-            return
+            if not handle:
+                print("Handle cannot be empty.")
+                input("Press Enter to continue...")
+                return
+            else:
+                result = self.ll.check_if_handle_in_use(handle)
+                if result == False:
+                    print("Player handle does not exist")
+                    T_F = True
+                else:
+                    T_F = False
+                
+                
+                
+            
         while True:
 
             self.menu_ui.print_box_top()
@@ -119,6 +135,8 @@ class PlayerUI:
             if choice == "1":
                 self.menu_ui.print_box_top()
                 new_phone = input(" Enter new phone (format 123-4567): ").strip()
+                if "-" not in new_phone:
+                    new_phone = new_phone[:3] + "-" + new_phone[3:]
                 result = self.ll.edit_player_phone(handle, new_phone)
                 self.menu_ui.print_box_bottom()
         
