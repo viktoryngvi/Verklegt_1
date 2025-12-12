@@ -29,6 +29,8 @@ class TeamLL:
         the teams.csv file"""
         teams_file: list[Team] = self._dl_wrapper.view_all_teams()
         captain_handle = self.player_ll.take_id_return_handle(captain_id)
+        if captain_handle is not True:
+            return "Captain handle does not exist"
         player_handle = self.player_ll.take_id_return_handle(captain_id)
         id = self.get_last_team_id()
         list_of_player_handles = []
@@ -38,7 +40,7 @@ class TeamLL:
             list_of_player_handles.append(player_handle)
             
         team_model = Team(id, name, captain_handle, list_of_player_handles)
-
+        #TODO chance crashing if ID does not exists have to check it 
         list_player: list[Player] = self._dl_wrapper.load_all_player_info()
         for player in list_player:
             if player.handle == player_handle:
@@ -115,7 +117,7 @@ class TeamLL:
 
     def check_if_player_handle_in_team(self, find_team, handle):
         """takes a player handle and checks if that player handle is in the team"""
-        players_in_team: list[Player] = self.view_all_players_in_team(find_team)
+        players_in_team: list[Player] = self.view_all_players_in_team(handle)
 
         if not players_in_team:
             return "No players in this team"
