@@ -5,25 +5,45 @@ from models.club import Club
 class Club_IO:
     """Reads, adds, registers, views clubs from/to a csv file and checks if a club name is already in use."""
     
+    
     def __init__(self):
         self.file_path = "data/clubs.csv"
 
+    # ----------------------------------------------------------------------
+    # READ CLUB FILE
+    # ----------------------------------------------------------------------
 
     def read_club_file_as_list_of_dict(self):
+        """READS THE CLUB FILES AND RETURNS LIST #### NEED TO UPDATE """
+
         with open(self.file_path, "r", encoding="utf-8") as club_file:
             return list(DictReader(club_file))
 
+    # ----------------------------------------------------------------------
+    # ADD CLUB
+    # ----------------------------------------------------------------------
         
     def add_club_id(self, club : Club):
+        """ADDS CLUB ID TO NEED TO UPDATE"""
+
         club_file= self.read_club_file_as_list_of_dict()
+
         if not club_file:
             return 1
+        
         last_id = int(club_file[-1].id)
+
         return last_id + 1
 
+    # ----------------------------------------------------------------------
+    # REGISTER CLUB
+    # ----------------------------------------------------------------------
                 
     def register_club(self, club: Club):
+        """ REGISTER CLUB APPEND IN CSV, RETURNS TRUE WHEN DONE """
+
         with open(self.file_path, "a", encoding="utf-8") as club_file:
+
             club_file.write(
                 f"{self.add_club_id()},"
                 f"{club.name},"
@@ -32,12 +52,20 @@ class Club_IO:
                 f"{';'.join(club.color) if club.color else ''},"
                 f"{club.teams}\n"
             )
+            
         return True
 
+    # ----------------------------------------------------------------------
+    # ADD TEAM TO CLUB
+    # ----------------------------------------------------------------------
 
     def add_team_to_club(self, clubs):
+        """ ADD TEAM TO CLUB, WRITES IN CSV, RETURNS FILE UPDATED """
+
         with open(self.file_path, "w", encoding="utf-8") as club_file_out:
+
             club_file_out.write("club_id,club_name,club_home_town,club_country,club_colors,teams\n")
+            
             for club in clubs:
                 club_file_out.write(
                     f"{getattr(club, 'id', '')},"
@@ -47,12 +75,19 @@ class Club_IO:
                     f"{';'.join(club.color) if club.color else ''},"
                     f"{';'.join(club.teams) if club.teams else ''}\n"
                 )
+
         return "Club file updated"
 
+    # ----------------------------------------------------------------------
+    # VIEW CLUBS
+    # ----------------------------------------------------------------------
     
     def view_clubs(self):
+        """ GET CLUB LIST FROM CSV, RETURNS CLUB LIST """
+
         club_file = self.read_club_file_as_list_of_dict()
         club_list = []
+
         for row in club_file:
             attributes = row.split(",")
             club = Club()
@@ -66,11 +101,19 @@ class Club_IO:
         
         return club_list
     
+    # ----------------------------------------------------------------------
+    # VIEW CLUB INFORMATION 
+    # ----------------------------------------------------------------------
 
     def view_club_information(self, club_name):
+        """ GET CLUB INFORMATION FROM INPUTTED NAME, RETURNS INFO """
+
         club_file = self.read_club_file_as_list_of_dict()
+
         for line in club_file:
+
             if line["club_name"] == club_name:
+
                 return Club(
                     name=line["club_name"],
                     home_town=line["club_home_town"],
@@ -78,13 +121,22 @@ class Club_IO:
                     color=line["club_colors"].split(";") if line["club_colors"] else [],
                     teams=line["teams"].split(";") if line["teams"] else [],
                 )
+            
         return None
 
+    # ----------------------------------------------------------------------
+    # CHECK IF CLUB NAME IS IN USE
+    # ----------------------------------------------------------------------
             
     def check_if_club_name_in_use(self, club_name):
+        """ TAKES INPUTTED CLUB, RETURNS TRUE IF NAME IN CLUB FILE, ELSE RETURNS FALSE """
+
         club_file = self.read_club_file_as_list_of_dict()
+        
         for line in club_file:
+        
             if line["club_name"] == club_name:
                 return True
+        
         return False
     

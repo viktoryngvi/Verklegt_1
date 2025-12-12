@@ -4,13 +4,26 @@ from csv import DictReader
 
 
 class Tournament_IO(Tournament):
+    """HANDLES READING, WRITING AND EDITING TOURNAMENT INFORMATION IN CSV FILE"""
+
+
     def __init__(self):
         self.file_path = "data/Tournament.csv"
 
+    # ----------------------------------------------------------------------
+    # READ TOURNAMENT FILE 
+    # ----------------------------------------------------------------------
+
     def read_tournament_file(self):
+        """LOADS ALL TOURNAMENTS FROM THE TOURNAMENT CSV FILE"""
+
+
         tournament_list = []
+
         with open(self.file_path, "r", encoding="utf-8") as Tournament_file:
+
             headers = Tournament_file.readline().split(",")
+
             for row in Tournament_file:
                 attributes = row.split(",")
                 tournament = Tournament()
@@ -25,9 +38,16 @@ class Tournament_IO(Tournament):
                 tournament.contact_phone = str(attributes[8])
 
                 tournament_list.append(tournament)
+
         return tournament_list
+    
+    # ----------------------------------------------------------------------
+    # WRITE INTO FILE
+    # ----------------------------------------------------------------------
 
     def write_into_file(self, tournament: Tournament):
+        """APPENDS A NEW TOURNAMENT AND SAVES IT INTO THE TOURNAMENT FILE"""
+
         with open(self.file_path, "a", encoding="utf-8") as new_tournament_data:
 
             new_tournament_data.write(
@@ -42,12 +62,23 @@ class Tournament_IO(Tournament):
                 f'{tournament.contact_phone},'
                 f'\n'
             )
+
         return "Succefully created tournament"
+    
+    # ----------------------------------------------------------------------
+    # EDIT TOURNAMENT FILE
+    # ----------------------------------------------------------------------
 
     def edit_tournament_file(self, tournaments: list[Tournament]):
+        """OVERWRITES THE TOURNAMENT FILE WITH UPDATED TOURNAMENT INFORMATION"""
+
+
         with open(self.file_path, "w", encoding="utf-8") as tournament_file:
+
             tournament_file.write("id,tournament_name,tournament_location,start_date,end_date,event_list,contact_name,contact_email,contact_phone\n")
+
             for tournament in tournaments:
+
                 tournament_file.write(
                     f'{tournament.tournament_id},'
                     f'{tournament.tournament_name},'
@@ -60,4 +91,5 @@ class Tournament_IO(Tournament):
                     f'{tournament.contact_phone},'
                     f'\n'
                 )
+
         return "tournament has been edited"
