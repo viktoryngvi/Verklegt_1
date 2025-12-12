@@ -78,7 +78,7 @@ class Tournament_IO(Tournament):
             tournament_file.write("id,tournament_name,tournament_location,start_date,end_date,event_list,contact_name,contact_email,contact_phone\n")
 
             for tournament in tournaments:
-            event_list_str = ";".join(str(t) for t in tournament.event_list)
+                event_list_str = ";".join(str(t) for t in tournament.event_list)
                 tournament_file.write(
                     f'{tournament.tournament_id},'
                     f'{tournament.tournament_name},'

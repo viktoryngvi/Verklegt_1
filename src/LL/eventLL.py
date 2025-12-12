@@ -146,6 +146,7 @@ class EventLL:
             return new_bracket_nr
         
     def get_date_of_match(self):
+        # first day, 
         pass
 
     def get_time_of_match(self):
@@ -158,7 +159,7 @@ class EventLL:
     def input_match_results(self, match_id, team_a_score, team_b_score, match: Match):
         """UPDATES MATCH SCORES AND DETERMINES WINNER"""
     
-        schedule_file: list(Match) = self._dl_wrapper.load_match_file()
+        schedule_file: list[Match] = self._dl_wrapper.load_match_file()
     
         for match in schedule_file:
     
