@@ -14,25 +14,25 @@ class Event_IO(Match, Event):
     # CEATE EMPTY EVENT 
     # ----------------------------------------------------------------------
 
-    def create_empty_event(self, event: Event):
+    def create_empty_event_blueprint(self, event: Event):
         """CREATES A NEW EMPTY EVENT BLUEPRINT AND SAVES IT TO FILE"""
 
 
         with open(self.blueprint_file, "w", encoding="utf-8") as blueprint_file:
-
             blueprint_file.write("event_name,event_type,tournment_name,start_date,end_date,team_name,id\n")
 
-            blueprint_file.write(
-                f'{event.event_name},'
-                f'{event.event_type},'
-                f'{event.tournament_name},'
-                f'{event.start_date},'
-                f'{event.end_date},'
-                f'{event.team_name},'
-                f'{event.event_id},'
-                f'\n'
-                )
-            
+            for line in range(16):
+                blueprint_file.write(
+                    f'{event.event_name},'
+                    f'{event.event_type},'
+                    f'{event.tournament_name},'
+                    f'{event.start_date},'
+                    f'{event.end_date},'
+                    f'{event.team_name},'
+                    f'{event.event_id},'
+                    f'\n'
+                    )
+                
         return "Empty event created"
     
     # ----------------------------------------------------------------------
@@ -42,7 +42,6 @@ class Event_IO(Match, Event):
     def load_event_blueprint(self):
         """LOADS ALL EVENT BLUEPRINT INFORMATION FROM CSV FILE"""
 
-        
         event_list = []
         
         with open(self.blueprint_file, "r", encoding="utf-8") as blueprint_file:
@@ -68,25 +67,23 @@ class Event_IO(Match, Event):
     # ----------------------------------------------------------------------
 
     def append_team_into_blueprint(self, team_data: list[Event]):
-        """APPENDS A TEAM INTO THE EXISTING EVENT BLUEPRINT FILE"""
-
-    
+        """APPENDS A TEAM INTO THE EXISTING EVENT BLUEPRINT FILE"""    
         with open(self.blueprint_file, "w", encoding="utf-8") as blueprint_file:
     
-            blueprint_file.write("id,team_name,event_name,event_type,tournment_name,start_date,end_date")
+            blueprint_file.write("event_name,event_type,tournment_name,start_date,end_date,team_name,id")
     
             for teams in team_data:
                 blueprint_file.write(
-                f'{teams.event_id},'
                 f'{teams.event_type},'
                 f'{teams.tournament_name},'
                 f'{teams.start_date},'
                 f'{teams.end_date},'
                 f'{teams.team_name},'
+                f'{teams.event_id},'
                 f'\n'
                 )
-    
         return "Match has been added to file"
+
 
     # ----------------------------------------------------------------------
     # LOAD MATCH FILE
@@ -156,7 +153,13 @@ class Event_IO(Match, Event):
     # ----------------------------------------------------------------------
     # EDIT MATCH FILE
     # ----------------------------------------------------------------------
-        
+
+    def override_match_file(self):
+        with open(self.match_file, "w", encoding="utf-8") as match_file:
+            match_file.write("tournament,event_name,game_type,server_id,match_id,date_of_match,time_of_match,teams,team_a,team_b,team_a_score,team_b_score,winner\n")
+        return True
+
+
     def edit_match_file(self, matches: list[Match]):
         """OVERWRITES MATCH FILE WITH UPDATED MATCH INFORMATION"""
 

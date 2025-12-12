@@ -262,7 +262,51 @@ class Validate:
         return self.check_if_handle_in_use(player.handle)
 
     # ----------------------------------------------------------------------
-    # EVENT VALIDATION
+
+    def validate_club(self, club: Club):
+        errors_list = []
+
+        club_country = self.validate_club_country(club.country)
+        club_home_town = self.validate_club_home_town(club.home_town)
+        club_color = self.validate_club_color(club.colors)
+
+        if club_country is not True:
+            errors_list.append(f"Error: {club_country}") 
+        
+        if club_home_town is not True:
+            errors_list.append(f"Error: {club_home_town}")
+
+        if club_color is not True:
+            errors_list.append(f"Error: {club_color}")
+
+        if errors_list:
+            return "\n".join(errors_list)
+        return None
+
+
+    def validate_club_country(self, club_country: str):
+        if not club_country.isalpha():
+            return "Country must be only letter"
+        
+        return True
+
+    def validate_club_home_town(self, club_home_town: str):
+        if not club_home_town.isalpha():
+            return "Country must be only letter"
+
+        return True
+
+    def validate_club_color(self, club_colors: list[str]):
+        for color in club_colors:
+            if not color.isalpha():
+                return "Color must be only letter"
+            
+        return True
+            
+
+    # CHECKS AND VALIpper)DATION METHODS FOR EVENT
+    # ----------------------------------------------------------------------
+    # CHECKS AND VALIDATION METHODS FOR EVENT
     # ----------------------------------------------------------------------
     def validate_event(self, event: Event):
         """VALIDATES EVENT NAME AND DATES"""
