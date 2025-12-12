@@ -473,7 +473,7 @@ class OrganizerUI:
         self.menu_ui.print_box_line(" Select the team you want to change the captain for: ")
         self.menu_ui.print_box_line()
         # get the list of teams from LL 
-        teams = self.ll.view_all_teams()
+        teams = self.ll.get_team_list()
 
         # check if there are any teams
         if not teams:
