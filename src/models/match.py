@@ -1,6 +1,8 @@
 from models.team import Team
 
 class Match():
+    """MATCH CLASS REPRESENTS TOURNAMENT, EVENT, GAME TYPE, SERVER, TEAMS, SCORES, WINNER, AND MATCH DETAILS."""
+
     def __init__(
             self,
             tournament_name: str = None, 

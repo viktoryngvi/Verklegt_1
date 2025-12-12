@@ -1,6 +1,6 @@
-
-
 class Event_blueprint:
+    """EVENT_BLUEPRINT CLASS REPRESENTS ID, TEAM NAME, EVENT TYPE, TOURNAMENT NAME, START DATE, AND END DATE."""
+    
     def __init__(self, id: int = None, team_name: str = None, event_type: str = None,
                  tournament_name: str = None, start_date: str = None, end_date: str = None):
 
