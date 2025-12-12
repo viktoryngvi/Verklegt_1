@@ -223,7 +223,7 @@ class EventLL:
                     team_b_score=None,
                     winner=None,
                     )
-                self._dl_wrapper.append_to_match_file(match)                
+                self._dl_wrapper.append_to_match_file(match)
 
     # ----------------------------------------------------------------------
     # CREATE ROUND 2, 3, AND 4
