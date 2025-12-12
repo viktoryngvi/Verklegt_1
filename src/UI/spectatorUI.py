@@ -87,7 +87,7 @@ class SpectatorUI:
         self.menu_ui.print_header("VIEW TEAMS AND PLAYERS")
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select a team to view: ")
-        teams = self.ll.view_all_teams()
+        teams = self.ll.view_teams_with_no_club()
         if not teams:
             self.menu_ui.print_box_line(" No teams found. ")
             self.menu_ui.print_box_bottom()
