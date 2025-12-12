@@ -145,6 +145,17 @@ class LLWrapper:
         """CHECKS IF TEAM EXISTS"""
         return self.team_ll.check_if_team_name_exists(captains_team)
    
+    # ----------------------------------------------------------------------
+    # MATCH METHODS
+    # ----------------------------------------------------------------------
+
+    def enter_match_results(self):
+        """ENTERS RESULTS FOR A MATCH"""
+        pass
+    
+    def get_unfinished_matches(self, event_name, tournament_name):
+        """GET UNFINISHED MATCHES AND RETURN LIST OF UNFINISHED MATCHES"""
+        return self.match_ll.get_unfinished_matches(event_name,tournament_name)
 
     # ----------------------------------------------------------------------
     # CLUB METHODS
@@ -206,9 +217,8 @@ class LLWrapper:
         """CREATES AN EMPTY EVENT"""
         return self.event_ll.create_empty_event(event)
 
-    # def get_team_captain(self, team_name, handle):
-    #     """RETURNS TEAM CAPTAIN"""
-    #     return self.captain_ll.get_team_captain(team_name, handle)
+    def register_team_into_event(self,team):
+        return self.event_ll.append_team_into_blue_print(team)
    
     def event_types(self):
       return self.event_ll.event_types()
