@@ -70,7 +70,7 @@ class DLWrapper:
 
     def create_empty_event_blueprint(self, match: Match):
         """CREATES EMPTY EVENT AND SAVES INFO INTO CSV"""
-        return self.match.create_empty_event(match)
+        return self.match.create_empty_event_blueprint(match)
 
     def load_event_blueprint(self):
         """LOADS ALL EVENT BLUEPRINT INFORMATION FROM FILE"""

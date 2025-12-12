@@ -200,8 +200,7 @@ class OrganizerUI:
             tournament_name=tournament_name,
             start_date=start_date,
             end_date=end_date,
-            team_name = None,
-            event_id = None
+            team_name = None
         )
         results = self.ll.create_empty_event(results)
         
@@ -232,7 +231,7 @@ class OrganizerUI:
         max_teams = 16
         registered_teams = []
 
-        teams = self.ll.view_all_teams()
+        teams = self.ll.get_team_list()
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line(" Available Teams: ")
         for i, team in enumerate(teams, start=1):

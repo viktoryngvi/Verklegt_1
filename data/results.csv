@@ -1,1 +1,1 @@
-tournament,event_name,game_type,server_id,match_id,bracket_nr,date_of_match,time_of_match,teams,team_a,team_b,team_a_score,team_b_score,winner,
+tournament,event_name,game_type,server_id,bracket_nr,date_of_match,time_of_match,teams,team_a,team_b,team_a_score,team_b_score,winner,
