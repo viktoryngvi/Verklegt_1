@@ -245,7 +245,7 @@ class Event_IO(Match, Event):
                         f'{match.server_id},'
                         f'{match.match_id},'
                         f'{match.bracket_nr},'
-                        f'{match.date_of_match},'
+                        f'{date.isoformat(match.date_of_match)},'
                         f'{match.time_of_match},'
                         f'{teams_str},'
                         f'{match.team_a},'
