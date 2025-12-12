@@ -3,7 +3,6 @@ from IO.Teams_IO import Team_IO
 from IO.Event_IO import Event_IO
 from IO.Tournament_IO import Tournament_IO
 from IO.Club_IO import Club_IO
-from models.event_blueprint import Event_blueprint
 from models.match import Match
 from models.club import Club
 
@@ -16,11 +15,9 @@ class DLWrapper:
     def __init__(self):
         self.playerio = Player_IO()
         self.teamio = Team_IO()
-        self.event_blueprintio = Event_IO()
+        self.match = Event_IO()
         self.tournamentio = Tournament_IO()
         self.clubio = Club_IO()
-        self.match = Match()
-        self.event_blueprint = Event_blueprint()
 
     # ----------------------------------------------------------------------
     # PLAYER METHODS
@@ -71,43 +68,47 @@ class DLWrapper:
     # EVENT METHODS
     # ----------------------------------------------------------------------
 
-    def create_empty_event(self, event_blueprint: Event_blueprint):
+    def create_empty_event_blueprint(self, match: Match):
         """CREATES EMPTY EVENT AND SAVES INFO INTO CSV"""
-        return self.event_blueprintio.create_empty_event(event_blueprint)
+        return self.match.create_empty_event(match)
 
     def load_event_blueprint(self):
         """LOADS ALL EVENT BLUEPRINT INFORMATION FROM FILE"""
-        return self.event_blueprintio.load_event_blueprint()
+        return self.match.load_event_blueprint()
 
     
-    def append_team_into_blueprint(self, team_data: Event_blueprint):
+    def append_team_into_blueprint(self, team_data: Match):
         """APPENDS A TEAM INTO AN EXISTING EVENT BLUEPRINT"""
-        return self.event_blueprintio.append_team_into_blueprint(team_data)
+        return self.match.append_team_into_blueprint(team_data)
 
     
     def load_match_file(self):
         """LOADS ALL MATCHES FROM MATCH FILE"""
-        return self.event_blueprintio.load_match_file()
+        return self.match.load_match_file()
 
     
     def append_to_match_file(self, match: Match):
         """APPENDS A NEW MATCH INTO THE MATCH FILE"""
-        return self.event_blueprintio.append_to_match_file(match)
+        return self.match.append_to_match_file(match)
 
     
     def edit_match_file(self, matches: list[Match]):
         """UPDATES EXISTING MATCH INFORMATION IN THE MATCH FILE"""
-        return self.event_blueprintio.edit_match_file(matches)
+        return self.match.edit_match_file(matches)
 
     
     def read_results_file(self):
         """READS ALL RESULTS FROM RESULTS FILE"""
-        return self.event_blueprintio.read_results_file()
+        return self.match.read_results_file()
 
     
     def append_into_results(self, matches_to_append: list[Match]):
         """APPENDS NEW MATCH RESULTS INTO THE RESULTS FILE"""
-        return self.event_blueprintio.append_into_results(matches_to_append)
+        return self.match.append_into_results(matches_to_append)
+    
+    def override_match_file(self):
+        """"""
+        return self.match.override_match_file()
 
     
     # ----------------------------------------------------------------------
