@@ -165,5 +165,10 @@ class LLWrapper:
    
    def event_types(self):
       return self.event_ll.event_types()
+   
+   #VALIDATE METHODS
+
+   def validate_handle(self, handle):
+      return self.validate.check_if_handle_in_use(handle)
 
 
