@@ -157,9 +157,6 @@ class OrganizerUI:
         select_tournament = input(" ➤ Select Tournament by number: ")
         tournament_name = select_tournament
 
-
-        
-
         self.menu_ui.print_box_bottom()
         
         self.menu_ui.print_box_top()
@@ -168,8 +165,19 @@ class OrganizerUI:
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select the event type: ")
         event_types = self.ll.event_types()
-        event_type = choose_from_list(" ➤ Select one type: ", event_types) 
-        self.menu_ui.print_box_line(f" You selected event type: {event_type}")
+        for i, event_type in enumerate(event_types, start=1):
+            self.menu_ui.print_box_line(f"  [{i}] {event_type}")
+        self.menu_ui.print_box_line()
+        pick = get_non_empty_input(" ➤ Select event type by number: ").strip()
+        try:
+            type_idx = int(pick) - 1
+            pick_event_type = event_types[type_idx]
+        except (ValueError, IndexError):
+            print("Invalid event type selection.")
+            input("Press Enter to continue...")
+            return
+
+        self.menu_ui.print_box_line(f" You selected event type: {pick_event_type} ")
         self.menu_ui.print_box_bottom()
 
         # get start and end date for the event
@@ -181,10 +189,10 @@ class OrganizerUI:
 
         results = Event(
             event_name,
-            event_type,
-            tournament_name,
-            start_date,
-            end_date,
+            event_type=pick_event_type,
+            tournament_name=tournament_name,
+            start_date=start_date,
+            end_date=end_date,
             team_name = None,
             event_id = None
         )
@@ -636,5 +644,5 @@ class OrganizerUI:
         input("Press Enter to continue...")
 
 
-    
+
 
