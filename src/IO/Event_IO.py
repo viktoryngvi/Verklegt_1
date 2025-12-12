@@ -110,7 +110,7 @@ class Event_IO(Match, Event):
                 match.bracket_nr = int(attributes[5])
                 match.date_of_match = str(attributes[6])
                 match.time_of_match = str(attributes[7])
-                match.teams = list(attributes[8])
+                match.teams = list(attributes[8].split(";"))
                 match.team_a = str(attributes[9])
                 match.team_b = int(attributes[10])
                 match.team_a_score = str(attributes[11])
@@ -127,9 +127,8 @@ class Event_IO(Match, Event):
     def append_to_match_file(self, match: Match):
         """APPENDS A NEW MATCH ENTRY INTO THE MATCH FILE"""
 
-    
         with open(self.match_file, "a", encoding="utf-8") as match_file:
-    
+            teams_str = ";".join(str(t) for t in match.teams)
             match_file.write(
                     f'{match.tournament_name},'
                     f'{match.event_name},'
@@ -139,7 +138,7 @@ class Event_IO(Match, Event):
                     f'{match.bracket_nr},'
                     f'{match.date_of_match},'
                     f'{match.time_of_match},'
-                    f'{match.teams},'
+                    f'{teams_str},'
                     f'{match.team_a},'
                     f'{match.team_b},'
                     f'{match.team_a_score},'
@@ -162,13 +161,13 @@ class Event_IO(Match, Event):
 
     def edit_match_file(self, matches: list[Match]):
         """OVERWRITES MATCH FILE WITH UPDATED MATCH INFORMATION"""
-
     
         with open(self.match_file, "w", encoding="utf-8") as match_file:
-    
             match_file.write("tournament,event_name,game_type,server_id,match_id,date_of_match,time_of_match,teams,team_a,team_b,team_a_score,team_b_score,winner\n")
-    
+
+
             for match in matches:
+                teams_str = ";".join(str(t) for t in match.teams)
                 match_file.write(
                     f'{match.tournament_name},'
                     f'{match.event_name},'
@@ -178,7 +177,7 @@ class Event_IO(Match, Event):
                     f'{match.bracket_nr},'
                     f'{match.date_of_match},'
                     f'{match.time_of_match},'
-                    f'{match.teams},'
+                    f'{teams_str},'
                     f'{match.team_a},'
                     f'{match.team_b},'
                     f'{match.team_a_score},'
@@ -234,10 +233,8 @@ class Event_IO(Match, Event):
     
         with open(self.match_file, "a", encoding="utf-8") as results_file:
     
-            for line in matches_to_append:
-                match  = Match()
+            for match in matches_to_append:
                 teams_str = ";".join(str(t) for t in match.teams)
-                match = Match()
     
                 results_file.write(
                         f'{match.tournament_name},'
