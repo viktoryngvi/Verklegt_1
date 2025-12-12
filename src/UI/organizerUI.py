@@ -538,6 +538,7 @@ class OrganizerUI:
         # Club colors
         self.menu_ui.print_box_top()
         club_colors = input("\tClub Colors (comma separated): ").strip()
+        club_colors_list = list[club_colors]
         self.menu_ui.print_box_bottom()
 
         # Select teams to add to this club
@@ -559,7 +560,7 @@ class OrganizerUI:
             club_name,
             club_home_town,
             club_country,
-            club_colors,
+            club_colors_list,
             selected_teams
         )
 

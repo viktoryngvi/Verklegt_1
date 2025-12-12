@@ -29,7 +29,7 @@ class TeamLL:
         the teams.csv file"""
         teams_file: list[Team] = self._dl_wrapper.view_all_teams()
         captain_handle = self.player_ll.take_id_return_handle(captain_id)
-        if captain_handle is not True:
+        if captain_handle is False:
             return "Captain handle does not exist"
         player_handle = self.player_ll.take_id_return_handle(captain_id)
         id = self.get_last_team_id()

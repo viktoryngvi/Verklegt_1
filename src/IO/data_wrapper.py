@@ -5,6 +5,7 @@ from IO.Tournament_IO import Tournament_IO
 from IO.Club_IO import Club_IO
 from models.event_blueprint import Event_blueprint
 from models.match import Match
+from models.club import Club
 
 class DLWrapper:
     def __init__(self):
@@ -81,20 +82,11 @@ class DLWrapper:
     
     # club methods:
 
-    def register_club(self, club):
-        return self.clubio.register_club(club)
-    
-    def add_team_to_club(self, clubs):
-        return self.clubio.add_team_to_club(clubs)
-    
-    def load_clubs(self):
-        return self.clubio.view_clubs()
+    def load_all_clubs(self):
+        return self.clubio.load_all_clubs()
 
-    def view_clubs(self):
-        return self.clubio.view_clubs()
-    
-    def view_club_information(self, club_name):
-        return self.clubio.view_club_information(club_name)
-    
-    def check_if_club_name_in_use(self, club_name):
-        return self.clubio.check_if_club_name_in_use(club_name)
+    def register_club(self, club: Club):
+        return self.clubio.register_club(club)
+
+    def edit_teams_file(self, clubs: list[Club]):
+        return self.clubio.edit_teams_file(clubs)

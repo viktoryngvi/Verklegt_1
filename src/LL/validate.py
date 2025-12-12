@@ -351,8 +351,7 @@ class Validate:
 
         club_country = self.validate_club_country(club.country)
         club_home_town = self.validate_club_home_town(club.home_town)
-        club_color = self.validate_club_color(club.color)
-        club_teams = self.validate_club_teams(club.teams)
+        club_color = self.validate_club_color(club.colors)
 
         if club_country is not True:
             errors_list.append(f"Error: {club_country}") 
@@ -363,29 +362,31 @@ class Validate:
         if club_color is not True:
             errors_list.append(f"Error: {club_color}")
 
-        if club_teams is not True:
-            errors_list.append(f"Error: {club_teams}")
-        
         if errors_list:
             return "\n".join(errors_list)
         return None
 
 
     def validate_club_country(self, club_country: str):
-        pass
-
+        if not club_country.isalpha():
+            return "Country must be only letter"
+        
+        return True
 
     def validate_club_home_town(self, club_home_town: str):
-        pass
+        if not club_home_town.isalpha():
+            return "Country must be only letter"
 
+        return True
 
-    def validate_club_color(self, club_color: str):
-        pass
-
-
-    def validate_club_teams(self, club_teams: list):
-        pass
-
+    def validate_club_color(self, club_color: list):
+        colors = str(club_color[0]).split(",")
+        for color in colors:
+            if not color.isalpha():
+                return "Color must be only letter"
+            
+        return True
+            
 
     # CHECKS AND VALIpper)DATION METHODS FOR EVENT
     # ----------------------------------------------------------------------
