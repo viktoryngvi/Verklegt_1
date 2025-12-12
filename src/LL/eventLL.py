@@ -116,6 +116,10 @@ class EventLL:
  
     def move_blueprint_to_match_file(self):
         """CREATES Match STRUCTURE FROM EVENT BLUEPRINT"""
+        list_events:list[Event] = self._dl_wrapper.load_event_blueprint()
+
+        if list_events[-1].team_name == "None":
+            return "Not enough teams registered"
         
         self._dl_wrapper.override_match_file()
         self.create_first_rounds()

@@ -356,8 +356,6 @@ class OrganizerUI:
 
         # send to LL to generate schedule
         result = self.ll.generate_schedule(
-            tournament_name=tournament_name,
-            event_name=select_event,
         )
 
         print("\n" + str(result))
