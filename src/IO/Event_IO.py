@@ -1,5 +1,6 @@
 from models.match import Match
 from models.event import Event
+from datetime import date
 
 class Event_IO(Match, Event):
     """HANDLES READING, WRITING AND UPDATING EVENT, MATCH AND RESULT FILES"""
@@ -26,8 +27,8 @@ class Event_IO(Match, Event):
                     f'{event.event_name},'
                     f'{event.event_type},'
                     f'{event.tournament_name},'
-                    f'{event.start_date},'
-                    f'{event.end_date},'
+                    f'{date.isoformat(event.start_date)},'
+                    f'{date.isoformat(event.end_date)},'
                     f'{event.team_name},'
                     f'{event.event_id},'
                     f'\n'
@@ -54,8 +55,8 @@ class Event_IO(Match, Event):
                 event.event_name = str(attributes[0])
                 event.event_type = str(attributes[1])
                 event.tournament_name = str(attributes[2])
-                event.start_date = str(attributes[3])
-                event.end_date = str(attributes[4])
+                event.start_date = date.fromisoformat(attributes[3])
+                event.end_date = date.fromisoformat(attributes[4])
                 event.team_name = str(attributes[5])
                 event.event_id = int(attributes[6])
                 event_list.append(event)
@@ -76,8 +77,8 @@ class Event_IO(Match, Event):
                 blueprint_file.write(
                 f'{teams.event_type},'
                 f'{teams.tournament_name},'
-                f'{teams.start_date},'
-                f'{teams.end_date},'
+                f'{date.isoformat(teams.start_date)},'
+                f'{date.isoformat(teams.end_date)},'
                 f'{teams.team_name},'
                 f'{teams.event_id},'
                 f'\n'
@@ -108,7 +109,7 @@ class Event_IO(Match, Event):
                 match.server_id = str(attributes[3])
                 match.match_id = int(attributes[4])
                 match.bracket_nr = int(attributes[5])
-                match.date_of_match = str(attributes[6])
+                match.date_of_match = date.isoformat(attributes[6])
                 match.time_of_match = str(attributes[7])
                 match.teams = list(attributes[8].split(";"))
                 match.team_a = str(attributes[9])
@@ -136,7 +137,7 @@ class Event_IO(Match, Event):
                     f'{match.server_id},'
                     f'{match.match_id},'
                     f'{match.bracket_nr},'
-                    f'{match.date_of_match},'
+                    f'{date.isoformat(match.date_of_match)},'
                     f'{match.time_of_match},'
                     f'{teams_str},'
                     f'{match.team_a},'
@@ -175,7 +176,7 @@ class Event_IO(Match, Event):
                     f'{match.server_id},'
                     f'{match.match_id},'
                     f'{match.bracket_nr},'
-                    f'{match.date_of_match},'
+                    f'{date.isoformat(match.date_of_match)},'
                     f'{match.time_of_match},'
                     f'{teams_str},'
                     f'{match.team_a},'
@@ -211,7 +212,7 @@ class Event_IO(Match, Event):
                 match.server_id = str(attributes[3])
                 match.match_id = int(attributes[4])
                 match.bracket_nr = int(attributes[5])
-                match.date_of_match = str(attributes[6])
+                match.date_of_match = date.fromisoformat(attributes[6])
                 match.time_of_match = str(attributes[7])
                 match.teams = list(attributes[8].split(";"))
                 match.team_a = str(attributes[9])

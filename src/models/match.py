@@ -39,4 +39,3 @@ class Match():
         self.teams = teams
         self.winner = winner
 
-    def poppulate_from_event(event):
