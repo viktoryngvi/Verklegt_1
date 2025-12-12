@@ -43,7 +43,7 @@ class Club_IO:
     
     def edit_club_file(self, clubs: list[Club]):
         with open(self.file_path, "w", encoding="utf-8") as clubs_file:
-            clubs_file.write("id,team,captain_handle,player_list\n")
+            clubs_file.write("name,team,captain_handle,player_list\n")
             for club in clubs:
                 teams = ";".join(str(t) for t in club.teams)
                 clubs_file.write(
