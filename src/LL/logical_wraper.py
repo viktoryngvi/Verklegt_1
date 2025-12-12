@@ -195,9 +195,9 @@ class LLWrapper:
         """RETURNS EVENTS IN A TOURNAMENT"""
         return self.tournament_ll.view_events_in_tournament(tournament_name)
    
-    def generate_schedule(tournament: Tournament, event: Event):
+    def generate_schedule(self):
         """GENERATES SCHEDULE FOR TOURNAMENT"""
-        pass
+        return self.event_ll.move_blueprint_to_match_file()
 
     def get_tournament_schedule(self, tournament_name, event_in_tournament):
         """RETURNS TOURNAMENT SCHEDULE"""
