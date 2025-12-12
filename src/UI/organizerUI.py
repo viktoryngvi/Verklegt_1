@@ -499,9 +499,21 @@ class OrganizerUI:
 
         # Get list of tournaments from LL
         tournaments = self.ll.get_tournament_list()  
+        list_of_tournament_names = [tournament for tournament in tournaments]
 
+        for i, tournament in enumerate(list_of_tournament_names, start=1):
+            self.menu_ui.print_box_line(f"  [{i}] {tournament}")
+        self.menu_ui.print_box_line()
+        select_tournament = get_non_empty_input(" ➤ Select Tournament by number: ").strip()
+        try:
+            t_idx = int(select_tournament) - 1
+            tournament_name = list_of_tournament_names[t_idx]
+        except (ValueError, IndexError):
+            print("Invalid tournament selection.")
+            input("Press Enter to continue...")
+            return
         # choose tournament basic validation with input helper
-        tournament_name = choose_from_list("Select Tournament by number: ", tournaments)  
+        
 
         self.menu_ui.print_box_line() 
         self.menu_ui.print_box_line(f" You selected Tournament: {tournament_name} ")    
