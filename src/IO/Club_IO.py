@@ -41,7 +41,7 @@ class Club_IO:
             
         return True
     
-    def edit_teams_file(self, clubs: list[Club]):
+    def edit_teamss_file(self, clubs: list[Club]):
         with open(self.file_path, "w", encoding="utf-8") as clubs_file:
             clubs_file.write("id,team,captain_handle,player_list\n")
             for club in clubs:
