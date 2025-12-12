@@ -188,9 +188,35 @@ class PlayerUI:
 
         # Get list of tournaments from LL
         tournaments = self.ll.get_tournament_list()  
+        list_of_tournament_names = [tournament for tournament in tournaments]
 
+        for i, tournament in enumerate(list_of_tournament_names, start=1):
+            self.menu_ui.print_box_line(f"  [{i}] {tournament}")
+        self.menu_ui.print_box_line()
+        select_tournament = get_non_empty_input(" ➤ Select Tournament by number: ").strip()
+        try:
+            t_idx = int(select_tournament) - 1
+            tournament_name = list_of_tournament_names[t_idx]
+        except (ValueError, IndexError):
+            print("Invalid tournament selection.")
+            input("Press Enter to continue...")
+            return
         # choose tournament basic validation with input helper
-        tournament_name = choose_from_list("Select Tournament by number: ", tournaments)  
+        
+        event_name = self.ll.get_events_in_tournament(tournament_name)
+        list_of_event_names = [event for event in event_name]
+
+        for i, tournament in enumerate(list_of_event_names, start=1):
+            self.menu_ui.print_box_line(f"  [{i}] {tournament}")
+        self.menu_ui.print_box_line()
+        select_event = get_non_empty_input(" ➤ Select Event by number: ").strip()
+        try:
+            e_idx = int(select_event) - 1
+            event_name = list_of_event_names[e_idx]
+        except (ValueError, IndexError):
+            print("Invalid event selection.")
+            input("Press Enter to continue...")
+            return
 
         self.menu_ui.print_box_line() 
         self.menu_ui.print_box_line(f" You selected Tournament: {tournament_name} ")    
@@ -198,16 +224,24 @@ class PlayerUI:
 
         # print the list of events in that tournament
         self.menu_ui.print_box_top()
-        events_in_tournament = choose_from_list("Select Event by number: ", self.ll.get_events_in_tournament(tournament_name))
+        # Load events
+        events = self.ll.get_events_in_tournament(tournament_name)
+        if not events:
+            print("This tournament has no events.")
+            input("Press Enter to continue...")
+            return
+
+        events_in_tournament = choose_from_list(" Select Event by number: ", events)
+
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line(f" You selected Event: {events_in_tournament}")
-    
         self.menu_ui.print_box_bottom()
+
         # get schedule from ll for that tournament and event
         self.menu_ui.print_header("TOURNAMENT SCHEDULE")
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line()
-        
+
         schedule = self.ll.get_tournament_schedule(tournament_name, events_in_tournament)
         if not schedule:
             print("No schedule found for this tournament/event.")

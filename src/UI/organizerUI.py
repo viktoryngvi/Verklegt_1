@@ -311,33 +311,53 @@ class OrganizerUI:
         self.menu_ui.print_box_line(" Choose a tournament to generate a schedule for: ")
         self.menu_ui.print_box_line()
 
-        tournaments = self.ll.get_tournament_list()  # get tournaments from LL
-        self.menu_ui.print_box_line(" Available Tournaments: ")
+        tournaments = self.ll.get_tournament_list()
+        list_of_tournament_names = [t for t in tournaments]
 
-        tournament_name = choose_from_list(" Select Tournament by number: ", tournaments) 
-        self.menu_ui.print_box_bottom()
+        for i, t in enumerate(list_of_tournament_names, start=1):
+            self.menu_ui.print_box_line(f"  [{i}] {t}")
+        self.menu_ui.print_box_line()
+
+        select_tournament = get_non_empty_input(" ➤ Select Tournament by number: ").strip()
+        try:
+            t_idx = int(select_tournament) - 1
+            tournament_name = list_of_tournament_names[t_idx]
+        except (ValueError, IndexError):
+            print("Invalid tournament selection.")
+            input("Press Enter to continue...")
+            return
         self.menu_ui.print_box_top()  
         self.menu_ui.print_box_line(f" You selected Tournament: {tournament_name} ")
         self.menu_ui.print_box_bottom() 
 
         # get events in that tournament
-        self.menu_ui.print_box_top()
-        self.menu_ui.print_box_line(" Select an event to generate the schedule for: ")
         events = self.ll.get_events_in_tournament(tournament_name)
-        if not events:
-            print("This tournament has no events.")
+
+        if events == "No tournament with this name":
+            print("No events found for this tournament.")
             input("Press Enter to continue...")
             return
 
-        events_in_tournament = choose_from_list(" Select Event by number: ", events)
+        for i, event in enumerate(events, start=1):
+            self.menu_ui.print_box_line(f"  [{i}] {event}")
         self.menu_ui.print_box_line()
-        self.menu_ui.print_box_line(f" You selected Event: {events_in_tournament} ")
+        select_event = get_non_empty_input(" ➤ Select Event by number: ").strip()
+        try:
+            e_idx = int(select_event) - 1
+            event_name = events[e_idx]
+        except (ValueError, IndexError):
+            print("Invalid event selection.")
+            input("Press Enter to continue...")
+            return
+        
+        self.menu_ui.print_box_line()
+        self.menu_ui.print_box_line(f" You selected Event: {select_event} ")
         self.menu_ui.print_box_bottom()
 
         # send to LL to generate schedule
         result = self.ll.generate_schedule(
             tournament_name=tournament_name,
-            event_name=events_in_tournament,
+            event_name=select_event,
         )
 
         print("\n" + str(result))
