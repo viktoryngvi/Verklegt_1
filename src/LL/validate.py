@@ -296,9 +296,8 @@ class Validate:
 
         return True
 
-    def validate_club_color(self, club_color: list):
-        colors = str(club_color[0]).split(",")
-        for color in colors:
+    def validate_club_color(self, club_colors: list[str]):
+        for color in club_colors:
             if not color.isalpha():
                 return "Color must be only letter"
             
