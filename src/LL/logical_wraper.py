@@ -217,9 +217,8 @@ class LLWrapper:
         """CREATES AN EMPTY EVENT"""
         return self.event_ll.create_empty_event(event)
 
-    # def get_team_captain(self, team_name, handle):
-    #     """RETURNS TEAM CAPTAIN"""
-    #     return self.captain_ll.get_team_captain(team_name, handle)
+    def register_team_into_event(self,team):
+        return self.event_ll.append_team_into_blue_print(team)
    
     def event_types(self):
       return self.event_ll.event_types()

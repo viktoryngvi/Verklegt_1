@@ -46,14 +46,14 @@ class EventLL:
     
 
 
-    # def find_next_useable_id(self):
-    #     """checks the next id that has no team associated with it"""
-    #     event_file = self._dl_wrapper.load_event_blueprint()
-    #     for line in event_file:
-    #         line:  = 
-    #         useable_id = int(line.id
-    #         if line. == "team":
-    #             return useable_id
+    def append_team_into_blue_print(self, team):
+        event_list_blue: list[Event] = self._dl_wrapper.load_event_blueprint()
+        for line in event_list_blue:
+            if line.team_name is None:
+                line = team
+
+        return self._dl_wrapper.append_team_into_blueprint(event_list_blue)
+        
     
 
     # ----------------------------------------------------------------------
