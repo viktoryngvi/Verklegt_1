@@ -68,7 +68,8 @@ class Event_IO(Match, Event):
     # ----------------------------------------------------------------------
 
     def append_team_into_blueprint(self, team_data: list[Event]):
-        """APPENDS A TEAM INTO THE EXISTING EVENT BLUEPRINT FILE"""    
+        """APPENDS A TEAM INTO THE EXISTING EVENT BLUEPRINT FILE"""
+        
         with open(self.blueprint_file, "w", encoding="utf-8") as blueprint_file:
     
             blueprint_file.write("event_name,event_type,tournment_name,start_date,end_date,team_name,id")

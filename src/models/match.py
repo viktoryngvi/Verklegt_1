@@ -1,5 +1,6 @@
 from models.team import Team
 from models.event import Event
+from datetime import date
 
 
 class Match():
@@ -13,8 +14,8 @@ class Match():
             server_id: str = None,
             match_id: str = None,
             bracket_nr: int = None,
-            date_of_match: str = None,
-            time_of_match: str = None,
+            date_of_match: date = None,
+            time_of_match: date = None,
             teams: list[str] = None,
             team_a: str = None,
             team_b: str = None,
