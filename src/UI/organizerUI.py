@@ -521,7 +521,17 @@ class OrganizerUI:
         for player in all_players:
             player_id, name, handle = player
             print(f" - [{player_id}] {name} ({handle})")
-        selected_players = input("\tEnter player id's separated by commas: ").strip().lower()
+        while True:
+            selected_players = input("Enter player IDs (comma separated): ").strip()
+            if not selected_players:
+                print("Input cannot be empty.")
+                continue
+            try:
+                # make sure only numbers are provided
+                _ = [int(p) for p in selected_players.split(",")]
+                break
+            except ValueError:
+                print("Invalid input! Use only numbers separated by commas.")
 
     
         self.menu_ui.print_box_bottom()
@@ -529,6 +539,8 @@ class OrganizerUI:
         cap_id = self.ll.take_handle_return_id(captain_handle)
         # send to ll to create team
         player_ids = self.ll.take_list_of_players_return_list_of_ids(selected_players)
+
+
         result = self.ll.create_team(team_name, cap_id, player_ids)
 
         print(result)
