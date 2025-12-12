@@ -1,8 +1,10 @@
 from datetime import datetime
 from models.tournament import Tournament
 from models.team import Team
+from models.event import Event
 from IO.data_wrapper import DLWrapper
 from LL.validate import Validate
+
 
 
 class TournamentLL:
@@ -28,7 +30,7 @@ class TournamentLL:
             return self.validator.validate_tournament(tournament)
         tournament.tournament_id = id
         if tournament.event_list is None:
-            tournament.event_list = "event_list"
+            tournament.event_list = ""
 
         return self._dl_wrapper.write_into_file(tournament)
          
@@ -38,9 +40,6 @@ class TournamentLL:
     def get_tournament_list(self):
         return self.view_tournaments(self)
 
-
-    def get_events_in_tournament(self, tournament_name):
-        return self.view_events_in_tournament(self, tournament_name)
 
         #     tournament_file.write(f"{id},{tournament.name},{tournament.location},{tournament.start_date},{tournament.end_date},event_list\n")
         # return "Tournament created!"
@@ -69,17 +68,16 @@ class TournamentLL:
         for tournament in tournament_file:
             list_of_tournaments.append(tournament.tournament_name)
         return list_of_tournaments
+    
 
-    def view_events_in_tournament(self, tournament : Tournament, tournament_name_to_check: str):
-        event_list = []
-        tournament_file: list(Tournament) = self._dl_wrapper.read_tournament_file()
-        for tournament in tournament_file:
+    def view_events_in_tournament(self, tournament_name_to_check: str):
+        tournament_list: list[Tournament] = self._dl_wrapper.read_tournament_file()
+        for tournament in tournament_list:
             if tournament.tournament_name == tournament_name_to_check:
-                for events in tournament.event_list:
-                    event_list.append(events)
+                return tournament.event_list
                     # print(f"[DEBUG] Found tournament: '{event_list}'")
-                return event_list
-            return "No tournament with this name"
+            
+        return "No tournament with this name"
     
 
     

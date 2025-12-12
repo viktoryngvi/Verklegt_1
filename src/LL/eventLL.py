@@ -28,9 +28,11 @@ class EventLL:
 
         if validate_errors:
             return validate_errors
+    
         
-        if self.write_event_into_tournament(event):
-            return self._dl_wrapper.create_empty_event_blueprint(event)
+        self.write_event_into_tournament(event)
+
+        return self._dl_wrapper.create_empty_event_blueprint(event)
 
     # ----------------------------------------------------------------------
     # EVENT TYPES 
@@ -48,9 +50,11 @@ class EventLL:
 
     def append_team_into_blue_print(self, team):
         event_list_blue: list[Event] = self._dl_wrapper.load_event_blueprint()
-        for line in event_list_blue:
-            if line.team_name is None:
-                line = team
+
+        for event in event_list_blue:
+            if event.team_name == "None":
+                event.team_name = team
+                break
 
         return self._dl_wrapper.append_team_into_blueprint(event_list_blue)
         
@@ -68,8 +72,8 @@ class EventLL:
         for tournament in tournament_file:
             if tournament.tournament_name == event.tournament_name:
                 tournament.event_list.append(event.event_name)
-    
-        return True
+
+        return self._dl_wrapper.edit_tournament_file(tournament_file)
 
     # ----------------------------------------------------------------------
     # CHECK IF TEAM IN EVENT

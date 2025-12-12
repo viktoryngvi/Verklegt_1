@@ -49,7 +49,8 @@ class Tournament_IO(Tournament):
         """APPENDS A NEW TOURNAMENT AND SAVES IT INTO THE TOURNAMENT FILE"""
 
         with open(self.file_path, "a", encoding="utf-8") as new_tournament_data:
-            if event_list_str is not None:
+            
+            if tournament.event_list is not None:
                 event_list_str = ";".join(str(t) for t in tournament.event_list)
 
             new_tournament_data.write(
