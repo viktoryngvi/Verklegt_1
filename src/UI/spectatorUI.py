@@ -151,8 +151,7 @@ class SpectatorUI:
         self.menu_ui.print_box_line(f" - Club Name: {selected_club.name}")
         self.menu_ui.print_box_line(f"   Home Town: {selected_club.home_town}")
         self.menu_ui.print_box_line(f"   Country: {selected_club.country}")
-        self.menu_ui.print_box_line(f"   Colors: {', '.join(selected_club.colors)}")            
-        team_names = [team.name for team in selected_club.teams]
+        team_names = selected_club.teams  
         self.menu_ui.print_box_line(f"   Teams: {', '.join(team_names)}")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_bottom()
