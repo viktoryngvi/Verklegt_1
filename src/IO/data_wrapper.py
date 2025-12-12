@@ -67,6 +67,8 @@ class DLWrapper:
     def edit_tournament_file(self, tournament_data):
         return self.tournamentio.edit_tournament_file(tournament_data)
 
+    def get_tournament_schedule(self, tournament_name, event_in_tournament):
+        return "NEED TO FINISH ############"
     # ----------------------------------------------------------------------
     # EVENT METHODS
     # ----------------------------------------------------------------------
@@ -112,6 +114,9 @@ class DLWrapper:
     def override_match_file(self):
         """"""
         return self.match.override_match_file()
+    
+    def append_into_results(self, matches_to_append: list[Match]):
+        return self.match.append_into_results(matches_to_append)
 
     
     # ----------------------------------------------------------------------

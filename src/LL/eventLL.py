@@ -179,7 +179,7 @@ class EventLL:
                 if team_a_score < team_b_score:
                     match.winner = match.team_b
                 break
-    
+        self._dl_wrapper.edit_match_file(schedule_file)
         return f"Winner for match{match_id} is {match.winner}"
     
     # ----------------------------------------------------------------------
@@ -340,6 +340,14 @@ class EventLL:
         winner = knockout_file[-1].winner        
         return winner
 
+
+
+    def move_match_to_result(self):
+        matches_to_append: list[Match] = self._dl_wrapper.load_match_file()
+        return self._dl_wrapper.append_into_results(matches_to_append)
+
+
+
     # ----------------------------------------------------------------------
     # HOW MANY MATCHES HAVE WINNERS
     # ----------------------------------------------------------------------
@@ -358,30 +366,26 @@ class EventLL:
         return winners
     
     # ----------------------------------------------------------------------
-    # VIEW UNFINISHED GAMES
+    # VIEW GAMES
     # ----------------------------------------------------------------------
     
-    def view_unfinnised_games(self):
-        """RETURNS ALL UNFINISHED MATCHES"""  
-        pass
+    def view_games(self, tournament, event_nam):
+        """RETURNS ALL MATCHES """  
+        result_file: list[Match] = self._dl_wrapper.read_results_file()
+        results_list = []
+        for line in result_file:
+            if line.tournament_name == tournament:
+                if line.event_name == event_nam:
+                    results_list.append(line)
+        if results_list:
+            return results_list
+        
+        match_file: list[Match] = self._dl_wrapper.load_match_file()
+        unfinnished_games = []
+        if match_file[1].tournament_name == tournament:
+            if match_file[1].event_name == event_nam:
+                for match in match_file:
+                    if match.winner is None:
+                        unfinnished_games.append(match)
+                return unfinnished_games
     
-    # ----------------------------------------------------------------------
-    # VIEW FINISHED GAMES
-    # ----------------------------------------------------------------------
-  
-    def view_finnished_games(self):
-        """RETURNS ALL FINISHED MATCHES"""
-        
-        return self._dl_wrapper.read_results_file()
-
-    # ----------------------------------------------------------------------
-    # GET RESULTS FROM ONE GAME
-    # ----------------------------------------------------------------------
-   
-    def get_results_from_one_game(self):
-        """RETRIEVES RESULTS FOR A SINGLE GAME"""
-
-        result_from_one_game = self._dl_wrapper.read_results_file()
-        
-        return result_from_one_game
-        

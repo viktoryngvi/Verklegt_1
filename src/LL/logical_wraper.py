@@ -53,9 +53,8 @@ class LLWrapper:
         """EDITS PLAYER ADDRESS"""
         return self.player_ll.edit_player_address(handle, address)
 
-    def edit_player_handle(self, handle: str, handle_str: str) -> str:
-        """EDITS PLAYER HANDLE"""
-        return self.player_ll.edit_player_handle(handle, handle_str)
+    def edit_player_handle(self, old_handle: str, new_handle: str):
+        return self.player_ll.edit_player_handle(old_handle, new_handle)
    
     def load_player_info(self, handle):
         """LOADS PLAYER INFORMATION BY HANDLE"""
@@ -257,14 +256,15 @@ class LLWrapper:
     def how_many_matches_have_winners(self):
         return self.event_ll.how_many_matches_have_winners()
     
-    def view_unfinnised_games(self):
-        return self.event_ll.view_unfinnised_games()
+    def view_games(self, tournament_name, event_name):
+        return self.event_ll.view_games(tournament_name, event_name)
 
     def get_results_from_one_game(self):
         return self.event_ll.get_results_from_one_game()
    #VALIDATE METHODS
 
-    def validate_handle(self, handle):
-      return self.validate.check_if_handle_in_use(handle)
+    def check_if_handle_in_use(self, handle: str) -> bool:
+        return self.player_ll.check_if_handle_in_use(handle)
+
 
 
