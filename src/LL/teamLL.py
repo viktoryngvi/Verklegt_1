@@ -77,13 +77,15 @@ class TeamLL:
     
     def view_all_teams(self):
         """RETURNS ALL TEAMS FROM DATA LAYER"""
-        club_list: list[Club] = self._dl_wrapper.load_all_clubs()
         team_list: list[Team] = self._dl_wrapper.view_all_teams()
+        
         avalable_teams = []
+        seen_names = set()
+
         for team in team_list:
-            for club in club_list:
-                if team.name not in club.teams and team.name not in avalable_teams:
-                    avalable_teams.append(team)
+            if team.name not in seen_names:
+                avalable_teams.append(team)
+                seen_names.add(team.name)
 
         return avalable_teams
 
