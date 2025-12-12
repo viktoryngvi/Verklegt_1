@@ -241,45 +241,59 @@ class OrganizerUI:
             input("Press Enter to continue...")
             return
 
-        event_name = choose_from_list("Select event:", events)
-        self.menu_ui.print_box_bottom()
-
-        # select a single team 
-        self.menu_ui.print_box_top()
-        self.menu_ui.print_box_line(" Select a team to register for this event: ")
-        teams = self.ll.get_team_list()
-
-        if not teams:
-            print("No teams available.")
-            input("Press Enter to continue...")
-            return
-
+        for i, event in enumerate(events, start=1):
+            self.menu_ui.print_box_line(f"  [{i}] {event}")
         self.menu_ui.print_box_line()
-        self.menu_ui.print_box_line(" Available Teams: ")
-        for i, team in enumerate(teams, start=1):
-            
-            self.menu_ui.print_box_line(f"  [{i}] {team.name}")
-        self.menu_ui.print_box_line()
-        self.menu_ui.print_box_bottom()
-
-        team_index_raw = get_integer_input(" Enter the number of the team to register: ").strip()
+        select_event = get_non_empty_input(" ➤ Select Event by number: ").strip()
         try:
-            team_index = int(team_index_raw) - 1
-        except ValueError:
-            print("Invalid team number. Try again.")
+            e_idx = int(select_event) - 1
+            event_name = events[e_idx]
+        except (ValueError, IndexError):
+            print("Invalid event selection.")
             input("Press Enter to continue...")
             return
-
-        selected_team_name = teams[team_index].name  
-
         
-        result = self.ll.register_team_into_event(
-            # tournament_name=tournament_name,
-            # event_name=event_name,
-            team_names=[selected_team_name],  
-        )
+        self.menu_ui.print_box_bottom()
 
-        print("\n" + str(result))
+        registered_count = 0
+        # select teams to register
+        while True:
+            self.menu_ui.print_box_top()
+            self.menu_ui.print_box_line(" Select a team to register for this event: ")
+            teams = self.ll.get_team_list()
+
+            if not teams:
+                print("No teams available.")
+                input("Press Enter to continue...")
+                return
+
+            self.menu_ui.print_box_line()
+            self.menu_ui.print_box_line(" Available Teams: ")
+            for i, team in enumerate(teams, start=1):
+                
+                self.menu_ui.print_box_line(f"  [{i}] {team.name}")
+            self.menu_ui.print_box_line()
+            self.menu_ui.print_box_bottom()
+
+            team_index_raw = get_integer_input(" Enter the number of the team to register: ")
+            try:
+                team_index = int(team_index_raw) - 1
+            except ValueError:
+                print("Invalid team number. Try again.")
+                input("Press Enter to continue...")
+                return
+
+
+            selected_team_name = teams[team_index].name  
+
+            result = self.ll.register_team_into_event(selected_team_name)
+            
+            print("\n" + str(result))
+
+            registered_count += 1
+            more = get_choice_input(" Register another team? (y/n): ", ["y", "n"])
+            if more.lower() == "n":
+                break
         input("Press Enter to continue...")
         
     """
@@ -308,7 +322,13 @@ class OrganizerUI:
         # get events in that tournament
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select an event to generate the schedule for: ")
-        events_in_tournament = choose_from_list(" Select Event by number: ", self.ll.get_events_in_tournament(tournament_name))
+        events = self.ll.get_events_in_tournament(tournament_name)
+        if not events:
+            print("This tournament has no events.")
+            input("Press Enter to continue...")
+            return
+
+        events_in_tournament = choose_from_list(" Select Event by number: ", events)
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line(f" You selected Event: {events_in_tournament} ")
         self.menu_ui.print_box_bottom()
@@ -551,17 +571,12 @@ class OrganizerUI:
         self.menu_ui.print_box_top()
         # Load events
         events = self.ll.get_events_in_tournament(tournament_name)
-
-       
-        if not events or events == "None" or events == ["None"]:
-            self.menu_ui.print_box_line()
-            self.menu_ui.print_box_line(" This tournament has no events.")
-            self.menu_ui.print_box_bottom()
+        if not events:
+            print("This tournament has no events.")
             input("Press Enter to continue...")
             return
 
-       
-        events_in_tournament = choose_from_list("Select Event by number: ", events)
+        events_in_tournament = choose_from_list(" Select Event by number: ", events)
 
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line(f" You selected Event: {events_in_tournament}")
