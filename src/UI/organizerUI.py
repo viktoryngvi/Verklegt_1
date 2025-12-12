@@ -273,9 +273,9 @@ class OrganizerUI:
         selected_team_name = teams[team_index].name  
 
         
-        result = self.ll.register_teams_into_event(
-            tournament_name=tournament_name,
-            event_name=event_name,
+        result = self.ll.register_team_into_event(
+            # tournament_name=tournament_name,
+            # event_name=event_name,
             team_names=[selected_team_name],  
         )
 
