@@ -418,8 +418,13 @@ class OrganizerUI:
 
 
         # let user select a player to be the new captain
+        current_captian = select_team.captain
+
         for player in players:
+            if player.handle == current_captian:
+                continue
             self.menu_ui.print_box_line(f" - {player.handle}")
+
         while True:
             new_captain_handle = input(" Enter the player handle: ").strip().lower()
             if any(p.handle == new_captain_handle for p in players):
