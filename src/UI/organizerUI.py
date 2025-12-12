@@ -309,6 +309,8 @@ class OrganizerUI:
         tournaments = self.ll.get_tournament_list()
         tournament_name = choose_from_list(" Select Tournament by number: ", tournaments)
         self.menu_ui.print_box_line()
+        
+        tournament_name = input("\n Select tournament to enter match results: ")
         self.menu_ui.print_box_line(f" You selected Tournament: {tournament_name} ")
         self.menu_ui.print_box_bottom()
 

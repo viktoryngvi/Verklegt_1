@@ -123,3 +123,10 @@ class DLWrapper:
 
     def edit_club_file(self, clubs: list[Club]):
         return self.clubio.edit_club_file(clubs)
+
+    # ----------------------------------------------------------------------
+    # CLUB METHODS
+    # ----------------------------------------------------------------------
+
+    def get_unfinished_matches(self):
+        return self.match.get_unfinished_matches()
