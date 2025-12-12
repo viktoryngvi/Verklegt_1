@@ -15,6 +15,7 @@ class PlayerLL:
     # ----------------------------------------------------------------------
     # CREATE PLAYER
     # ----------------------------------------------------------------------
+    
     def create_player(self, player: Player):
         """VALIDATES PLAYER DATA AND CREATES PLAYER IN DATA LAYER"""
         validate_errors = self._validate.validate_player(player)
@@ -36,6 +37,7 @@ class PlayerLL:
     # ----------------------------------------------------------------------
     # EDIT PLAYER INFORMATION
     # ----------------------------------------------------------------------
+
     def edit_player_phone(self, handle: str, phone: str) -> str:
         """UPDATES PLAYER PHONE AFTER VALIDATION"""
         existing_player = self._validate.check_if_handle_in_use(handle)
@@ -44,7 +46,13 @@ class PlayerLL:
         validate_error = self._validate.validate_phone(phone)
         if validate_error:
             return validate_error
-        updated = self.edit_player_try(handle, "phone", phone)
+        
+        list_players: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in list_players:
+            if player.handle == handle:
+                player.phone = phone
+        
+        updated = self._dl_wrapper.edit_player_file(list_players)
         if updated:
             return "Success: Player information updated"
         return "Error: Failed to update player"
@@ -54,10 +62,18 @@ class PlayerLL:
         existing_player = self._validate.check_if_handle_in_use(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
-        validate_error = self._validate.validate_email(email)
-        if validate_error:
-            return validate_error
-        updated = self.edit_player_try(handle, "email", email)
+        
+        validate_email = self._validate.validate_email(email)
+        if validate_email:
+            return validate_email
+
+        # Validate the updated data
+        list_players: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in list_players:
+            if player.handle == handle:
+                player.email = email
+        
+        updated = self._dl_wrapper.edit_player_file(list_players)
         if updated:
             return "Success: Player information updated"
         return "Error: Failed to update player"
@@ -67,10 +83,18 @@ class PlayerLL:
         existing_player = self._validate.check_if_handle_in_use(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
-        validate_error = self._validate.validate_address(address)
-        if validate_error:
-            return validate_error
-        updated = self.edit_player_try(handle, "address", address)
+        
+        validate_address = self._validate.validate_address(address)
+        if validate_address:
+            return validate_address
+
+        # Validate the updated data
+        list_players: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in list_players:
+            if player.handle == handle:
+                player.address = address
+        
+        updated = self._dl_wrapper.edit_player_file(list_players)
         if updated:
             return "Success: Player information updated"
         return "Error: Failed to update player"
@@ -80,10 +104,17 @@ class PlayerLL:
         existing_player = self._validate.check_if_handle_in_use(handle)
         if not existing_player:
             return "Error: Player handle does not exists"
-        existing_new_handle = self._validate.check_if_handle_in_use(handle_str)
-        if existing_new_handle:
-            return "Error: New handle already exists"
-        updated = self.edit_player_try(handle, "handle", handle_str)
+        
+        existing_handle = self._validate.check_if_handle_in_use(handle)
+        if existing_handle:
+            return "Error: This handle already exists"
+        
+        list_players: list[Player] = self._dl_wrapper.load_all_player_info()
+        for player in list_players:
+            if player.handle == handle:
+                player.handle = handle_str
+        
+        updated = self._dl_wrapper.edit_player_file(list_players)
         if updated:
             return "Success: Player information updated"
         return "Error: Failed to update player"
@@ -91,6 +122,7 @@ class PlayerLL:
     # ----------------------------------------------------------------------
     # LOAD PLAYER INFORMATION
     # ----------------------------------------------------------------------
+
     def load_player_info(self, handle: str):
         """LOADS PLAYER PUBLIC INFORMATION BY HANDLE"""
         existing_player = self._validate.check_if_handle_in_use(handle)
@@ -126,6 +158,7 @@ class PlayerLL:
     # ----------------------------------------------------------------------
     # PLAYER ID AND HANDLE HELPERS
     # ----------------------------------------------------------------------
+
     def get_new_player_id(self):
         """RETURNS THE NEXT AVAILABLE PLAYER ID"""
         player_data: list[Player] = self._dl_wrapper.load_all_player_info()
