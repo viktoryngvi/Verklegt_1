@@ -156,7 +156,7 @@ class EventLL:
     # INPUT MATCH RESULTS
     # ----------------------------------------------------------------------
  
-    def input_match_results(self, match_id, team_a_score, team_b_score, match: Match):
+    def input_match_results(self, match_id, team_a_score, team_b_score):
         """UPDATES MATCH SCORES AND DETERMINES WINNER"""
     
         schedule_file: list[Match] = self._dl_wrapper.load_match_file()
@@ -291,7 +291,7 @@ class EventLL:
     #######################################################################
 
 
-    def move_blueprint_to_last_team_standing(self, event: Event):
+    def move_blueprint_to_last_team_standing(self):
         blueprint: list[Event] = self._dl_wrapper.load_event_blueprint()
         
         list_of_teams = []

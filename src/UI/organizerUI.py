@@ -151,14 +151,18 @@ class OrganizerUI:
         # get a list of the tournaments created
         tournaments = self.ll.get_tournament_list()
         list_of_tournament_names = [tournament for tournament in tournaments]
+
         for i, tournament in enumerate(list_of_tournament_names, start=1):
             self.menu_ui.print_box_line(f"  [{i}] {tournament}")
         self.menu_ui.print_box_line()
-        select_tournament = input(" ➤ Select Tournament by number: ")
-        tournament_name = select_tournament
-
-
-        
+        select_tournament = get_non_empty_input(" ➤ Select Tournament by number: ").strip()
+        try:
+            t_idx = int(select_tournament) - 1
+            tournament_name = list_of_tournament_names[t_idx]
+        except (ValueError, IndexError):
+            print("Invalid tournament selection.")
+            input("Press Enter to continue...")
+            return
 
         self.menu_ui.print_box_bottom()
         
@@ -168,8 +172,19 @@ class OrganizerUI:
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select the event type: ")
         event_types = self.ll.event_types()
-        event_type = choose_from_list(" ➤ Select one type: ", event_types) 
-        self.menu_ui.print_box_line(f" You selected event type: {event_type}")
+        for i, event_type in enumerate(event_types, start=1):
+            self.menu_ui.print_box_line(f"  [{i}] {event_type}")
+        self.menu_ui.print_box_line()
+        pick = get_non_empty_input(" ➤ Select event type by number: ").strip()
+        try:
+            type_idx = int(pick) - 1
+            pick_event_type = event_types[type_idx]
+        except (ValueError, IndexError):
+            print("Invalid event type selection.")
+            input("Press Enter to continue...")
+            return
+
+        self.menu_ui.print_box_line(f" You selected event type: {pick_event_type} ")
         self.menu_ui.print_box_bottom()
 
         # get start and end date for the event
@@ -181,10 +196,10 @@ class OrganizerUI:
 
         results = Event(
             event_name,
-            event_type,
-            tournament_name,
-            start_date,
-            end_date,
+            event_type=pick_event_type,
+            tournament_name=tournament_name,
+            start_date=start_date,
+            end_date=end_date,
             team_name = None,
             event_id = None
         )
@@ -510,15 +525,12 @@ class OrganizerUI:
 
        # team name
        self.menu_ui.print_box_top()
-       team_name = input("\tTeam Name: ").strip()
+       team_name = get_non_empty_input("\tTeam Name: ").strip()
        self.menu_ui.print_box_bottom()
 
 
        # captain handle
        self.menu_ui.print_box_top()
-     
-      
-
 
        # validate that captain handle exists and get id
       
@@ -534,10 +546,6 @@ class OrganizerUI:
            print("Captain handle does not exist. Try again.")
        self.menu_ui.print_box_bottom()
       
-
-
-
-
        # select players
        self.menu_ui.print_box_top()
        # need list of all players without a team
@@ -551,7 +559,7 @@ class OrganizerUI:
            player_id, name, handle = player
            print(f" - [{player_id}] {name} ({handle})")
 
-
+        # validate that captain handle exists and get id
        valid_ids = {int(player_id) for player_id, _, _ in all_players}
 
 
@@ -597,22 +605,22 @@ class OrganizerUI:
 
         # Club name
         self.menu_ui.print_box_top()
-        club_name = input("\tClub Name: ").strip()
+        club_name = get_non_empty_input("\tClub Name: ").strip()
         self.menu_ui.print_box_bottom()
 
         # Club home town
         self.menu_ui.print_box_top()
-        club_home_town = input("\tHome Town: ").strip()
+        club_home_town = get_non_empty_input("\tHome Town: ").strip()
         self.menu_ui.print_box_bottom()
 
         # Club country
         self.menu_ui.print_box_top()
-        club_country = input("\tCountry: ").strip()
+        club_country = get_non_empty_input("\tCountry: ").strip()
         self.menu_ui.print_box_bottom()
 
         # Club colors
         self.menu_ui.print_box_top()
-        club_colors_list = input("\tClub Colors (comma separated): ").strip().split(",")
+        club_colors_list = get_non_empty_input("\tClub Colors (comma separated): ").strip().split(",")
         self.menu_ui.print_box_bottom()
 
         # Select teams to add to this club
@@ -622,6 +630,7 @@ class OrganizerUI:
         all: Team
         for all in all_teams:
             listi.append(all.name)
+    
         selected_teams = choose_from_list(
             "Select teams to add (comma separated for multiple): ",
             listi,
@@ -644,5 +653,5 @@ class OrganizerUI:
         input("Press Enter to continue...")
 
 
-    
+
 
