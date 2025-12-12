@@ -40,12 +40,11 @@ class OrganizerUI:
         self.menu_ui.print_box_line("  [6] Change team captain ")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  Reports: ")
-        self.menu_ui.print_box_line("  [7] View statistics ")
-        self.menu_ui.print_box_line("  [8] View schedule ")
+        self.menu_ui.print_box_line("  [7] View schedule ")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  Club Management: ")
-        self.menu_ui.print_box_line("  [9] Create team ")
-        self.menu_ui.print_box_line("  [10] Create club ")
+        self.menu_ui.print_box_line("  [8] Create team ")
+        self.menu_ui.print_box_line("  [9] Create club ")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line("  [B] Back to main menu ")
         self.menu_ui.print_box_line()
@@ -54,8 +53,8 @@ class OrganizerUI:
         
 
         
-        if choice not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "b"]:
-            print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, B")
+        if choice not in ["1", "2", "3", "4", "5", "6", "7", "8", "9", "b"]:
+            print(f"Invalid choice. Valid options: 1, 2, 3, 4, 5, 6, 7, 8, 9, B")
             input("Press Enter to continue...")
             return self.show_menu()
 
@@ -79,15 +78,12 @@ class OrganizerUI:
             self.change_team_captain()
             return "ORGANIZER_MENU"
         if choice == "7":
-            self.view_statistics()
-            return "ORGANIZER_MENU"
-        if choice == "8":
             self.view_schedule()
             return "ORGANIZER_MENU"
-        if choice == "9":
+        if choice == "8":
             self.create_team()
             return "ORGANIZER_MENU"
-        if choice == "10":
+        if choice == "9":
             self.register_club()
             return "ORGANIZER_MENU"
         if choice == "b":
@@ -430,7 +426,19 @@ class OrganizerUI:
         self.menu_ui.print_box_line(" Select a match to enter results for: ")
 
         # list of matches that have not been entered yet
-        selected_match = choose_from_list(" Select Match by number: ", matches)      
+        for i, match in enumerate(matches, start=1):
+            self.menu_ui.print_box_line(f"  [{i}] {match}")
+        self.menu_ui.print_box_line()
+        select_match = get_non_empty_input(" ➤ Select Match by number: ").strip()
+        try:
+            m_idx = int(select_match) - 1
+            selected_match = matches[m_idx]
+            selected_match_id = selected_match.id
+        except (ValueError, IndexError):
+            print("Invalid match selection.")
+            input("Press Enter to continue...")
+            return
+        self.menu_ui.print_box_bottom()    
 
         # get scores and make sure they are integers with input helper
         self.menu_ui.print_box_line("Enter the scores for the match: ")
@@ -440,14 +448,12 @@ class OrganizerUI:
 
         # Forward everything directly to LL
         result = matches(
-            selected_match,
+            selected_match_id,
             team_a_score,
-            team_b_score,
-            tournament_name,
-            event_name,
+            team_b_score
         )
 
-        results = self.ll.enter_match_result(result)
+        results = self.ll.input_match_results(result)
 
         #  Print LL response
         print("\n" + str(result))
