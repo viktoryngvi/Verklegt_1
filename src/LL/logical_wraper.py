@@ -254,8 +254,8 @@ class LLWrapper:
     def how_many_matches_have_winners(self):
         return self.event_ll.how_many_matches_have_winners()
     
-    def view_unfinnised_games(self):
-        return self.event_ll.view_unfinnised_games()
+    def view_games(self):
+        return self.event_ll.view_games()
 
     def get_results_from_one_game(self):
         return self.event_ll.get_results_from_one_game()
