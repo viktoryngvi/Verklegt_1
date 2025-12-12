@@ -9,7 +9,7 @@ class Event:
             self, 
             event_name :str = None, 
             event_type: str = None, 
-            tournament_name: str = None,    
+            tournament_name: str = None,  
             start_date: date = None,
             end_date: date = None,
             team_name: str = None,
