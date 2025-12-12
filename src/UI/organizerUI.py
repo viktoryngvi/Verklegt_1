@@ -236,7 +236,8 @@ class OrganizerUI:
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select an event to register a team for: ")
         events = self.ll.get_events_in_tournament(tournament_name)
-        if not events:
+
+        if events == "No tournament with this name":
             print("No events found for this tournament.")
             input("Press Enter to continue...")
             return
