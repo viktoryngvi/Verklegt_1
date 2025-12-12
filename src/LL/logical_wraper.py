@@ -145,13 +145,6 @@ class LLWrapper:
         """CHECKS IF TEAM EXISTS"""
         return self.team_ll.check_if_team_name_exists(captains_team)
    
-    # ----------------------------------------------------------------------
-    # MATCH METHODS
-    # ----------------------------------------------------------------------
-
-    def enter_match_results(self):
-        """ENTERS RESULTS FOR A MATCH"""
-        pass
 
     # ----------------------------------------------------------------------
     # CLUB METHODS
@@ -213,13 +206,49 @@ class LLWrapper:
         """CREATES AN EMPTY EVENT"""
         return self.event_ll.create_empty_event(event)
 
-    def get_team_captain(self, team_name, handle):
-        """RETURNS TEAM CAPTAIN"""
-        return self.captain_ll.get_team_captain(team_name, handle)
+    # def get_team_captain(self, team_name, handle):
+    #     """RETURNS TEAM CAPTAIN"""
+    #     return self.captain_ll.get_team_captain(team_name, handle)
    
     def event_types(self):
       return self.event_ll.event_types()
-   
+    
+    def enter_match_results(self):
+        """ENTERS RESULTS FOR A MATCH"""
+        pass
+    
+    def check_if_team_in_event(self, team):
+        return self.event_ll.check_if_team_in_event(team)
+    
+    def move_from_blueprint_to_match(self):
+        return self.event_ll.move_from_blueprint_to_match()
+    
+    def input_match_results(self, match_id, team_a_score, team_b_score):
+        return self.event_ll.input_match_results(match_id, team_a_score, team_b_score)
+    
+    def create_second_round(self):
+        return self.event_ll.create_second_round()
+    
+    def create_third_round(self):
+        return self.event_ll.create_third_round()
+    
+    def create_fourth_round(self):
+        return self.event_ll.create_fourth_round()
+    
+    def move_blueprint_to_last_team_standing(self):
+        return self.event_ll.move_blueprint_to_last_team_standing()
+    
+    def find_winner(self):
+        return self.event_ll.find_winner()
+    
+    def how_many_matches_have_winners(self):
+        return self.event_ll.how_many_matches_have_winners()
+    
+    def view_unfinnised_games(self):
+        return self.event_ll.view_unfinnised_games()
+
+    def get_results_from_one_game(self):
+        return self.event_ll.get_results_from_one_game()
    #VALIDATE METHODS
 
     def validate_handle(self, handle):
