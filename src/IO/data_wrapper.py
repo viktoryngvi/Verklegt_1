@@ -4,6 +4,7 @@ from IO.Event_IO import Event_IO
 from IO.Tournament_IO import Tournament_IO
 from IO.Club_IO import Club_IO
 from models.match import Match
+from models.club import Club
 
 class DLWrapper:
     """Central wrapper for all IO operations: 
@@ -114,32 +115,11 @@ class DLWrapper:
     # CLUB METHODS
     # ----------------------------------------------------------------------
 
-    def register_club(self, club):
-        """REGISTERS A NEW CLUB INTO THE CLUB FILE"""
+    def load_all_clubs(self):
+        return self.clubio.load_all_clubs()
+
+    def register_club(self, club: Club):
         return self.clubio.register_club(club)
 
-    
-    def add_team_to_club(self, clubs):
-        """ADDS A TEAM UNDER THE SPECIFIED CLUB"""
-        return self.clubio.add_team_to_club(clubs)
-
-    
-    def load_clubs(self):
-        """LOADS ALL CLUBS FROM FILE"""
-        return self.clubio.view_clubs()
-
-
-    def view_clubs(self):
-        """RETURNS A LIST OF ALL CLUBS"""
-        return self.clubio.view_clubs()
-
-    
-    def view_club_information(self, club_name):
-        """RETURNS DETAILED INFORMATION ABOUT A SPECIFIC CLUB"""
-        return self.clubio.view_club_information(club_name)
-
-    
-    def check_if_club_name_in_use(self, club_name):
-        """CHECKS IF A CLUB NAME IS ALREADY REGISTERED"""
-        return self.clubio.check_if_club_name_in_use(club_name)
-
+    def edit_teams_file(self, clubs: list[Club]):
+        return self.clubio.edit_teams_file(clubs)
