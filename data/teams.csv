@@ -1,6 +1,10 @@
 id,team,captain_handle,player_list
-1,vikk tor,eggdancer,kristalking;vandav;yrsay,
+1,vikk tor,vandav,kristalking;yrsay;eggdancer;eggdancer,
 2,barca,stacksmashsara,voidstarval;chucknorrismain;movaxmaria,
 3,vikkkkk,ulfurup,hannah;palinap;arnaraegisson,
+<<<<<<< HEAD
 4,kekkef,tris11,freyjaf;gardarg,
 5,Tristan,tris11,carlac;dagurd;erlinge,
+=======
+4,kekkef,gardarg,tris11;freyjaf,
+>>>>>>> 980fea38ff57d08364253f7740f688d1d771ec60
