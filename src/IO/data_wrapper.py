@@ -111,6 +111,9 @@ class DLWrapper:
     def override_match_file(self):
         """"""
         return self.match.override_match_file()
+    
+    def append_into_results(self, matches_to_append: list[Match]):
+        return self.match.append_into_results(matches_to_append)
 
     
     # ----------------------------------------------------------------------

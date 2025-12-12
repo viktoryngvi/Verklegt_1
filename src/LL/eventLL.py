@@ -175,7 +175,7 @@ class EventLL:
                 if team_a_score < team_b_score:
                     match.winner = match.team_b
                 break
-    
+        self._dl_wrapper.edit_match_file(schedule_file)
         return f"Winner for match{match_id} is {match.winner}"
     
     # ----------------------------------------------------------------------
@@ -336,6 +336,14 @@ class EventLL:
         winner = knockout_file[-1].winner        
         return winner
 
+
+
+    def move_match_to_result(self):
+        matches_to_append: list[Match] = self._dl_wrapper.load_match_file()
+        return self._dl_wrapper.append_into_results(matches_to_append)
+
+
+
     # ----------------------------------------------------------------------
     # HOW MANY MATCHES HAVE WINNERS
     # ----------------------------------------------------------------------
@@ -377,15 +385,3 @@ class EventLL:
                         unfinnished_games.append(match)
                 return unfinnished_games
     
-
-    # ----------------------------------------------------------------------
-    # GET RESULTS FROM ONE GAME
-    # ----------------------------------------------------------------------
-   
-    def get_results_from_one_game(self):
-        """RETRIEVES RESULTS FOR A SINGLE GAME"""
-
-        result_from_one_game = self._dl_wrapper.read_results_file()
-        
-        return result_from_one_game
-        
