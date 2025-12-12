@@ -210,64 +210,76 @@ class OrganizerUI:
     def Register_team_into_event(self):
         self.menu_ui.print_header("Register Teams for Event")
 
+        # select tournament 
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(" Select a tournament: ")
-        # get a list of the tournaments created
-        tournament = self.ll.get_tournament_list()  
-        tournament_name = choose_from_list(" Select Tournament by number: ", tournament)
+
+        tournaments = self.ll.get_tournament_list()
+        list_of_tournament_names = [t for t in tournaments]
+
+        for i, t in enumerate(list_of_tournament_names, start=1):
+            self.menu_ui.print_box_line(f"  [{i}] {t}")
+        self.menu_ui.print_box_line()
+
+        select_tournament = get_non_empty_input(" ➤ Select Tournament by number: ").strip()
+        try:
+            t_idx = int(select_tournament) - 1
+            tournament_name = list_of_tournament_names[t_idx]
+        except (ValueError, IndexError):
+            print("Invalid tournament selection.")
+            input("Press Enter to continue...")
+            return
+
         self.menu_ui.print_box_bottom()
 
-        # select event
+        # select event in that tournament
         self.menu_ui.print_box_top()
-        self.menu_ui.print_box_line(" Select an event to register teams for: ")
+        self.menu_ui.print_box_line(" Select an event to register a team for: ")
         events = self.ll.get_events_in_tournament(tournament_name)
+        if not events:
+            print("No events found for this tournament.")
+            input("Press Enter to continue...")
+            return
+
         event_name = choose_from_list("Select event:", events)
         self.menu_ui.print_box_bottom()
 
-        # register teams
+        # select a single team 
         self.menu_ui.print_box_top()
-        self.menu_ui.print_box_line(" Select teams to register for this event: ")
-        # Register teams  for the event, get the list of teams and pick what teams to register by number
-        max_teams = 16
-        registered_teams = []
-
+        self.menu_ui.print_box_line(" Select a team to register for this event: ")
         teams = self.ll.get_team_list()
+
+        if not teams:
+            print("No teams available.")
+            input("Press Enter to continue...")
+            return
+
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_line(" Available Teams: ")
         for i, team in enumerate(teams, start=1):
-            print(f"  [{i}] {team.name}")
+            
+            self.menu_ui.print_box_line(f"  [{i}] {team.name}")
         self.menu_ui.print_box_line()
         self.menu_ui.print_box_bottom()
+
+        team_index_raw = get_integer_input(" Enter the number of the team to register: ").strip()
+        try:
+            team_index = int(team_index_raw) - 1
+        except ValueError:
+            print("Invalid team number. Try again.")
+            input("Press Enter to continue...")
+            return
+
+        selected_team_name = teams[team_index].name  
+
         
-        while True:
-            team_index = get_integer_input(" Enter the number of the team to register: ") - 1
-
-            if team_index < 0 or team_index >= len(teams):
-                print("Invalid team number. Try again.")
-                continue
-            team_name = teams[team_index]
-            if team_name in registered_teams:
-                print(f"Team {team_name} is already registered.")
-                continue
-            else:
-                registered_teams.append(team_name)
-            
-            print(f"\n{len(registered_teams)}/{max_teams} teams registered.")
-            print("Registered Teams: " + ", ".join(registered_teams))
-
-            if len(registered_teams) >= max_teams:
-                print("Maximum number of teams registered.")
-                break
-            more = get_choice_input(" Register another team? (y/n): ", ["y", "n"])
-            if more == "n":
-                break
-
-        results = self.ll.register_teams_into_event(
+        result = self.ll.register_teams_into_event(
             tournament_name=tournament_name,
             event_name=event_name,
-            team_names=registered_teams
+            team_names=[selected_team_name],  
         )
-        print("\n" + str(results))
+
+        print("\n" + str(result))
         input("Press Enter to continue...")
         
     """
