@@ -1,3 +1,1 @@
-club_name,club_home_town,club_country,club_colors,teams,
-klubbur 8,reykjavik,isl,blue,vikk tor,
-Barcelona,Barcelona,Spain,red;blue,barca,
+id,team,captain_handle,player_list

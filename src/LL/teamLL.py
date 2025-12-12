@@ -29,6 +29,8 @@ class TeamLL:
         if check_team_name:
             return "Team name already exists"
         
+        players_id = [playerid for playerid in players_id if playerid != cap_id]
+        
         for player_id in players_id:
     
             if not self.player_ll.check_if_player_id_in_team(player_id):
@@ -40,36 +42,36 @@ class TeamLL:
 
     def create_team_to_data(self, name, captain_id, list_of_player_ids):
         """SAVES TEAM TO DATA LAYER AND UPDATES PLAYER TEAMS"""
-    
-        teams_file: list[Team] = self._dl_wrapper.view_all_teams()
-    
+
+       
         captain_handle = self.player_ll.take_id_return_handle(captain_id)
         if captain_handle is False:
             return "Captain handle does not exist"
-    
-        list_of_player_handles = []
-    
+
+        
+        self.player_ll.place_player_into_team(name, captain_id)
+
+
+        list_of_player_handles = [captain_handle]
+
+
         for player_id in list_of_player_ids:
-    
             self.player_ll.place_player_into_team(name, player_id)
             player_handle = self.player_ll.take_id_return_handle(player_id)
             list_of_player_handles.append(player_handle)
-            
+
+
         id = self.get_last_team_id()
-    
+
+
         team_model = Team(id, name, captain_handle, list_of_player_handles)
 
-        list_player: list[Player] = self._dl_wrapper.load_all_player_info()
-    
-        for player in list_player:
-    
-            if player.handle == player_handle:
-                player.team = name
 
         if self._dl_wrapper.append_team_into_file(team_model):
             return "Successfully created Team"
-        
+
         return "Team was not created"
+
 
     # ----------------------------------------------------------------------
     # VIEW TEAMS
@@ -77,13 +79,15 @@ class TeamLL:
     
     def view_all_teams(self):
         """RETURNS ALL TEAMS FROM DATA LAYER"""
-        club_list: list[Club] = self._dl_wrapper.load_all_clubs()
         team_list: list[Team] = self._dl_wrapper.view_all_teams()
+        
         avalable_teams = []
+        seen_names = set()
+
         for team in team_list:
-            for club in club_list:
-                if team.name not in club.teams and team.name not in avalable_teams:
-                    avalable_teams.append(team)
+            if team.name not in seen_names:
+                avalable_teams.append(team)
+                seen_names.add(team.name)
 
         return avalable_teams
 

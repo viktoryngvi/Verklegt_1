@@ -2,9 +2,10 @@ id,team,captain_handle,player_list
 1,vikk tor,vandav,kristalking;yrsay;eggdancer;eggdancer,
 2,barca,stacksmashsara,voidstarval;chucknorrismain;movaxmaria,
 3,vikkkkk,ulfurup,hannah;palinap;arnaraegisson,
-<<<<<<< HEAD
-4,kekkef,tris11,freyjaf;gardarg,
-5,Tristan,tris11,carlac;dagurd;erlinge,
-=======
-4,kekkef,gardarg,tris11;freyjaf,
->>>>>>> 980fea38ff57d08364253f7740f688d1d771ec60
+4,kekkef,freyjaf,tris11;gardarg,
+5,afsa,jjeremias13,vikkmanefefij;vikkman3jnf;segfaultsam,
+6,sdaga,tris11,segfaultsam,
+7,teamwithcap,bjarkibear,False;False;False,
+8,teamwithcaptainnameinlist,tristan90,tristan90;krisssss;tobbit,
+9,newteamfullyworking,tristan90,tristan90;rosar;quentinq,
+10,workingteam,orvaro,orvaro;ninan;magnusm,

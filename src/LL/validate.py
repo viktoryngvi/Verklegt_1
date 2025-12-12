@@ -165,6 +165,11 @@ class Validate:
         
         if len(parts) > 5:
             return "Full name cannot have more than 5 words."
+        
+        special_char = r'!\"#%&/()='
+
+        if any(char in special_char for char in self.name):
+            return "Field contains invalid special characters."
 
         return True
 
@@ -456,6 +461,13 @@ class Validate:
     
         if len(tournament_name) < 3 or len(tournament_name) > 60:
             return "Tournament name must be between 3–60 characters."
+        
+
+        special_char = r'!\"#¤%&/()='
+
+
+        if any(char in special_char for char in tournament_name):
+            return "Field contains invalid special characters."
     
         return True
 
