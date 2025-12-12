@@ -99,25 +99,26 @@ class PlayerLL:
             return "Success: Player information updated"
         return "Error: Failed to update player"
 
-    def edit_player_handle(self, handle: str, handle_str: str) -> str:
-        """UPDATES PLAYER HANDLE AFTER CHECKING FOR DUPLICATES"""
-        existing_player = self._validate.check_if_handle_in_use(handle)
-        if not existing_player:
-            return "Error: Player handle does not exists"
-        
-        existing_handle = self._validate.check_if_handle_in_use(handle)
-        if existing_handle:
-            return "Error: This handle already exists"
-        
-        list_players: list[Player] = self._dl_wrapper.load_all_player_info()
-        for player in list_players:
-            if player.handle == handle:
-                player.handle = handle_str
-        
-        updated = self._dl_wrapper.edit_player_file(list_players)
-        if updated:
-            return "Success: Player information updated"
-        return "Error: Failed to update player"
+    def edit_player_handle(self, old_handle: str, new_handle: str):
+        players = self._dl_wrapper.load_all_player_info()
+
+        # Validate new handle (IMPORTANT)
+        if new_handle != old_handle and self.check_if_handle_in_use(new_handle):
+            return False  # new handle already taken
+
+        # Update
+        for player in players:
+            if player.handle == old_handle:
+                player.handle = new_handle
+                break
+
+        # Save
+        self._dl_wrapper.edit_player_file(players)
+        return "Successfully changed player handle"
+
+    
+    def check_if_handle_in_use(self,handle):
+        return self._validate.check_if_handle_in_use(handle)
 
     # ----------------------------------------------------------------------
     # LOAD PLAYER INFORMATION
