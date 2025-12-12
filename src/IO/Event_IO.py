@@ -105,15 +105,16 @@ class Event_IO(Match, Event):
                 match.event_name = str(attributes[1])
                 match.game_type = str(attributes[2])
                 match.server_id = str(attributes[3])
-                match.bracket_nr = int(attributes[4])
-                match.date_of_match = date.isoformat(attributes[5])
-                match.time_of_match = str(attributes[6])
-                match.teams = list(attributes[7].split(";"))
-                match.team_a = str(attributes[8])
-                match.team_b = int(attributes[9])
-                match.team_a_score = str(attributes[10])
-                match.team_b_score = str(attributes[11])
-                match.winner = str(attributes[12])
+                match.match_id = str(attributes[4])
+                match.bracket_nr = int(attributes[5])
+                match.date_of_match = date.isoformat(attributes[6])
+                match.time_of_match = str(attributes[7])
+                match.teams = list(attributes[8].split(";"))
+                match.team_a = str(attributes[9])
+                match.team_b = int(attributes[10])
+                match.team_a_score = str(attributes[11])
+                match.team_b_score = str(attributes[12])
+                match.winner = str(attributes[13])
                 knockout_list.append(match)
     
         return knockout_list
@@ -132,6 +133,7 @@ class Event_IO(Match, Event):
                     f'{match.event_name},'
                     f'{match.game_type},'
                     f'{match.server_id},'
+                    f'{match.match_id}'
                     f'{match.bracket_nr},'
                     f'{date.isoformat(match.date_of_match)},'
                     f'{match.time_of_match},'
@@ -152,7 +154,7 @@ class Event_IO(Match, Event):
 
     def override_match_file(self):
         with open(self.match_file, "w", encoding="utf-8") as match_file:
-            match_file.write("tournament,event_name,game_type,server_id,date_of_match,time_of_match,teams,team_a,team_b,team_a_score,team_b_score,winner\n")
+            match_file.write("tournament,event_name,game_type,server_id,match_id,date_of_match,time_of_match,teams,team_a,team_b,team_a_score,team_b_score,winner\n")
         return True
 
 
@@ -160,7 +162,7 @@ class Event_IO(Match, Event):
         """OVERWRITES MATCH FILE WITH UPDATED MATCH INFORMATION"""
     
         with open(self.match_file, "w", encoding="utf-8") as match_file:
-            match_file.write("tournament,event_name,game_type,server_id,date_of_match,time_of_match,teams,team_a,team_b,team_a_score,team_b_score,winner\n")
+            match_file.write("tournament,event_name,game_type,server_id,match_id,date_of_match,time_of_match,teams,team_a,team_b,team_a_score,team_b_score,winner\n")
 
 
             for match in matches:
@@ -170,6 +172,7 @@ class Event_IO(Match, Event):
                     f'{match.event_name},'
                     f'{match.game_type},'
                     f'{match.server_id},'
+                    f'{match.match_id}'
                     f'{match.bracket_nr},'
                     f'{date.isoformat(match.date_of_match)},'
                     f'{match.time_of_match},'
@@ -226,7 +229,6 @@ class Event_IO(Match, Event):
 
     def append_into_results(self, matches_to_append: list[Match]):
         """APPENDS NEW RESULTS INTO THE RESULTS FILE"""
-
     
         with open(self.match_file, "a", encoding="utf-8") as results_file:
     
@@ -251,7 +253,3 @@ class Event_IO(Match, Event):
                     )
     
             return "Match has been added to file"
-
-            # það þarf ekki að vera edit results function af því við
-            # erum aldrei að breyta leikjum sem eru liðnir
-
