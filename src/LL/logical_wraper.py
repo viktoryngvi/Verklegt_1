@@ -217,18 +217,12 @@ class LLWrapper:
         """RETURNS TEAM CAPTAIN"""
         return self.captain_ll.get_team_captain(team_name, handle)
    
-<<<<<<< HEAD
     def event_types(self):
-        """RETURNS LIST OF EVENT TYPES"""
-        return self.event_ll.event_types()
-=======
-   def event_types(self):
       return self.event_ll.event_types()
    
    #VALIDATE METHODS
 
-   def validate_handle(self, handle):
+    def validate_handle(self, handle):
       return self.validate.check_if_handle_in_use(handle)
 
 
->>>>>>> a4b983508014258c92227de9093fb1bec9c94ed2
