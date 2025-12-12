@@ -30,7 +30,7 @@ class CaptainLL:
         list_player: list[Player] = self._dl_wrapper.load_all_player_info()
         for player in list_player:
             if player.handle == handle:
-                player.phone == phone
+                player.phone = phone
         
         updated = self._dl_wrapper.edit_player_file(list_player)
         if updated:
