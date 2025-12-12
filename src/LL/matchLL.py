@@ -2,13 +2,19 @@ from models.match import Match
 from IO.data_wrapper import DLWrapper
 
 class MatchLL:
+    """LOGIC LAYER CLASS FOR MATCH VALIDATION AND RESULT MANAGEMENT"""
+
     def __init__(self, dl_wrapper: DLWrapper):
+
         self._dl_wrapper = dl_wrapper
 
+    # ----------------------------------------------------------------------
+    # CHECK SCORE FORMAT
+    # ----------------------------------------------------------------------
+
     def check_score_format(self, match: Match):
-        """
-        Validates that the result_score is in the format 'Int-Int'.
-        """
+        """VALIDATES THAT THE MATCH RESULT SCORE IS IN THE FORMAT 'X-Y'"""
+       
         score_str = match.result_score.strip()
         
         if "-" not in score_str:
@@ -31,17 +37,16 @@ class MatchLL:
             
         return True
 
+    # ----------------------------------------------------------------------
+    # CHECK WINNER CONSISTENCY
+    # ----------------------------------------------------------------------
+
     def check_winner_consistency(self, match: Match):
-        """
-        Validates that the declared winner matches the logic of the scores
-        and that the winner is actually one of the participating teams.
-        """
-        # If no winner is set yet, we cannot validate consistency
+        """VALIDATES THAT THE DECLARED WINNER MATCHES THE SCORE LOGIC"""
+       
         if not match.winner:
             return "No winner declared."
 
-        # Check if winner is one of the participants
-        # Assuming Team objects are compared by name or ID
         team_a_name = match.team_a.name if hasattr(match.team_a, 'name') else str(match.team_a)
         team_b_name = match.team_b.name if hasattr(match.team_b, 'name') else str(match.team_b)
         winner_name = match.winner.name if hasattr(match.winner, 'name') else str(match.winner)
@@ -49,10 +54,9 @@ class MatchLL:
         if winner_name != team_a_name and winner_name != team_b_name:
             return f"Winner ({winner_name}) is not part of this match ({team_a_name} vs {team_b_name})."
 
-        # Parse scores to ensure the winner actually has the higher score
         try:
             score_a, score_b = map(int, match.result_score.split("-"))
-        except:
+        except ValueError:
             return "Invalid score format prevents winner validation."
 
         if score_a == score_b:
@@ -66,11 +70,12 @@ class MatchLL:
 
         return True
 
+    # ----------------------------------------------------------------------
+    # VALIDATE MATCH
+    # ----------------------------------------------------------------------
+
     def validate_match(self, match: Match):
-        """
-        Aggregates validation checks.
-        Returns a LIST of errors if invalid, or None if valid.
-        """
+        """AGGREGATES MATCH VALIDATION CHECKS AND RETURNS ERRORS OR NONE"""
         errors = []
 
         check_score = self.check_score_format(match)
@@ -79,7 +84,6 @@ class MatchLL:
         if check_score is not True:
             errors.append(f"Score: {check_score}")
         
-        # Only check winner logic if the score format was valid
         if check_score is True and check_winner is not True:
             errors.append(f"Winner: {check_winner}")
 
@@ -88,23 +92,18 @@ class MatchLL:
         
         return None
 
+    # ----------------------------------------------------------------------
+    # ENTER MATCH RESULT
+    # ----------------------------------------------------------------------
+
     def enter_match_result(self, match: Match):
-        """
-        Validates the match result and sends it to the DLWrapper to be saved.
-        """
-        # 1. Validate data
+        """VALIDATES AND SAVES MATCH RESULT USING DLWrapper"""
         validation_errors = self.validate_match(match)
         
         if validation_errors:
             return validation_errors
 
-        # 2. Check if match ID exists (Optional, depending on your logic)
-        # if not self._dl_wrapper.check_if_match_exists(match.id):
-        #     return ["Match ID not found."]
-
-        # 3. Save to Data Layer
-        # Note: You need to implement save_match_result in your DLWrapper
         try:
-            return  self._dl_wrapper.save_match_result(match)
+            return self._dl_wrapper.save_match_result(match)
         except Exception as e:
             return [f"Database Error: {str(e)}"]

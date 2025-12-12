@@ -4,6 +4,8 @@ from models.contact_person import contact_person
 from datetime import date
 
 class Tournament(contact_person):
+    """TOURNAMENT CLASS REPRESENTS NAME, LOCATION, START/END DATES, CONTACT INFO, AND EVENTS."""
+
     def __init__(self, tournament_name: str = None, tournament_location: str = None, start_date: date = None, end_date: date = None
                  , contact_name: str = None, contact_email: str = None,
                  contact_phone: str = None, tournament_id: int = None, event_list: list[Event] = None):

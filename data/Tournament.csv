@@ -1,4 +1,5 @@
-tournament_id,tournament_name,tournament_location,start_date,end_date,event_list,contact_name,contact_email,contact_phone
-1,CAPA TOURNY,CAPA TOURNY,2025-12-20,2025-12-24,event1;coolevent2;kritos_favorite_event,Kristófer Kristjan Erlendsson,email@gmail.com,787-2550,
-2,kristostourny,hr 4,2025-12-12,2025-12-16,None,kristo krif kefi,kristo@gmail.com,7872550,
-3,kristotourny,hr 29,2025-12-20,2025-12-25,None,kri irg gji,kekf@gmail.com,7872550,
+tournament_id, tournament_name, tournament_location, start_date, end_date  , event_list                             , contact_name                 , contact_email     , contact_phone
+            1, CAPA TOURNY    , CAPA TOURNY        , 2025-12-20, 2025-12-24, event1;coolevent2;kritos_favorite_event, Kristófer Kristjan Erlendsson, email@gmail.com   , 787-2550     , 
+            2, kristostourny  , hr 4               , 2025-12-12, 2025-12-16, None                                   , kristo krif kefi             , kristo@gmail.com  , 7872550      , 
+            3, kristotourny   , hr 29              , 2025-12-20, 2025-12-25, None                                   , kri irg gji                  , kekf@gmail.com    , 7872550      , 
+            4, Barcelona      , Hafnratu 14        , 2006-03-03, 2007-03-03, None                                   , Jeremias Borjas              , jereamis@gmail.com, 659-2893     , 
