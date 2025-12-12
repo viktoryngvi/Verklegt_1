@@ -387,13 +387,15 @@ class OrganizerUI:
         self.menu_ui.print_box_bottom()
 
         # Forward everything directly to LL
-        result = self.ll.enter_match_result(
+        result = matches(
             selected_match,
             team_a_score,
             team_b_score,
             tournament_name,
             event_name,
         )
+
+        results = self.ll.enter_match_result(result)
 
         #  Print LL response
         print("\n" + str(result))
