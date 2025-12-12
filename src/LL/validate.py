@@ -166,10 +166,6 @@ class Validate:
         if len(parts) > 5:
             return "Full name cannot have more than 5 words."
         
-        special_char = r'!\"#%&/()='
-
-        if any(char in special_char for char in self.name):
-            return "Field contains invalid special characters."
 
         return True
 
@@ -193,11 +189,7 @@ class Validate:
         if len(left) != 3 or len(right) != 4:
             return "Phone number must be in format 123-4567."
         
-        special_char = r'!\"#%&/()='
 
-        if any(char in special_char for char in phone):
-            return "Field contains invalid special characters."
-    
         return None
 
     def validate_email(self, email: str) -> None:
@@ -235,10 +227,6 @@ class Validate:
         if "." not in email_split[1]:
             return "Top-level domain is missing."
         
-        special_char = r'!\"#%&/()='
-
-        if any(char in special_char for char in email):
-            return "Field contains invalid special characters."
     
         return None
 
@@ -254,10 +242,6 @@ class Validate:
         if "  " in address:
             return "Adress cannot contain consecutive spaces"
         
-        special_char = r'!\"#%&/()='
-
-        if any(char in special_char for char in address):
-            return "Field contains invalid special characters."
     
         return None
 
@@ -308,21 +292,13 @@ class Validate:
         if not club_country.isalpha():
             return "Country must be only letter"
         
-        special_char = r'!\"#%&/()='
-
-        if any(char in special_char for char in club_country):
-            return "Field contains invalid special characters."
         
         return True
 
     def validate_club_home_town(self, club_home_town: str):
         if not club_home_town.isalpha():
             return "Country must be only letter"
-        
-        special_char = r'!\"#%&/()='
-
-        if any(char in special_char for char in club_home_town):
-            return "Field contains invalid special characters."
+    
 
         return True
 
@@ -331,10 +307,6 @@ class Validate:
             if not color.isalpha():
                 return "Color must be only letter"
             
-        special_char = r'!\"#%&/()='
-
-        if any(char in special_char for char in color):
-            return "Field contains invalid special characters."
             
         return True
             
@@ -378,10 +350,6 @@ class Validate:
         if len(event_name) > 20:
             return "Event name is too long (max 20 characters)."
 
-        special_char = r'!\"#%&/()='
-
-        if any(char in special_char for char in event_name):
-            return "Field contains invalid special characters."
     
         return True
 
@@ -393,10 +361,6 @@ class Validate:
         except ValueError:
             return "Event must be in YYYY-MM-DD format."
                 
-        special_char = r'!\"#%&/()='
-
-        if any(char in special_char for char in start_date_event):
-            return "Field contains invalid special characters."
     
         start_tournament = self.view_start_date_of_tournament(tournament_name)
     
@@ -416,10 +380,6 @@ class Validate:
         except ValueError:
             return "Event must be in YYYY-MM-DD format."
         
-        special_char = r'!\"#%&/()='
-
-        if any(char in special_char for char in end_date_event):
-            return "Field contains invalid special characters."
     
         end_tournament = self.view_end_date_of_tournament(tournament_name)
     
@@ -495,12 +455,6 @@ class Validate:
         if len(tournament_name) < 3 or len(tournament_name) > 60:
             return "Tournament name must be between 3–60 characters."
         
-
-        special_char = r'!\"#¤%&/()='
-
-
-        if any(char in special_char for char in tournament_name):
-            return "Field contains invalid special characters."
     
         return True
 
@@ -518,14 +472,7 @@ class Validate:
     
         if (self.end - self.start).days < 4:
             return "Tournament must span more then 4 days."
-        
-        special_char = r'!\"#%&/()='
 
-        if any(char in special_char for char in self.start):
-            return "Field contains invalid special characters."
-        
-        if any(char in special_char for char in self.end):
-            return "Field contains invalid special characters."
     
         return True
 
@@ -539,10 +486,6 @@ class Validate:
         if len(check_contact_name) < 3:
             return "Contact name must be at least 3 characters."
         
-        special_char = r'!\"#%&/()='
-
-        if any(char in special_char for char in check_contact_name):
-            return "Field contains invalid special characters."
     
         return True
 
