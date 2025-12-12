@@ -52,5 +52,9 @@ class ClubLL:
                 return True
         
         return False
+    
+    def load_clubs(self):
+        club_list: list[Club] = self.dl_wrapper.load_all_clubs()
+        return club_list
 
 

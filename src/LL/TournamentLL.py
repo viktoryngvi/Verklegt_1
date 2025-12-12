@@ -27,6 +27,8 @@ class TournamentLL:
         if self.validator.validate_tournament(tournament):
             return self.validator.validate_tournament(tournament)
         tournament.tournament_id = id
+        if tournament.event_list is None:
+            tournament.event_list = "event_list"
 
         return self._dl_wrapper.write_into_file(tournament)
          
