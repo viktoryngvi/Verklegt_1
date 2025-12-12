@@ -588,22 +588,22 @@ class OrganizerUI:
 
         # Club name
         self.menu_ui.print_box_top()
-        club_name = input("\tClub Name: ").strip()
+        club_name = get_non_empty_input("\tClub Name: ").strip()
         self.menu_ui.print_box_bottom()
 
         # Club home town
         self.menu_ui.print_box_top()
-        club_home_town = input("\tHome Town: ").strip()
+        club_home_town = get_non_empty_input("\tHome Town: ").strip()
         self.menu_ui.print_box_bottom()
 
         # Club country
         self.menu_ui.print_box_top()
-        club_country = input("\tCountry: ").strip()
+        club_country = get_non_empty_input("\tCountry: ").strip()
         self.menu_ui.print_box_bottom()
 
         # Club colors
         self.menu_ui.print_box_top()
-        club_colors_list = input("\tClub Colors (comma separated): ").strip().split(",")
+        club_colors_list = get_non_empty_input("\tClub Colors (comma separated): ").strip().split(",")
         self.menu_ui.print_box_bottom()
 
         # Select teams to add to this club
@@ -613,6 +613,7 @@ class OrganizerUI:
         all: Team
         for all in all_teams:
             listi.append(all.name)
+    
         selected_teams = choose_from_list(
             "Select teams to add (comma separated for multiple): ",
             listi,
