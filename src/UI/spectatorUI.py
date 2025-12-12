@@ -94,12 +94,8 @@ class SpectatorUI:
             input("Press Enter to continue...")
             return
 
-        for event in events:
-            self.menu_ui.print_box_line(f" - {event} ")
-        selected_event = get_non_empty_input(" Enter event name to view schedule: ").strip()
-
         self.menu_ui.print_box_line()
-        self.menu_ui.print_box_line(f" You selected Event: {selected_event}")
+        self.menu_ui.print_box_line(f" You selected Event: {select_event}")
         self.menu_ui.print_box_bottom()
 
         # get schedule from ll for that tournament and event
@@ -108,11 +104,11 @@ class SpectatorUI:
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line()
 
-        schedule = self.ll.get_tournament_schedule(tournament_name, selected_event)
+        schedule: list[Match] = self.ll.view_games(tournament_name, select_event)
         if not schedule:
             self.menu_ui.print_box_line(" No schedule found for this tournament/event. ")
         else:
-            self.menu_ui.print_box_line(f" Schedule for {tournament_name} - {selected_event}: ")    
+            self.menu_ui.print_box_line(f" Schedule for {tournament_name} - {select_event}: ")    
             for match in schedule:
                 self.menu_ui.print_box_line(f" Match ID: {match.match_id} ")
                 self.menu_ui.print_box_line(f" - Bracket Number: {match.bracket_nr} ")
