@@ -503,15 +503,12 @@ class OrganizerUI:
 
        # team name
        self.menu_ui.print_box_top()
-       team_name = input("\tTeam Name: ").strip()
+       team_name = get_non_empty_input("\tTeam Name: ").strip()
        self.menu_ui.print_box_bottom()
 
 
        # captain handle
        self.menu_ui.print_box_top()
-     
-      
-
 
        # validate that captain handle exists and get id
       
@@ -527,10 +524,6 @@ class OrganizerUI:
            print("Captain handle does not exist. Try again.")
        self.menu_ui.print_box_bottom()
       
-
-
-
-
        # select players
        self.menu_ui.print_box_top()
        # need list of all players without a team
@@ -544,7 +537,7 @@ class OrganizerUI:
            player_id, name, handle = player
            print(f" - [{player_id}] {name} ({handle})")
 
-
+        # validate that captain handle exists and get id
        valid_ids = {int(player_id) for player_id, _, _ in all_players}
 
 

@@ -409,7 +409,7 @@ class CaptainUI:
        # validate that captain handle exists and get id
       
        while True:
-           captain_handle = input("\tCaptain Handle: ").strip().lower()
+           captain_handle = get_non_empty_input("\tCaptain Handle: ").strip().lower()
            cap_id = self.ll.take_handle_return_id(captain_handle)
 
 
@@ -437,7 +437,7 @@ class CaptainUI:
            player_id, name, handle = player
            print(f" - [{player_id}] {name} ({handle})")
 
-
+       # only valid IDs the _ is to skip the name, and handle and only get the id 
        valid_ids = {int(player_id) for player_id, _, _ in all_players}
 
 
