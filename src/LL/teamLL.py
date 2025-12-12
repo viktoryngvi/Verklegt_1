@@ -2,6 +2,7 @@ from IO.data_wrapper import DLWrapper
 from LL.playerLL import PlayerLL
 from models.team import Team
 from models.player import Player
+from models.club import Club
 
 class TeamLL:
     """LOGICAL LAYER FOR TEAM MANAGEMENT AND VALIDATION"""
@@ -43,8 +44,7 @@ class TeamLL:
         teams_file: list[Team] = self._dl_wrapper.view_all_teams()
     
         captain_handle = self.player_ll.take_id_return_handle(captain_id)
-    
-        if captain_handle is not True:
+        if captain_handle is False:
             return "Captain handle does not exist"
     
         list_of_player_handles = []
@@ -77,7 +77,15 @@ class TeamLL:
     
     def view_all_teams(self):
         """RETURNS ALL TEAMS FROM DATA LAYER"""
-        return self._dl_wrapper.view_all_teams()
+        club_list: list[Club] = self._dl_wrapper.load_all_clubs()
+        team_list: list[Team] = self._dl_wrapper.view_all_teams()
+        avalable_teams = []
+        for team in team_list:
+            for club in club_list:
+                if team.name not in club.teams and team.name not in avalable_teams:
+                    avalable_teams.append(team)
+
+        return avalable_teams
 
     def view_all_team_names_and_captains(self):
         """RETURNS LIST OF DICTIONARIES WITH TEAM NAMES AND CAPTAINS"""

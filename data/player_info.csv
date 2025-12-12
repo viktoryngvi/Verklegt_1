@@ -27,6 +27,7 @@ id,name,phone,address,dob,email,handle,team
 26,Bjarki Bjorn,673-8899,Bjornakot 13 Akranes,2005-02-28,bjarki.bjorn@example.com,bjarkibear,None,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 27,Carla Castro,674-9900,Castrogata 14 Selfoss,2002-07-14,carla.castro@example.com,carlac,test2,
 28,Dagur Dahl,675-0011,Dahlsvegur 15 Borgarnes,2001-09-03,dagur.dahl@example.com,dagurd,testing team,
 29,Erling Eriksson,676-1122,Eriksgata 16 Hveragerði,2003-03-22,erling.eriksson@example.com,erlinge,Kristos da bomb teams!,
@@ -43,6 +44,11 @@ id,name,phone,address,dob,email,handle,team
 27,Carla Castro,674-9900,Castrogata 14 Selfoss,2002-07-14,carla.castro@example.com,carlac,None,
 28,Dagur Dahl,675-0011,Dahlsvegur 15 Borgarnes,2001-09-03,dagur.dahl@example.com,dagurd,None,
 29,Erling Eriksson,676-1122,Eriksgata 16 Hveragerði,2003-03-22,erling.eriksson@example.com,erlinge,None,
+=======
+27,Carla Castro,674-9900,Castrogata 14 Selfoss,2002-07-14,carla.castro@example.com,carlac,Tristan,
+28,Dagur Dahl,675-0011,Dahlsvegur 15 Borgarnes,2001-09-03,dagur.dahl@example.com,dagurd,Tristan,
+29,Erling Eriksson,676-1122,Eriksgata 16 Hveragerði,2003-03-22,erling.eriksson@example.com,erlinge,Tristan,
+>>>>>>> a84f0e60f034da262754e208009dc4e9616f7d4d
 30,Freyja Frost,677-2233,Frostgata 17 Mosfellsbær,2005-10-11,freyja.frost@example.com,freyjaf,kekkef,
 31,Garðar Gullberg,678-3344,Gullbergsgata 18 Reykjavik,2002-01-30,gardar.gullberg@example.com,gardarg,kekkef,
 >>>>>>> e705196ddf76d52ea863f77c4608c7a078409d50
@@ -57,9 +63,9 @@ id,name,phone,address,dob,email,handle,team
 40,Pálína Páll,687-2233,Pallsgata 27 Hveragerði,2004-09-05,palina.pall@example.com,palinap,vikkkkk,
 41,Quentin Quinn,688-3344,Quinngata 28 Mosfellsbær,2002-11-22,quentin.quinn@example.com,quentinq,None,
 42,Rósa Róbertsdóttir,689-4455,Robertsgata 29 Reykjavik,2003-07-08,rosa.roberts@example.com,rosar,None,
-43,Siggi Sigurdsson,690-5566,Sigurdsgata 30 Kópavogur,2005-01-19,siggi.sigurdsson@example.com,siggis,None,
+43,Siggi Sigurdsson,690-5566,Sigurdsgata 30 Kópavogur,2005-01-19,siggi.sigurdsson@example.com,siggis,Barcelona,
 44,Tobbi Tomásson,691-6677,Tomasgata 31 Hafnarfjörður,2002-03-26,tobbi.tomasson@example.com,tobbit,None,
 45,krist da bomb,7872550,dwijwd 28,2000-12-12,kris@gmail.com,krisssss,None,
 46,Tristan Danielss,659-2893,1pö3rk23ö4kt,2005-12-27,jermias@gmail.com,tris11,None,
 47,Arnar Ægisson,888-1234,Sjávargata 1,2000-01-15,arnar.ae@example.com,arnaraegisson,vikkkkk,
-48,Jeremias Borjas,659-2893,Hafnarbaut 14,2006-04-05,jeremias@gmial.com,jjeremias13,None
+48,Jeremias Borjas,659-2893,Hafnarbaut 14,2006-04-05,jeremias@gmial.com,jjeremias13,None,
