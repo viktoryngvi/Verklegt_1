@@ -125,7 +125,7 @@ class DLWrapper:
         return self.clubio.edit_club_file(clubs)
 
     # ----------------------------------------------------------------------
-    # CLUB METHODS
+    # MATCH METHODS
     # ----------------------------------------------------------------------
 
     def get_unfinished_matches(self):

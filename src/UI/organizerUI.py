@@ -350,7 +350,7 @@ class OrganizerUI:
         for i, event in enumerate(events, start=1):
             self.menu_ui.print_box_line(f"  [{i}] {event}")
         
-        select_event = get_non_empty_input(" ➤ Select Event by number: ").strip()
+        select_event = get_non_empty_input(" \n➤ Select Event by number: ").strip()
         try:
             e_idx = int(select_event) - 1
             event_name = events[e_idx]
