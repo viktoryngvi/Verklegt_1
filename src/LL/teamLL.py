@@ -29,6 +29,8 @@ class TeamLL:
         if check_team_name:
             return "Team name already exists"
         
+        players_id = [playerid for playerid in players_id if playerid != cap_id]
+        
         for player_id in players_id:
     
             if not self.player_ll.check_if_player_id_in_team(player_id):
