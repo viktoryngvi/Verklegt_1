@@ -151,11 +151,18 @@ class OrganizerUI:
         # get a list of the tournaments created
         tournaments = self.ll.get_tournament_list()
         list_of_tournament_names = [tournament for tournament in tournaments]
+
         for i, tournament in enumerate(list_of_tournament_names, start=1):
             self.menu_ui.print_box_line(f"  [{i}] {tournament}")
         self.menu_ui.print_box_line()
-        select_tournament = input(" ➤ Select Tournament by number: ")
-        tournament_name = select_tournament
+        select_tournament = get_non_empty_input(" ➤ Select Tournament by number: ").strip()
+        try:
+            t_idx = int(select_tournament) - 1
+            tournament_name = list_of_tournament_names[t_idx]
+        except (ValueError, IndexError):
+            print("Invalid tournament selection.")
+            input("Press Enter to continue...")
+            return
 
         self.menu_ui.print_box_bottom()
         
