@@ -107,3 +107,10 @@ class MatchLL:
             return self._dl_wrapper.save_match_result(match)
         except Exception as e:
             return [f"Database Error: {str(e)}"]
+
+    # ----------------------------------------------------------------------
+    # GET UNFINISHED MATCHES
+    # ----------------------------------------------------------------------
+
+    def get_unfinished_matches(self, event_name, tournament_name ):
+        list_of_unfinished_matches = self._dl_wrapper.get_unfinished_matches()
