@@ -94,7 +94,7 @@ class TournamentLL:
         return next_useable_id
     
     def get_tournament_schedule(self, tournament_name, event_in_tournament):
-        print(f"'DEBUGGGGG '{tournament_name},{event_in_tournament}")
+        return self._dl_wrapper.get_tournament_schedule(tournament_name, event_in_tournament)
     
 
  

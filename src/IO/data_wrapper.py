@@ -64,6 +64,8 @@ class DLWrapper:
         """WRITE / APPEND INTO TOURNAMENT DATA FILE """
         return self.tournamentio.write_into_file(tournament_data)
 
+    def get_tournament_schedule(self, tournament_name, event_in_tournament):
+        return "NEED TO FINISH ############"
     # ----------------------------------------------------------------------
     # EVENT METHODS
     # ----------------------------------------------------------------------
