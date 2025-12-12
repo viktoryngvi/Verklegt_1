@@ -241,8 +241,12 @@ class OrganizerUI:
             input("Press Enter to continue...")
             return
 
-        for i, event in enumerate(events, start=1):
-            self.menu_ui.print_box_line(f"  [{i}] {event}")
+        for i, event_name in enumerate(events, start=0):
+            if i == 0:
+                continue
+
+            self.menu_ui.print_box_line(f"  [{i}] {event_name}")
+
         self.menu_ui.print_box_line()
         select_event = get_non_empty_input(" ➤ Select Event by number: ").strip()
         try:
@@ -260,7 +264,7 @@ class OrganizerUI:
         while True:
             self.menu_ui.print_box_top()
             self.menu_ui.print_box_line(" Select a team to register for this event: ")
-            teams = self.ll.get_team_list()
+            teams = self.ll.view_all_teams_not_in_blueprint()
 
             if not teams:
                 print("No teams available.")

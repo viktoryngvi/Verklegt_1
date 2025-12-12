@@ -3,6 +3,7 @@ from LL.playerLL import PlayerLL
 from models.team import Team
 from models.player import Player
 from models.club import Club
+from models.event import Event
 
 class TeamLL:
     """LOGICAL LAYER FOR TEAM MANAGEMENT AND VALIDATION"""
@@ -81,6 +82,24 @@ class TeamLL:
         """RETURNS ALL TEAMS FROM DATA LAYER"""
         team_list: list[Team] = self._dl_wrapper.view_all_teams()
         return team_list
+    
+    def view_all_teams_not_in_blueprint(self):
+        list_of_teams = []
+        team_list: list[Team] = self._dl_wrapper.view_all_teams()
+        event_blue: list[Event] = self._dl_wrapper.load_event_blueprint()
+
+        list_of_event_list = []
+
+        for event in event_blue:
+            if event.team_name not in list_of_event_list:
+                list_of_event_list.append(event.team_name)
+
+        for team in team_list:
+            if team.name not in list_of_event_list:
+                list_of_teams.append(team)
+
+        return list_of_teams
+
     
     def view_teams_with_no_club(self):
         """RETURNS ALL TEAMS FROM DATA LAYER"""

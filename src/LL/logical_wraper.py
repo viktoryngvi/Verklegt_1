@@ -141,6 +141,9 @@ class LLWrapper:
         """RETURNS LIST OF ALL TEAMS"""
         return self.team_ll.view_all_teams()
     
+    def view_all_teams_not_in_blueprint(self):
+        return self.team_ll.view_all_teams_not_in_blueprint()
+    
     def check_if_team_exists(self, captains_team: str) -> bool:
         """CHECKS IF TEAM EXISTS"""
         return self.team_ll.check_if_team_name_exists(captains_team)
@@ -191,7 +194,7 @@ class LLWrapper:
    
     def get_events_in_tournament(self, tournament_name):
         """RETURNS EVENTS IN A TOURNAMENT"""
-        return self.tournament_ll.get_events_in_tournament(tournament_name)
+        return self.tournament_ll.view_events_in_tournament(tournament_name)
    
     def generate_schedule(tournament: Tournament, event: Event):
         """GENERATES SCHEDULE FOR TOURNAMENT"""

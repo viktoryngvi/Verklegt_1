@@ -70,10 +70,11 @@ class Event_IO(Match, Event):
         
         with open(self.blueprint_file, "w", encoding="utf-8") as blueprint_file:
     
-            blueprint_file.write("event_name,event_type,tournment_name,start_date,end_date,team_name,")
+            blueprint_file.write("event_name,event_type,tournment_name,start_date,end_date,team_name,\n")
     
             for teams in team_data:
                 blueprint_file.write(
+                f'{teams.event_name},'
                 f'{teams.event_type},'
                 f'{teams.tournament_name},'
                 f'{date.isoformat(teams.start_date)},'
