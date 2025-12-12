@@ -4,6 +4,7 @@ from UI.input_helper import (
     choose_from_list
 )
 from LL.logical_wraper import LLWrapper
+from models.player import Player
 
 
 class PlayerUI:
@@ -60,21 +61,22 @@ class PlayerUI:
         self.menu_ui.print_box_bottom()
 
         # display profile info
+        # self.ll.validate_handle(handle)
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line(f" Loading profile for handle: {handle} ")
         self.menu_ui.print_box_bottom()
 
-        profile = self.ll.load_player_by_handle(handle)
-        if profile:  
+        player = self.ll.load_player_by_handle(handle)
+        if isinstance(player, Player):  
             self.menu_ui.print_box_top()
             self.menu_ui.print_box_line(f" Profile Information for {handle} ")
-            self.menu_ui.print_box_line(f" Name   : {profile.name} ")
-            self.menu_ui.print_box_line(f" Phone  : {profile.phone} ")
-            self.menu_ui.print_box_line(f" Address: {profile.address} ")
-            self.menu_ui.print_box_line(f" DOB    : {profile.dob} ")
-            self.menu_ui.print_box_line(f" Email  : {profile.email} ")
-            self.menu_ui.print_box_line(f" Handle : {profile.handle} ")
-            self.menu_ui.print_box_line(f" Team   : {profile.team if profile.team else 'No team assigned'} ")
+            self.menu_ui.print_box_line(f" Name   : {player.name} ")
+            self.menu_ui.print_box_line(f" Phone  : {player.phone} ")
+            self.menu_ui.print_box_line(f" Address: {player.address} ")
+            self.menu_ui.print_box_line(f" DOB    : {player.dob} ")
+            self.menu_ui.print_box_line(f" Email  : {player.email} ")
+            self.menu_ui.print_box_line(f" Handle : {player.handle} ")
+            self.menu_ui.print_box_line(f" Team   : {player.team if player.team else 'No team assigned'} ")
             self.menu_ui.print_box_bottom()
         else:
             self.menu_ui.print_box_top()
