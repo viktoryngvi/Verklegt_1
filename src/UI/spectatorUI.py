@@ -4,6 +4,7 @@ from UI.input_helper import (
     get_non_empty_input
 )
 from LL.logical_wraper import LLWrapper
+from models.match import Match
 
 class SpectatorUI:
     def __init__(self, ll: LLWrapper, menu_ui):

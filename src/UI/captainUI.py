@@ -1,5 +1,7 @@
 from datetime import date
 from models.player import Player
+from models.match import Match
+
 from LL.logical_wraper import LLWrapper
 from UI.input_helper import (
     get_non_empty_input,
