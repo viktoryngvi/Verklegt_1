@@ -13,6 +13,7 @@ from LL.logical_wraper import LLWrapper
 from models.team import Team
 from models.club import Club
 from models.player import Player
+from models.match import Match
 
 class OrganizerUI:
     def __init__(self, ll: LLWrapper, menu_ui: Any):
@@ -418,8 +419,21 @@ class OrganizerUI:
         self.menu_ui.print_box_top()
 
         #  Ask LL for unfinished matches in that tournament
-        matches = self.ll.get_unfinished_matches(event_name, tournament_name)
+        matches: list[Match] = self.ll.view_games(tournament_name, event_name)
+        results = None
         if not matches:
+            while True:
+                print("would you like to generate the next round?")
+                N = input("Yes/No: ")
+                if N =="No":
+                    break
+                if N == "Yes":
+                    results = self.ll.generate_next_schedule()
+                    break
+                else:
+                    break
+            if results is not None:
+                print(results)
             print("No unfinished matches found for this tournament/event.")
             input("Press Enter to continue...")
             return
@@ -429,13 +443,13 @@ class OrganizerUI:
 
         # list of matches that have not been entered yet
         for i, match in enumerate(matches, start=1):
-            self.menu_ui.print_box_line(f"  [{i}] {match}")
+            self.menu_ui.print_box_line(f"  [{i}] {match.team_a} vs {match.team_b}")
         self.menu_ui.print_box_line()
         select_match = get_non_empty_input(" ➤ Select Match by number: ").strip()
         try:
             m_idx = int(select_match) - 1
             selected_match = matches[m_idx]
-            selected_match_id = selected_match.id
+            selected_match_id = selected_match.match_id
         except (ValueError, IndexError):
             print("Invalid match selection.")
             input("Press Enter to continue...")
@@ -449,13 +463,11 @@ class OrganizerUI:
         self.menu_ui.print_box_bottom()
 
         # Forward everything directly to LL
-        result = matches(
+        result = self.ll.input_match_results(
             selected_match_id,
             team_a_score,
             team_b_score
         )
-
-        results = self.ll.input_match_results(result)
 
         #  Print LL response
         print("\n" + str(result))

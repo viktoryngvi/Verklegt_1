@@ -138,6 +138,9 @@ class EventLL:
 
     def get_match_id(self):
         schedule_file: list[Match] = self._dl_wrapper.load_match_file()
+        if not schedule_file:
+            return 1
+        
         last_id = int(schedule_file[-1].match_id)
         return last_id + 1
     
@@ -145,12 +148,8 @@ class EventLL:
         """DETERMINES NEXT BRACKET NUMBER"""
     
         match_file: list[Match] = self._dl_wrapper.load_match_file()
-    
-        if not match_file[-1].bracket_nr:
-            return 1
-        else:
-            new_bracket_nr = match_file[-1].bracket_nr + 1
-            return new_bracket_nr
+        new_bracket_nr = match_file[-1].bracket_nr + 1
+        return new_bracket_nr
         
     def get_date_of_match(self):
         # first day, 
@@ -168,6 +167,8 @@ class EventLL:
     
         schedule_file: list[Match] = self._dl_wrapper.load_match_file()
     
+
+
         for match in schedule_file:
     
             if match.match_id == match_id:
@@ -175,7 +176,7 @@ class EventLL:
                 match.team_b_score = team_b_score
 
                 if team_a_score == team_b_score:
-                    match.winner = "Tie!"
+                    return "Brackets can not have ties!"
     
                 if team_a_score > team_b_score:
                     match.winner = match.team_a
@@ -195,7 +196,7 @@ class EventLL:
         public_file: list[Event] = self._dl_wrapper.load_event_blueprint()
 
         # the_event = public_file[0]
-        all_team_list = []
+        all_team_list: list[str] = []
         for line in public_file:
             all_team_list.append(line.team_name)
         random.shuffle(all_team_list)
@@ -223,11 +224,8 @@ class EventLL:
                     date_of_match=date_of_match,
                     time_of_match=time_of_match,
                     teams= all_team_list,
-                    team_a_score=None,
-                    team_b_score=None,
-                    winner=None,
                     )
-                self._dl_wrapper.append_to_match_file(match)                
+            self._dl_wrapper.append_to_match_file(match)                
 
     # ----------------------------------------------------------------------
     # CREATE ROUND 2, 3, AND 4
@@ -236,23 +234,27 @@ class EventLL:
     def create_round_2_3_and_4(self, round_nr: int):
         """CREATES SUBSEQUENT ROUNDS BASED ON PREVIOUS WINNERS"""  
         
-        schedule_file: list[Match] = self._dl_wrapper.load_match_file()
+        matches: list[Match] = self._dl_wrapper.load_match_file()
         list_of_winners_from_bracket = []
         
-        for match in schedule_file[round_nr:]:
+        for match in matches[round_nr:]:
             list_of_winners_from_bracket.append(match.winner)
 
         match.bracket_nr = self.get_bracket_id()
-
+        last_match: Match = matches[-1]
         for i in range(0, len(list_of_winners_from_bracket), 2):
             team_a_new = list_of_winners_from_bracket[i]
             team_b_new = list_of_winners_from_bracket[i+1]
-
-            match.date_of_match = self.get_date_of_match()
-            match.time_of_match = self.get_time_of_match()
-            match.team_a = team_a_new
-            match.team_b = team_b_new
-            match.server_id = self.get_server_id()
+            match: Match = Match(
+                tournament_name=last_match.tournament_name,
+                event_name=last_match.event_name,
+                game_type=last_match.game_type,
+                team_a=team_a_new,
+                team_b=team_b_new,
+                server_id=self.get_server_id(),
+                match_id=self.get_match_id(),
+                bracket_nr=self.get_bracket_id(),
+                )          
             self._dl_wrapper.append_to_match_file(match)
         
         return "Round created"
@@ -276,7 +278,7 @@ class EventLL:
     def create_third_round(self):
         """CREATES THIRD ROUND MATCHUPS"""
         
-        round_nr = int(9)
+        round_nr = int(8)
         
         self.create_round_2_3_and_4(round_nr)
         
@@ -289,11 +291,25 @@ class EventLL:
     def create_fourth_round(self):
         """CREATES FOURTH ROUND MATCHUPS"""
         
-        round_nr = int(13)
+        round_nr = int(12)
         
         self.create_round_2_3_and_4(round_nr)
         
         return "Round created"
+    
+    def generate_next_schedule(self):
+        match_file = self._dl_wrapper.load_match_file()
+        if len(match_file) < 5:
+            self.create_second_round()
+        elif len(match_file) < 14:
+            self.create_third_round()
+        elif len(match_file) == 14:
+            self.create_fourth_round()
+        elif len(match_file) == 15:
+            self.move_match_to_result()
+            return f"winner is {self.find_winner()}!"
+
+        return None
 
     #######################################################################
 
@@ -377,10 +393,13 @@ class EventLL:
         """RETURNS ALL MATCHES """  
         result_file: list[Match] = self._dl_wrapper.read_results_file()
         results_list = []
+        if not result_file:
+            result_file = self._dl_wrapper.load_match_file()
         for line in result_file:
             if line.tournament_name == tournament:
                 if line.event_name == event_nam:
-                    results_list.append(line)
+                    if line.winner == "None":
+                        results_list.append(line)
         if results_list:
             return results_list
         
@@ -389,7 +408,7 @@ class EventLL:
         if match_file[1].tournament_name == tournament:
             if match_file[1].event_name == event_nam:
                 for match in match_file:
-                    if match.winner is None:
+                    if match.winner == "None":
                         unfinnished_games.append(match)
                 return unfinnished_games
     

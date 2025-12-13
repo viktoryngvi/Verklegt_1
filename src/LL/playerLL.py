@@ -210,19 +210,6 @@ class PlayerLL:
         return player_id_list
 
     # ----------------------------------------------------------------------
-    # EDIT PLAYER GENERIC HELPER
-    # ----------------------------------------------------------------------
-    
-    def edit_player_try(self, find_player_handle, what_to_edit, new_information):
-        """GENERIC FUNCTION TO EDIT PLAYER ATTRIBUTE AND SAVE TO DATA LAYER"""
-        player_file: list[Player] = self._dl_wrapper.load_all_player_info()
-        for player in player_file:
-            handle = player.handle
-            if find_player_handle == handle:
-                setattr(player, what_to_edit, new_information)
-                return self._dl_wrapper.edit_player_file(player_file)
-
-    # ----------------------------------------------------------------------
     # PLACE PLAYER INTO TEAM
     # ----------------------------------------------------------------------
 
