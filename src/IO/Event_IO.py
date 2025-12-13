@@ -101,20 +101,20 @@ class Event_IO(Match, Event):
     
             for row in match_file:
                 attributes = row.split(",")
-                match = Match
+                match = Match()
                 match.tournament_name = str(attributes[0])
                 match.event_name = str(attributes[1])
                 match.game_type = str(attributes[2])
                 match.server_id = str(attributes[3])
                 match.match_id = str(attributes[4])
                 match.bracket_nr = int(attributes[5])
-                match.date_of_match = date.isoformat(attributes[6])
+                match.date_of_match = date.fromisoformat(attributes[6])
                 match.time_of_match = str(attributes[7])
                 match.teams = list(attributes[8].split(";"))
                 match.team_a = str(attributes[9])
-                match.team_b = int(attributes[10])
-                match.team_a_score = str(attributes[11])
-                match.team_b_score = str(attributes[12])
+                match.team_b = str(attributes[10])
+                match.team_a_score = int(attributes[11])
+                match.team_b_score = int(attributes[12])
                 match.winner = str(attributes[13])
                 knockout_list.append(match)
     
@@ -134,9 +134,9 @@ class Event_IO(Match, Event):
                     f'{match.event_name},'
                     f'{match.game_type},'
                     f'{match.server_id},'
-                    f'{match.match_id}'
+                    f'{match.match_id},'
                     f'{match.bracket_nr},'
-                    f'{date.isoformat(match.date_of_match)},'
+                    f'{(date.isoformat(match.date_of_match))},'
                     f'{match.time_of_match},'
                     f'{teams_str},'
                     f'{match.team_a},'
@@ -155,7 +155,7 @@ class Event_IO(Match, Event):
 
     def override_match_file(self):
         with open(self.match_file, "w", encoding="utf-8") as match_file:
-            match_file.write("tournament,event_name,game_type,server_id,match_id,date_of_match,time_of_match,teams,team_a,team_b,team_a_score,team_b_score,winner\n")
+            match_file.write("tournament_name,event_name,game_type,server_id,match_id,bracket_nr,date_of_match,time_of_match,teams,team_a,team_b,team_a_score,team_b_score,winner\n")
         return True
 
 
@@ -163,7 +163,7 @@ class Event_IO(Match, Event):
         """OVERWRITES MATCH FILE WITH UPDATED MATCH INFORMATION"""
     
         with open(self.match_file, "w", encoding="utf-8") as match_file:
-            match_file.write("tournament,event_name,game_type,server_id,match_id,date_of_match,time_of_match,teams,team_a,team_b,team_a_score,team_b_score,winner\n")
+            match_file.write("tournament_name,event_name,game_type,server_id,match_id,bracket_nr,date_of_match,time_of_match,teams,team_a,team_b,team_a_score,team_b_score,winner\n")
 
 
             for match in matches:
@@ -173,9 +173,9 @@ class Event_IO(Match, Event):
                     f'{match.event_name},'
                     f'{match.game_type},'
                     f'{match.server_id},'
-                    f'{match.match_id}'
+                    f'{match.match_id},'
                     f'{match.bracket_nr},'
-                    f'{date.isoformat(match.date_of_match)},'
+                    f'{(match.date_of_match)},'
                     f'{match.time_of_match},'
                     f'{teams_str},'
                     f'{match.team_a},'
@@ -204,7 +204,7 @@ class Event_IO(Match, Event):
     
             for row in results_file:
                 attributes = row.split(",")
-                match = Match
+                match = Match()
                 match.tournament_name = str(attributes[0])
                 match.event_name = str(attributes[1])
                 match.game_type = str(attributes[2])
@@ -214,9 +214,9 @@ class Event_IO(Match, Event):
                 match.time_of_match = str(attributes[6])
                 match.teams = list(attributes[7].split(";"))
                 match.team_a = str(attributes[8])
-                match.team_b = int(attributes[9])
-                match.team_a_score = str(attributes[10])
-                match.team_b_score = str(attributes[11])
+                match.team_b = str(attributes[9])
+                match.team_a_score = int(attributes[10])
+                match.team_b_score = int(attributes[11])
                 match.winner = str(attributes[12])
 
                 results_list.append(match)
@@ -231,7 +231,7 @@ class Event_IO(Match, Event):
     def append_into_results(self, matches_to_append: list[Match]):
         """APPENDS NEW RESULTS INTO THE RESULTS FILE"""
     
-        with open(self.match_file, "a", encoding="utf-8") as results_file:
+        with open(self.results_file, "a", encoding="utf-8") as results_file:
     
             for match in matches_to_append:
                 teams_str = ";".join(str(t) for t in match.teams)
@@ -241,8 +241,9 @@ class Event_IO(Match, Event):
                         f'{match.event_name},'
                         f'{match.game_type},'
                         f'{match.server_id},'
+                        f'{match.match_id},'
                         f'{match.bracket_nr},'
-                        f'{date.isoformat(match.date_of_match)},'
+                        f'{(match.date_of_match)},'
                         f'{match.time_of_match},'
                         f'{teams_str},'
                         f'{match.team_a},'

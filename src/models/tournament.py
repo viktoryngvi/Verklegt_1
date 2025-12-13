@@ -1,9 +1,9 @@
 from models.person import Person
 from models.event import Event
-from models.contact_person import contact_person
+from models.contact_person import ContactPerson
 from datetime import date
 
-class Tournament(contact_person):
+class Tournament(ContactPerson):
     """TOURNAMENT CLASS REPRESENTS NAME, LOCATION, START/END DATES, CONTACT INFO, AND EVENTS."""
 
     def __init__(

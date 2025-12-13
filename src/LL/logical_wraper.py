@@ -259,8 +259,10 @@ class LLWrapper:
     def view_games(self, tournament_name, event_name):
         return self.event_ll.view_games(tournament_name, event_name)
 
-    def get_results_from_one_game(self):
-        return self.event_ll.get_results_from_one_game()
+    def generate_next_schedule(self):
+        return self.event_ll.generate_next_schedule()
+    
+
    #VALIDATE METHODS
 
     def check_if_handle_in_use(self, handle: str) -> bool:

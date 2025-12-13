@@ -1,4 +1,4 @@
-class contact_person:
+class ContactPerson:
     """CONTACT_PERSON CLASS REPRESENTS NAME, EMAIL, AND PHONE."""
     
     def __init__(self, contact_name: str = None, contact_email :str = None, contact_phone :str = None):
