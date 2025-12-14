@@ -398,7 +398,7 @@ class EventLL:
         for line in result_file:
             if line.tournament_name == tournament:
                 if line.event_name == event_nam:
-                    if line.winner == "None":
+                    if line.winner != "None":
                         results_list.append(line)
         if results_list:
             return results_list

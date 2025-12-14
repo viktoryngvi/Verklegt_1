@@ -5,6 +5,7 @@ from UI.input_helper import (
 )
 from LL.logical_wraper import LLWrapper
 from models.player import Player
+from models.match import Match
 
 
 class PlayerUI:
@@ -224,17 +225,19 @@ class PlayerUI:
         event_name = self.ll.get_events_in_tournament(tournament_name)
         list_of_event_names = [event for event in event_name]
 
-        for i, tournament in enumerate(list_of_event_names, start=1):
-            self.menu_ui.print_box_line(f"  [{i}] {tournament}")
+        for i, event in enumerate(list_of_event_names, start=0):
+            if i == 0:
+                continue
+            self.menu_ui.print_box_line(f"  [{i}] {event}")
         self.menu_ui.print_box_line()
         select_event = get_non_empty_input(" ➤ Select Event by number: ").strip()
         try:
-            e_idx = int(select_event) - 1
+            e_idx = int(select_event)
             event_name = list_of_event_names[e_idx]
         except (ValueError, IndexError):
             print("Invalid event selection.")
             input("Press Enter to continue...")
-            return
+            return 
 
         self.menu_ui.print_box_line() 
         self.menu_ui.print_box_line(f" You selected Tournament: {tournament_name} ")    
@@ -249,25 +252,33 @@ class PlayerUI:
             input("Press Enter to continue...")
             return
 
-        events_in_tournament = choose_from_list(" Select Event by number: ", events)
-
         self.menu_ui.print_box_line()
-        self.menu_ui.print_box_line(f" You selected Event: {events_in_tournament}")
+        self.menu_ui.print_box_line(f" You selected Event: {event_name}")
         self.menu_ui.print_box_bottom()
 
         # get schedule from ll for that tournament and event
+        # bracket id, date, server id, teams, scores
         self.menu_ui.print_header("TOURNAMENT SCHEDULE")
         self.menu_ui.print_box_top()
         self.menu_ui.print_box_line()
 
-        schedule = self.ll.get_tournament_schedule(tournament_name, events_in_tournament)
+        schedule: list[Match] = self.ll.view_games(tournament_name, event_name)
         if not schedule:
-            print("No schedule found for this tournament/event.")
+            self.menu_ui.print_box_line(" No schedule found for this tournament/event. ")
         else:
-            print(f"Schedule for {tournament_name} - {events_in_tournament}:")
+            self.menu_ui.print_box_line(f" Schedule for {tournament_name} - {event_name}: ")    
             for match in schedule:
-                print(f" - {match}")
+                self.menu_ui.print_box_line(f" Match ID: {match.match_id} ")
+                self.menu_ui.print_box_line(f" - Bracket Number: {match.bracket_nr} ")
+                self.menu_ui.print_box_line(f" - Date: {match.date_of_match}")
+                self.menu_ui.print_box_line(f" - Time: {match.time_of_match} ")
+                self.menu_ui.print_box_line(f" - Server ID: {match.server_id} ")
+                self.menu_ui.print_box_line(f" - Team A: {match.team_a} vs Team B: {match.team_b} ")
+                self.menu_ui.print_box_line(f" - Score: {match.team_a_score} - {match.team_b_score} ")
+                self.menu_ui.print_box_line(f" - Winner: {match.winner} ")
+                self.menu_ui.print_box_line()
+        self.menu_ui.print_box_bottom()
+
         input("Press Enter to continue...")
         return
-
     
